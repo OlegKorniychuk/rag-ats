@@ -136,10 +136,10 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** `.github/workflows/ci.yml` on `ubuntu-latest`, triggered on push/PR to `main`. Steps: checkout → setup Node (with npm cache) → `npm ci` (root, installs `apps/api` + `packages/shared`) → lint (`npm run lint -w apps/api`) → format check (`npx prettier --check .` against a root `.prettierrc`/`.prettierignore`) → build (`npm run build --workspaces`) → unit test (`npm run test -w apps/api`) → integration test (`npm run test:integration -w apps/api`, Testcontainers — works unmodified on `ubuntu-latest` since Docker is pre-installed there). Single job, steps run in sequence so a failure at any gate stops the pipeline and is easy to attribute.
 **Acceptance criteria:**
 
-- [ ] Workflow triggers on push and PR to `main` (not yet verified — branch not pushed)
+- [x] Workflow triggers on push and PR to `main`
 - [x] Each of lint / format / build / unit test / integration test is its own visible step (not one opaque `npm run ci` blob) — a failure clearly names which gate broke
 - [ ] A deliberately broken/unformatted file fails the format step; a deliberately failing test fails the test step (equivalent local commands verified; not yet run on an actual GitHub Actions PR)
-- [ ] Pipeline is green on a real PR opened against `main` (not yet — branch not pushed)
+- [x] Pipeline is green on a real PR opened against `main` (PR #1, run passed in 53s)
       **Verification:** open a PR from a branch with Phase 0's changes, confirm all steps run and pass; temporarily introduce a lint error / formatting issue / failing test on a scratch branch to confirm each gate actually fails (not silently skipped)
       **Dependencies:** 0.7
       **Files:** `.github/workflows/ci.yml`
@@ -154,7 +154,7 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 - [x] `npm run test -w apps/api` and `npm run test:integration -w apps/api` both pass
 - [x] The rollback proof test in 0.7 is genuinely red/green-tested (temporarily break the transaction wiring — e.g. cache `tx` in the repository's constructor — and confirm the rollback test fails, then revert)
 - [x] Ready for Step 1 (auth) to consume `RECRUITERS_REPOSITORY` with zero additional wiring
-- [ ] GitHub Actions CI is green on `main` (lint, format, build, unit test, integration test all passing as separate steps) — not yet, branch not pushed
+- [x] GitHub Actions CI is green (lint, format, build, unit test, integration test all passing as separate steps) on PR #1; pending a final green run on `main` itself after merge
 
 ## Commit Plan
 
