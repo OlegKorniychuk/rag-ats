@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { envValidationSchema } from './config/env.validation';
 import { DbModule } from './db/db.module';
 import { DRIZZLE } from './db/db.tokens';
+import { RepositoriesModule } from './db/repositories.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { DRIZZLE } from './db/db.tokens';
         }),
       ],
     }),
+    RepositoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
