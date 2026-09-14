@@ -47,9 +47,9 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** npm workspaces root (`apps/api`, `packages/shared`), NestJS app skeleton in `apps/api` via `@nestjs/cli@10` (Jest default), `packages/shared` with the existing domain types (Recruiter, Vacancy, Candidate, Application, ScoreResult — same shapes as before).
 **Acceptance criteria:**
 
-- [ ] `npm install` succeeds at the root; `npm run build --workspaces` succeeds
-- [ ] `apps/api` boots (`npm run start:dev -w apps/api`) and serves the default route
-- [ ] Default Jest unit test (`app.controller.spec.ts`) passes
+- [x] `npm install` succeeds at the root; `npm run build --workspaces` succeeds
+- [x] `apps/api` boots (`npm run start:dev -w apps/api`) and serves the default route
+- [x] Default Jest unit test (`app.controller.spec.ts`) passes
       **Verification:** `npm run build --workspaces`, `npm run test -w apps/api`
       **Dependencies:** None
       **Files:** `package.json` (root), `apps/api/**` (Nest scaffold), `packages/shared/**`
@@ -60,8 +60,8 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** `docker-compose.yml` with a single `db` service (`postgres:17`, plain — no pgvector), `.env.example` (`DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `PORT`), `@nestjs/config` wired globally in `AppModule` with fail-fast schema validation.
 **Acceptance criteria:**
 
-- [ ] `docker compose up -d db` starts a reachable Postgres
-- [ ] App fails fast with a clear error if a required env var is missing (Joi validation in `ConfigModule.forRoot`)
+- [x] `docker compose up -d db` starts a reachable Postgres
+- [x] App fails fast with a clear error if a required env var is missing (Joi validation in `ConfigModule.forRoot`)
       **Verification:** `docker compose up -d db && psql $DATABASE_URL -c 'select 1'`; boot the app with a missing env var and confirm it errors instead of silently continuing
       **Dependencies:** 0.1
       **Files:** `docker-compose.yml`, `apps/api/.env.example`, `apps/api/src/app.module.ts`
@@ -72,9 +72,9 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** Install `drizzle-orm@rc` and `drizzle-kit@rc` (pin the resolved `1.0.0-rc.4` in `package.json`, not a floating `rc` tag). Full schema for all Stage 1 entities in `src/db/schema.ts`: `recruiters`, `vacancies` (+ `vacancy_status` enum), `candidates`, `applications` (+ `application_stage` enum) — tables/columns/relations only, matching `packages/shared`'s types, no `vector` column yet. `drizzle.config.ts` targeting `DATABASE_URL`. Root/workspace scripts: `db:generate`, `db:migrate`.
 **Acceptance criteria:**
 
-- [ ] `npm run db:generate -w apps/api` produces a migration matching the schema
-- [ ] `npm run db:migrate -w apps/api` applies cleanly to an empty `docker compose` Postgres
-- [ ] Re-running migrate on an already-migrated DB is a no-op (idempotent)
+- [x] `npm run db:generate -w apps/api` produces a migration matching the schema
+- [x] `npm run db:migrate -w apps/api` applies cleanly to an empty `docker compose` Postgres
+- [x] Re-running migrate on an already-migrated DB is a no-op (idempotent)
       **Verification:** fresh `docker compose down -v && docker compose up -d db`, then generate+migrate, inspect tables via `psql \dt`
       **Dependencies:** 0.2
       **Files:** `apps/api/src/db/schema.ts`, `apps/api/drizzle.config.ts`, `apps/api/src/db/migrations/**`
@@ -85,8 +85,8 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** `DbModule` (`@Global()`), provides the `DRIZZLE` token (a `NodePgDatabase<typeof schema>` built from a `pg.Pool` using `DATABASE_URL`), closes the pool on `onModuleDestroy`. Exported type aliases (`AppDatabase`, and the transactional adapter type from 0.5) live alongside it for reuse by every repository.
 **Acceptance criteria:**
 
-- [ ] Any provider can `@Inject(DRIZZLE)` and run a query against the real DB
-- [ ] Pool closes cleanly on app shutdown (no dangling handles in tests)
+- [x] Any provider can `@Inject(DRIZZLE)` and run a query against the real DB
+- [x] Pool closes cleanly on app shutdown (no dangling handles in tests)
       **Verification:** covered by 0.7's Testcontainers integration test; `jest --detectOpenHandles` clean after that suite runs
       **Dependencies:** 0.3
       **Files:** `apps/api/src/db/db.module.ts`, `apps/api/src/db/db.tokens.ts`
@@ -97,8 +97,8 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** Install `nestjs-cls`, `@nestjs-cls/transactional`, `@nestjs-cls/transactional-adapter-drizzle-orm`. Wire `ClsModule.forRoot({ global: true, middleware: { mount: true }, plugins: [new ClsPluginTransactional({ imports: [DbModule], adapter: new TransactionalAdapterDrizzleOrm({ drizzleInstanceToken: DRIZZLE }) })] })` in `AppModule`. Export a typed `AppTransactionAdapter = TransactionalAdapterDrizzleOrm<AppDatabase>` alias from `src/db/db.tokens.ts` so every repository imports one consistent type for `TransactionHost<AppTransactionAdapter>`.
 **Acceptance criteria:**
 
-- [ ] `middleware.mount: true` is set (the documented "No CLS context available" failure mode is explicitly avoided)
-- [ ] A minimal provider can inject `TransactionHost<AppTransactionAdapter>` and read `.tx` without error, both inside and outside a request context
+- [x] `middleware.mount: true` is set (the documented "No CLS context available" failure mode is explicitly avoided)
+- [x] A minimal provider can inject `TransactionHost<AppTransactionAdapter>` and read `.tx` without error, both inside and outside a request context
       **Verification:** covered by 0.7's integration test (this task alone has no independent user-facing behavior to verify beyond "it doesn't throw on boot")
       **Dependencies:** 0.4
       **Files:** `apps/api/src/app.module.ts`, `apps/api/src/db/db.tokens.ts`
@@ -109,8 +109,8 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** `interface RecruitersRepository { create(data): Promise<Recruiter>; findByEmail(email): Promise<Recruiter | null>; findById(id): Promise<Recruiter | null>; }` in `src/db/repositories/recruiters.repository.ts`, plus `DrizzleRecruitersRepository implements RecruitersRepository` using `TransactionHost<AppTransactionAdapter>` — **`this.txHost.tx` read fresh inside every method, never stored on `this`**. Bound in a `RepositoriesModule` (`@Global()`, imported once in `AppModule`) via `{ provide: RECRUITERS_REPOSITORY, useClass: DrizzleRecruitersRepository }`. This module is where every later step (vacancies, candidates, applications repositories) adds its own interface/impl/binding — no new wiring pattern needed after this.
 **Acceptance criteria:**
 
-- [ ] `RecruitersRepository` methods work correctly called directly (no transaction)
-- [ ] Repository never imports/caches the raw `DRIZZLE` client — only `TransactionHost`
+- [x] `RecruitersRepository` methods work correctly called directly (no transaction)
+- [x] Repository never imports/caches the raw `DRIZZLE` client — only `TransactionHost`
       **Verification:** covered by 0.7
       **Dependencies:** 0.5
       **Files:** `apps/api/src/db/repositories/recruiters.repository.ts`, `apps/api/src/db/repositories/drizzle-recruiters.repository.ts`, `apps/api/src/db/repositories.module.ts`
@@ -121,11 +121,11 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** Install `testcontainers` + `@testcontainers/postgresql` as dev dependencies. A shared helper `test/testcontainers-db.util.ts` exposes `createTestDatabase()`: starts a `PostgreSqlContainer`, runs Drizzle migrations against it programmatically (drizzle-orm's `migrate()` against the generated migrations folder — not the `drizzle-kit` CLI, to avoid shelling out mid-test), and returns `{ container, pool, db }`. Integration test file `apps/api/test/repositories/recruiters.repository.integration-spec.ts`: `beforeAll` calls `createTestDatabase()` and builds a Nest `TestingModule` (importing `DbModule`/`RepositoriesModule`/CLS wiring, overriding the `DRIZZLE` provider with the container's `db`), `afterAll` closes the pool and stops the container. The proof test: a throwaway `@Injectable()` test-only service with two `@Transactional()`-wrapped methods that both call `RecruitersRepository` — one commits two inserts, one throws partway through and must roll back both.
 **Acceptance criteria:**
 
-- [ ] Integration test runs against a real, ephemeral Postgres (Testcontainers) — not mocked, not the dev `docker compose` DB
-- [ ] Happy path: two repository calls inside one `@Transactional()` method both persist
-- [ ] Rollback: an error thrown inside a `@Transactional()` method after one repository write leaves **zero** rows — proves the transaction actually rolled back, not just that the error propagated
-- [ ] A repository call made _outside_ any `@Transactional()` context still works (uses the base `db`, not a stray `tx`)
-- [ ] Container is torn down after the suite even on test failure (`afterAll`, not relying on process exit)
+- [x] Integration test runs against a real, ephemeral Postgres (Testcontainers) — not mocked, not the dev `docker compose` DB
+- [x] Happy path: two repository calls inside one `@Transactional()` method both persist
+- [x] Rollback: an error thrown inside a `@Transactional()` method after one repository write leaves **zero** rows — proves the transaction actually rolled back, not just that the error propagated
+- [x] A repository call made _outside_ any `@Transactional()` context still works (uses the base `db`, not a stray `tx`)
+- [x] Container is torn down after the suite even on test failure (`afterAll`, not relying on process exit)
       **Verification:** `npm run test:integration -w apps/api` (new script), confirm no leftover container via `docker ps` after the run
       **Dependencies:** 0.6
       **Files:** `apps/api/test/testcontainers-db.util.ts`, `apps/api/test/repositories/recruiters.repository.integration-spec.ts`, `apps/api/jest.integration.config.ts` (or a `testPathIgnorePatterns`/project split so `*.integration-spec.ts` doesn't run under the default `npm test`)
@@ -136,10 +136,10 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Description:** `.github/workflows/ci.yml` on `ubuntu-latest`, triggered on push/PR to `main`. Steps: checkout → setup Node (with npm cache) → `npm ci` (root, installs `apps/api` + `packages/shared`) → lint (`npm run lint -w apps/api`) → format check (`npx prettier --check .` against a root `.prettierrc`/`.prettierignore`) → build (`npm run build --workspaces`) → unit test (`npm run test -w apps/api`) → integration test (`npm run test:integration -w apps/api`, Testcontainers — works unmodified on `ubuntu-latest` since Docker is pre-installed there). Single job, steps run in sequence so a failure at any gate stops the pipeline and is easy to attribute.
 **Acceptance criteria:**
 
-- [ ] Workflow triggers on push and PR to `main`
-- [ ] Each of lint / format / build / unit test / integration test is its own visible step (not one opaque `npm run ci` blob) — a failure clearly names which gate broke
-- [ ] A deliberately broken/unformatted file fails the format step; a deliberately failing test fails the test step (both verified once, then reverted)
-- [ ] Pipeline is green on a real PR opened against `main`
+- [ ] Workflow triggers on push and PR to `main` (not yet verified — branch not pushed)
+- [x] Each of lint / format / build / unit test / integration test is its own visible step (not one opaque `npm run ci` blob) — a failure clearly names which gate broke
+- [ ] A deliberately broken/unformatted file fails the format step; a deliberately failing test fails the test step (equivalent local commands verified; not yet run on an actual GitHub Actions PR)
+- [ ] Pipeline is green on a real PR opened against `main` (not yet — branch not pushed)
       **Verification:** open a PR from a branch with Phase 0's changes, confirm all steps run and pass; temporarily introduce a lint error / formatting issue / failing test on a scratch branch to confirm each gate actually fails (not silently skipped)
       **Dependencies:** 0.7
       **Files:** `.github/workflows/ci.yml`
@@ -149,12 +149,12 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 
 ### Checkpoint: Phase 0 complete
 
-- [ ] `npm run build --workspaces` clean
-- [ ] `docker compose up -d db`, migrations apply cleanly to an empty DB
-- [ ] `npm run test -w apps/api` and `npm run test:integration -w apps/api` both pass
-- [ ] The rollback proof test in 0.7 is genuinely red/green-tested (temporarily break the transaction wiring — e.g. cache `tx` in the repository's constructor — and confirm the rollback test fails, then revert)
-- [ ] Ready for Step 1 (auth) to consume `RECRUITERS_REPOSITORY` with zero additional wiring
-- [ ] GitHub Actions CI is green on `main` (lint, format, build, unit test, integration test all passing as separate steps)
+- [x] `npm run build --workspaces` clean
+- [x] `docker compose up -d db`, migrations apply cleanly to an empty DB
+- [x] `npm run test -w apps/api` and `npm run test:integration -w apps/api` both pass
+- [x] The rollback proof test in 0.7 is genuinely red/green-tested (temporarily break the transaction wiring — e.g. cache `tx` in the repository's constructor — and confirm the rollback test fails, then revert)
+- [x] Ready for Step 1 (auth) to consume `RECRUITERS_REPOSITORY` with zero additional wiring
+- [ ] GitHub Actions CI is green on `main` (lint, format, build, unit test, integration test all passing as separate steps) — not yet, branch not pushed
 
 ## Commit Plan
 

@@ -41,11 +41,13 @@ These reinterpret/narrow the relevant SPEC.md stories for Stage 1; Stage 2 repla
 
 ## Task List
 
-### Phase 0: Foundation (not a user story)
+### Phase 0: Foundation (not a user story) — Done
 
-Minimal monorepo bootstrap: npm workspaces (`apps/api`, `packages/shared`), NestJS app skeleton, Postgres via Docker Compose (plain, no pgvector), **full Drizzle schema for all Stage 1 entities** (recruiters, vacancies, candidates, applications — tables/enums/relations only, no modules built on top yet) + migration tooling wired (`drizzle-kit generate`/`migrate`), and the e2e test harness (Jest + Supertest running against a real test Postgres instance). No feature modules, no business logic — later steps add folders/dependencies as needed.
+Detailed breakdown: `docs/plans/phase-0-plan.md`.
 
-**Checkpoint:** app boots, empty DB migrates cleanly, a trivial e2e test hits the app and passes against the real test DB.
+Minimal monorepo bootstrap: npm workspaces (`apps/api`, `packages/shared`), NestJS app skeleton, Postgres via Docker Compose (plain, no pgvector), **full Drizzle schema for all Stage 1 entities** (recruiters, vacancies, candidates, applications — tables/enums/relations only, no modules built on top yet) + migration tooling wired (`drizzle-kit generate`/`migrate`), a correctly-wired repository pattern (interfaces + Drizzle impls, `@nestjs-cls/transactional`) proven via a Testcontainers-backed integration test (not e2e/Supertest — no HTTP endpoints exist yet), and GitHub Actions CI (lint/format/build/test). No feature modules, no business logic — later steps add folders/dependencies as needed.
+
+**Checkpoint:** app boots, empty DB migrates cleanly, the Testcontainers integration suite (including a rollback proof test) passes against a real ephemeral Postgres. Verified locally; CI-on-a-real-PR still pending (branch not pushed yet).
 
 ---
 
