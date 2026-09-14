@@ -19,6 +19,7 @@
     "db:migrate": "npm run db:migrate -w apps/api"
   },
   "devDependencies": {
+    "drizzle-orm": "1.0.0-rc.4",
     "prettier": "^3.3.3"
   }
 }
