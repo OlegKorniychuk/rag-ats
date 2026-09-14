@@ -1,10 +1,4 @@
-import {
-  pgTable,
-  uuid,
-  text,
-  timestamp,
-  pgEnum,
-} from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
 export const applicationStageEnum = pgEnum('application_stage', [
