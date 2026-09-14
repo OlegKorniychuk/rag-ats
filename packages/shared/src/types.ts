@@ -5,11 +5,7 @@ export interface Recruiter {
 }
 
 export type ApplicationStage =
-  | 'applied'
-  | 'screened'
-  | 'interview'
-  | 'rejected'
-  | 'hired';
+  'applied' | 'screened' | 'interview' | 'rejected' | 'hired';
 
 export type VacancyStatus = 'open' | 'closed';
 
