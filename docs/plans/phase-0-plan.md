@@ -33,9 +33,10 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 - **DB driver:** `pg` (node-postgres) — confirmed supported by the transactional adapter's async mode.
 - **DB image:** plain `postgres:17` in `docker-compose.yml` for Stage 1 (per the Stage 1 plan's "no pgvector yet" decision). Stage 2 swaps the image to `pgvector/pgvector` and adds the extension via its own migration.
 - **Tests are integration tests, not e2e.** Phase 0 has no HTTP endpoints to exercise, so tests build a Nest `TestingModule` (compiling `DbModule` + `RepositoriesModule` + the CLS/transactional wiring) and call providers/repositories directly — no Supertest, no HTTP layer. This pattern carries forward: later steps' repository/service tests stay integration-style; only steps with actual controllers add e2e/Supertest on top.
-- **Test DB via Testcontainers**, not the Docker Compose `db` service. Each integration test file starts its own ephemeral `PostgreSqlContainer` (via `@testcontainers/postgresql`) in `beforeAll`, runs Drizzle migrations against it programmatically, builds the `TestingModule` against that container's connection string, and stops the container in `afterAll`. No shared test database, no manual cleanup/truncation between runs, no dependency on `docker compose up` being run first — Testcontainers manages the whole container lifecycle. Docker Compose's `db` service remains for local dev (`npm run start:dev`) only.
+- **Test DB via Testcontainers**, not the Docker Compose `db` service. Each integration test file starts its own ephemeral `PostgreSqlContainer` (via `@testcontainers/postgresql`) in `beforeAll`, runs Drizzle migrations against it programmatically, builds the `TestingModule` against that container's connection string, and stops the container in `afterAll`. No shared test database, no manual cleanup/truncation between runs, no dependency on `docker compose up` being run first — Testcontainers manages the whole container lifecycle, so no `DATABASE_URL_TEST` env var is needed. Docker Compose's `db` service remains for local dev (`npm run start:dev`) only.
 - **Proof of the transactional wiring is a real repository, not throwaway code:** `RecruitersRepository` (the `recruiters` table already needs to exist in schema regardless, and Step 1/auth will consume it) is built in Phase 0 specifically to prove `@Transactional()` commit + rollback works, via a Testcontainers-backed integration test. Every later step's repository (vacancies, candidates, applications) follows the exact same shape.
 - **Nest version:** `@nestjs/cli@10` (pins Jest as the default test runner, matching SPEC.md; the current CLI major scaffolds Vitest by default, established in an earlier session). `@nestjs-cls`'s peer range (`@nestjs/core`/`common` `>=10 <13`) is compatible.
+- **CI: GitHub Actions on `ubuntu-latest`.** Docker Engine is pre-installed on GitHub-hosted Ubuntu runners, so Testcontainers-based integration tests run there with zero extra setup (no DinD, no service-container workaround needed) — confirmed via Docker's own GitHub Actions + Testcontainers guidance. This retires the "Testcontainers needs a reachable Docker daemon in CI" risk from the original Phase 0 pass.
 
 ## Task List
 
@@ -51,10 +52,10 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Size:** S
 
 ### Task 0.2: Docker Compose + config
-**Description:** `docker-compose.yml` with a single `db` service (`postgres:17`, plain — no pgvector), `.env.example` (`DATABASE_URL`, `DATABASE_URL_TEST`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `PORT`), `@nestjs/config` wired globally in `AppModule`.
+**Description:** `docker-compose.yml` with a single `db` service (`postgres:17`, plain — no pgvector), `.env.example` (`DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `PORT`), `@nestjs/config` wired globally in `AppModule` with fail-fast schema validation.
 **Acceptance criteria:**
 - [ ] `docker compose up -d db` starts a reachable Postgres
-- [ ] App fails fast with a clear error if a required env var is missing (Joi/zod validation in `ConfigModule.forRoot`, or `ConfigService.getOrThrow`)
+- [ ] App fails fast with a clear error if a required env var is missing (Joi validation in `ConfigModule.forRoot`)
 **Verification:** `docker compose up -d db && psql $DATABASE_URL -c 'select 1'`; boot the app with a missing env var and confirm it errors instead of silently continuing
 **Dependencies:** 0.1
 **Files:** `docker-compose.yml`, `apps/api/.env.example`, `apps/api/src/app.module.ts`
@@ -114,6 +115,18 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 **Files:** `apps/api/test/testcontainers-db.util.ts`, `apps/api/test/repositories/recruiters.repository.integration-spec.ts`, `apps/api/jest.integration.config.ts` (or a `testPathIgnorePatterns`/project split so `*.integration-spec.ts` doesn't run under the default `npm test`)
 **Size:** M
 
+### Task 0.8: GitHub Actions CI — lint, format, build, test
+**Description:** `.github/workflows/ci.yml` on `ubuntu-latest`, triggered on push/PR to `main`. Steps: checkout → setup Node (with npm cache) → `npm ci` (root, installs `apps/api` + `packages/shared`) → lint (`npm run lint -w apps/api`) → format check (`npx prettier --check .` against a root `.prettierrc`/`.prettierignore`) → build (`npm run build --workspaces`) → unit test (`npm run test -w apps/api`) → integration test (`npm run test:integration -w apps/api`, Testcontainers — works unmodified on `ubuntu-latest` since Docker is pre-installed there). Single job, steps run in sequence so a failure at any gate stops the pipeline and is easy to attribute.
+**Acceptance criteria:**
+- [ ] Workflow triggers on push and PR to `main`
+- [ ] Each of lint / format / build / unit test / integration test is its own visible step (not one opaque `npm run ci` blob) — a failure clearly names which gate broke
+- [ ] A deliberately broken/unformatted file fails the format step; a deliberately failing test fails the test step (both verified once, then reverted)
+- [ ] Pipeline is green on a real PR opened against `main`
+**Verification:** open a PR from a branch with Phase 0's changes, confirm all steps run and pass; temporarily introduce a lint error / formatting issue / failing test on a scratch branch to confirm each gate actually fails (not silently skipped)
+**Dependencies:** 0.7
+**Files:** `.github/workflows/ci.yml`
+**Size:** S
+
 ---
 
 ### Checkpoint: Phase 0 complete
@@ -122,6 +135,24 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 - [ ] `npm run test -w apps/api` and `npm run test:integration -w apps/api` both pass
 - [ ] The rollback proof test in 0.7 is genuinely red/green-tested (temporarily break the transaction wiring — e.g. cache `tx` in the repository's constructor — and confirm the rollback test fails, then revert)
 - [ ] Ready for Step 1 (auth) to consume `RECRUITERS_REPOSITORY` with zero additional wiring
+- [ ] GitHub Actions CI is green on `main` (lint, format, build, unit test, integration test all passing as separate steps)
+
+## Commit Plan
+
+One commit per task, in dependency order — each leaves `main` buildable and green (`npm run build --workspaces` + whatever test scripts exist at that point). No squashing across tasks; short, conventional-commit messages (per `CLAUDE.md`, no attribution lines).
+
+| # | Task | Commit message |
+|---|---|---|
+| 1 | 0.1 Monorepo bootstrap | `chore: bootstrap npm workspaces and nest api skeleton` |
+| 2 | 0.2 Docker Compose + config | `chore: add docker compose postgres and env config` |
+| 3 | 0.3 Drizzle schema + migrations | `feat(db): add drizzle schema and migrations` |
+| 4 | 0.4 Drizzle client provider | `feat(db): add drizzle client provider` |
+| 5 | 0.5 Transactional infra | `feat(db): wire nestjs-cls transactional adapter` |
+| 6 | 0.6 RecruitersRepository | `feat(db): add recruiters repository` |
+| 7 | 0.7 Testcontainers harness + proof test | `test(db): add testcontainers integration harness and transactional proof test` |
+| 8 | 0.8 GitHub Actions CI | `ci: add lint, format, build, and test pipeline` |
+
+Note: commits 4–6 (`db` client, transactional wiring, first repository) have no independent test coverage of their own — each is verified retroactively by 0.7's integration test (per their tasks' "Verification" lines). They still land as separate commits for reviewability (small, single-concern diffs), just not independently green on their own test suite between commits 4 and 7.
 
 ## Risks and Mitigations
 | Risk | Impact | Mitigation |
@@ -129,7 +160,8 @@ Sources: [Drizzle ORM v1 RC changes](https://orm.drizzle.team/docs/v0-v1-changes
 | Drizzle 1.0 RC ships a breaking change before Stage 1 finishes (still an RC, not stable) | Medium | Pin the exact resolved version (`1.0.0-rc.4`), not a floating `rc`/`*` range; bump deliberately |
 | A future repository caches `this.txHost.tx` in its constructor instead of reading it per-call, silently breaking rollback | High (silent data-integrity bug) | 0.7's rollback test is the regression guard; note the rule directly in `repositories.module.ts` as the one non-obvious comment |
 | `ClsModule` middleware not mounted on some request path (e.g. a future non-HTTP entrypoint like a CLI script) | Medium | `middleware.mount: true` covers all HTTP routes; flag explicitly if Stage 2's `scripts/seed.ts`/`eval.ts` need transactional repositories outside an HTTP request (they'd need `ClsService#run` manually) |
-| Testcontainers needs a reachable Docker daemon wherever tests run (local machine confirmed fine; unverified for any future CI runner) | Medium | Confirmed working locally; revisit if/when CI is introduced (Docker-in-Docker or a DinD-capable runner) |
+| ~~Testcontainers needs a reachable Docker daemon wherever tests run~~ | ~~Medium~~ | Resolved by Task 0.8: `ubuntu-latest` GitHub Actions runners ship Docker Engine pre-installed, confirmed via Docker's own Testcontainers+GH Actions guidance — no DinD/service-container workaround needed |
+| CI pipeline itself becomes a maintenance burden if lint/format/build/test steps drift out of sync with local scripts | Low | Task 0.8's steps call the exact same npm scripts a developer runs locally (`npm run lint`, `test`, `test:integration`, `build`) — CI is not a separate config to keep in sync |
 
 ## Open Questions
 - None blocking. Low-stakes implementation defaults chosen without a separate ask (documented above under Architecture Decisions): plain `postgres:17` image for the Docker Compose dev service; one ephemeral Testcontainers Postgres per integration test file rather than a shared/reused container. Flag if either should change.
