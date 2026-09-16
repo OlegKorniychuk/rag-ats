@@ -34,8 +34,8 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** Add a pointer from `docs/plans/stage-1-api-plan.md`'s Step 1 section to this new subplan (same pattern as Phase 0's pointer), and update its "Delivers" line to include `GET /auth/me`.
 **Acceptance criteria:**
 
-- [ ] Step 1 section links `docs/plans/step-1-auth-plan.md`
-- [ ] "Delivers" line includes `GET /auth/me`
+- [x] Step 1 section links `docs/plans/step-1-auth-plan.md`
+- [x] "Delivers" line includes `GET /auth/me`
       **Verification:** visual diff review
       **Dependencies:** None
       **Files:** `docs/plans/stage-1-api-plan.md`
@@ -46,8 +46,8 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** Install `@nestjs/jwt`, `@nestjs/passport@^10.0.3`, `passport@^0.7.0`, `passport-jwt` (+ `@types/passport-jwt`), `bcrypt` (+ `@types/bcrypt`), `cookie-parser` (+ `@types/cookie-parser`), `class-validator`, `class-transformer`, `ms` (+ `@types/ms`). Wire `app.use(cookieParser())` and `app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }))` in `main.ts`. Add `NODE_ENV` to `env.validation.ts`.
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds
-- [ ] App still boots (`npm run start:dev -w apps/api`)
+- [x] `npm run build --workspaces` succeeds
+- [x] App still boots (`npm run start:dev -w apps/api`)
       **Verification:** build + manual boot
       **Dependencies:** None
       **Files:** `apps/api/package.json`, `apps/api/src/main.ts`, `apps/api/src/config/env.validation.ts`, `apps/api/.env.example` (add `NODE_ENV`)
@@ -58,9 +58,9 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** `apps/api/test/e2e-app.util.ts` — helper `createTestApp()`: sets required `process.env` vars, calls `createTestDatabase()` (reused from Phase 0), compiles `AppModule` with `DRIZZLE` overridden, `app.init()`, returns `{ app, testDb }`; `closeTestApp()` closes both. `jest.e2e.config.ts`. `apps/api/test/app.e2e-spec.ts` — smoke test hitting the existing `GET /` route to prove the harness end-to-end before any auth code exists. `test:e2e` script (api + root). New CI step.
 **Acceptance criteria:**
 
-- [ ] `npm run test:e2e -w apps/api` boots the real `AppModule` against an ephemeral Testcontainers Postgres and gets `200` from `GET /`
-- [ ] Container + app close cleanly (`afterAll`, no leftover container, no open-handle warnings)
-- [ ] CI runs the new step as its own visible gate
+- [x] `npm run test:e2e -w apps/api` boots the real `AppModule` against an ephemeral Testcontainers Postgres and gets `200` from `GET /`
+- [x] Container + app close cleanly (`afterAll`, no leftover container, no open-handle warnings)
+- [ ] CI runs the new step as its own visible gate (config added to `ci.yml`; not yet confirmed on a real PR run)
       **Verification:** `npm run test:e2e -w apps/api` locally, then confirm the new CI step passes on the PR
       **Dependencies:** 1.1
       **Files:** `apps/api/test/e2e-app.util.ts`, `apps/api/jest.e2e.config.ts`, `apps/api/test/app.e2e-spec.ts`, `apps/api/package.json`, `package.json` (root), `.github/workflows/ci.yml`
@@ -71,9 +71,9 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** `src/auth/auth.module.ts`, `auth.controller.ts`, `auth.service.ts`, `dto/register.dto.ts` (`email: @IsEmail()`, `password: @IsString() @MinLength(8)`). `AuthService.register`: `RECRUITERS_REPOSITORY.findByEmail` → `ConflictException` if taken; else `bcrypt.hash` → `create`; controller returns `{ id, email }` (never the hash). Unguarded route. `AuthModule` imported into `AppModule`.
 **Acceptance criteria:**
 
-- [ ] Happy path: `201`, body has `id`/`email`, no `passwordHash`
-- [ ] Duplicate email: `409`
-- [ ] Missing/invalid email or short password: `400` (global `ValidationPipe`)
+- [x] Happy path: `201`, body has `id`/`email`, no `passwordHash`
+- [x] Duplicate email: `409`
+- [x] Missing/invalid email or short password: `400` (global `ValidationPipe`)
       **Verification:** `npm run test:e2e -w apps/api` (new `test/auth.e2e-spec.ts`)
       **Dependencies:** 1.2
       **Files:** `apps/api/src/auth/**`, `apps/api/src/app.module.ts`, `apps/api/test/auth.e2e-spec.ts`
@@ -84,9 +84,9 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** `dto/login.dto.ts`. `JwtModule.registerAsync` in `AuthModule` (secret/expiresIn from `ConfigService`). `AuthService.login`: `findByEmail` → `bcrypt.compare`; either failure → same `UnauthorizedException` (no enumeration). On success, sign `{ sub: recruiter.id, email }`, set `access_token` cookie (`httpOnly`, `sameSite: 'lax'`, `secure` per `NODE_ENV`, `maxAge` via `ms(JWT_EXPIRES_IN)`) via `@Res({ passthrough: true })`.
 **Acceptance criteria:**
 
-- [ ] Happy path: `200`/`201`, `Set-Cookie: access_token=...; HttpOnly; SameSite=Lax` present
-- [ ] Wrong password: `401`
-- [ ] Unknown email: `401` (same shape as wrong password)
+- [x] Happy path: `200`/`201`, `Set-Cookie: access_token=...; HttpOnly; SameSite=Lax` present
+- [x] Wrong password: `401`
+- [x] Unknown email: `401` (same shape as wrong password)
       **Verification:** `npm run test:e2e -w apps/api` (extends `auth.e2e-spec.ts`)
       **Dependencies:** 1.3
       **Files:** `apps/api/src/auth/**`, `apps/api/test/auth.e2e-spec.ts`
@@ -97,10 +97,10 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 **Description:** `JwtStrategy` (`passport-jwt`) with a custom extractor reading `req.cookies['access_token']`; `validate(payload)` returns `AuthUser` (`{ id, email }`), attached to `req.user`. `JwtAuthGuard extends AuthGuard('jwt')`. `@CurrentUser()` param decorator reads `req.user`. `GET /auth/me` (guarded) returns `AuthUser`. `POST /auth/logout` clears the cookie (`clearCookie` with matching options), unguarded (idempotent no-op if already logged out).
 **Acceptance criteria:**
 
-- [ ] Valid cookie → `/auth/me` returns the current user
-- [ ] No cookie → `/auth/me` → `401`
-- [ ] Tampered/invalid cookie → `/auth/me` → `401`
-- [ ] `login` → `/me` succeeds → `logout` → same session's next `/me` → `401` (via `supertest.agent`, proving the cookie is actually cleared, not just that logout returns `200`)
+- [x] Valid cookie → `/auth/me` returns the current user
+- [x] No cookie → `/auth/me` → `401`
+- [x] Tampered/invalid cookie → `/auth/me` → `401`
+- [x] `login` → `/me` succeeds → `logout` → same session's next `/me` → `401` (via `supertest.agent`, proving the cookie is actually cleared, not just that logout returns `200`)
       **Verification:** `npm run test:e2e -w apps/api` (completes `auth.e2e-spec.ts` — matches `stage-1-api-plan.md`'s full Step 1 e2e list)
       **Dependencies:** 1.4
       **Files:** `apps/api/src/auth/**`, `apps/api/test/auth.e2e-spec.ts`
@@ -110,10 +110,10 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 
 ### Checkpoint: Step 1 complete
 
-- [ ] `npm run build --workspaces`, `npm run test -w apps/api`, `npm run test:integration -w apps/api`, `npm run test:e2e -w apps/api` all pass
-- [ ] Full e2e list from `stage-1-api-plan.md` covered: register success; duplicate-email rejected; login success + cookie set; wrong-password rejected; guarded route rejects no-cookie and tampered-cookie requests
-- [ ] GitHub Actions green on a real PR (new e2e step included)
-- [ ] `RECRUITERS_REPOSITORY`, `AuthUser`, `@CurrentUser()`, `JwtAuthGuard` ready for Step 2 (vacancies) to consume with zero additional wiring
+- [x] `npm run build --workspaces`, `npm run test -w apps/api`, `npm run test:integration -w apps/api`, `npm run test:e2e -w apps/api` all pass
+- [x] Full e2e list from `stage-1-api-plan.md` covered: register success; duplicate-email rejected; login success + cookie set; wrong-password rejected; guarded route rejects no-cookie and tampered-cookie requests (13 e2e tests total)
+- [ ] GitHub Actions green on a real PR (new e2e step included) — not yet pushed
+- [x] `RECRUITERS_REPOSITORY`, `AuthUser`, `@CurrentUser()`, `JwtAuthGuard` ready for Step 2 (vacancies) to consume with zero additional wiring
 
 ## Commit Plan
 
