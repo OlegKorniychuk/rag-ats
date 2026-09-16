@@ -54,7 +54,9 @@ Minimal monorepo bootstrap: npm workspaces (`apps/api`, `packages/shared`), Nest
 ### Step 1 — Recruiter registration & login (JWT httpOnly cookie)
 
 **Story:** Recruiter — auth (register + login; session uses a JWT in an httpOnly cookie)
-**Delivers:** `POST /auth/register`, `POST /auth/login` (sets the cookie), `POST /auth/logout` (clears it — necessary plumbing for a working cookie session, not a separate story), `JwtStrategy` (cookie extractor) + `JwtAuthGuard`, password hashing via bcrypt.
+**Delivers:** `POST /auth/register`, `POST /auth/login` (sets the cookie), `POST /auth/logout` (clears it), `GET /auth/me` (session check — necessary plumbing for a working cookie session, not a separate story), `JwtStrategy` (cookie extractor) + `JwtAuthGuard` + `@CurrentUser()`, password hashing via bcrypt.
+
+Detailed breakdown: `docs/plans/step-1-auth-plan.md`.
 **E2E:** register success; duplicate-email register rejected; login success + cookie set; wrong-password login rejected; a guarded route rejects requests with no cookie and with a tampered/invalid cookie.
 **Depends on:** Phase 0.
 

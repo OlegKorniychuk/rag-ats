@@ -9,6 +9,7 @@
     "dist",
     "**/*spec.ts",
     "drizzle.config.ts",
-    "jest.integration.config.ts"
+    "jest.integration.config.ts",
+    "jest.e2e.config.ts"
   ]
 }
