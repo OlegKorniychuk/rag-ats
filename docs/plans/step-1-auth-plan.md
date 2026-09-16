@@ -60,7 +60,7 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 
 - [x] `npm run test:e2e -w apps/api` boots the real `AppModule` against an ephemeral Testcontainers Postgres and gets `200` from `GET /`
 - [x] Container + app close cleanly (`afterAll`, no leftover container, no open-handle warnings)
-- [ ] CI runs the new step as its own visible gate (config added to `ci.yml`; not yet confirmed on a real PR run)
+- [x] CI runs the new step as its own visible gate (PR #2, green)
       **Verification:** `npm run test:e2e -w apps/api` locally, then confirm the new CI step passes on the PR
       **Dependencies:** 1.1
       **Files:** `apps/api/test/e2e-app.util.ts`, `apps/api/jest.e2e.config.ts`, `apps/api/test/app.e2e-spec.ts`, `apps/api/package.json`, `package.json` (root), `.github/workflows/ci.yml`
@@ -112,7 +112,7 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 
 - [x] `npm run build --workspaces`, `npm run test -w apps/api`, `npm run test:integration -w apps/api`, `npm run test:e2e -w apps/api` all pass
 - [x] Full e2e list from `stage-1-api-plan.md` covered: register success; duplicate-email rejected; login success + cookie set; wrong-password rejected; guarded route rejects no-cookie and tampered-cookie requests (13 e2e tests total)
-- [ ] GitHub Actions green on a real PR (new e2e step included) — not yet pushed
+- [x] GitHub Actions green on a real PR (new e2e step included) — PR #2, run passed in 1m11s
 - [x] `RECRUITERS_REPOSITORY`, `AuthUser`, `@CurrentUser()`, `JwtAuthGuard` ready for Step 2 (vacancies) to consume with zero additional wiring
 
 ## Commit Plan
