@@ -10,6 +10,7 @@ import { EnvConfig } from './config/env.config.js';
 import { DbModule } from './db/db.module.js';
 import { DRIZZLE } from './db/db.tokens.js';
 import { RepositoriesModule } from './db/repositories.module.js';
+import { VacanciesModule } from './vacancies/vacancies.module.js';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { RepositoriesModule } from './db/repositories.module.js';
     }),
     RepositoriesModule,
     AuthModule,
+    VacanciesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
