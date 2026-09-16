@@ -18,14 +18,13 @@ export interface TestApp {
 // NestFactory.create() returns - Test.createTestingModule()'s app never runs
 // main.ts, so that wiring is replicated here to keep e2e tests representative
 // of the real bootstrapped app.
+//
+// Required env vars (DATABASE_URL, JWT_SECRET, ...) are NOT set here: the
+// `import { AppModule }` above already evaluates ConfigModule.forRoot()'s
+// validation the moment this file is loaded, before this function ever
+// runs - they're seeded by jest.e2e.config.ts's `setupFiles` instead, which
+// runs before any test file's imports.
 export async function createTestApp(): Promise<TestApp> {
-  process.env.DATABASE_URL ??=
-    'postgres://test:test@localhost:5432/unused_placeholder';
-  process.env.JWT_SECRET ??= 'test-secret';
-  process.env.JWT_EXPIRES_IN ??= '1h';
-  process.env.PORT ??= '0';
-  process.env.NODE_ENV ??= 'test';
-
   const testDb = await createTestDatabase();
 
   const moduleRef = await Test.createTestingModule({
