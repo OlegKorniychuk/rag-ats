@@ -1,19 +1,18 @@
 import { Global, Module, OnModuleDestroy } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { drizzle } from 'drizzle-orm/node-postgres';
+import { EnvConfig } from '../config/env.config';
 import { Pool } from 'pg';
 import { DRIZZLE } from './db.tokens';
 
 @Global()
 @Module({
-  imports: [ConfigModule],
   providers: [
     {
       provide: Pool,
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) =>
+      inject: [EnvConfig],
+      useFactory: (config: EnvConfig) =>
         new Pool({
-          connectionString: config.getOrThrow<string>('DATABASE_URL'),
+          connectionString: config.DATABASE_URL,
         }),
     },
     {

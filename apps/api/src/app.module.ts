@@ -3,9 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapter-drizzle-orm';
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { ClsModule } from 'nestjs-cls';
+import { dotenvLoader, TypedConfigModule } from 'nest-typed-config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { EnvConfig } from './config/env.config';
 import { envValidationSchema } from './config/env.validation';
 import { DbModule } from './db/db.module';
 import { DRIZZLE } from './db/db.tokens';
@@ -17,6 +19,10 @@ import { RepositoriesModule } from './db/repositories.module';
       isGlobal: true,
       validationSchema: envValidationSchema,
       validationOptions: { abortEarly: false },
+    }),
+    TypedConfigModule.forRoot({
+      schema: EnvConfig,
+      load: dotenvLoader(),
     }),
     DbModule,
     ClsModule.forRoot({

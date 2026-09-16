@@ -38,7 +38,7 @@
     @IsOptional()
     @Type(() => Number)
     @IsInt()
-    @Min(1)
+    @Min(0)
     @Max(65535)
     public readonly PORT: number = 3000;
 
