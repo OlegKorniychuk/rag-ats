@@ -106,4 +106,58 @@ describe('Auth (e2e)', () => {
         .expect(401);
     });
   });
+
+  describe('GET /auth/me', () => {
+    it('returns the current user for a valid session cookie', async () => {
+      const email = uniqueEmail();
+      const password = 'password123';
+      await request(testApp.app.getHttpServer())
+        .post('/auth/register')
+        .send({ email, password })
+        .expect(201);
+
+      const agent = request.agent(testApp.app.getHttpServer());
+      await agent.post('/auth/login').send({ email, password }).expect(201);
+
+      const res = await agent.get('/auth/me').expect(200);
+      expect(res.body).toMatchObject({ email });
+      expect(res.body.id).toBeDefined();
+    });
+
+    it('rejects a request with no cookie', async () => {
+      await request(testApp.app.getHttpServer()).get('/auth/me').expect(401);
+    });
+
+    it('rejects a tampered cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .get('/auth/me')
+        .set('Cookie', 'access_token=not-a-real-jwt')
+        .expect(401);
+    });
+  });
+
+  describe('POST /auth/logout', () => {
+    it('clears the session so a subsequent /me is rejected', async () => {
+      const email = uniqueEmail();
+      const password = 'password123';
+      await request(testApp.app.getHttpServer())
+        .post('/auth/register')
+        .send({ email, password })
+        .expect(201);
+
+      const agent = request.agent(testApp.app.getHttpServer());
+      await agent.post('/auth/login').send({ email, password }).expect(201);
+      await agent.get('/auth/me').expect(200);
+
+      await agent.post('/auth/logout').expect(201);
+      await agent.get('/auth/me').expect(401);
+    });
+
+    it('goes through successfully if there is no session', async () => {
+      const agent = request.agent(testApp.app.getHttpServer());
+
+      await agent.get('/auth/me').expect(401);
+      await agent.post('/auth/logout').expect(201);
+    });
+  });
 });

@@ -12,6 +12,7 @@ import {
 } from '../db/repositories/recruiters.repository';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { JwtPayload } from './jwt-payload.interface';
 
 const BCRYPT_SALT_ROUNDS = 10;
 
@@ -50,10 +51,8 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const accessToken = await this.jwtService.signAsync({
-      sub: recruiter.id,
-      email: recruiter.email,
-    });
+    const payload: JwtPayload = { sub: recruiter.id, email: recruiter.email };
+    const accessToken = await this.jwtService.signAsync(payload);
 
     return { accessToken };
   }
