@@ -5,14 +5,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import {
   RECRUITERS_REPOSITORY,
-  RecruitersRepository,
-} from '../db/repositories/recruiters.repository';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { JwtPayload } from './jwt-payload.interface';
+  type RecruitersRepository,
+} from '../db/repositories/recruiters.repository.js';
+import { LoginDto } from './dto/login.dto.js';
+import { RegisterDto } from './dto/register.dto.js';
+import type { JwtPayload } from './jwt-payload.interface.js';
 
 const BCRYPT_SALT_ROUNDS = 10;
 

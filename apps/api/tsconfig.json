@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "types": ["node", "jest"],
     "declaration": true,
     "removeComments": true,

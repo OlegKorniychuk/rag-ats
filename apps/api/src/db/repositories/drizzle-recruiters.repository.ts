@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
 import { eq } from 'drizzle-orm';
-import { AppTransactionAdapter } from '../db.tokens';
-import { recruiters } from '../schema';
-import {
+import type { AppTransactionAdapter } from '../db.tokens.js';
+import { recruiters } from '../schema.js';
+import type {
   NewRecruiter,
   Recruiter,
   RecruitersRepository,
-} from './recruiters.repository';
+} from './recruiters.repository.js';
 
 @Injectable()
 export class DrizzleRecruitersRepository implements RecruitersRepository {

@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
-import * as request from 'supertest';
-import { closeTestApp, createTestApp, TestApp } from './e2e-app.util';
+import request from 'supertest';
+import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
 function uniqueEmail(): string {
   return `${randomUUID()}@example.com`;

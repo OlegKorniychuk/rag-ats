@@ -1,12 +1,15 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
   testRegex: 'test/.*\\.e2e-spec\\.ts$',
   setupFiles: ['<rootDir>/test/jest-e2e-setup.ts'],
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
+  },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testEnvironment: 'node',
   testTimeout: 60_000,

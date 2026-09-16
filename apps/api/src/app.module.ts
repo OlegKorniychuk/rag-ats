@@ -3,13 +3,13 @@ import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapte
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { ClsModule } from 'nestjs-cls';
 import { dotenvLoader, TypedConfigModule } from 'nest-typed-config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { EnvConfig } from './config/env.config';
-import { DbModule } from './db/db.module';
-import { DRIZZLE } from './db/db.tokens';
-import { RepositoriesModule } from './db/repositories.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { AuthModule } from './auth/auth.module.js';
+import { EnvConfig } from './config/env.config.js';
+import { DbModule } from './db/db.module.js';
+import { DRIZZLE } from './db/db.tokens.js';
+import { RepositoriesModule } from './db/repositories.module.js';
 
 @Module({
   imports: [

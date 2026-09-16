@@ -1,13 +1,13 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import * as cookieParser from 'cookie-parser';
-import { AppModule } from '../src/app.module';
-import { DRIZZLE } from '../src/db/db.tokens';
+import cookieParser from 'cookie-parser';
+import { AppModule } from '../src/app.module.js';
+import { DRIZZLE } from '../src/db/db.tokens.js';
 import {
   createTestDatabase,
   teardownTestDatabase,
-  TestDatabase,
-} from './testcontainers-db.util';
+  type TestDatabase,
+} from './testcontainers-db.util.js';
 
 export interface TestApp {
   app: INestApplication;
@@ -22,7 +22,7 @@ export interface TestApp {
 // Required env vars (DATABASE_URL, JWT_SECRET, ...) are NOT set here: the
 // `import { AppModule }` above already evaluates TypedConfigModule.forRoot()'s
 // validation the moment this file is loaded, before this function ever
-// runs - they're seeded by jest.e2e.config.ts's `setupFiles` instead, which
+// runs - they're seeded by jest.e2e.config.js's `setupFiles` instead, which
 // runs before any test file's imports.
 export async function createTestApp(): Promise<TestApp> {
   const testDb = await createTestDatabase();

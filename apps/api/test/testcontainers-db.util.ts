@@ -1,4 +1,5 @@
-import { join } from 'path';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import {
   PostgreSqlContainer,
   StartedPostgreSqlContainer,
@@ -6,7 +7,9 @@ import {
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { Pool } from 'pg';
-import { AppDatabase } from '../src/db/db.tokens';
+import type { AppDatabase } from '../src/db/db.tokens.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export interface TestDatabase {
   container: StartedPostgreSqlContainer;

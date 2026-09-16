@@ -1,6 +1,7 @@
 import type { CookieOptions } from 'express';
-import * as ms from 'ms';
-import { EnvConfig } from '../config/env.config';
+import ms from 'ms';
+import type { StringValue } from 'ms';
+import { EnvConfig } from '../config/env.config.js';
 
 export const ACCESS_TOKEN_COOKIE = 'access_token';
 
@@ -10,7 +11,7 @@ export const ACCESS_TOKEN_COOKIE = 'access_token';
 export function accessTokenCookieOptions(config: EnvConfig): CookieOptions {
   return {
     ...baseCookieOptions(config),
-    maxAge: ms(config.JWT_EXPIRES_IN as ms.StringValue),
+    maxAge: ms(config.JWT_EXPIRES_IN as StringValue),
   };
 }
 
