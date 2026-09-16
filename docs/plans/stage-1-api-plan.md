@@ -64,6 +64,8 @@ Detailed breakdown: `docs/plans/step-1-auth-plan.md`.
 
 **Story:** Recruiter — create a vacancy / auto-generate a shareable public apply link (one endpoint, both stories)
 **Delivers:** `POST /vacancies` (owner = current recruiter, generates a `nanoid` apply token).
+
+Detailed breakdown: `docs/plans/step-2-vacancy-plan.md`.
 **E2E:** happy path (response includes working apply link/token); unauthenticated rejected; validation errors (missing title/requirements).
 **Depends on:** Step 1.
 
