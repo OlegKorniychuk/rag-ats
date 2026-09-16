@@ -1,31 +1,31 @@
-import { ConfigService } from '@nestjs/config';
 import type { CookieOptions } from 'express';
 import * as ms from 'ms';
+import { EnvConfig } from '../config/env.config';
 
 export const ACCESS_TOKEN_COOKIE = 'access_token';
 
 // Single source of truth for the cookie's lifetime and security flags -
 // login (set) and logout (clear) must both pass matching options, or the
 // browser treats them as different cookies and logout silently no-ops.
-export function accessTokenCookieOptions(config: ConfigService): CookieOptions {
+export function accessTokenCookieOptions(config: EnvConfig): CookieOptions {
   return {
     ...baseCookieOptions(config),
-    maxAge: ms(config.getOrThrow<string>('JWT_EXPIRES_IN') as ms.StringValue),
+    maxAge: ms(config.JWT_EXPIRES_IN as ms.StringValue),
   };
 }
 
 // res.clearCookie() deprecates passing maxAge (Express sets its own
 // immediate-expiry value), so logout uses this instead of the full options.
 export function clearAccessTokenCookieOptions(
-  config: ConfigService,
+  config: EnvConfig,
 ): CookieOptions {
   return baseCookieOptions(config);
 }
 
-function baseCookieOptions(config: ConfigService): CookieOptions {
+function baseCookieOptions(config: EnvConfig): CookieOptions {
   return {
     httpOnly: true,
     sameSite: 'lax',
-    secure: config.get<string>('NODE_ENV') === 'production',
+    secure: config.NODE_ENV === 'production',
   };
 }
