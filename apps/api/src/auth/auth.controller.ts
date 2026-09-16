@@ -4,14 +4,14 @@ import {
   ACCESS_TOKEN_COOKIE,
   accessTokenCookieOptions,
   clearAccessTokenCookieOptions,
-} from './access-token-cookie';
-import { AuthService } from './auth.service';
-import { AuthUser } from './auth-user';
-import { EnvConfig } from '../config/env.config';
-import { CurrentUser } from './current-user.decorator';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
+} from './access-token-cookie.js';
+import { AuthService } from './auth.service.js';
+import type { AuthUser } from './auth-user.js';
+import { EnvConfig } from '../config/env.config.js';
+import { CurrentUser } from './current-user.decorator.js';
+import { LoginDto } from './dto/login.dto.js';
+import { RegisterDto } from './dto/register.dto.js';
+import { JwtAuthGuard } from './jwt-auth.guard.js';
 
 @Controller('auth')
 export class AuthController {

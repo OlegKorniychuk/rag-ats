@@ -8,19 +8,19 @@ import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapte
 import { Test } from '@nestjs/testing';
 import { eq } from 'drizzle-orm';
 import { ClsModule } from 'nestjs-cls';
-import { DRIZZLE } from '../../src/db/db.tokens';
-import { recruiters } from '../../src/db/schema';
-import { RepositoriesModule } from '../../src/db/repositories.module';
+import { DRIZZLE } from '../../src/db/db.tokens.js';
+import { recruiters } from '../../src/db/schema.js';
+import { RepositoriesModule } from '../../src/db/repositories.module.js';
 import {
-  NewRecruiter,
   RECRUITERS_REPOSITORY,
-  RecruitersRepository,
-} from '../../src/db/repositories/recruiters.repository';
+  type NewRecruiter,
+  type RecruitersRepository,
+} from '../../src/db/repositories/recruiters.repository.js';
 import {
   createTestDatabase,
   teardownTestDatabase,
-  TestDatabase,
-} from '../testcontainers-db.util';
+  type TestDatabase,
+} from '../testcontainers-db.util.js';
 
 function newRecruiter(): NewRecruiter {
   return {

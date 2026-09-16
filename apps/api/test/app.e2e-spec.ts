@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import { closeTestApp, createTestApp, TestApp } from './e2e-app.util';
+import request from 'supertest';
+import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
 describe('AppController (e2e)', () => {
   let testApp: TestApp;

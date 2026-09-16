@@ -1,4 +1,4 @@
-import { recruiters } from '../schema';
+import { recruiters } from '../schema.js';
 
 export type Recruiter = typeof recruiters.$inferSelect;
 export type NewRecruiter = typeof recruiters.$inferInsert;

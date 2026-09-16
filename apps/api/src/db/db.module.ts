@@ -1,8 +1,8 @@
 import { Global, Module, OnModuleDestroy } from '@nestjs/common';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { EnvConfig } from '../config/env.config';
+import { EnvConfig } from '../config/env.config.js';
 import { Pool } from 'pg';
-import { DRIZZLE } from './db.tokens';
+import { DRIZZLE } from './db.tokens.js';
 
 @Global()
 @Module({

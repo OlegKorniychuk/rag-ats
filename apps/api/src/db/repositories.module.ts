@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { DrizzleRecruitersRepository } from './repositories/drizzle-recruiters.repository';
-import { RECRUITERS_REPOSITORY } from './repositories/recruiters.repository';
+import { DrizzleRecruitersRepository } from './repositories/drizzle-recruiters.repository.js';
+import { RECRUITERS_REPOSITORY } from './repositories/recruiters.repository.js';
 
 @Global()
 @Module({
