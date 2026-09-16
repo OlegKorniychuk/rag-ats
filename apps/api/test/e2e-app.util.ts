@@ -20,7 +20,7 @@ export interface TestApp {
 // of the real bootstrapped app.
 //
 // Required env vars (DATABASE_URL, JWT_SECRET, ...) are NOT set here: the
-// `import { AppModule }` above already evaluates ConfigModule.forRoot()'s
+// `import { AppModule }` above already evaluates TypedConfigModule.forRoot()'s
 // validation the moment this file is loaded, before this function ever
 // runs - they're seeded by jest.e2e.config.ts's `setupFiles` instead, which
 // runs before any test file's imports.

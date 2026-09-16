@@ -1,4 +1,4 @@
-// ConfigModule.forRoot({ validationSchema }) validates process.env as soon as
+// TypedConfigModule.forRoot({ schema }) validates process.env as soon as
 // AppModule is imported (it's evaluated while building the @Module()
 // decorator's metadata, not lazily at DI-resolution time) - so these must be
 // set here, in a Jest setupFiles script that runs before any test file's own

@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import type { Response } from 'express';
 import {
   ACCESS_TOKEN_COOKIE,
@@ -8,6 +7,7 @@ import {
 } from './access-token-cookie';
 import { AuthService } from './auth.service';
 import { AuthUser } from './auth-user';
+import { EnvConfig } from '../config/env.config';
 import { CurrentUser } from './current-user.decorator';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -17,7 +17,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly configService: ConfigService,
+    private readonly envConfig: EnvConfig,
   ) {}
 
   @Post('register')
@@ -36,7 +36,7 @@ export class AuthController {
     res.cookie(
       ACCESS_TOKEN_COOKIE,
       accessToken,
-      accessTokenCookieOptions(this.configService),
+      accessTokenCookieOptions(this.envConfig),
     );
     return { success: true };
   }
@@ -45,7 +45,7 @@ export class AuthController {
   logout(@Res({ passthrough: true }) res: Response): { success: true } {
     res.clearCookie(
       ACCESS_TOKEN_COOKIE,
-      clearAccessTokenCookieOptions(this.configService),
+      clearAccessTokenCookieOptions(this.envConfig),
     );
     return { success: true };
   }
