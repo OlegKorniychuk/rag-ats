@@ -74,4 +74,78 @@ describe('Vacancies (e2e)', () => {
       await agent.post('/vacancies').send({ title: 'Title' }).expect(400);
     });
   });
+
+  describe('PATCH /vacancies/:id', () => {
+    async function createVacancy(
+      agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+    ): Promise<string> {
+      const res = await agent
+        .post('/vacancies')
+        .send({
+          title: 'Senior Backend Engineer',
+          requirements: '5+ years Node.js, PostgreSQL',
+        })
+        .expect(201);
+      return res.body.id as string;
+    }
+
+    it('updates fields on a vacancy owned by the authenticated recruiter', async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent);
+
+      const res = await agent
+        .patch(`/vacancies/${id}`)
+        .send({ title: 'Staff Backend Engineer' })
+        .expect(200);
+
+      expect(res.body).toMatchObject({
+        id,
+        title: 'Staff Backend Engineer',
+        requirements: '5+ years Node.js, PostgreSQL',
+        status: 'open',
+      });
+    });
+
+    it('closes a vacancy', async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent);
+
+      const res = await agent
+        .patch(`/vacancies/${id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+
+      expect(res.body.status).toBe('closed');
+    });
+
+    it('rejects a non-owner with 404', async () => {
+      const owner = await authenticatedAgent();
+      const id = await createVacancy(owner);
+      const otherRecruiter = await authenticatedAgent();
+
+      await otherRecruiter
+        .patch(`/vacancies/${id}`)
+        .send({ title: 'Hijacked' })
+        .expect(404);
+    });
+
+    it('returns 404 for an unknown id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent
+        .patch(`/vacancies/${randomUUID()}`)
+        .send({ title: 'Title' })
+        .expect(404);
+    });
+
+    it('rejects an invalid status value', async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent);
+
+      await agent
+        .patch(`/vacancies/${id}`)
+        .send({ status: 'archived' })
+        .expect(400);
+    });
+  });
 });
