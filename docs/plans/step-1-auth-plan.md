@@ -11,7 +11,7 @@ Per SPEC.md's Testing Strategy, this step is exercised via **e2e tests (Jest + S
 ## Research Findings
 
 - `@nestjs/passport@^12` requires `@nestjs/common ^11||^12` — **incompatible** with this project's Nest 10 (same class of pitfall as the earlier `@nestjs/config@12` issue). Fix: pin `@nestjs/passport@^10.0.3` (peer: `@nestjs/common ^8||^9||^10`, `passport ^0.7.0`).
-- `@nestjs/jwt@^12` peers `@nestjs/common` back to `^8.0.0`, so latest is fine there — no pin needed.
+- `@nestjs/jwt@^12` peers `@nestjs/common` fine, but ships as `"type": "module"` (pure ESM `dist/index.js`, `import jsonwebtoken from 'jsonwebtoken'`) — breaks under this project's ts-jest/CommonJS setup with `SyntaxError: Cannot use import statement outside a module` in every Jest suite that imports `AuthModule` (unit/integration/e2e alike). Discovered when Task 1.4's e2e tests failed. Fix: pin `@nestjs/jwt@^11.0.0` (confirmed CJS output; peers `@nestjs/common ^8||^9||^10||^11`).
 - `passport-jwt`'s built-in extractors are header-based only; the httpOnly-cookie requirement (SPEC.md line 53) needs a small custom extractor function reading `req.cookies['access_token']`, which requires `cookie-parser` middleware mounted in `main.ts` before Nest can populate `req.cookies`.
 - SPEC.md's Commands section already names a **separate** script, `npm run test:e2e -w apps/api`, distinct from Phase 0's `test:integration`. Phase 0's integration tests compile only `DbModule`/`RepositoriesModule` (no HTTP). Step 1 introduces a genuinely new harness: a full `AppModule` compiled via `@nestjs/testing`, `DRIZZLE` overridden with a Testcontainers Postgres, driven with Supertest — this is the `test:e2e` script SPEC.md already expects.
 

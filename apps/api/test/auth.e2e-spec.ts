@@ -59,4 +59,51 @@ describe('Auth (e2e)', () => {
         .expect(400);
     });
   });
+
+  describe('POST /auth/login', () => {
+    async function registerRecruiter(
+      email: string,
+      password: string,
+    ): Promise<void> {
+      await request(testApp.app.getHttpServer())
+        .post('/auth/register')
+        .send({ email, password })
+        .expect(201);
+    }
+
+    it('logs in and sets the access_token cookie', async () => {
+      const email = uniqueEmail();
+      const password = 'password123';
+      await registerRecruiter(email, password);
+
+      const res = await request(testApp.app.getHttpServer())
+        .post('/auth/login')
+        .send({ email, password })
+        .expect(201);
+
+      const setCookie = res.headers['set-cookie'];
+      expect(setCookie).toBeDefined();
+      const cookie = String(setCookie[0]);
+      expect(cookie).toMatch(/^access_token=/);
+      expect(cookie).toMatch(/HttpOnly/i);
+      expect(cookie).toMatch(/SameSite=Lax/i);
+    });
+
+    it('rejects a wrong password', async () => {
+      const email = uniqueEmail();
+      await registerRecruiter(email, 'password123');
+
+      await request(testApp.app.getHttpServer())
+        .post('/auth/login')
+        .send({ email, password: 'wrong-password' })
+        .expect(401);
+    });
+
+    it('rejects an unknown email', async () => {
+      await request(testApp.app.getHttpServer())
+        .post('/auth/login')
+        .send({ email: uniqueEmail(), password: 'password123' })
+        .expect(401);
+    });
+  });
 });
