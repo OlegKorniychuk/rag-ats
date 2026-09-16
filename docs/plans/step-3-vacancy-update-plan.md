@@ -1,5 +1,7 @@
 # Implementation Plan: Step 3 — Update / close a vacancy
 
+**Status: complete.** All 3 tasks done, full local suite green, PR #6 CI green in 1m5s.
+
 ## Context
 
 Per `docs/plans/stage-1-api-plan.md`, Step 3 is: `PATCH /vacancies/:id` — a recruiter edits a vacancy's fields and/or transitions its status to `closed`, owner-scoped in the service layer (SPEC.md's "Always do" list: owner-scoping must live in the service, not just the controller).
@@ -27,8 +29,8 @@ Builds directly on Step 2 (PR #5, merged): `vacancies` table, `VacanciesReposito
 **Description:** Add `findById(id: string): Promise<Vacancy | null>` and `update(id: string, data: Partial<NewVacancy>): Promise<Vacancy>` to `VacanciesRepository` + `DrizzleVacanciesRepository` (mirrors `DrizzleRecruitersRepository.findById`'s `eq(...)` + null-coalesce pattern for the former; `.update(vacancies).set(data).where(eq(vacancies.id, id)).returning()` for the latter).
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds
-- [ ] New integration tests in `test/repositories/vacancies.repository.integration-spec.ts`: `findById` returns the row / `null` for an unknown id; `update` persists a partial change and leaves untouched fields as-is
+- [x] `npm run build --workspaces` succeeds
+- [x] New integration tests in `test/repositories/vacancies.repository.integration-spec.ts`: `findById` returns the row / `null` for an unknown id; `update` persists a partial change and leaves untouched fields as-is
       **Verification:** build + `npm run test:integration -w apps/api`
       **Dependencies:** None
       **Files:** `apps/api/src/db/repositories/vacancies.repository.ts`, `apps/api/src/db/repositories/drizzle-vacancies.repository.ts`, `apps/api/test/repositories/vacancies.repository.integration-spec.ts`
@@ -39,8 +41,8 @@ Builds directly on Step 2 (PR #5, merged): `vacancies` table, `VacanciesReposito
 **Description:** Create `UpdateVacancyDto` (`vacancies/dto/update-vacancy.dto.ts`, all fields optional per Research Findings). Add `VacanciesService.update(recruiterId: string, vacancyId: string, dto: UpdateVacancyDto): Promise<Vacancy>` — `findById`, throw `NotFoundException` if missing/not-owned, else build the partial patch and call `update`. Add `VacanciesController`'s `@Patch(':id')` handler (`@Param('id', ParseUUIDPipe) id: string`, `@CurrentUser() user: AuthUser`, `@Body() dto: UpdateVacancyDto`).
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds
-- [ ] New e2e cases in `test/vacancies.e2e-spec.ts`: happy path field update; happy path close (`status: 'closed'`); non-owner (second recruiter) → 404; unknown id → 404; validation error (invalid `status` value) → 400
+- [x] `npm run build --workspaces` succeeds
+- [x] New e2e cases in `test/vacancies.e2e-spec.ts`: happy path field update; happy path close (`status: 'closed'`); non-owner (second recruiter) → 404; unknown id → 404; validation error (invalid `status` value) → 400
       **Verification:** `npm run test:e2e -w apps/api`
       **Dependencies:** 1
       **Files:** `apps/api/src/vacancies/dto/update-vacancy.dto.ts`, `apps/api/src/vacancies/vacancies.service.ts`, `apps/api/src/vacancies/vacancies.controller.ts`, `apps/api/test/vacancies.e2e-spec.ts`
@@ -51,7 +53,7 @@ Builds directly on Step 2 (PR #5, merged): `vacancies` table, `VacanciesReposito
 **Description:** Full local suite in sequence: build, lint, `prettier --check .`, unit, integration, e2e. Confirm no regression in existing auth/vacancy-create e2e tests.
 **Acceptance criteria:**
 
-- [ ] All of the above green locally
+- [x] All of the above green locally
       **Verification:** `npm run build --workspaces && npm run lint --workspaces && npx prettier --check . && npm test --workspaces && npm run test:integration -w apps/api && npm run test:e2e -w apps/api`
       **Dependencies:** 2
       **Files:** none (verification only)
@@ -61,10 +63,10 @@ Builds directly on Step 2 (PR #5, merged): `vacancies` table, `VacanciesReposito
 
 ### Checkpoint: Step 3 complete
 
-- [ ] `PATCH /vacancies/:id` updates fields and/or closes a vacancy owned by the authenticated recruiter
-- [ ] Non-owner and unknown-id both return 404 (no existence leak); malformed id returns 400
-- [ ] Full local suite green; matches Step 3's E2E acceptance criteria in `stage-1-api-plan.md`
-- [ ] CI green on a real PR
+- [x] `PATCH /vacancies/:id` updates fields and/or closes a vacancy owned by the authenticated recruiter
+- [x] Non-owner and unknown-id both return 404 (no existence leak); malformed id returns 400
+- [x] Full local suite green; matches Step 3's E2E acceptance criteria in `stage-1-api-plan.md`
+- [x] CI green on a real PR
 
 ## Commit Plan
 
