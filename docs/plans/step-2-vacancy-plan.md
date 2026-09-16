@@ -1,5 +1,7 @@
 # Implementation Plan: Step 2 — Create vacancy + auto-generated apply link
 
+**Status: complete.** All 3 tasks done, full local suite green, PR #5 CI green in 1m26s.
+
 ## Context
 
 Per `docs/plans/stage-1-api-plan.md`, Step 2 is: `POST /vacancies` — a recruiter creates a vacancy (title + requirements) and the response includes an auto-generated, unguessable public apply link/token (`nanoid`), per SPEC.md stories 1 and 2 (one endpoint covers both). Owner = the requesting recruiter (from the JWT cookie session built in Step 1).
@@ -35,8 +37,8 @@ This step follows the exact module/repository/DTO conventions established in Ste
 **Description:** Add `VacanciesRepository` interface (`db/repositories/vacancies.repository.ts`, `create(data: NewVacancy): Promise<Vacancy>`, `VACANCIES_REPOSITORY` token) + Drizzle impl (`db/repositories/drizzle-vacancies.repository.ts`, mirroring `drizzle-recruiters.repository.ts`'s `txHost.tx` pattern and `import type` usage). Register in `repositories.module.ts`.
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds
-- [ ] New integration test (`test/repositories/vacancies.repository.integration-spec.ts`, Testcontainers) covers: `create` persists a row with a recruiter FK; unique `applyToken` constraint is enforced (duplicate token insert rejected)
+- [x] `npm run build --workspaces` succeeds
+- [x] New integration test (`test/repositories/vacancies.repository.integration-spec.ts`, Testcontainers) covers: `create` persists a row with a recruiter FK; unique `applyToken` constraint is enforced (duplicate token insert rejected)
       **Verification:** build + `npm run test:integration -w apps/api`
       **Dependencies:** None
       **Files:** `apps/api/src/db/repositories/vacancies.repository.ts`, `apps/api/src/db/repositories/drizzle-vacancies.repository.ts`, `apps/api/src/db/repositories.module.ts`, `apps/api/test/repositories/vacancies.repository.integration-spec.ts`
@@ -47,8 +49,8 @@ This step follows the exact module/repository/DTO conventions established in Ste
 **Description:** Add `nanoid` dependency (latest, unpinned). Create `CreateVacancyDto` (`title`, `requirements`: both `@IsString() @MinLength(1)`). Create `VacanciesService.create(recruiterId: string, dto: CreateVacancyDto)` — generates the apply token via `nanoid()`, calls the repository with `{ recruiterId, title: dto.title, requirements: dto.requirements, applyToken }`. Create `VacanciesController` (`@Controller('vacancies')`, `@UseGuards(JwtAuthGuard)`, `POST /` reads `@CurrentUser() user: AuthUser` and `@Body() dto: CreateVacancyDto`). Create `VacanciesModule` (controller + service + provider wiring) and import it into `AppModule`.
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds
-- [ ] New e2e suite (`test/vacancies.e2e-spec.ts`): happy path (authenticated, valid body → 201, response includes a non-empty `applyToken` and `status: 'open'`); unauthenticated request (no cookie) → 401; validation errors (missing `title`, missing `requirements`) → 400
+- [x] `npm run build --workspaces` succeeds
+- [x] New e2e suite (`test/vacancies.e2e-spec.ts`): happy path (authenticated, valid body → 201, response includes a non-empty `applyToken` and `status: 'open'`); unauthenticated request (no cookie) → 401; validation errors (missing `title`, missing `requirements`) → 400
       **Verification:** `npm run test:e2e -w apps/api`
       **Dependencies:** 1
       **Files:** `apps/api/package.json`, `apps/api/src/vacancies/vacancies.module.ts`, `apps/api/src/vacancies/vacancies.controller.ts`, `apps/api/src/vacancies/vacancies.service.ts`, `apps/api/src/vacancies/dto/create-vacancy.dto.ts`, `apps/api/src/app.module.ts`, `apps/api/test/vacancies.e2e-spec.ts`
@@ -59,7 +61,7 @@ This step follows the exact module/repository/DTO conventions established in Ste
 **Description:** Full local suite in sequence: build, lint, `prettier --check .`, unit, integration, e2e. Confirm no regression in existing `auth.e2e-spec.ts`/`app.e2e-spec.ts`.
 **Acceptance criteria:**
 
-- [ ] All of the above green locally
+- [x] All of the above green locally
       **Verification:** `npm run build --workspaces && npm run lint --workspaces && npx prettier --check . && npm test --workspaces && npm run test:integration -w apps/api && npm run test:e2e -w apps/api`
       **Dependencies:** 2
       **Files:** none (verification only)
@@ -69,10 +71,10 @@ This step follows the exact module/repository/DTO conventions established in Ste
 
 ### Checkpoint: Step 2 complete
 
-- [ ] `POST /vacancies` creates a vacancy owned by the authenticated recruiter with a working, unique apply token
-- [ ] Unauthenticated and validation-error cases rejected correctly
-- [ ] Full local suite green; matches Step 2's E2E acceptance criteria in `stage-1-api-plan.md`
-- [ ] CI green on a real PR
+- [x] `POST /vacancies` creates a vacancy owned by the authenticated recruiter with a working, unique apply token
+- [x] Unauthenticated and validation-error cases rejected correctly
+- [x] Full local suite green; matches Step 2's E2E acceptance criteria in `stage-1-api-plan.md`
+- [x] CI green on a real PR
 
 ## Commit Plan
 
