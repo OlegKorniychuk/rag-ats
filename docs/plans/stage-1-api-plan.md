@@ -73,6 +73,8 @@ Detailed breakdown: `docs/plans/step-2-vacancy-plan.md`.
 
 **Story:** Recruiter — update or close a vacancy
 **Delivers:** `PATCH /vacancies/:id` (field edits + status transition to `closed`), owner-scoped in the service layer.
+
+Detailed breakdown: `docs/plans/step-3-vacancy-update-plan.md`.
 **E2E:** happy path update; happy path close; non-owner gets 403/404; validation errors.
 **Depends on:** Step 2.
 

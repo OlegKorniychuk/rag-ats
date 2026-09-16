@@ -112,4 +112,31 @@ describe('VacanciesRepository (Testcontainers integration)', () => {
       ),
     ).rejects.toThrow();
   });
+
+  it('findById returns the row for a known id', async () => {
+    const created = await vacanciesRepository.create(newVacancy(recruiterId));
+
+    const found = await vacanciesRepository.findById(created.id);
+
+    expect(found).toEqual(created);
+  });
+
+  it('findById returns null for an unknown id', async () => {
+    const found = await vacanciesRepository.findById(randomUUID());
+
+    expect(found).toBeNull();
+  });
+
+  it('update persists a partial change and leaves other fields untouched', async () => {
+    const created = await vacanciesRepository.create(newVacancy(recruiterId));
+
+    const updated = await vacanciesRepository.update(created.id, {
+      status: 'closed',
+    });
+
+    expect(updated.status).toBe('closed');
+    expect(updated.title).toBe(created.title);
+    expect(updated.requirements).toBe(created.requirements);
+    expect(updated.applyToken).toBe(created.applyToken);
+  });
 });

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
+import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { vacancies } from '../schema.js';
 import type {
@@ -21,6 +22,23 @@ export class DrizzleVacanciesRepository implements VacanciesRepository {
     const [row] = await this.txHost.tx
       .insert(vacancies)
       .values(data)
+      .returning();
+    return row;
+  }
+
+  async findById(id: string): Promise<Vacancy | null> {
+    const [row] = await this.txHost.tx
+      .select()
+      .from(vacancies)
+      .where(eq(vacancies.id, id));
+    return row ?? null;
+  }
+
+  async update(id: string, data: Partial<NewVacancy>): Promise<Vacancy> {
+    const [row] = await this.txHost.tx
+      .update(vacancies)
+      .set(data)
+      .where(eq(vacancies.id, id))
       .returning();
     return row;
   }
