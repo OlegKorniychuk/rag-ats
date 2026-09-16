@@ -1,6 +1,6 @@
 # Implementation Plan: Swap `@nestjs/config` for `nest-typed-config`
 
-**Status: all 4 tasks complete locally.** Done on `feat/typed-config`; pending push + PR + CI verification.
+**Status: complete.** PR #3, CI green in 1m6s.
 
 ## Context
 
@@ -110,7 +110,7 @@
 - [x] `@nestjs/config` and `joi` fully removed; `nest-typed-config` is the sole config source
 - [x] Every consumer injects `EnvConfig` by type — no `.get`/`.getOrThrow` string-keyed access left anywhere in `apps/api/src`
 - [x] build/lint/format/unit/integration/e2e all green locally, including the no-local-`.env` repro
-- [ ] CI green on a real PR — not yet pushed
+- [x] CI green on a real PR (PR #3, run passed in 1m6s)
 
 ## Commit Plan
 
