@@ -32,7 +32,6 @@ export class EnvConfig {
   @Max(65535)
   public readonly PORT: number = 3000;
 
-  @IsOptional()
   @IsIn(['development', 'production', 'test'])
-  public readonly NODE_ENV: string = 'development';
+  public readonly NODE_ENV: string;
 }
