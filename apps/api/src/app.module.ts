@@ -5,6 +5,7 @@ import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { ClsModule } from 'nestjs-cls';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { envValidationSchema } from './config/env.validation';
 import { DbModule } from './db/db.module';
 import { DRIZZLE } from './db/db.tokens';
@@ -31,6 +32,7 @@ import { RepositoriesModule } from './db/repositories.module';
       ],
     }),
     RepositoriesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
