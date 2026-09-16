@@ -1,6 +1,6 @@
 # Implementation Plan: Swap `@nestjs/config` for `nest-typed-config`
 
-**Status: in progress.** Started on `feat/typed-config` after PR #2 (Step 1 auth) merged.
+**Status: all 4 tasks complete locally.** Done on `feat/typed-config`; pending push + PR + CI verification.
 
 ## Context
 
@@ -59,8 +59,8 @@
 **Description:** Install `nest-typed-config` (dependency); move `dotenv` from `devDependencies` to `dependencies`. Create `apps/api/src/config/env.config.ts` with the `EnvConfig` class above. Leave `env.validation.ts` and all current `ConfigService` usage untouched — `EnvConfig` isn't wired into `AppModule` yet, so this step has no runtime effect.
 **Acceptance criteria:**
 
-- [ ] `npm run build --workspaces` succeeds (new file compiles; nothing imports it yet)
-- [ ] `nest-typed-config` resolves `class-validator`/`class-transformer` from the hoisted root copy (spot-check: only one copy of each under `node_modules/.package-lock.json` at a version satisfying both `^0.15.1` and `nest-typed-config`'s own range, or a nested copy exists only if genuinely required — not expected, but worth a quick look)
+- [x] `npm run build --workspaces` succeeds (new file compiles; nothing imports it yet)
+- [x] `nest-typed-config` resolves `class-validator`/`class-transformer` from the hoisted root copy — a nested `class-validator@0.14.4` fallback copy does exist under `nest-typed-config/node_modules/` (npm installed it to satisfy `nest-typed-config`'s own `^0.14.0` dependency range), but Task 2's boot tests (missing `DATABASE_URL` correctly rejected, valid config correctly accepted) empirically prove validation actually uses our `EnvConfig` decorators — no silent no-op
       **Verification:** build
       **Dependencies:** None
       **Files:** `apps/api/package.json`, `apps/api/src/config/env.config.ts`
@@ -71,8 +71,8 @@
 **Description:** Add `TypedConfigModule.forRoot({ schema: EnvConfig, load: dotenvLoader() })` to `AppModule`'s imports, alongside the still-present `ConfigModule.forRoot(...)`. Migrate `db.module.ts`'s `Pool` factory to `inject: [EnvConfig]` / `config.DATABASE_URL`; drop its now-redundant `imports: [ConfigModule]` (global by default).
 **Acceptance criteria:**
 
-- [ ] App boots; DB connects via `EnvConfig`-sourced `DATABASE_URL`
-- [ ] `npm run test:integration -w apps/api` passes unchanged (exercises `DbModule`/`RepositoriesModule`)
+- [x] App boots; DB connects via `EnvConfig`-sourced `DATABASE_URL` (verified via manual boot: missing `DATABASE_URL` → validation error; valid `DATABASE_URL` → `GET /` returns 200)
+- [x] `npm run test:integration -w apps/api` passes unchanged (exercises `DbModule`/`RepositoriesModule`)
       **Verification:** build + `npm run test:integration -w apps/api`
       **Dependencies:** 1
       **Files:** `apps/api/src/app.module.ts`, `apps/api/src/db/db.module.ts`
@@ -83,7 +83,7 @@
 **Description:** `auth.module.ts`'s `JwtModule.registerAsync`: `inject: [EnvConfig]`, `config.JWT_SECRET` / `config.JWT_EXPIRES_IN`; drop `imports: [ConfigModule]`. `jwt.strategy.ts`: constructor takes `EnvConfig`, `secretOrKey: config.JWT_SECRET`. `auth.controller.ts`: constructor's `ConfigService` → `EnvConfig`. `access-token-cookie.ts`: both functions take `EnvConfig`, use `config.JWT_EXPIRES_IN` / `config.NODE_ENV` directly.
 **Acceptance criteria:**
 
-- [ ] Full e2e auth suite passes unchanged (register, login + cookie flags/expiry, `/me`, logout) — no test file changes needed, only the app code underneath
+- [x] Full e2e auth suite passes unchanged (register, login + cookie flags/expiry, `/me`, logout) — no test file changes needed, only the app code underneath (13/13 e2e tests pass)
       **Verification:** `npm run test:e2e -w apps/api`
       **Dependencies:** 2
       **Files:** `apps/api/src/auth/auth.module.ts`, `apps/api/src/auth/jwt.strategy.ts`, `apps/api/src/auth/auth.controller.ts`, `apps/api/src/auth/access-token-cookie.ts`
@@ -94,10 +94,10 @@
 **Description:** Remove `ConfigModule.forRoot(...)` from `app.module.ts` (TypedConfigModule is now the sole config source). Delete `apps/api/src/config/env.validation.ts`. `npm uninstall @nestjs/config joi -w apps/api`. Update the comments in `apps/api/test/jest-e2e-setup.ts` and `apps/api/test/e2e-app.util.ts` that name `ConfigModule.forRoot` to instead name `TypedConfigModule.forRoot` (same underlying gotcha, just the new library). Confirm `apps/api/.env.example` needs no edits (same 5 keys, unchanged names).
 **Acceptance criteria:**
 
-- [ ] `@nestjs/config` and `joi` no longer appear in `apps/api/package.json`
-- [ ] `grep -r "ConfigService\|@nestjs/config" apps/api/src` returns nothing
-- [ ] Full local suite green: build, lint, `prettier --check .`, unit, integration, e2e
-- [ ] e2e suite re-verified with the local `apps/api/.env` file temporarily removed/renamed (reproducing CI's no-`.env` condition, per the lesson from Step 1's real CI failure) — then `.env` restored
+- [x] `@nestjs/config` and `joi` no longer appear in `apps/api/package.json`
+- [x] `grep -r "ConfigService\|@nestjs/config" apps/api/src` returns nothing
+- [x] Full local suite green: build, lint, `prettier --check .`, unit, integration, e2e
+- [x] e2e suite re-verified with the local `apps/api/.env` file temporarily removed/renamed (reproducing CI's no-`.env` condition, per the lesson from Step 1's real CI failure) — 13/13 pass; `.env` restored
       **Verification:** all commands above, run in sequence
       **Dependencies:** 3
       **Files:** `apps/api/src/app.module.ts`, `apps/api/src/config/env.validation.ts` (deleted), `apps/api/package.json`, `apps/api/test/jest-e2e-setup.ts`, `apps/api/test/e2e-app.util.ts`
@@ -107,10 +107,10 @@
 
 ### Checkpoint: Config swap complete
 
-- [ ] `@nestjs/config` and `joi` fully removed; `nest-typed-config` is the sole config source
-- [ ] Every consumer injects `EnvConfig` by type — no `.get`/`.getOrThrow` string-keyed access left anywhere in `apps/api/src`
-- [ ] build/lint/format/unit/integration/e2e all green locally, including the no-local-`.env` repro
-- [ ] CI green on a real PR
+- [x] `@nestjs/config` and `joi` fully removed; `nest-typed-config` is the sole config source
+- [x] Every consumer injects `EnvConfig` by type — no `.get`/`.getOrThrow` string-keyed access left anywhere in `apps/api/src`
+- [x] build/lint/format/unit/integration/e2e all green locally, including the no-local-`.env` repro
+- [ ] CI green on a real PR — not yet pushed
 
 ## Commit Plan
 
