@@ -8,5 +8,6 @@ export const VACANCIES_REPOSITORY = Symbol('VACANCIES_REPOSITORY');
 export interface VacanciesRepository {
   create(data: NewVacancy): Promise<Vacancy>;
   findById(id: string): Promise<Vacancy | null>;
+  findByRecruiterId(recruiterId: string): Promise<Vacancy[]>;
   update(id: string, data: Partial<NewVacancy>): Promise<Vacancy>;
 }

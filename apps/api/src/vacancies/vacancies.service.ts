@@ -30,6 +30,28 @@ export class VacanciesService {
     vacancyId: string,
     dto: UpdateVacancyDto,
   ): Promise<Vacancy> {
+    await this.getOwnedVacancy(recruiterId, vacancyId);
+
+    const patch: Partial<NewVacancy> = {};
+    if (dto.title !== undefined) patch.title = dto.title;
+    if (dto.requirements !== undefined) patch.requirements = dto.requirements;
+    if (dto.status !== undefined) patch.status = dto.status;
+
+    return this.vacanciesRepository.update(vacancyId, patch);
+  }
+
+  async findAllMine(recruiterId: string): Promise<Vacancy[]> {
+    return this.vacanciesRepository.findByRecruiterId(recruiterId);
+  }
+
+  async findOne(recruiterId: string, vacancyId: string): Promise<Vacancy> {
+    return this.getOwnedVacancy(recruiterId, vacancyId);
+  }
+
+  private async getOwnedVacancy(
+    recruiterId: string,
+    vacancyId: string,
+  ): Promise<Vacancy> {
     const vacancy = await this.vacanciesRepository.findById(vacancyId);
 
     // same 404 for "doesn't exist" and "exists but isn't yours" - don't let
@@ -38,11 +60,6 @@ export class VacanciesService {
       throw new NotFoundException('Vacancy not found');
     }
 
-    const patch: Partial<NewVacancy> = {};
-    if (dto.title !== undefined) patch.title = dto.title;
-    if (dto.requirements !== undefined) patch.requirements = dto.requirements;
-    if (dto.status !== undefined) patch.status = dto.status;
-
-    return this.vacanciesRepository.update(vacancyId, patch);
+    return vacancy;
   }
 }

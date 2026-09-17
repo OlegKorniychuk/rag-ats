@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -26,6 +27,19 @@ export class VacanciesController {
     @Body() dto: CreateVacancyDto,
   ): Promise<Vacancy> {
     return this.vacanciesService.create(user.id, dto);
+  }
+
+  @Get()
+  async findAllMine(@CurrentUser() user: AuthUser): Promise<Vacancy[]> {
+    return this.vacanciesService.findAllMine(user.id);
+  }
+
+  @Get(':id')
+  async findOne(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<Vacancy> {
+    return this.vacanciesService.findOne(user.id, id);
   }
 
   @Patch(':id')

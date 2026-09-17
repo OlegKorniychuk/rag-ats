@@ -139,4 +139,31 @@ describe('VacanciesRepository (Testcontainers integration)', () => {
     expect(updated.requirements).toBe(created.requirements);
     expect(updated.applyToken).toBe(created.applyToken);
   });
+
+  it("findByRecruiterId returns only that recruiter's vacancies, newest first", async () => {
+    const owner = await recruitersRepository.create(newRecruiter());
+    const other = await recruitersRepository.create(newRecruiter());
+    await vacanciesRepository.create(
+      newVacancy(other.id, { title: 'Other recruiter vacancy' }),
+    );
+    const first = await vacanciesRepository.create(
+      newVacancy(owner.id, { title: 'First' }),
+    );
+    const second = await vacanciesRepository.create(
+      newVacancy(owner.id, { title: 'Second' }),
+    );
+
+    const found = await vacanciesRepository.findByRecruiterId(owner.id);
+
+    expect(found.map((v) => v.id)).toEqual([second.id, first.id]);
+    expect(found.every((v) => v.recruiterId === owner.id)).toBe(true);
+  });
+
+  it('findByRecruiterId returns an empty array for a recruiter with no vacancies', async () => {
+    const lonely = await recruitersRepository.create(newRecruiter());
+
+    const found = await vacanciesRepository.findByRecruiterId(lonely.id);
+
+    expect(found).toEqual([]);
+  });
 });
