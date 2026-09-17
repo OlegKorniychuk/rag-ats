@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import type { Response } from 'express';
 import {
   ACCESS_TOKEN_COOKIE,
@@ -10,8 +10,8 @@ import type { AuthUser } from './auth-user.js';
 import { EnvConfig } from '../config/env.config.js';
 import { CurrentUser } from './current-user.decorator.js';
 import { LoginDto } from './dto/login.dto.js';
+import { Public } from './public.decorator.js';
 import { RegisterDto } from './dto/register.dto.js';
-import { JwtAuthGuard } from './jwt-auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
@@ -20,6 +20,7 @@ export class AuthController {
     private readonly envConfig: EnvConfig,
   ) {}
 
+  @Public()
   @Post('register')
   async register(
     @Body() dto: RegisterDto,
@@ -27,6 +28,7 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
+  @Public()
   @Post('login')
   async login(
     @Body() dto: LoginDto,
@@ -41,6 +43,7 @@ export class AuthController {
     return { success: true };
   }
 
+  @Public()
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response): { success: true } {
     res.clearCookie(
@@ -50,7 +53,6 @@ export class AuthController {
     return { success: true };
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('me')
   me(@CurrentUser() user: AuthUser): AuthUser {
     return user;
