@@ -40,6 +40,13 @@ export class DrizzleVacanciesRepository implements VacanciesRepository {
     });
   }
 
+  async findByApplyToken(token: string): Promise<Vacancy | null> {
+    const row = await this.txHost.tx.query.vacancies.findFirst({
+      where: { applyToken: token },
+    });
+    return row ?? null;
+  }
+
   async update(id: string, data: Partial<NewVacancy>): Promise<Vacancy> {
     const [row] = await this.txHost.tx
       .update(vacancies)

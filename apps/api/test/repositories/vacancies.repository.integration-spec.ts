@@ -166,4 +166,21 @@ describe('VacanciesRepository (Testcontainers integration)', () => {
 
     expect(found).toEqual([]);
   });
+
+  it('findByApplyToken returns the row for a known token', async () => {
+    const token = randomUUID();
+    const created = await vacanciesRepository.create(
+      newVacancy(recruiterId, { applyToken: token }),
+    );
+
+    const found = await vacanciesRepository.findByApplyToken(token);
+
+    expect(found).toEqual(created);
+  });
+
+  it('findByApplyToken returns null for an unknown token', async () => {
+    const found = await vacanciesRepository.findByApplyToken(randomUUID());
+
+    expect(found).toBeNull();
+  });
 });
