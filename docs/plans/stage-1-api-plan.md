@@ -91,6 +91,8 @@ Detailed breakdown: `docs/plans/step-4-vacancy-list-plan.md`.
 
 **Story:** Applicant — open a vacancy's public link and see role details
 **Delivers:** `GET /apply/:token` (public, unguarded).
+
+Detailed breakdown: `docs/plans/step-5-apply-view-plan.md`.
 **E2E:** valid token → role details; unknown token → 404; closed vacancy still resolves (per closed-vacancy decision above).
 **Depends on:** Step 2.
 
