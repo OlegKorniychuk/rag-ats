@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
-import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { recruiters } from '../schema.js';
 import type {
@@ -27,18 +26,16 @@ export class DrizzleRecruitersRepository implements RecruitersRepository {
   }
 
   async findByEmail(email: string): Promise<Recruiter | null> {
-    const [row] = await this.txHost.tx
-      .select()
-      .from(recruiters)
-      .where(eq(recruiters.email, email));
+    const row = await this.txHost.tx.query.recruiters.findFirst({
+      where: { email },
+    });
     return row ?? null;
   }
 
   async findById(id: string): Promise<Recruiter | null> {
-    const [row] = await this.txHost.tx
-      .select()
-      .from(recruiters)
-      .where(eq(recruiters.id, id));
+    const row = await this.txHost.tx.query.recruiters.findFirst({
+      where: { id },
+    });
     return row ?? null;
   }
 }

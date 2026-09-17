@@ -1,3 +1,4 @@
+import { defineRelations } from 'drizzle-orm';
 import { pgTable, uuid, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
@@ -52,3 +53,14 @@ export const applications = pgTable('applications', {
   stage: applicationStageEnum('stage').notNull().default('applied'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
+
+const schema = {
+  vacancyStatusEnum,
+  applicationStageEnum,
+  recruiters,
+  vacancies,
+  candidates,
+  applications,
+};
+
+export const dbRelations = defineRelations(schema);

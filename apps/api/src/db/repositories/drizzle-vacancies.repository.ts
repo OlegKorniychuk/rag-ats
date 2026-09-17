@@ -27,10 +27,9 @@ export class DrizzleVacanciesRepository implements VacanciesRepository {
   }
 
   async findById(id: string): Promise<Vacancy | null> {
-    const [row] = await this.txHost.tx
-      .select()
-      .from(vacancies)
-      .where(eq(vacancies.id, id));
+    const row = await this.txHost.tx.query.vacancies.findFirst({
+      where: { id },
+    });
     return row ?? null;
   }
 
