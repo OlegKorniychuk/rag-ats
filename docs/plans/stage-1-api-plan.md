@@ -82,6 +82,8 @@ Detailed breakdown: `docs/plans/step-3-vacancy-update-plan.md`.
 
 **Story:** Recruiter — see only the vacancies (and, by extension, applications) I created
 **Delivers:** `GET /vacancies` (mine only), `GET /vacancies/:id` (mine, 404 otherwise).
+
+Detailed breakdown: `docs/plans/step-4-vacancy-list-plan.md`.
 **E2E:** listing returns only this recruiter's vacancies (seed two recruiters); get-by-id 404s for another recruiter's vacancy.
 **Depends on:** Step 2.
 
