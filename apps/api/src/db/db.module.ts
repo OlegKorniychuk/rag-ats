@@ -3,6 +3,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { EnvConfig } from '../config/env.config.js';
 import { Pool } from 'pg';
 import { DRIZZLE } from './db.tokens.js';
+import { dbRelations } from './schema.js';
 
 @Global()
 @Module({
@@ -18,7 +19,8 @@ import { DRIZZLE } from './db.tokens.js';
     {
       provide: DRIZZLE,
       inject: [Pool],
-      useFactory: (pool: Pool) => drizzle({ client: pool }),
+      useFactory: (pool: Pool) =>
+        drizzle({ client: pool, relations: dbRelations }),
     },
   ],
   exports: [DRIZZLE],
