@@ -30,6 +30,20 @@ describe('Vacancies (e2e)', () => {
     return agent;
   }
 
+  async function createVacancy(
+    agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+    overrides: { title?: string; requirements?: string } = {},
+  ): Promise<string> {
+    const res = await agent
+      .post('/vacancies')
+      .send({
+        title: overrides.title ?? 'Senior Backend Engineer',
+        requirements: overrides.requirements ?? '5+ years Node.js, PostgreSQL',
+      })
+      .expect(201);
+    return res.body.id as string;
+  }
+
   describe('POST /vacancies', () => {
     it('creates a vacancy owned by the authenticated recruiter', async () => {
       const agent = await authenticatedAgent();
@@ -76,19 +90,6 @@ describe('Vacancies (e2e)', () => {
   });
 
   describe('PATCH /vacancies/:id', () => {
-    async function createVacancy(
-      agent: Awaited<ReturnType<typeof authenticatedAgent>>,
-    ): Promise<string> {
-      const res = await agent
-        .post('/vacancies')
-        .send({
-          title: 'Senior Backend Engineer',
-          requirements: '5+ years Node.js, PostgreSQL',
-        })
-        .expect(201);
-      return res.body.id as string;
-    }
-
     it('updates fields on a vacancy owned by the authenticated recruiter', async () => {
       const agent = await authenticatedAgent();
       const id = await createVacancy(agent);
@@ -146,6 +147,66 @@ describe('Vacancies (e2e)', () => {
         .patch(`/vacancies/${id}`)
         .send({ status: 'archived' })
         .expect(400);
+    });
+  });
+
+  describe('GET /vacancies', () => {
+    it("returns only the authenticated recruiter's vacancies", async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent, { title: 'Mine' });
+      const other = await authenticatedAgent();
+      await createVacancy(other, { title: 'Not mine' });
+
+      const res = await agent.get('/vacancies').expect(200);
+
+      const ids = (res.body as { id: string }[]).map((v) => v.id);
+      expect(ids).toContain(id);
+      expect(
+        res.body.every((v: { title: string }) => v.title !== 'Not mine'),
+      ).toBe(true);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer()).get('/vacancies').expect(401);
+    });
+  });
+
+  describe('GET /vacancies/:id', () => {
+    it('returns a vacancy owned by the authenticated recruiter', async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent);
+
+      const res = await agent.get(`/vacancies/${id}`).expect(200);
+
+      expect(res.body).toMatchObject({
+        id,
+        title: 'Senior Backend Engineer',
+        requirements: '5+ years Node.js, PostgreSQL',
+        status: 'open',
+      });
+    });
+
+    it('rejects a non-owner with 404', async () => {
+      const owner = await authenticatedAgent();
+      const id = await createVacancy(owner);
+      const otherRecruiter = await authenticatedAgent();
+
+      await otherRecruiter.get(`/vacancies/${id}`).expect(404);
+    });
+
+    it('returns 404 for an unknown id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get(`/vacancies/${randomUUID()}`).expect(404);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      const agent = await authenticatedAgent();
+      const id = await createVacancy(agent);
+
+      await request(testApp.app.getHttpServer())
+        .get(`/vacancies/${id}`)
+        .expect(401);
     });
   });
 });

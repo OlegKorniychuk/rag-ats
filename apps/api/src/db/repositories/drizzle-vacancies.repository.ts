@@ -33,6 +33,13 @@ export class DrizzleVacanciesRepository implements VacanciesRepository {
     return row ?? null;
   }
 
+  async findByRecruiterId(recruiterId: string): Promise<Vacancy[]> {
+    return this.txHost.tx.query.vacancies.findMany({
+      where: { recruiterId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
   async update(id: string, data: Partial<NewVacancy>): Promise<Vacancy> {
     const [row] = await this.txHost.tx
       .update(vacancies)
