@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import type { AuthUser } from '../auth/auth-user.js';
 import { CurrentUser } from '../auth/current-user.decorator.js';
+import type { ApplicationWithCandidate } from '../db/repositories/applications.repository.js';
 import type { Vacancy } from '../db/repositories/vacancies.repository.js';
 import { CreateVacancyDto } from './dto/create-vacancy.dto.js';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto.js';
@@ -37,6 +38,14 @@ export class VacanciesController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<Vacancy> {
     return this.vacanciesService.findOne(user.id, id);
+  }
+
+  @Get(':id/applications')
+  async findApplications(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ApplicationWithCandidate[]> {
+    return this.vacanciesService.findApplications(user.id, id);
   }
 
   @Patch(':id')

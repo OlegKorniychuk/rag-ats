@@ -30,10 +30,10 @@ describe('Vacancies (e2e)', () => {
     return agent;
   }
 
-  async function createVacancy(
+  async function createVacancyWithToken(
     agent: Awaited<ReturnType<typeof authenticatedAgent>>,
     overrides: { title?: string; requirements?: string } = {},
-  ): Promise<string> {
+  ): Promise<{ id: string; applyToken: string }> {
     const res = await agent
       .post('/vacancies')
       .send({
@@ -41,7 +41,42 @@ describe('Vacancies (e2e)', () => {
         requirements: overrides.requirements ?? '5+ years Node.js, PostgreSQL',
       })
       .expect(201);
-    return res.body.id as string;
+    return {
+      id: res.body.id as string,
+      applyToken: res.body.applyToken as string,
+    };
+  }
+
+  async function createVacancy(
+    agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+    overrides: { title?: string; requirements?: string } = {},
+  ): Promise<string> {
+    const { id } = await createVacancyWithToken(agent, overrides);
+    return id;
+  }
+
+  function applicationPayload(overrides: Record<string, unknown> = {}) {
+    return {
+      name: 'Jane Applicant',
+      email: uniqueEmail(),
+      skills: ['TypeScript', 'Node.js'],
+      experience: 'Built things at a company.',
+      projects: ['Cool project'],
+      summary: 'A backend engineer looking for new challenges.',
+      ...overrides,
+    };
+  }
+
+  async function applyToVacancy(
+    applyToken: string,
+    overrides: Record<string, unknown> = {},
+  ): Promise<{ name: string; email: string }> {
+    const payload = applicationPayload(overrides);
+    await request(testApp.app.getHttpServer())
+      .post(`/apply/${applyToken}`)
+      .send(payload)
+      .expect(201);
+    return { name: payload.name, email: payload.email };
   }
 
   describe('POST /vacancies', () => {
@@ -206,6 +241,81 @@ describe('Vacancies (e2e)', () => {
 
       await request(testApp.app.getHttpServer())
         .get(`/vacancies/${id}`)
+        .expect(401);
+    });
+  });
+
+  describe('GET /vacancies/:id/applications', () => {
+    it("returns applications with candidate info for the owner's vacancy", async () => {
+      const agent = await authenticatedAgent();
+      const { id, applyToken } = await createVacancyWithToken(agent);
+      const { applyToken: otherToken } = await createVacancyWithToken(agent, {
+        title: 'Other role',
+      });
+
+      const first = await applyToVacancy(applyToken);
+      const second = await applyToVacancy(applyToken);
+      const other = await applyToVacancy(otherToken);
+
+      const res = await agent.get(`/vacancies/${id}/applications`).expect(200);
+
+      expect(res.body).toHaveLength(2);
+      const byEmail = new Map(
+        (res.body as { candidate: { email: string } }[]).map((a) => [
+          a.candidate.email,
+          a,
+        ]),
+      );
+      expect(byEmail.has(other.email.toLowerCase())).toBe(false);
+
+      const firstApp = byEmail.get(first.email.toLowerCase());
+      expect(firstApp).toMatchObject({
+        stage: 'applied',
+        candidate: { name: first.name, email: first.email.toLowerCase() },
+      });
+
+      const secondApp = byEmail.get(second.email.toLowerCase());
+      expect(secondApp).toMatchObject({
+        stage: 'applied',
+        candidate: { name: second.name, email: second.email.toLowerCase() },
+      });
+    });
+
+    it('returns an empty array for a vacancy with no applications', async () => {
+      const agent = await authenticatedAgent();
+      const { id } = await createVacancyWithToken(agent);
+
+      const res = await agent.get(`/vacancies/${id}/applications`).expect(200);
+
+      expect(res.body).toEqual([]);
+    });
+
+    it('rejects a non-owner with 404', async () => {
+      const owner = await authenticatedAgent();
+      const { id } = await createVacancyWithToken(owner);
+      const otherRecruiter = await authenticatedAgent();
+
+      await otherRecruiter.get(`/vacancies/${id}/applications`).expect(404);
+    });
+
+    it('returns 404 for an unknown id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get(`/vacancies/${randomUUID()}/applications`).expect(404);
+    });
+
+    it('rejects a malformed id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get('/vacancies/not-a-uuid/applications').expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      const agent = await authenticatedAgent();
+      const { id } = await createVacancyWithToken(agent);
+
+      await request(testApp.app.getHttpServer())
+        .get(`/vacancies/${id}/applications`)
         .expect(401);
     });
   });
