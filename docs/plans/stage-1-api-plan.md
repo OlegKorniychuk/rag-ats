@@ -100,6 +100,8 @@ Detailed breakdown: `docs/plans/step-5-apply-view-plan.md`.
 
 **Stories:** Applicant — submit application (structured form) + get confirmation
 **Delivers:** `POST /apply/:token` — validates the profile form, upserts the `Candidate` by email (append-merge on repeat), creates an `Application` (stage=`applied`), returns confirmation.
+
+Detailed breakdown: `docs/plans/step-6-apply-submit-plan.md`.
 **E2E:** happy path (new candidate) → confirmation; happy path (existing email) → profile data appended, single candidate row, new application row; invalid/unknown token → 404; closed vacancy → rejected; validation errors on the form.
 **Depends on:** Steps 1 (candidate/application reference recruiters transitively via vacancy), 5.
 
@@ -134,9 +136,9 @@ Detailed breakdown: `docs/plans/step-5-apply-view-plan.md`.
 
 ### Checkpoint: Public apply flow (after Steps 5–6)
 
-- [ ] An applicant can view a vacancy and submit without any account, end-to-end
-- [ ] Dedup-by-email + append-merge behavior verified
-- [ ] Closed-vacancy view-ok/submit-rejected behavior verified
+- [x] An applicant can view a vacancy and submit without any account, end-to-end
+- [x] Dedup-by-email + append-merge behavior verified
+- [x] Closed-vacancy view-ok/submit-rejected behavior verified
 
 ### Checkpoint: Pipeline management (after Steps 7–8)
 

@@ -1,5 +1,12 @@
 import { defineRelations } from 'drizzle-orm';
-import { pgTable, uuid, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  text,
+  timestamp,
+  pgEnum,
+  unique,
+} from 'drizzle-orm/pg-core';
 
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
 export const applicationStageEnum = pgEnum('application_stage', [
@@ -42,17 +49,26 @@ export const candidates = pgTable('candidates', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
-export const applications = pgTable('applications', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  vacancyId: uuid('vacancy_id')
-    .notNull()
-    .references(() => vacancies.id),
-  candidateId: uuid('candidate_id')
-    .notNull()
-    .references(() => candidates.id),
-  stage: applicationStageEnum('stage').notNull().default('applied'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
+export const applications = pgTable(
+  'applications',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vacancyId: uuid('vacancy_id')
+      .notNull()
+      .references(() => vacancies.id),
+    candidateId: uuid('candidate_id')
+      .notNull()
+      .references(() => candidates.id),
+    stage: applicationStageEnum('stage').notNull().default('applied'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (t) => [
+    unique('applications_vacancy_id_candidate_id_unique').on(
+      t.vacancyId,
+      t.candidateId,
+    ),
+  ],
+);
 
 const schema = {
   vacancyStatusEnum,
