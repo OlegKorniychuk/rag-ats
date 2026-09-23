@@ -127,6 +127,8 @@ Detailed breakdown: `docs/plans/step-8-application-stage-plan.md`.
 
 **Story:** Recruiter — search or view any candidate's standardized profile (narrowed: list + view, no search)
 **Delivers:** `GET /candidates` (all candidates, any recruiter), `GET /candidates/:id`.
+
+Detailed breakdown: `docs/plans/step-9-candidate-pool-plan.md`.
 **E2E:** happy path list includes candidates from other recruiters' vacancies too; view single profile; unauthenticated rejected; unknown id → 404.
 **Depends on:** Step 6.
 
@@ -134,9 +136,9 @@ Detailed breakdown: `docs/plans/step-8-application-stage-plan.md`.
 
 ### Checkpoint: Auth + vacancy CRUD (after Steps 1–4)
 
-- [ ] All e2e tests pass against the real test Postgres instance
-- [ ] A recruiter can register, log in, create/update/close/list their own vacancies end-to-end
-- [ ] Cross-recruiter isolation verified (recruiter B cannot see/edit recruiter A's vacancy)
+- [x] All e2e tests pass against the real test Postgres instance
+- [x] A recruiter can register, log in, create/update/close/list their own vacancies end-to-end
+- [x] Cross-recruiter isolation verified (recruiter B cannot see/edit recruiter A's vacancy)
 
 ### Checkpoint: Public apply flow (after Steps 5–6)
 
@@ -151,9 +153,9 @@ Detailed breakdown: `docs/plans/step-8-application-stage-plan.md`.
 
 ### Checkpoint: Stage 1 complete (after Step 9)
 
-- [ ] Every in-scope user story above has passing e2e coverage (happy path + main exceptions)
-- [ ] Full Stage 1 API is demoable end-to-end via HTTP calls alone (register → create vacancy → apply → list → move stage → browse candidate pool)
-- [ ] Ready to start Stage 2 (pgvector migration, CV upload+parsing, semantic search, fit scoring, eval script)
+- [x] Every in-scope user story above has passing e2e coverage (happy path + main exceptions)
+- [x] Full Stage 1 API is demoable end-to-end via HTTP calls alone (register → create vacancy → apply → list → move stage → browse candidate pool) — covered hop-by-hop by the per-step e2e suites, no separate journey spec
+- [x] Ready to start Stage 2 (pgvector migration, CV upload+parsing, semantic search, fit scoring, eval script)
 
 ## Open Notes for Subplans
 
