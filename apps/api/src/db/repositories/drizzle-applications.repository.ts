@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
+import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications } from '../schema.js';
 import type {
   NewApplication,
   Application,
   ApplicationWithCandidate,
+  ApplicationWithVacancy,
   ApplicationsRepository,
 } from './applications.repository.js';
 
@@ -44,5 +46,27 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
       with: { candidate: true },
       orderBy: { createdAt: 'desc' },
     });
+  }
+
+  async findByIdWithVacancy(
+    id: string,
+  ): Promise<ApplicationWithVacancy | null> {
+    const row = await this.txHost.tx.query.applications.findFirst({
+      where: { id },
+      with: { vacancy: true },
+    });
+    return row ?? null;
+  }
+
+  async updateStage(
+    id: string,
+    stage: Application['stage'],
+  ): Promise<Application> {
+    const [row] = await this.txHost.tx
+      .update(applications)
+      .set({ stage })
+      .where(eq(applications.id, id))
+      .returning();
+    return row;
   }
 }

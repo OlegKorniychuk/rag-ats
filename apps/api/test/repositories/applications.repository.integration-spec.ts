@@ -241,4 +241,49 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
 
     expect(found).toEqual([]);
   });
+
+  it('findByIdWithVacancy returns the application with vacancy populated', async () => {
+    const vacancyId = await seedVacancy();
+    const candidateId = await seedCandidate();
+    const created = await applicationsRepository.create({
+      vacancyId,
+      candidateId,
+    });
+
+    const found = await applicationsRepository.findByIdWithVacancy(created.id);
+
+    expect(found).not.toBeNull();
+    expect(found?.vacancy.id).toBe(vacancyId);
+    expect(found?.vacancy.recruiterId).toBe(recruiterId);
+  });
+
+  it('findByIdWithVacancy returns null for an unknown id', async () => {
+    const found =
+      await applicationsRepository.findByIdWithVacancy(randomUUID());
+
+    expect(found).toBeNull();
+  });
+
+  it('updateStage persists the new stage and leaves other fields unchanged', async () => {
+    const vacancyId = await seedVacancy();
+    const candidateId = await seedCandidate();
+    const created = await applicationsRepository.create({
+      vacancyId,
+      candidateId,
+    });
+
+    const updated = await applicationsRepository.updateStage(
+      created.id,
+      'screened',
+    );
+
+    expect(updated.stage).toBe('screened');
+    expect(updated.vacancyId).toBe(vacancyId);
+    expect(updated.candidateId).toBe(candidateId);
+
+    const found = await applicationsRepository.findByIdWithVacancy(created.id);
+    expect(found?.stage).toBe('screened');
+    expect(found?.vacancyId).toBe(vacancyId);
+    expect(found?.candidateId).toBe(candidateId);
+  });
 });

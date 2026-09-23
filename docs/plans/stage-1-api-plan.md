@@ -118,6 +118,8 @@ Detailed breakdown: `docs/plans/step-7-vacancy-applications-plan.md`.
 
 **Story:** Recruiter — move a candidate through pipeline stages (applied → screened → interview → rejected/hired)
 **Delivers:** `PATCH /applications/:id` (stage update), scoped via the parent vacancy's owner.
+
+Detailed breakdown: `docs/plans/step-8-application-stage-plan.md`.
 **E2E:** happy path transition; invalid stage value rejected; non-owner (application under another recruiter's vacancy) gets 403/404.
 **Depends on:** Step 7.
 
@@ -144,8 +146,8 @@ Detailed breakdown: `docs/plans/step-7-vacancy-applications-plan.md`.
 
 ### Checkpoint: Pipeline management (after Steps 7–8)
 
-- [ ] Recruiter can list applicants for their vacancy and move them through stages end-to-end
-- [ ] Owner-scoping enforced in the service layer (not just the controller), per SPEC.md's boundary
+- [x] Recruiter can list applicants for their vacancy and move them through stages end-to-end
+- [x] Owner-scoping enforced in the service layer (not just the controller), per SPEC.md's boundary
 
 ### Checkpoint: Stage 1 complete (after Step 9)
 
