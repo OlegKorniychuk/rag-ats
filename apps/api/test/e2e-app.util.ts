@@ -24,7 +24,13 @@ export interface TestApp {
 // validation the moment this file is loaded, before this function ever
 // runs - they're seeded by jest.e2e.config.js's `setupFiles` instead, which
 // runs before any test file's imports.
-export async function createTestApp(): Promise<TestApp> {
+export interface CreateTestAppOptions {
+  beforeInit?: (app: INestApplication) => void;
+}
+
+export async function createTestApp(
+  options: CreateTestAppOptions = {},
+): Promise<TestApp> {
   const testDb = await createTestDatabase();
 
   const moduleRef = await Test.createTestingModule({
@@ -43,6 +49,7 @@ export async function createTestApp(): Promise<TestApp> {
       transform: true,
     }),
   );
+  options.beforeInit?.(app);
   await app.init();
 
   return { app, testDb };
