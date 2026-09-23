@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { PublicVacancy } from '../apply.service.js';
+import type { PublicVacancyResponse, VacancyStatus } from '@rag-ats/shared';
 
-export class PublicVacancyResponseDto implements PublicVacancy {
+export class PublicVacancyResponseDto implements PublicVacancyResponse {
   @ApiProperty({ example: 'Senior Backend Engineer' })
   title: string;
 
@@ -11,5 +11,5 @@ export class PublicVacancyResponseDto implements PublicVacancy {
   requirements: string;
 
   @ApiProperty({ enum: ['open', 'closed'], example: 'open' })
-  status: 'open' | 'closed';
+  status: VacancyStatus;
 }

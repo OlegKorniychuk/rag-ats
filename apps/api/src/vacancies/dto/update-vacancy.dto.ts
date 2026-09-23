@@ -1,7 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsOptional, IsString, MinLength } from 'class-validator';
+import type { UpdateVacancyRequest } from '@rag-ats/shared';
 
-export class UpdateVacancyDto {
+export class UpdateVacancyDto implements UpdateVacancyRequest {
   @ApiPropertyOptional({ minLength: 1, example: 'Senior Backend Engineer' })
   @IsOptional()
   @IsString()
