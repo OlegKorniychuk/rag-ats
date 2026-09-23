@@ -109,6 +109,8 @@ Detailed breakdown: `docs/plans/step-6-apply-submit-plan.md`.
 
 **Story:** Recruiter — see all candidates applied to one of my vacancies (unranked in Stage 1)
 **Delivers:** `GET /vacancies/:id/applications` — owner-scoped, includes each application's pipeline stage.
+
+Detailed breakdown: `docs/plans/step-7-vacancy-applications-plan.md`.
 **E2E:** happy path list; empty list; non-owner gets 403/404 (covers the "applications" half of Step 4's story).
 **Depends on:** Steps 4, 6.
 
