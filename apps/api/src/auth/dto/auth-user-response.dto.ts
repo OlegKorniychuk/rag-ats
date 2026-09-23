@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { AuthUser } from '../auth-user.js';
+import type { AuthUserResponse } from '@rag-ats/shared';
 
-export class AuthUserResponseDto implements AuthUser {
+export class AuthUserResponseDto implements AuthUserResponse {
   @ApiProperty({
     format: 'uuid',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { Vacancy } from '../../db/repositories/vacancies.repository.js';
+import type { VacancyResponse, VacancyStatus } from '@rag-ats/shared';
 
-export class VacancyResponseDto implements Vacancy {
+export class VacancyResponseDto implements VacancyResponse {
   @ApiProperty({
     format: 'uuid',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -26,12 +26,12 @@ export class VacancyResponseDto implements Vacancy {
   applyToken: string;
 
   @ApiProperty({ enum: ['open', 'closed'], example: 'open' })
-  status: 'open' | 'closed';
+  status: VacancyStatus;
 
   @ApiProperty({
     type: String,
     format: 'date-time',
     example: '2026-01-15T09:30:00.000Z',
   })
-  createdAt: Date;
+  createdAt: string;
 }

@@ -9,8 +9,9 @@ import {
   IsUrl,
   MinLength,
 } from 'class-validator';
+import type { SubmitApplicationRequest } from '@rag-ats/shared';
 
-export class SubmitApplicationDto {
+export class SubmitApplicationDto implements SubmitApplicationRequest {
   @ApiProperty({ minLength: 1, example: 'Jane Doe' })
   @IsString()
   @MinLength(1)

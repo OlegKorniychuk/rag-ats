@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import type { ApplicationResponse, ApplicationStage } from '@rag-ats/shared';
 import { applicationStageEnum } from '../../db/schema.js';
-import type { Application } from '../../db/repositories/applications.repository.js';
 
-export class ApplicationResponseDto implements Application {
+export class ApplicationResponseDto implements ApplicationResponse {
   @ApiProperty({
     format: 'uuid',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -25,12 +25,12 @@ export class ApplicationResponseDto implements Application {
     enum: applicationStageEnum.enumValues,
     example: 'applied',
   })
-  stage: (typeof applicationStageEnum.enumValues)[number];
+  stage: ApplicationStage;
 
   @ApiProperty({
     type: String,
     format: 'date-time',
     example: '2026-01-15T09:30:00.000Z',
   })
-  createdAt: Date;
+  createdAt: string;
 }

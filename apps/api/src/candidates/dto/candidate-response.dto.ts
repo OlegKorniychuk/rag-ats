@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { Candidate } from '../../db/repositories/candidates.repository.js';
+import type { CandidateResponse } from '@rag-ats/shared';
 
-export class CandidateResponseDto implements Candidate {
+export class CandidateResponseDto implements CandidateResponse {
   @ApiProperty({
     format: 'uuid',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -57,5 +57,5 @@ export class CandidateResponseDto implements Candidate {
     format: 'date-time',
     example: '2026-01-15T09:30:00.000Z',
   })
-  createdAt: Date;
+  createdAt: string;
 }
