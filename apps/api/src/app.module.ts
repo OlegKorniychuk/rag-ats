@@ -5,6 +5,7 @@ import { ClsModule } from 'nestjs-cls';
 import { dotenvLoader, TypedConfigModule } from 'nest-typed-config';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { ApplicationsModule } from './applications/applications.module.js';
 import { ApplyModule } from './apply/apply.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { EnvConfig } from './config/env.config.js';
@@ -36,6 +37,7 @@ import { VacanciesModule } from './vacancies/vacancies.module.js';
     AuthModule,
     VacanciesModule,
     ApplyModule,
+    ApplicationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
