@@ -7,6 +7,8 @@ export const CANDIDATES_REPOSITORY = Symbol('CANDIDATES_REPOSITORY');
 
 export interface CandidatesRepository {
   create(data: NewCandidate): Promise<Candidate>;
+  findAll(): Promise<Candidate[]>;
+  findById(id: string): Promise<Candidate | null>;
   findByEmail(email: string): Promise<Candidate | null>;
   update(id: string, data: Partial<NewCandidate>): Promise<Candidate>;
 }
