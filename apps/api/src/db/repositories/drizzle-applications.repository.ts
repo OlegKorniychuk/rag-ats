@@ -5,6 +5,7 @@ import { applications } from '../schema.js';
 import type {
   NewApplication,
   Application,
+  ApplicationWithCandidate,
   ApplicationsRepository,
 } from './applications.repository.js';
 
@@ -33,5 +34,15 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
       where: { vacancyId, candidateId },
     });
     return row ?? null;
+  }
+
+  async findByVacancyIdWithCandidate(
+    vacancyId: string,
+  ): Promise<ApplicationWithCandidate[]> {
+    return this.txHost.tx.query.applications.findMany({
+      where: { vacancyId },
+      with: { candidate: true },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 }

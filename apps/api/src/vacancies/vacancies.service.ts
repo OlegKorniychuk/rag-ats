@@ -1,5 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { nanoid } from 'nanoid';
+import {
+  APPLICATIONS_REPOSITORY,
+  type ApplicationsRepository,
+  type ApplicationWithCandidate,
+} from '../db/repositories/applications.repository.js';
 import type { NewVacancy } from '../db/repositories/vacancies.repository.js';
 import {
   VACANCIES_REPOSITORY,
@@ -14,6 +19,8 @@ export class VacanciesService {
   constructor(
     @Inject(VACANCIES_REPOSITORY)
     private readonly vacanciesRepository: VacanciesRepository,
+    @Inject(APPLICATIONS_REPOSITORY)
+    private readonly applicationsRepository: ApplicationsRepository,
   ) {}
 
   async create(recruiterId: string, dto: CreateVacancyDto): Promise<Vacancy> {
@@ -46,6 +53,14 @@ export class VacanciesService {
 
   async findOne(recruiterId: string, vacancyId: string): Promise<Vacancy> {
     return this.getOwnedVacancy(recruiterId, vacancyId);
+  }
+
+  async findApplications(
+    recruiterId: string,
+    vacancyId: string,
+  ): Promise<ApplicationWithCandidate[]> {
+    await this.getOwnedVacancy(recruiterId, vacancyId);
+    return this.applicationsRepository.findByVacancyIdWithCandidate(vacancyId);
   }
 
   private async getOwnedVacancy(

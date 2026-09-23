@@ -200,4 +200,45 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     expect(secondApplication.vacancyId).toBe(secondVacancyId);
     expect(secondApplication.candidateId).toBe(candidateId);
   });
+
+  it('findByVacancyIdWithCandidate returns only that vacancy applications, newest first, with candidate populated', async () => {
+    const vacancyId = await seedVacancy();
+    const otherVacancyId = await seedVacancy();
+    const firstCandidate = await candidatesRepository.create(newCandidate());
+    const secondCandidate = await candidatesRepository.create(newCandidate());
+    const otherCandidate = await candidatesRepository.create(newCandidate());
+
+    const first = await applicationsRepository.create({
+      vacancyId,
+      candidateId: firstCandidate.id,
+    });
+    const second = await applicationsRepository.create({
+      vacancyId,
+      candidateId: secondCandidate.id,
+    });
+    await applicationsRepository.create({
+      vacancyId: otherVacancyId,
+      candidateId: otherCandidate.id,
+    });
+
+    const found =
+      await applicationsRepository.findByVacancyIdWithCandidate(vacancyId);
+
+    expect(found).toHaveLength(2);
+    expect(found.map((a) => a.id)).toEqual([second.id, first.id]);
+    expect(found.every((a) => a.vacancyId === vacancyId)).toBe(true);
+    expect(found[0].candidate.id).toBe(secondCandidate.id);
+    expect(found[0].candidate.email).toBe(secondCandidate.email);
+    expect(found[1].candidate.id).toBe(firstCandidate.id);
+    expect(found[1].candidate.email).toBe(firstCandidate.email);
+  });
+
+  it('findByVacancyIdWithCandidate returns an empty array for a vacancy with no applications', async () => {
+    const vacancyId = await seedVacancy();
+
+    const found =
+      await applicationsRepository.findByVacancyIdWithCandidate(vacancyId);
+
+    expect(found).toEqual([]);
+  });
 });

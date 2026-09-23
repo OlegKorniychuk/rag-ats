@@ -79,4 +79,28 @@ const schema = {
   applications,
 };
 
-export const dbRelations = defineRelations(schema);
+export const dbRelations = defineRelations(schema, (r) => ({
+  applications: {
+    candidate: r.one.candidates({
+      from: r.applications.candidateId,
+      to: r.candidates.id,
+      optional: false,
+    }),
+    vacancy: r.one.vacancies({
+      from: r.applications.vacancyId,
+      to: r.vacancies.id,
+      optional: false,
+    }),
+  },
+  vacancies: {
+    recruiter: r.one.recruiters({
+      from: r.vacancies.recruiterId,
+      to: r.recruiters.id,
+      optional: false,
+    }),
+    applications: r.many.applications(),
+  },
+  candidates: {
+    applications: r.many.applications(),
+  },
+}));
