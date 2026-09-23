@@ -8,6 +8,7 @@ import { AppService } from './app.service.js';
 import { ApplicationsModule } from './applications/applications.module.js';
 import { ApplyModule } from './apply/apply.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { CandidatesModule } from './candidates/candidates.module.js';
 import { EnvConfig } from './config/env.config.js';
 import { DbModule } from './db/db.module.js';
 import { DRIZZLE } from './db/db.tokens.js';
@@ -38,6 +39,7 @@ import { VacanciesModule } from './vacancies/vacancies.module.js';
     VacanciesModule,
     ApplyModule,
     ApplicationsModule,
+    CandidatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

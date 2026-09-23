@@ -26,6 +26,19 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
     return row;
   }
 
+  async findAll(): Promise<Candidate[]> {
+    return this.txHost.tx.query.candidates.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findById(id: string): Promise<Candidate | null> {
+    const row = await this.txHost.tx.query.candidates.findFirst({
+      where: { id },
+    });
+    return row ?? null;
+  }
+
   async findByEmail(email: string): Promise<Candidate | null> {
     const row = await this.txHost.tx.query.candidates.findFirst({
       where: { email },

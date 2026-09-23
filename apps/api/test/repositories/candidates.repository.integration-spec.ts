@@ -96,6 +96,34 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
     ).rejects.toThrow();
   });
 
+  it('findAll returns candidates newest first', async () => {
+    const first = await candidatesRepository.create(newCandidate());
+    const second = await candidatesRepository.create(newCandidate());
+
+    const all = await candidatesRepository.findAll();
+
+    const firstIndex = all.findIndex((c) => c.id === first.id);
+    const secondIndex = all.findIndex((c) => c.id === second.id);
+
+    expect(firstIndex).toBeGreaterThanOrEqual(0);
+    expect(secondIndex).toBeGreaterThanOrEqual(0);
+    expect(secondIndex).toBeLessThan(firstIndex);
+  });
+
+  it('findById returns the row for a known id', async () => {
+    const created = await candidatesRepository.create(newCandidate());
+
+    const found = await candidatesRepository.findById(created.id);
+
+    expect(found).toEqual(created);
+  });
+
+  it('findById returns null for an unknown id', async () => {
+    const found = await candidatesRepository.findById(randomUUID());
+
+    expect(found).toBeNull();
+  });
+
   it('findByEmail returns the row for a known email', async () => {
     const created = await candidatesRepository.create(newCandidate());
 
