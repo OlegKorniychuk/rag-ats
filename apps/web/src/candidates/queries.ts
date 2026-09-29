@@ -14,6 +14,5 @@ export function useCandidate(id: string) {
   return useQuery({
     queryKey: candidateKeys.detail(id),
     queryFn: () => getCandidate(id),
-    retry: false,
   });
 }

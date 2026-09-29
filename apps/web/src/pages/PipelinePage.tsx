@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router';
-import {
-  Alert,
-  Chip,
-  CircularProgress,
-  Link,
-  Snackbar,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { ApiError } from '../api/client';
+import { Chip, Link, Snackbar, Stack, Typography } from '@mui/material';
+import { NotFoundState } from '../components/NotFoundState';
+import { PageLoader } from '../components/PageLoader';
+import { QueryErrorAlert } from '../components/QueryErrorAlert';
+import { isNotFound } from '../lib/errors';
 import { PipelineBoard } from '../pipeline/PipelineBoard';
 import { useVacancyApplications } from '../pipeline/queries';
 import { useVacancy } from '../vacancies/queries';
@@ -26,20 +21,24 @@ export function PipelinePage() {
     </Link>
   );
 
-  if (vacancy.isLoading || applications.isLoading) {
-    return <CircularProgress />;
+  if (vacancy.isPending || applications.isPending) {
+    return <PageLoader />;
   }
 
   if (vacancy.isError) {
-    const notFound =
-      vacancy.error instanceof ApiError &&
-      (vacancy.error.status === 404 || vacancy.error.status === 400);
+    if (isNotFound(vacancy.error)) {
+      return (
+        <NotFoundState
+          title="Vacancy not found"
+          backTo="/vacancies"
+          backLabel="← Vacancies"
+        />
+      );
+    }
     return (
       <Stack spacing={2} sx={{ alignItems: 'flex-start' }}>
         {backLink}
-        <Alert severity={notFound ? 'warning' : 'error'}>
-          {notFound ? 'Vacancy not found' : vacancy.error.message}
-        </Alert>
+        <QueryErrorAlert error={vacancy.error} what="this vacancy" />
       </Stack>
     );
   }
@@ -62,9 +61,7 @@ export function PipelinePage() {
       </Stack>
 
       {applications.isError && (
-        <Alert severity="error">
-          Could not load applications: {applications.error.message}
-        </Alert>
+        <QueryErrorAlert error={applications.error} what="applications" />
       )}
 
       {applicationsData.length === 0 && !applications.isError && (

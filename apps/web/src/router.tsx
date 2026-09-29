@@ -6,6 +6,7 @@ import { ApplyPage } from './pages/ApplyPage';
 import { CandidatePage } from './pages/CandidatePage';
 import { CandidatesPage } from './pages/CandidatesPage';
 import { LoginPage } from './pages/LoginPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { PipelinePage } from './pages/PipelinePage';
 import { RegisterPage } from './pages/RegisterPage';
 import { VacanciesPage } from './pages/VacanciesPage';
@@ -29,7 +30,7 @@ export const routes: RouteObject[] = [
     ],
   },
   { path: '/apply/:token', element: <ApplyPage /> },
-  { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <NotFoundPage /> },
 ];
 
 export const router = createBrowserRouter(routes);

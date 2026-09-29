@@ -2,14 +2,8 @@ import { useState } from 'react';
 import { ApiError } from '../api/client';
 import { getPublicVacancy } from '../api/apply';
 import { ApplicationForm } from '../apply/ApplicationForm';
-import {
-  Alert,
-  Box,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { PageLoader } from '../components/PageLoader';
+import { Alert, Box, Container, Paper, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
@@ -17,10 +11,9 @@ export function ApplyPage() {
   const { token = '' } = useParams();
   const queryClient = useQueryClient();
   const [submittedName, setSubmittedName] = useState<string | null>(null);
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['apply', token],
     queryFn: () => getPublicVacancy(token),
-    retry: false,
   });
 
   return (
@@ -34,7 +27,7 @@ export function ApplyPage() {
       </Typography>
 
       <Paper sx={{ p: 4 }}>
-        {isLoading && <CircularProgress />}
+        {isPending && <PageLoader />}
 
         {isError &&
           (error instanceof ApiError && error.status === 404 ? (
@@ -47,7 +40,7 @@ export function ApplyPage() {
             </Alert>
           ))}
 
-        {!isLoading && !isError && data && (
+        {!isPending && !isError && data && (
           <Box>
             <Typography variant="h4">{data.title}</Typography>
             <Typography variant="h6" sx={{ mt: 3 }}>

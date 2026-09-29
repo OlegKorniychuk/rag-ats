@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-  Alert,
   Chip,
-  CircularProgress,
   Link,
   Paper,
   Stack,
@@ -17,6 +15,8 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link as RouterLink, useSearchParams } from 'react-router';
+import { PageLoader } from '../components/PageLoader';
+import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { formatDate } from '../lib/format';
 import { useCandidates } from '../candidates/queries';
 import { filterCandidates } from '../candidates/filter';
@@ -24,7 +24,7 @@ import { filterCandidates } from '../candidates/filter';
 const MAX_VISIBLE_SKILLS = 5;
 
 export function CandidatesPage() {
-  const { data, isLoading, isError, error } = useCandidates();
+  const { data, isPending, isError, error } = useCandidates();
   const [searchParams, setSearchParams] = useSearchParams();
   // local state drives the input: URL updates are async and would drop fast keystrokes
   const [query, setQuery] = useState(() => searchParams.get('q') ?? '');
@@ -76,19 +76,15 @@ export function CandidatesPage() {
         }}
       />
 
-      {isLoading && <CircularProgress />}
+      {isPending && <PageLoader />}
 
-      {isError && (
-        <Alert severity="error">
-          Could not load candidates: {error.message}
-        </Alert>
-      )}
+      {isError && <QueryErrorAlert error={error} what="candidates" />}
 
-      {!isLoading && !isError && data?.length === 0 && (
+      {!isPending && !isError && data?.length === 0 && (
         <Typography>No candidates yet</Typography>
       )}
 
-      {!isLoading &&
+      {!isPending &&
         !isError &&
         data &&
         data.length > 0 &&
@@ -97,7 +93,7 @@ export function CandidatesPage() {
           <Typography>No candidates match &quot;{query}&quot;</Typography>
         )}
 
-      {!isLoading && !isError && filtered.length > 0 && (
+      {!isPending && !isError && filtered.length > 0 && (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

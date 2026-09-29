@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import type { VacancyResponse } from '@rag-ats/shared';
 import {
-  Alert,
   Button,
-  CircularProgress,
   Paper,
   Snackbar,
   Stack,
@@ -15,6 +13,8 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { PageLoader } from '../components/PageLoader';
+import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { useVacancies } from '../vacancies/queries';
 import { VacancyFormDialog } from '../vacancies/VacancyFormDialog';
 import { VacancyRow } from '../vacancies/VacancyRow';
@@ -26,7 +26,7 @@ interface DialogState {
 }
 
 export function VacanciesPage() {
-  const { data, isLoading, isError, error } = useVacancies();
+  const { data, isPending, isError, error } = useVacancies();
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [dialog, setDialog] = useState<DialogState>({
     open: false,
@@ -56,19 +56,15 @@ export function VacanciesPage() {
         </Button>
       </Stack>
 
-      {isLoading && <CircularProgress />}
+      {isPending && <PageLoader />}
 
-      {isError && (
-        <Alert severity="error">
-          Could not load vacancies: {error.message}
-        </Alert>
-      )}
+      {isError && <QueryErrorAlert error={error} what="vacancies" />}
 
-      {!isLoading && !isError && data?.length === 0 && (
+      {!isPending && !isError && data?.length === 0 && (
         <Typography>No vacancies yet</Typography>
       )}
 
-      {!isLoading && !isError && data && data.length > 0 && (
+      {!isPending && !isError && data && data.length > 0 && (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
 
@@ -62,21 +63,49 @@ describe('routing', () => {
     expect(router.state.location.pathname).toBe('/vacancies');
   });
 
-  it('sends an unknown path to /vacancies when authenticated', async () => {
+  it('shows "Page not found" for an unknown path when authenticated and stays put', async () => {
     const { router } = renderApp({
       route: '/does-not-exist',
       session: { status: 'authenticated', user },
     });
-    await screen.findByRole('heading', { name: 'Vacancies' });
-    expect(router.state.location.pathname).toBe('/vacancies');
+    expect(await screen.findByText('Page not found')).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/does-not-exist');
   });
 
-  it('sends an unknown path to /login when anonymous', async () => {
+  it('shows "Page not found" for an unknown path when anonymous and stays put', async () => {
     const { router } = renderApp({
       route: '/does-not-exist',
       session: { status: 'anonymous', user: null },
     });
-    await screen.findByRole('heading', { name: 'Log in' });
-    expect(router.state.location.pathname).toBe('/login');
+    expect(await screen.findByText('Page not found')).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/does-not-exist');
+  });
+
+  it('sends authenticated users to /vacancies from "Go to vacancies"', async () => {
+    const { router } = renderApp({
+      route: '/does-not-exist',
+      session: { status: 'authenticated', user },
+    });
+    await screen.findByText('Page not found');
+    await userEvent.click(
+      screen.getByRole('link', { name: 'Go to vacancies' }),
+    );
+
+    await waitFor(() =>
+      expect(router.state.location.pathname).toBe('/vacancies'),
+    );
+  });
+
+  it('sends anonymous users to /login from "Go to vacancies"', async () => {
+    const { router } = renderApp({
+      route: '/does-not-exist',
+      session: { status: 'anonymous', user: null },
+    });
+    await screen.findByText('Page not found');
+    await userEvent.click(
+      screen.getByRole('link', { name: 'Go to vacancies' }),
+    );
+
+    await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
   });
 });
