@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Alert,
   Chip,
@@ -26,7 +26,8 @@ const MAX_VISIBLE_SKILLS = 5;
 export function CandidatesPage() {
   const { data, isLoading, isError, error } = useCandidates();
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('q') ?? '';
+  // local state drives the input: URL updates are async and would drop fast keystrokes
+  const [query, setQuery] = useState(() => searchParams.get('q') ?? '');
 
   const filtered = useMemo(
     () => (data ? filterCandidates(data, query) : []),
@@ -34,6 +35,7 @@ export function CandidatesPage() {
   );
 
   const handleQueryChange = (value: string) => {
+    setQuery(value);
     setSearchParams(value ? { q: value } : {}, { replace: true });
   };
 
