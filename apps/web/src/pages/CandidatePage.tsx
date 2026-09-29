@@ -1,8 +1,6 @@
 import { Link as RouterLink, useParams } from 'react-router';
 import {
-  Alert,
   Chip,
-  CircularProgress,
   Link,
   List,
   ListItem,
@@ -11,9 +9,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { ApiError } from '../api/client';
+import { NotFoundState } from '../components/NotFoundState';
+import { PageLoader } from '../components/PageLoader';
+import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { useCandidate } from '../candidates/queries';
 import { formatDate } from '../lib/format';
+import { isNotFound } from '../lib/errors';
 import { safeExternalUrl } from '../lib/safeUrl';
 
 function ExternalLink({
@@ -45,22 +46,24 @@ export function CandidatePage() {
     </Link>
   );
 
-  if (candidate.isLoading) {
-    return <CircularProgress />;
+  if (candidate.isPending) {
+    return <PageLoader />;
   }
 
   if (candidate.isError) {
-    const notFound =
-      candidate.error instanceof ApiError &&
-      (candidate.error.status === 404 || candidate.error.status === 400);
+    if (isNotFound(candidate.error)) {
+      return (
+        <NotFoundState
+          title="Candidate not found"
+          backTo="/candidates"
+          backLabel="← Candidates"
+        />
+      );
+    }
     return (
       <Stack spacing={2} sx={{ alignItems: 'flex-start' }}>
         {backLink}
-        <Alert severity={notFound ? 'warning' : 'error'}>
-          {notFound
-            ? 'Candidate not found'
-            : `Could not load this candidate: ${candidate.error.message}`}
-        </Alert>
+        <QueryErrorAlert error={candidate.error} what="this candidate" />
       </Stack>
     );
   }
