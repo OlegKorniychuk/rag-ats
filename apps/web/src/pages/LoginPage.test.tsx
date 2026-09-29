@@ -33,6 +33,7 @@ describe('LoginPage', () => {
         return HttpResponse.json({ success: true });
       }),
       http.get(`${baseUrl}/auth/me`, () => HttpResponse.json(user)),
+      http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])),
     );
     const { router } = renderApp({ route: '/login' });
     await fillAndSubmit();

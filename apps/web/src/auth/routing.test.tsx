@@ -1,10 +1,17 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { http, HttpResponse } from 'msw';
 import { screen } from '@testing-library/react';
+import { server } from '../test/server';
 import { renderApp } from '../test/render';
 
+const baseUrl = 'http://localhost:3000';
 const user = { id: '1', email: 'a@b.com' };
 
 describe('routing', () => {
+  beforeEach(() => {
+    server.use(http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])));
+  });
+
   it('redirects anonymous users at /vacancies to /login', async () => {
     const { router } = renderApp({
       route: '/vacancies',
