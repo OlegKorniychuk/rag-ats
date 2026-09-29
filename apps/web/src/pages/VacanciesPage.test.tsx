@@ -45,6 +45,24 @@ describe('VacanciesPage', () => {
     expect(screen.getByText(formattedDate)).toBeInTheDocument();
   });
 
+  it('navigates to the vacancy pipeline when the title is clicked', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([vacancy])),
+      http.get(`${baseUrl}/vacancies/1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/1/applications`, () =>
+        HttpResponse.json([]),
+      ),
+    );
+    const { router } = renderApp({ route: '/vacancies', session });
+
+    await screen.findByText('Backend Dev');
+    await userEvent.click(screen.getByRole('link', { name: 'Backend Dev' }));
+
+    await waitFor(() =>
+      expect(router.state.location.pathname).toBe('/vacancies/1'),
+    );
+  });
+
   it('shows an empty state when there are no vacancies', async () => {
     server.use(http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])));
     renderApp({ route: '/vacancies', session });

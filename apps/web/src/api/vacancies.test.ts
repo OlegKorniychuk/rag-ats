@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
-import { createVacancy, listVacancies, updateVacancy } from './vacancies';
+import {
+  createVacancy,
+  getVacancy,
+  listVacancies,
+  updateVacancy,
+} from './vacancies';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -37,6 +42,14 @@ describe('vacancies api', () => {
       requirements: 'TS',
     });
     expect(receivedBody).toEqual({ title: 'Engineer', requirements: 'TS' });
+    expect(result).toEqual(vacancy);
+  });
+
+  it('getVacancy gets /vacancies/:id', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/1`, () => HttpResponse.json(vacancy)),
+    );
+    const result = await getVacancy('1');
     expect(result).toEqual(vacancy);
   });
 

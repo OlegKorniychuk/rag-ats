@@ -3,12 +3,28 @@ import type {
   UpdateVacancyRequest,
 } from '@rag-ats/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createVacancy, listVacancies, updateVacancy } from '../api/vacancies';
+import {
+  createVacancy,
+  getVacancy,
+  listVacancies,
+  updateVacancy,
+} from '../api/vacancies';
 
-export const vacancyKeys = { all: ['vacancies'] as const };
+export const vacancyKeys = {
+  all: ['vacancies'] as const,
+  detail: (id: string) => ['vacancies', id] as const,
+  applications: (id: string) => ['vacancies', id, 'applications'] as const,
+};
 
 export function useVacancies() {
   return useQuery({ queryKey: vacancyKeys.all, queryFn: listVacancies });
+}
+
+export function useVacancy(id: string) {
+  return useQuery({
+    queryKey: vacancyKeys.detail(id),
+    queryFn: () => getVacancy(id),
+  });
 }
 
 export function useCreateVacancy() {

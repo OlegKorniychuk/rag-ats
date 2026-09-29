@@ -7,12 +7,6 @@ import { type SessionStatus, useSessionStore } from '../auth/sessionStore';
 import { routes } from '../router';
 import { theme } from '../theme';
 
-const initialSessionState = { status: 'loading' as const, user: null };
-
-export function resetSessionStore() {
-  useSessionStore.setState(initialSessionState);
-}
-
 interface RenderAppOptions {
   route?: string;
   session?: { status: SessionStatus; user: AuthUserResponse | null };
