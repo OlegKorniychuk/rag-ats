@@ -12,7 +12,7 @@ It replaces the per-step implementation plans, which were removed once Stage 1 w
 
 ## 2. Architecture
 
-- **npm workspaces**: `apps/api` (NestJS backend), `packages/shared` (shared TS API contract — see §7).
+- **npm workspaces**: `apps/api` (NestJS backend), `apps/web` (React + Vite frontend — scaffolded, not covered by this doc; see `docs/plans/stage-1-frontend.md`), `packages/shared` (shared TS API contract — see §7).
 - **NestJS 10**, native ESM (`apps/api/package.json` has `"type": "module"`, `tsconfig.json` uses `NodeNext` resolution). See §12 for the resulting import conventions.
 - **Drizzle ORM `1.0.0-rc.4`** (`drizzle-orm`, `drizzle-kit`), relational query API v2 (`defineRelations`, exported as `dbRelations` from `apps/api/src/db/schema.ts`), driven over `pg` (node-postgres).
 - **Postgres 17** via Docker Compose (`docker-compose.yml`, plain `postgres:17` image — no pgvector in Stage 1).
@@ -20,6 +20,7 @@ It replaces the per-step implementation plans, which were removed once Stage 1 w
 - **Transactions**: `@nestjs-cls/transactional` + `@nestjs-cls/transactional-adapter-drizzle-orm`, wired once in `apps/api/src/app.module.ts` (`ClsModule.forRoot` with `middleware.mount: true`). Repositories inject `TransactionHost<AppTransactionAdapter>` and read `this.txHost.tx` fresh on every call (never cached on `this`) so `@Transactional()` on a service method transparently swaps every repository call's db handle for the current transaction. Only `ApplyService.submit` currently uses `@Transactional()`.
 - **Config**: `nest-typed-config` (`TypedConfigModule.forRoot({ schema: EnvConfig, load: dotenvLoader() })` in `app.module.ts`) — a single typed `EnvConfig` class (`apps/api/src/config/env.config.ts`) validated with `class-validator` at boot; every consumer injects `EnvConfig` by type (no stringly-keyed `ConfigService.get()` anywhere). See §9.
 - **Global `ValidationPipe`** (`whitelist: true, forbidNonWhitelisted: true, transform: true`), wired in `apps/api/src/main.ts` and replicated in the e2e test harness (`apps/api/test/e2e-app.util.ts`) since `Test.createTestingModule` never runs `main.ts`.
+- **Bootstrap/CORS**: `configureApp()` (`apps/api/src/app.setup.ts`) wires `cookie-parser`, the global `ValidationPipe`, and `enableCors({ origin: [EnvConfig.WEB_ORIGIN], credentials: true })` — a single allowed origin, credentialed (cookies), so `apps/web` (default `http://localhost:5173`) can call the API cross-origin; any other origin gets no `Access-Control-Allow-Origin` header. Both `main.ts` and the e2e harness's `createTestApp` call `configureApp()`, keeping the two in sync.
 
 ## 3. Module map
 
@@ -120,6 +121,7 @@ Validated at boot via `nest-typed-config` (`EnvConfig`, `apps/api/src/config/env
 | `JWT_EXPIRES_IN` | `'7d'`                                                    | JWT `signOptions.expiresIn` **and** the `access_token` cookie's `maxAge` (via `ms()`) — single source of truth for both                               |
 | `PORT`           | `3000`                                                    | Port `app.listen()`s on (`0`–`65535`; the e2e harness uses `PORT=0` to let the OS pick one)                                                           |
 | `NODE_ENV`       | _(required — one of `development`\|`production`\|`test`)_ | `secure` cookie flag is `true` only when `production`; Swagger (`/docs`, `/docs-json`) is served only when **not** `production`                       |
+| `WEB_ORIGIN`     | `http://localhost:5173`                                   | The single origin allowed by CORS (`configureApp()`, credentialed) — the `apps/web` dev server's origin                                               |
 
 ## 10. Testing & CI
 

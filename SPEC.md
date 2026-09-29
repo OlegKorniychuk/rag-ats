@@ -43,7 +43,7 @@ Explicitly not in MVP stories: talent-pool resurfacing, skill-gap analysis, auto
 
 - TypeScript everywhere (Node backend, React frontend) — single language across stack
 - Backend: Node.js + **NestJS** — modules/controllers/services, DI, DTOs with `class-validator`
-- Frontend: React + Vite; **MUI** (`@mui/material`) for components, **Zustand** for client state (auth/session state, UI-local state — server data fetched directly per-page, no separate cache layer in MVP scope)
+- Frontend: React + Vite; **MUI** (`@mui/material`) for components; **TanStack Query** for server data (fetching/caching/invalidation); **Zustand** for client-only state (auth session, UI-local state); **React Router** for routing; **React Hook Form + Zod** for forms; **dnd-kit** for the pipeline board
 - DB: PostgreSQL + pgvector extension — single datastore, via Docker Compose locally
 - Data access: **Drizzle ORM** — native `vector` column type support, handles relational + vector queries in one layer (no raw-SQL workaround needed)
 - LLM: OpenAI `gpt-4o-mini` — CV/GitHub parsing into structured profile, grounded fit scoring
@@ -67,7 +67,7 @@ Build:           npm run build --workspaces
 Test (api unit): npm run test -w apps/api            # Jest
 Test (api e2e):  npm run test:e2e -w apps/api        # Jest + Supertest
 Test (web):      npm run test -w apps/web            # Vitest
-Lint:            npm run lint --workspaces
+Lint:            npm run lint --workspaces --if-present
 DB up:           docker compose up -d db              # postgres+pgvector container
 DB schema gen:   npm run db:generate -w apps/api       # drizzle-kit generate
 DB migrate:      npm run db:migrate -w apps/api        # drizzle-kit migrate

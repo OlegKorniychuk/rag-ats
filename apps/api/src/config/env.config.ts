@@ -34,4 +34,8 @@ export class EnvConfig {
 
   @IsIn(['development', 'production', 'test'])
   public readonly NODE_ENV: string;
+
+  @IsOptional()
+  @IsUrl({ require_tld: false })
+  public readonly WEB_ORIGIN: string = 'http://localhost:5173';
 }
