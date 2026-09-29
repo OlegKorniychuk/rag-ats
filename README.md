@@ -5,8 +5,7 @@ RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1
 ## Docs
 
 - [`SPEC.md`](./SPEC.md) — requirements and full product intent (Stage 1 + Stage 2)
-- [`docs/sdd.md`](./docs/sdd.md) — as-built design + API reference for what's actually implemented
-- [`docs/plans/stage-1-frontend.md`](./docs/plans/stage-1-frontend.md) — frontend roadmap
+- [`docs/sdd.md`](./docs/sdd.md) — as-built design + API + frontend reference for what's actually implemented
 - Swagger UI at `http://localhost:3000/docs` when running locally (raw OpenAPI at `/docs-json`)
 
 ## Run locally
@@ -22,3 +21,12 @@ npm test                        # unit tests (api) + web tests
 npm run test:integration        # integration tests (Testcontainers)
 npm run test:e2e                # e2e tests (Supertest + Testcontainers)
 ```
+
+## Using the app
+
+1. Register an account at `http://localhost:5173` and log in.
+2. Create a vacancy.
+3. Copy its public apply link from the vacancies list.
+4. Open that link logged out (or in a private window) to submit an application as a candidate.
+5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board.
+6. Browse the shared candidate pool at `/candidates`.
