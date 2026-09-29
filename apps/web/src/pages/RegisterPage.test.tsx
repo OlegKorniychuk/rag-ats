@@ -48,6 +48,7 @@ describe('RegisterPage', () => {
         meCalled = true;
         return HttpResponse.json(user);
       }),
+      http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])),
     );
     const { router } = renderApp({ route: '/register' });
     await fillAndSubmit();

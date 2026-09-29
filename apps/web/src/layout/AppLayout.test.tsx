@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -10,6 +10,10 @@ const baseUrl = 'http://localhost:3000';
 const user = { id: '1', email: 'a@b.com' };
 
 describe('AppLayout', () => {
+  beforeEach(() => {
+    server.use(http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])));
+  });
+
   it('navigates to candidates when the nav link is clicked', async () => {
     const { router } = renderApp({
       route: '/vacancies',
