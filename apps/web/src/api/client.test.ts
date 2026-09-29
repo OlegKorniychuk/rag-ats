@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
-import { ApiError, apiFetch } from './client';
+import { ApiError, apiFetch, setUnauthorizedHandler } from './client';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -108,6 +108,38 @@ describe('apiFetch', () => {
     expect(error).toMatchObject({
       status: 500,
       messages: ['Internal Server Error'],
+    });
+  });
+
+  describe('unauthorized handler', () => {
+    afterEach(() => {
+      setUnauthorizedHandler(null);
+    });
+
+    it('calls the handler on a 401 for a non-login path', async () => {
+      const handler = vi.fn();
+      setUnauthorizedHandler(handler);
+      server.use(
+        http.get(
+          `${baseUrl}/secret`,
+          () => new HttpResponse(null, { status: 401 }),
+        ),
+      );
+      await apiFetch('/secret').catch(() => {});
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call the handler on a 401 for /auth/login', async () => {
+      const handler = vi.fn();
+      setUnauthorizedHandler(handler);
+      server.use(
+        http.post(
+          `${baseUrl}/auth/login`,
+          () => new HttpResponse(null, { status: 401 }),
+        ),
+      );
+      await apiFetch('/auth/login', { method: 'POST' }).catch(() => {});
+      expect(handler).not.toHaveBeenCalled();
     });
   });
 });

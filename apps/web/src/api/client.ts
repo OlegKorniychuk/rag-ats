@@ -11,6 +11,12 @@ export class ApiError extends Error {
 
 const baseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
+let unauthorizedHandler: (() => void) | null = null;
+
+export function setUnauthorizedHandler(handler: (() => void) | null) {
+  unauthorizedHandler = handler;
+}
+
 export async function apiFetch<T>(
   path: string,
   init?: RequestInit & { json?: unknown },
@@ -31,6 +37,9 @@ export async function apiFetch<T>(
   });
 
   if (!response.ok) {
+    if (response.status === 401 && path !== '/auth/login') {
+      unauthorizedHandler?.();
+    }
     throw await toApiError(response);
   }
 
