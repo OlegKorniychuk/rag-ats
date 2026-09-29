@@ -15,6 +15,8 @@ export const STAGES = (Object.keys(STAGE_LABELS) as ApplicationStage[]).map(
   (id) => ({ id, label: STAGE_LABELS[id] }),
 );
 
+export type Stage = (typeof STAGES)[number];
+
 export function groupByStage(
   applications: readonly ApplicationWithCandidateResponse[],
 ): Record<ApplicationStage, ApplicationWithCandidateResponse[]> {

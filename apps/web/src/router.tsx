@@ -3,8 +3,10 @@ import { createBrowserRouter, Navigate } from 'react-router';
 import { PublicOnly } from './auth/PublicOnly';
 import { RequireAuth } from './auth/RequireAuth';
 import { ApplyPage } from './pages/ApplyPage';
+import { CandidatePage } from './pages/CandidatePage';
 import { CandidatesPage } from './pages/CandidatesPage';
 import { LoginPage } from './pages/LoginPage';
+import { PipelinePage } from './pages/PipelinePage';
 import { RegisterPage } from './pages/RegisterPage';
 import { VacanciesPage } from './pages/VacanciesPage';
 
@@ -21,7 +23,9 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, element: <Navigate to="/vacancies" replace /> },
       { path: '/vacancies', element: <VacanciesPage /> },
+      { path: '/vacancies/:id', element: <PipelinePage /> },
       { path: '/candidates', element: <CandidatesPage /> },
+      { path: '/candidates/:id', element: <CandidatePage /> },
     ],
   },
   { path: '/apply/:token', element: <ApplyPage /> },

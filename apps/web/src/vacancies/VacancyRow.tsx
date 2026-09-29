@@ -1,9 +1,17 @@
 import type { VacancyResponse } from '@rag-ats/shared';
-import { Chip, IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
+import {
+  Chip,
+  IconButton,
+  Link,
+  TableCell,
+  TableRow,
+  Tooltip,
+} from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import EditIcon from '@mui/icons-material/Edit';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { Link as RouterLink } from 'react-router';
 import { ApiError } from '../api/client';
 import { useUpdateVacancy } from './queries';
 
@@ -56,7 +64,11 @@ export function VacancyRow({ vacancy, onNotify, onEdit }: VacancyRowProps) {
 
   return (
     <TableRow>
-      <TableCell>{vacancy.title}</TableCell>
+      <TableCell>
+        <Link component={RouterLink} to={`/vacancies/${vacancy.id}`}>
+          {vacancy.title}
+        </Link>
+      </TableCell>
       <TableCell>
         <Chip
           size="small"
