@@ -142,18 +142,20 @@ describe('PipelinePage', () => {
     ).toBeInTheDocument();
   });
 
-  it('navigates to the candidate placeholder page when a card is clicked', async () => {
+  it('navigates to the candidate page when a card is clicked', async () => {
+    const candidate = makeCandidate({ id: 'c1', name: 'Ada Lovelace' });
     const applied = makeApplication({
       id: 'a1',
       stage: 'applied',
       candidateId: 'c1',
-      candidate: makeCandidate({ id: 'c1', name: 'Ada Lovelace' }),
+      candidate,
     });
     server.use(
       http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
       http.get(`${baseUrl}/vacancies/v1/applications`, () =>
         HttpResponse.json([applied]),
       ),
+      http.get(`${baseUrl}/candidates/c1`, () => HttpResponse.json(candidate)),
     );
 
     const { router } = renderApp({ route: '/vacancies/v1', session });
@@ -165,7 +167,7 @@ describe('PipelinePage', () => {
       expect(router.state.location.pathname).toBe('/candidates/c1'),
     );
     expect(
-      await screen.findByRole('heading', { name: 'Candidate' }),
+      await screen.findByRole('heading', { name: 'Ada Lovelace' }),
     ).toBeInTheDocument();
   });
 });

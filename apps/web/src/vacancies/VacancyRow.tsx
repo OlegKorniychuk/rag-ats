@@ -13,11 +13,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link as RouterLink } from 'react-router';
 import { ApiError } from '../api/client';
+import { formatDate } from '../lib/format';
 import { useUpdateVacancy } from './queries';
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  dateStyle: 'medium',
-});
 
 interface VacancyRowProps {
   vacancy: VacancyResponse;
@@ -76,7 +73,7 @@ export function VacancyRow({ vacancy, onNotify, onEdit }: VacancyRowProps) {
           color={isOpen ? 'success' : 'default'}
         />
       </TableCell>
-      <TableCell>{dateFormatter.format(new Date(vacancy.createdAt))}</TableCell>
+      <TableCell>{formatDate(vacancy.createdAt)}</TableCell>
       <TableCell align="right">
         <Tooltip title={`Edit ${vacancy.title}`}>
           <IconButton

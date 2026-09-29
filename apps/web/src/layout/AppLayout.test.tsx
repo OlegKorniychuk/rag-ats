@@ -11,7 +11,10 @@ const user = { id: '1', email: 'a@b.com' };
 
 describe('AppLayout', () => {
   beforeEach(() => {
-    server.use(http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])));
+    server.use(
+      http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])),
+      http.get(`${baseUrl}/candidates`, () => HttpResponse.json([])),
+    );
   });
 
   it('navigates to candidates when the nav link is clicked', async () => {
