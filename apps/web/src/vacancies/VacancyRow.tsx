@@ -1,6 +1,7 @@
 import type { VacancyResponse } from '@rag-ats/shared';
 import { Chip, IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import EditIcon from '@mui/icons-material/Edit';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { ApiError } from '../api/client';
@@ -13,9 +14,10 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 interface VacancyRowProps {
   vacancy: VacancyResponse;
   onNotify: (message: string) => void;
+  onEdit: (vacancy: VacancyResponse) => void;
 }
 
-export function VacancyRow({ vacancy, onNotify }: VacancyRowProps) {
+export function VacancyRow({ vacancy, onNotify, onEdit }: VacancyRowProps) {
   const updateVacancy = useUpdateVacancy();
   const isOpen = vacancy.status === 'open';
 
@@ -64,6 +66,14 @@ export function VacancyRow({ vacancy, onNotify }: VacancyRowProps) {
       </TableCell>
       <TableCell>{dateFormatter.format(new Date(vacancy.createdAt))}</TableCell>
       <TableCell align="right">
+        <Tooltip title={`Edit ${vacancy.title}`}>
+          <IconButton
+            aria-label={`Edit ${vacancy.title}`}
+            onClick={() => onEdit(vacancy)}
+          >
+            <EditIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
         <Tooltip title={`Copy apply link for ${vacancy.title}`}>
           <IconButton
             aria-label={`Copy apply link for ${vacancy.title}`}

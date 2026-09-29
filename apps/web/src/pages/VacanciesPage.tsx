@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { VacancyResponse } from '@rag-ats/shared';
 import {
   Alert,
   Button,
@@ -15,11 +16,33 @@ import {
   Typography,
 } from '@mui/material';
 import { useVacancies } from '../vacancies/queries';
+import { VacancyFormDialog } from '../vacancies/VacancyFormDialog';
 import { VacancyRow } from '../vacancies/VacancyRow';
+
+interface DialogState {
+  open: boolean;
+  vacancy?: VacancyResponse;
+  openCount: number;
+}
 
 export function VacanciesPage() {
   const { data, isLoading, isError, error } = useVacancies();
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  const [dialog, setDialog] = useState<DialogState>({
+    open: false,
+    openCount: 0,
+  });
+
+  const openDialog = (vacancy?: VacancyResponse) =>
+    setDialog((d) => ({ open: true, vacancy, openCount: d.openCount + 1 }));
+  const openCreateDialog = () => openDialog();
+  // keeps vacancy so the dialog doesn't flash to "New vacancy" while fading out
+  const closeDialog = () => setDialog((d) => ({ ...d, open: false }));
+
+  const handleSaved = (message: string) => {
+    closeDialog();
+    setSnackbarMessage(message);
+  };
 
   return (
     <Stack spacing={3}>
@@ -28,7 +51,7 @@ export function VacanciesPage() {
         sx={{ justifyContent: 'space-between', alignItems: 'center' }}
       >
         <Typography variant="h4">Vacancies</Typography>
-        <Button variant="contained" disabled>
+        <Button variant="contained" onClick={openCreateDialog}>
           New vacancy
         </Button>
       </Stack>
@@ -62,12 +85,21 @@ export function VacanciesPage() {
                   key={vacancy.id}
                   vacancy={vacancy}
                   onNotify={setSnackbarMessage}
+                  onEdit={openDialog}
                 />
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
+
+      <VacancyFormDialog
+        key={dialog.openCount}
+        open={dialog.open}
+        vacancy={dialog.vacancy}
+        onClose={closeDialog}
+        onSaved={handleSaved}
+      />
 
       <Snackbar
         open={snackbarMessage !== null}
