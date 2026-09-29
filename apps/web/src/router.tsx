@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router';
 import { createBrowserRouter, Navigate } from 'react-router';
 import { PublicOnly } from './auth/PublicOnly';
 import { RequireAuth } from './auth/RequireAuth';
+import { ApplyPage } from './pages/ApplyPage';
 import { CandidatesPage } from './pages/CandidatesPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -23,6 +24,7 @@ export const routes: RouteObject[] = [
       { path: '/candidates', element: <CandidatesPage /> },
     ],
   },
+  { path: '/apply/:token', element: <ApplyPage /> },
   { path: '*', element: <Navigate to="/" replace /> },
 ];
 
