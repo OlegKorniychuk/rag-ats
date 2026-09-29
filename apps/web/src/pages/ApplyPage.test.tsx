@@ -31,7 +31,9 @@ describe('ApplyPage', () => {
     expect(
       screen.queryByRole('button', { name: 'Logout' }),
     ).not.toBeInTheDocument();
-    expect(screen.getByTestId('application-form-slot')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Submit application' }),
+    ).toBeInTheDocument();
   });
 
   it('shows the vacancy for authenticated visitors without redirecting', async () => {
@@ -91,7 +93,7 @@ describe('ApplyPage', () => {
       ),
     ).toBeInTheDocument();
     expect(
-      screen.queryByTestId('application-form-slot'),
+      screen.queryByRole('button', { name: 'Submit application' }),
     ).not.toBeInTheDocument();
   });
 

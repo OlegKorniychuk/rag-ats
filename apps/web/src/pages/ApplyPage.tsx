@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { ApiError } from '../api/client';
 import { getPublicVacancy } from '../api/apply';
+import { ApplicationForm } from '../apply/ApplicationForm';
 import {
   Alert,
   Box,
@@ -8,11 +10,13 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
 export function ApplyPage() {
   const { token = '' } = useParams();
+  const queryClient = useQueryClient();
+  const [submittedName, setSubmittedName] = useState<string | null>(null);
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['apply', token],
     queryFn: () => getPublicVacancy(token),
@@ -59,9 +63,24 @@ export function ApplyPage() {
               </Alert>
             )}
 
-            {data.status === 'open' && (
-              <Box sx={{ mt: 3 }} data-testid="application-form-slot" />
-            )}
+            {data.status === 'open' &&
+              (submittedName ? (
+                <Alert severity="success" sx={{ mt: 3 }}>
+                  Application submitted — thanks, {submittedName}!
+                </Alert>
+              ) : (
+                <Box sx={{ mt: 3 }}>
+                  <ApplicationForm
+                    token={token}
+                    onSubmitted={setSubmittedName}
+                    onClosed={() =>
+                      queryClient.invalidateQueries({
+                        queryKey: ['apply', token],
+                      })
+                    }
+                  />
+                </Box>
+              ))}
           </Box>
         )}
       </Paper>
