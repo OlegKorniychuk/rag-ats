@@ -1,6 +1,6 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import cookieParser from 'cookie-parser';
+import { configureApp } from '../src/app.setup.js';
 import { AppModule } from '../src/app.module.js';
 import { DRIZZLE } from '../src/db/db.tokens.js';
 import {
@@ -14,10 +14,8 @@ export interface TestApp {
   testDb: TestDatabase;
 }
 
-// main.ts wires cookie-parser + the global ValidationPipe on the app instance
-// NestFactory.create() returns - Test.createTestingModule()'s app never runs
-// main.ts, so that wiring is replicated here to keep e2e tests representative
-// of the real bootstrapped app.
+// Test.createTestingModule()'s app never runs main.ts, so configureApp is
+// called here too, to keep e2e tests representative of the real bootstrapped app.
 //
 // Required env vars (DATABASE_URL, JWT_SECRET, ...) are NOT set here: the
 // `import { AppModule }` above already evaluates TypedConfigModule.forRoot()'s
@@ -41,14 +39,7 @@ export async function createTestApp(
     .compile();
 
   const app = moduleRef.createNestApplication();
-  app.use(cookieParser());
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+  configureApp(app);
   options.beforeInit?.(app);
   await app.init();
 
