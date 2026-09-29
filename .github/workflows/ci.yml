@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run lint -w apps/api
+        run: npm run lint --workspaces --if-present
 
       - name: Format check
         run: npx prettier --check .
@@ -33,6 +33,9 @@ jobs:
 
       - name: Unit tests
         run: npm run test -w apps/api
+
+      - name: Web tests
+        run: npm run test -w apps/web
 
       - name: Integration tests
         run: npm run test:integration -w apps/api
