@@ -52,6 +52,7 @@ describe('LoginPage', () => {
         HttpResponse.json({ success: true }),
       ),
       http.get(`${baseUrl}/auth/me`, () => HttpResponse.json(user)),
+      http.get(`${baseUrl}/candidates`, () => HttpResponse.json([])),
     );
     const { router } = renderApp({ route: '/candidates' });
     await screen.findByRole('heading', { name: 'Log in' });
