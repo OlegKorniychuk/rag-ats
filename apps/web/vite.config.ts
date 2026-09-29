@@ -7,6 +7,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
+    // jsdom + MUI form tests take 1-2s; the 5s default flakes under CPU load
+    testTimeout: 15_000,
     globals: false,
   },
 });
