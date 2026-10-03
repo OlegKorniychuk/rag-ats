@@ -6,6 +6,7 @@ RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1
 
 - [`SPEC.md`](./SPEC.md) — requirements and full product intent (Stage 1 + Stage 2)
 - [`docs/sdd.md`](./docs/sdd.md) — as-built design + API + frontend reference for what's actually implemented
+- [`docs/plans/stage-2.md`](./docs/plans/stage-2.md) — Stage 2 roadmap (CV parsing, rating, RAG, eval)
 - Swagger UI at `http://localhost:3000/docs` when running locally (raw OpenAPI at `/docs-json`)
 
 ## Run locally
