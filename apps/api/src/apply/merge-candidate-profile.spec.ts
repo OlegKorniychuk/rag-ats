@@ -1,10 +1,10 @@
-import type { Candidate } from '../db/repositories/candidates.repository.js';
+import type { CandidateRow } from '../db/repositories/candidates.repository.js';
 import {
   mergeCandidateProfile,
   type CandidateSubmission,
 } from './merge-candidate-profile.js';
 
-function makeCandidate(overrides: Partial<Candidate> = {}): Candidate {
+function makeCandidate(overrides: Partial<CandidateRow> = {}): CandidateRow {
   return {
     id: 'candidate-id',
     name: 'Existing Name',

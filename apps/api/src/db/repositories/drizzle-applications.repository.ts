@@ -3,6 +3,7 @@ import { TransactionHost } from '@nestjs-cls/transactional';
 import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications } from '../schema.js';
+import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
 import type {
   NewApplication,
   Application,
@@ -41,11 +42,12 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
   async findByVacancyIdWithCandidate(
     vacancyId: string,
   ): Promise<ApplicationWithCandidate[]> {
-    return this.txHost.tx.query.applications.findMany({
+    const rows = await this.txHost.tx.query.applications.findMany({
       where: { vacancyId },
-      with: { candidate: true },
+      with: { candidate: { with: latestCvSummaryWith } },
       orderBy: { createdAt: 'desc' },
     });
+    return rows.map((row) => ({ ...row, candidate: withCv(row.candidate) }));
   }
 
   async findByIdWithVacancy(

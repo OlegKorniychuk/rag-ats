@@ -1,5 +1,5 @@
 import type {
-  Candidate,
+  CandidateRow,
   NewCandidate,
 } from '../db/repositories/candidates.repository.js';
 import type { SubmitApplicationDto } from './dto/submit-application.dto.js';
@@ -57,7 +57,7 @@ function mergeExperience(
 }
 
 export function mergeCandidateProfile(
-  existing: Candidate,
+  existing: CandidateRow,
   submission: CandidateSubmission,
 ): Partial<NewCandidate> {
   return {

@@ -1,14 +1,18 @@
 import { candidates } from '../schema.js';
+import type { CvDocumentSummary } from './cv-documents.repository.js';
 
-export type Candidate = typeof candidates.$inferSelect;
+export type CandidateRow = typeof candidates.$inferSelect;
 export type NewCandidate = typeof candidates.$inferInsert;
+/** A candidate as read back: always carries its latest CV summary. */
+export type Candidate = CandidateRow & { cv: CvDocumentSummary };
 
 export const CANDIDATES_REPOSITORY = Symbol('CANDIDATES_REPOSITORY');
 
 export interface CandidatesRepository {
-  create(data: NewCandidate): Promise<Candidate>;
+  /** A freshly created candidate has no CV row yet. */
+  create(data: NewCandidate): Promise<CandidateRow>;
   findAll(): Promise<Candidate[]>;
   findById(id: string): Promise<Candidate | null>;
   findByEmail(email: string): Promise<Candidate | null>;
-  update(id: string, data: Partial<NewCandidate>): Promise<Candidate>;
+  update(id: string, data: Partial<NewCandidate>): Promise<CandidateRow>;
 }

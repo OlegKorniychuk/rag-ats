@@ -5,6 +5,7 @@ import type {
   ApplicationWithCandidateResponse,
   AuthUserResponse,
   CandidateResponse,
+  CvDocumentSummary as CvDocumentSummaryResponse,
   PublicVacancyResponse,
   VacancyResponse,
   VacancyStatus,
@@ -16,6 +17,7 @@ import type {
   ApplicationWithCandidate,
 } from './db/repositories/applications.repository.js';
 import type { Candidate } from './db/repositories/candidates.repository.js';
+import type { CvDocumentSummary } from './db/repositories/cv-documents.repository.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
 import type { applicationStageEnum, vacancyStatusEnum } from './db/schema.js';
 
@@ -46,6 +48,12 @@ export type CheckApplication = Assert<
 >;
 export type CheckCandidate = Assert<
   Equal<Simplify<Jsonify<Candidate>>, Simplify<CandidateResponse>>
+>;
+export type CheckCvDocumentSummary = Assert<
+  Equal<
+    Simplify<Jsonify<CvDocumentSummary>>,
+    Simplify<CvDocumentSummaryResponse>
+  >
 >;
 export type CheckApplicationWithCandidate = Assert<
   Equal<

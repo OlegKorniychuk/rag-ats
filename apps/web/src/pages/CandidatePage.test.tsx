@@ -25,6 +25,12 @@ function makeCandidate(
     experience: 'Line one\nLine two',
     projects: ['Analytical Engine', 'Notes on the Engine'],
     summary: 'A pioneering programmer.',
+    cv: {
+      id: 'cv1',
+      filename: 'cv.pdf',
+      sizeBytes: 1024,
+      uploadedAt: '2024-01-01T00:00:00.000Z',
+    },
     createdAt: '2024-01-15T00:00:00.000Z',
     ...overrides,
   };

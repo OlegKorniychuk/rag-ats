@@ -6,6 +6,9 @@ import {
   timestamp,
   pgEnum,
   unique,
+  integer,
+  bytea,
+  index,
 } from 'drizzle-orm/pg-core';
 
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
@@ -70,6 +73,22 @@ export const applications = pgTable(
   ],
 );
 
+export const cvDocuments = pgTable(
+  'cv_documents',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    candidateId: uuid('candidate_id')
+      .notNull()
+      .references(() => candidates.id),
+    filename: text('filename').notNull(),
+    sizeBytes: integer('size_bytes').notNull(),
+    content: bytea('content').notNull(),
+    text: text('text').notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (t) => [index('cv_documents_candidate_id_idx').on(t.candidateId)],
+);
+
 const schema = {
   vacancyStatusEnum,
   applicationStageEnum,
@@ -77,6 +96,7 @@ const schema = {
   vacancies,
   candidates,
   applications,
+  cvDocuments,
 };
 
 export const dbRelations = defineRelations(schema, (r) => ({
@@ -102,5 +122,13 @@ export const dbRelations = defineRelations(schema, (r) => ({
   },
   candidates: {
     applications: r.many.applications(),
+    cvDocuments: r.many.cvDocuments(),
+  },
+  cvDocuments: {
+    candidate: r.one.candidates({
+      from: r.cvDocuments.candidateId,
+      to: r.candidates.id,
+      optional: false,
+    }),
   },
 }));
