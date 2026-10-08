@@ -1,5 +1,6 @@
 import { Link as RouterLink, useParams } from 'react-router';
 import {
+  Button,
   Chip,
   Link,
   List,
@@ -12,10 +13,18 @@ import {
 import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
+import { apiUrl } from '../api/client';
 import { useCandidate } from '../candidates/queries';
 import { formatDate } from '../lib/format';
 import { isNotFound } from '../lib/errors';
 import { safeExternalUrl } from '../lib/safeUrl';
+
+function formatSize(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+const NOT_AVAILABLE = 'Not available yet — profile will be filled from the CV';
 
 function ExternalLink({
   label,
@@ -79,6 +88,7 @@ export function CandidatePage() {
     experience,
     projects,
     summary,
+    cv,
     createdAt,
   } = candidate.data;
 
@@ -101,11 +111,31 @@ export function CandidatePage() {
         </Stack>
       )}
 
+      <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+        <Button
+          component="a"
+          variant="outlined"
+          href={apiUrl(`/candidates/${encodeURIComponent(id)}/cv`)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View CV
+        </Button>
+        <Typography color="text.secondary">
+          {cv.filename} · {formatSize(cv.sizeBytes)} · uploaded{' '}
+          {formatDate(cv.uploadedAt)}
+        </Typography>
+      </Stack>
+
       <Paper sx={{ p: 2 }}>
         <Typography variant="h6" gutterBottom>
           Summary
         </Typography>
-        <Typography sx={{ whiteSpace: 'pre-wrap' }}>{summary}</Typography>
+        {summary ? (
+          <Typography sx={{ whiteSpace: 'pre-wrap' }}>{summary}</Typography>
+        ) : (
+          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+        )}
       </Paper>
 
       <Paper sx={{ p: 2 }}>
@@ -113,7 +143,7 @@ export function CandidatePage() {
           Skills
         </Typography>
         {skills.length === 0 ? (
-          <Typography color="text.secondary">No skills listed</Typography>
+          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
         ) : (
           <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
             {skills.map((skill) => (
@@ -127,7 +157,11 @@ export function CandidatePage() {
         <Typography variant="h6" gutterBottom>
           Experience
         </Typography>
-        <Typography sx={{ whiteSpace: 'pre-wrap' }}>{experience}</Typography>
+        {experience ? (
+          <Typography sx={{ whiteSpace: 'pre-wrap' }}>{experience}</Typography>
+        ) : (
+          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+        )}
       </Paper>
 
       <Paper sx={{ p: 2 }}>
@@ -135,7 +169,7 @@ export function CandidatePage() {
           Projects
         </Typography>
         {projects.length === 0 ? (
-          <Typography color="text.secondary">No projects listed</Typography>
+          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
         ) : (
           <List dense>
             {projects.map((project, index) => (

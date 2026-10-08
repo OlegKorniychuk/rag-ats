@@ -11,6 +11,10 @@ export class ApiError extends Error {
 
 const baseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
+export function apiUrl(path: string): string {
+  return `${baseUrl}${path}`;
+}
+
 let unauthorizedHandler: (() => void) | null = null;
 
 export function setUnauthorizedHandler(handler: (() => void) | null) {
@@ -29,7 +33,7 @@ export async function apiFetch<T>(
     finalHeaders.set('Content-Type', 'application/json');
   }
 
-  const response = await fetch(`${baseUrl}${path}`, {
+  const response = await fetch(apiUrl(path), {
     ...rest,
     body,
     headers: finalHeaders,

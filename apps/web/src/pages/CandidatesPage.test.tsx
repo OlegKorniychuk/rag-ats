@@ -82,6 +82,22 @@ describe('CandidatesPage', () => {
     expect(screen.getByText('+2')).toBeInTheDocument();
   });
 
+  it('renders a candidate with no skills and still filters', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates`, () =>
+        HttpResponse.json([makeCandidate({ skills: [] })]),
+      ),
+    );
+    renderApp({ route: '/candidates', session });
+
+    await screen.findByText('Ada Lovelace');
+    await userEvent.type(
+      screen.getByLabelText('Filter by name, email or skill'),
+      'ada',
+    );
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
+  });
+
   it('narrows rows when typing in the filter and updates the URL', async () => {
     server.use(
       http.get(`${baseUrl}/candidates`, () =>

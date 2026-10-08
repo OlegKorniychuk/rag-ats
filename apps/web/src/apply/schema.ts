@@ -5,17 +5,14 @@ import type { SubmitApplicationRequest } from '@rag-ats/shared';
 interface ApplicationFormInput {
   name: string;
   email: string;
-  skills: string[];
-  experience: string;
-  projects: string[];
-  summary: string;
   githubUrl: string;
   portfolioUrl: string;
+  cv: File | undefined;
 }
 
-const requiredText = (message: string) => z.string().trim().min(1, message);
+export const CV_MAX_SIZE_BYTES = 5 * 1024 * 1024;
 
-const nonEmptyStringArray = z.array(z.string().trim().min(1));
+const requiredText = (message: string) => z.string().trim().min(1, message);
 
 const optionalUrl = z
   .string()
@@ -26,13 +23,19 @@ const optionalUrl = z
 export const applicationSchema = z.object({
   name: requiredText('Name is required'),
   email: z.string().trim().pipe(z.email('Enter a valid email')),
-  skills: nonEmptyStringArray.min(1, 'Add at least one skill'),
-  experience: requiredText('Experience is required'),
-  projects: nonEmptyStringArray,
-  summary: requiredText('Summary is required'),
   githubUrl: optionalUrl,
   portfolioUrl: optionalUrl,
-}) satisfies z.ZodType<SubmitApplicationRequest, ApplicationFormInput>;
+  cv: z
+    .instanceof(File, { error: 'Attach your CV as a PDF' })
+    .refine((file) => file.type === 'application/pdf', 'CV must be a PDF')
+    .refine(
+      (file) => file.size <= CV_MAX_SIZE_BYTES,
+      'CV must be 5 MB or smaller',
+    ),
+}) satisfies z.ZodType<
+  SubmitApplicationRequest & { cv: File },
+  ApplicationFormInput
+>;
 
 export type ApplicationFormValues = z.input<typeof applicationSchema>;
 export type ApplicationFormOutput = z.output<typeof applicationSchema>;

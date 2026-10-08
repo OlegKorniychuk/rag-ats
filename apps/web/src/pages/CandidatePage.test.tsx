@@ -40,7 +40,49 @@ const formattedDate = new Intl.DateTimeFormat(undefined, {
   dateStyle: 'medium',
 }).format(new Date('2024-01-15T00:00:00.000Z'));
 
+const placeholder = 'Not available yet — profile will be filled from the CV';
+
 describe('CandidatePage', () => {
+  it('links to the CV in a new tab and shows its metadata', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(makeCandidate({})),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    const link = await screen.findByRole('link', { name: 'View CV' });
+    expect(link).toHaveAttribute('href', `${baseUrl}/candidates/c1/cv`);
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    const uploaded = new Intl.DateTimeFormat(undefined, {
+      dateStyle: 'medium',
+    }).format(new Date('2024-01-01T00:00:00.000Z'));
+    expect(
+      screen.getByText(`cv.pdf · 1 KB · uploaded ${uploaded}`),
+    ).toBeInTheDocument();
+  });
+
+  it('renders placeholders for an empty profile', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({
+            skills: [],
+            projects: [],
+            experience: '',
+            summary: '',
+          }),
+        ),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    await screen.findByRole('heading', { name: 'Ada Lovelace' });
+    expect(screen.getAllByText(placeholder)).toHaveLength(4);
+    expect(screen.getByRole('link', { name: 'View CV' })).toBeInTheDocument();
+  });
+
   it('renders all candidate fields', async () => {
     server.use(
       http.get(`${baseUrl}/candidates/c1`, () =>
@@ -76,7 +118,7 @@ describe('CandidatePage', () => {
     expect(experienceText).toBeInTheDocument();
   });
 
-  it('shows "No projects listed" when there are no projects', async () => {
+  it('shows the placeholder when there are no projects', async () => {
     server.use(
       http.get(`${baseUrl}/candidates/c1`, () =>
         HttpResponse.json(makeCandidate({ projects: [] })),
@@ -84,10 +126,10 @@ describe('CandidatePage', () => {
     );
     renderApp({ route: '/candidates/c1', session });
 
-    expect(await screen.findByText('No projects listed')).toBeInTheDocument();
+    expect(await screen.findByText(placeholder)).toBeInTheDocument();
   });
 
-  it('shows "No skills listed" when there are no skills', async () => {
+  it('shows the placeholder when there are no skills', async () => {
     server.use(
       http.get(`${baseUrl}/candidates/c1`, () =>
         HttpResponse.json(makeCandidate({ skills: [] })),
@@ -95,7 +137,7 @@ describe('CandidatePage', () => {
     );
     renderApp({ route: '/candidates/c1', session });
 
-    expect(await screen.findByText('No skills listed')).toBeInTheDocument();
+    expect(await screen.findByText(placeholder)).toBeInTheDocument();
   });
 
   it('does not render GitHub or Portfolio links when null', async () => {

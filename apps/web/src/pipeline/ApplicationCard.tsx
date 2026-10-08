@@ -25,14 +25,16 @@ function CardBody({ application }: ApplicationCardProps) {
       >
         {application.candidate.email}
       </Typography>
-      <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 0.5 }}>
-        {visibleSkills.map((skill) => (
-          <Chip key={skill} label={skill} size="small" />
-        ))}
-        {extraCount > 0 && (
-          <Chip label={`+${extraCount}`} size="small" variant="outlined" />
-        )}
-      </Stack>
+      {skills.length > 0 && (
+        <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 0.5 }}>
+          {visibleSkills.map((skill) => (
+            <Chip key={skill} label={skill} size="small" />
+          ))}
+          {extraCount > 0 && (
+            <Chip label={`+${extraCount}`} size="small" variant="outlined" />
+          )}
+        </Stack>
+      )}
     </CardContent>
   );
 }
