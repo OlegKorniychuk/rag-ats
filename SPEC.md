@@ -46,15 +46,16 @@ Explicitly not in MVP stories: talent-pool resurfacing, skill-gap analysis, auto
 - Frontend: React + Vite; **MUI** (`@mui/material`) for components; **TanStack Query** for server data (fetching/caching/invalidation); **Zustand** for client-only state (auth session, UI-local state); **React Router** for routing; **React Hook Form + Zod** for forms; **dnd-kit** for the pipeline board
 - DB: PostgreSQL + pgvector extension — single datastore, via Docker Compose locally
 - Data access: **Drizzle ORM** — native `vector` column type support, handles relational + vector queries in one layer (no raw-SQL workaround needed)
-- LLM: OpenAI `gpt-4o-mini` — CV/GitHub parsing into structured profile, grounded fit scoring
-- Embeddings: local, in-process via `@xenova/transformers` (e.g. `Xenova/all-MiniLM-L6-v2`) — no external API cost
-- CV intake: PDF upload only (MVP), text extracted via `pdf-parse` before being handed to the LLM parser
+- LLM: OpenAI `gpt-5.4-mini` with structured outputs (JSON schema) — CV/GitHub parsing into structured profile, grounded fit scoring; all calls isolated in `llm/` so the provider is swappable
+- Embeddings: OpenAI `text-embedding-3-small` (1536-dim, stored in a pgvector `vector(1536)` column) (no local embedding model); cost is negligible against the budget
+- Async processing: **pg-boss** job queue on the existing Postgres (no Redis), workers in-process in the API (CV parsing, scoring, embedding jobs)
+- CV intake: PDF upload only (MVP), multipart `POST /apply/:token`, magic-byte PDF check and 5 MB cap; text extracted via `pdf-parse` v2 before being handed to the LLM parser. PDF bytes plus extracted text are stored in Postgres (`bytea`, `cv_documents` table; every CV upload is kept, the latest is current). The apply form is reduced to name, email, PDF CV and optional GitHub/portfolio URLs — applicants no longer type skills/experience/projects
 - Public apply link: each vacancy gets a random unguessable token (e.g. `nanoid`) forming `/apply/:token` — no auth, but not enumerable
 - Auth: `@nestjs/jwt` + `@nestjs/passport` + a cookie-reading `passport-jwt` strategy (`cookie-parser` middleware, JWT read from an httpOnly cookie — no Bearer header), `bcrypt` for password hashing. Single JWT, fixed ~7-day expiry, no refresh-token flow. Cookie set `httpOnly`, `sameSite: 'lax'`, `secure` in prod, matching the JWT's expiry; login sets it, logout clears it. `JwtAuthGuard` on all recruiter routes; `apply/` routes stay unguarded. `sameSite: 'lax'` is the CSRF mitigation (no separate CSRF token) — acceptable given no state-changing GETs and local-only deploy.
 - Package manager: **npm** (workspaces: `apps/api`, `apps/web`, `packages/shared`)
 - Testing: **Jest** (Nest default, unit + e2e via `@nestjs/testing` + Supertest) for backend; Vitest + React Testing Library for frontend
-- Budget: **$20 OpenAI API ceiling**. Sanity check with `gpt-4o-mini` pricing: parsing 100 CVs (~150k in / 50k out tokens) ≈ $0.05; scoring 100×10=1,000 candidate–vacancy pairs (~1M in / 300k out tokens) ≈ $0.33. Full pass ≈ well under $1 — $20 comfortably covers many dev iterations + eval reruns.
-- Synthetic data: **fully LLM-generated** — `gpt-4o-mini` prompted to produce the 100 synthetic CVs/GitHub-style profiles and 10 vacancy postings, plus the self-labeled ground-truth fit judgments. No external dataset, no licensing concerns.
+- Budget: **$20 OpenAI API ceiling**. Volume sanity check: parsing 100 CVs ≈ 150k in / 50k out tokens; scoring 100×10=1,000 candidate–vacancy pairs ≈ 1M in / 300k out tokens (a small `-mini` model keeps a full pass well under the ceiling; re-check against current `gpt-5.4-mini` and `text-embedding-3-small` rates before large runs, and log token usage in the first live parse runs).
+- Synthetic data: **fully LLM-generated** — `gpt-5.4-mini` prompted to produce the 100 synthetic CVs/GitHub-style profiles and 10 vacancy postings, plus the self-labeled ground-truth fit judgments. No external dataset, no licensing concerns.
 - Timeline: **~2 months remaining** — Phase 3 tasks must stay ruthlessly scoped to MVP success criteria; resurfacing and skill-gap analysis stay explicitly out of scope, not "if time allows."
 
 ## Commands
@@ -88,8 +89,10 @@ Eval:            npm run eval -w apps/api                # standalone script, pr
 │   │   │   ├── applications/         → pipeline stage tracking (guarded, scoped via parent vacancy's owner)
 │   │   │   ├── apply/                → PUBLIC unauthenticated module: GET vacancy by token, POST CV submission
 │   │   │   ├── search/               → semantic search controller/service (guarded, NOT owner-scoped)
+│   │   │   ├── cv/                   → PDF check + text extraction (pdf-parse)
+│   │   │   ├── jobs/                 → pg-boss queue + workers
 │   │   │   ├── llm/                  → OpenAI client wrapper (parse, score prompts)
-│   │   │   ├── embeddings/           → local embedding service (@xenova/transformers)
+│   │   │   ├── embeddings/           → OpenAI embedding service (text-embedding-3-small)
 │   │   │   ├── db/                   → drizzle schema, migrations, client
 │   │   │   ├── app.module.ts
 │   │   │   └── main.ts
