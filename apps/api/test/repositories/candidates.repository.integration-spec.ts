@@ -12,6 +12,10 @@ import {
   type CandidatesRepository,
 } from '../../src/db/repositories/candidates.repository.js';
 import {
+  CV_DOCUMENTS_REPOSITORY,
+  type CvDocumentsRepository,
+} from '../../src/db/repositories/cv-documents.repository.js';
+import {
   createTestDatabase,
   teardownTestDatabase,
   type TestDatabase,
@@ -34,6 +38,7 @@ function newCandidate(overrides: Partial<NewCandidate> = {}): NewCandidate {
 describe('CandidatesRepository (Testcontainers integration)', () => {
   let testDb: TestDatabase;
   let candidatesRepository: CandidatesRepository;
+  let cvDocumentsRepository: CvDocumentsRepository;
 
   beforeAll(async () => {
     testDb = await createTestDatabase();
@@ -65,11 +70,32 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
     }).compile();
 
     candidatesRepository = moduleRef.get(CANDIDATES_REPOSITORY);
+    cvDocumentsRepository = moduleRef.get(CV_DOCUMENTS_REPOSITORY);
   }, 120_000);
 
   afterAll(async () => {
     await teardownTestDatabase(testDb);
   });
+
+  async function addCv(candidateId: string): Promise<void> {
+    await cvDocumentsRepository.create({
+      candidateId,
+      filename: 'cv.pdf',
+      sizeBytes: 3,
+      content: Buffer.from('pdf'),
+      text: 'cv text',
+    });
+  }
+
+  async function seedCandidate(
+    overrides: Partial<NewCandidate> = {},
+  ): Promise<{ id: string; email: string }> {
+    const candidate = await candidatesRepository.create(
+      newCandidate(overrides),
+    );
+    await addCv(candidate.id);
+    return candidate;
+  }
 
   it('persists a candidate row with all fields, including arrays', async () => {
     const data = newCandidate();
@@ -85,11 +111,15 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
     expect(created.experience).toBe(data.experience);
     expect(created.projects).toEqual(data.projects);
     expect(created.summary).toBe(data.summary);
+
+    // keep the shared test DB valid for later findAll reads
+    await addCv(created.id);
   });
 
   it('rejects a duplicate email', async () => {
     const email = `${randomUUID()}@example.com`;
-    await candidatesRepository.create(newCandidate({ email }));
+    const first = await candidatesRepository.create(newCandidate({ email }));
+    await addCv(first.id);
 
     await expect(
       candidatesRepository.create(newCandidate({ email })),
@@ -97,8 +127,8 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
   });
 
   it('findAll returns candidates newest first', async () => {
-    const first = await candidatesRepository.create(newCandidate());
-    const second = await candidatesRepository.create(newCandidate());
+    const first = await seedCandidate();
+    const second = await seedCandidate();
 
     const all = await candidatesRepository.findAll();
 
@@ -111,11 +141,21 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
   });
 
   it('findById returns the row for a known id', async () => {
-    const created = await candidatesRepository.create(newCandidate());
+    const created = await seedCandidate();
 
     const found = await candidatesRepository.findById(created.id);
 
-    expect(found).toEqual(created);
+    expect(found).toMatchObject(created);
+    expect(found?.cv.filename).toBe('cv.pdf');
+    expect(found?.cv.sizeBytes).toBe(3);
+    expect(found?.cv.uploadedAt).toBeInstanceOf(Date);
+    expect(Object.keys(found!.cv).sort()).toEqual([
+      'filename',
+      'id',
+      'sizeBytes',
+      'uploadedAt',
+    ]);
+    expect(found).not.toHaveProperty('cvDocuments');
   });
 
   it('findById returns null for an unknown id', async () => {
@@ -125,11 +165,53 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
   });
 
   it('findByEmail returns the row for a known email', async () => {
-    const created = await candidatesRepository.create(newCandidate());
+    const created = await seedCandidate();
 
     const found = await candidatesRepository.findByEmail(created.email);
 
-    expect(found).toEqual(created);
+    expect(found).toMatchObject(created);
+    expect(Object.keys(found!.cv).sort()).toEqual([
+      'filename',
+      'id',
+      'sizeBytes',
+      'uploadedAt',
+    ]);
+    expect(found).not.toHaveProperty('cvDocuments');
+  });
+
+  it('findAll returns cv summaries without content or text', async () => {
+    const created = await seedCandidate();
+
+    const all = await candidatesRepository.findAll();
+
+    const found = all.find((c) => c.id === created.id);
+    expect(Object.keys(found!.cv).sort()).toEqual([
+      'filename',
+      'id',
+      'sizeBytes',
+      'uploadedAt',
+    ]);
+    expect(found).not.toHaveProperty('cvDocuments');
+  });
+
+  it('reads throw an invariant error for a candidate with no CV', async () => {
+    const created = await candidatesRepository.create(newCandidate());
+    const invariant = `Invariant violated: candidate ${created.id} has no CV`;
+
+    await expect(candidatesRepository.findById(created.id)).rejects.toThrow(
+      invariant,
+    );
+    await expect(
+      candidatesRepository.findByEmail(created.email),
+    ).rejects.toThrow(invariant);
+    await expect(candidatesRepository.findAll()).rejects.toThrow(
+      'Invariant violated',
+    );
+
+    // keep the shared test DB valid for any later findAll
+    await testDb.pool.query('DELETE FROM candidates WHERE id = $1', [
+      created.id,
+    ]);
   });
 
   it('findByEmail returns null for an unknown email', async () => {

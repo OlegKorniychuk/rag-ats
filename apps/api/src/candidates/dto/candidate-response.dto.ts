@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CvDocumentSummaryResponseDto } from './cv-document-summary-response.dto.js';
 import type { CandidateResponse } from '@rag-ats/shared';
 
 export class CandidateResponseDto implements CandidateResponse {
@@ -51,6 +52,9 @@ export class CandidateResponseDto implements CandidateResponse {
     example: 'Backend engineer focused on scalable API design',
   })
   summary: string;
+
+  @ApiProperty({ type: CvDocumentSummaryResponseDto })
+  cv: CvDocumentSummaryResponseDto;
 
   @ApiProperty({
     type: String,

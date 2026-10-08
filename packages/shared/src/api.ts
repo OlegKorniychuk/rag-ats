@@ -41,14 +41,13 @@ export interface UpdateApplicationRequest {
   stage: ApplicationStage;
 }
 
-/** POST /apply/:token body */
+/**
+ * POST /apply/:token body: the text fields of a `multipart/form-data` request.
+ * The PDF CV goes in the `cv` file part.
+ */
 export interface SubmitApplicationRequest {
   name: string;
   email: string;
-  skills: string[];
-  experience: string;
-  projects: string[];
-  summary: string;
   githubUrl?: string;
   portfolioUrl?: string;
 }
@@ -99,6 +98,14 @@ export interface ApplicationResponse {
   createdAt: IsoDateString;
 }
 
+/** Metadata of a candidate's latest CV (the PDF bytes are never inlined) */
+export interface CvDocumentSummary {
+  id: string;
+  filename: string;
+  sizeBytes: number;
+  uploadedAt: IsoDateString;
+}
+
 /** GET /candidates, GET /candidates/:id */
 export interface CandidateResponse {
   id: string;
@@ -110,6 +117,7 @@ export interface CandidateResponse {
   experience: string;
   projects: string[];
   summary: string;
+  cv: CvDocumentSummary;
   createdAt: IsoDateString;
 }
 

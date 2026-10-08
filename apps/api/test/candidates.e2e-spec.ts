@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
+import { applyWithCv, fixtureBytes } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
 function uniqueEmail(): string {
@@ -47,14 +48,10 @@ describe('Candidates (e2e)', () => {
     };
   }
 
-  function applicationPayload(overrides: Record<string, unknown> = {}) {
+  function applicationPayload(overrides: Record<string, string> = {}) {
     return {
       name: 'Jane Applicant',
       email: uniqueEmail(),
-      skills: ['TypeScript', 'Node.js'],
-      experience: 'Built things at a company.',
-      projects: ['Cool project'],
-      summary: 'A backend engineer looking for new challenges.',
       ...overrides,
     };
   }
@@ -65,16 +62,9 @@ describe('Candidates (e2e)', () => {
   ): Promise<{
     name: string;
     email: string;
-    skills: string[];
-    experience: string;
-    projects: string[];
-    summary: string;
   }> {
     const payload = applicationPayload(overrides);
-    await request(testApp.app.getHttpServer())
-      .post(`/apply/${applyToken}`)
-      .send(payload)
-      .expect(201);
+    await applyWithCv(testApp.app, applyToken, payload).expect(201);
     return payload;
   }
 
@@ -124,10 +114,10 @@ describe('Candidates (e2e)', () => {
       expect(res.body).toMatchObject({
         name: applicant.name,
         email: applicant.email.toLowerCase(),
-        skills: applicant.skills,
-        experience: applicant.experience,
-        projects: applicant.projects,
-        summary: applicant.summary,
+        skills: [],
+        experience: '',
+        projects: [],
+        summary: '',
       });
       expect(res.body.applications).toBeUndefined();
     });
@@ -152,6 +142,134 @@ describe('Candidates (e2e)', () => {
 
       await request(testApp.app.getHttpServer())
         .get(`/candidates/${candidateId}`)
+        .expect(401);
+    });
+  });
+
+  describe('GET /candidates/:id/cv', () => {
+    const binaryParser = (
+      res: NodeJS.ReadableStream,
+      cb: (err: Error | null, body: Buffer) => void,
+    ) => {
+      const chunks: Buffer[] = [];
+      res.on('data', (c: Buffer) => chunks.push(c));
+      res.on('end', () => cb(null, Buffer.concat(chunks)));
+    };
+
+    async function applyAndGetId(
+      agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+      applyToken: string,
+      email: string,
+      fixture = 'cv-text.pdf',
+      uploadName?: string,
+    ): Promise<string> {
+      await applyWithCv(
+        testApp.app,
+        applyToken,
+        { name: 'Jane Applicant', email },
+        fixture,
+        uploadName,
+      ).expect(201);
+      return findCandidateId(agent, email);
+    }
+
+    it('returns the uploaded PDF inline with safe headers', async () => {
+      const agent = await authenticatedAgent();
+      const { applyToken } = await createVacancyWithToken(agent);
+      const id = await applyAndGetId(agent, applyToken, uniqueEmail());
+
+      const res = await agent
+        .get(`/candidates/${id}/cv`)
+        .buffer(true)
+        .parse(binaryParser)
+        .expect(200);
+
+      expect(res.headers['content-type']).toContain('application/pdf');
+      expect(res.headers['x-content-type-options']).toBe('nosniff');
+      expect(res.headers['cache-control']).toBe('private, no-store');
+      expect(res.headers['content-disposition']).toContain('inline;');
+      expect(res.headers['content-disposition']).toContain(
+        'filename="cv-text.pdf"',
+      );
+      expect(res.headers['content-length']).toBe(
+        String(fixtureBytes('cv-text.pdf').length),
+      );
+      expect((res.body as Buffer).equals(fixtureBytes('cv-text.pdf'))).toBe(
+        true,
+      );
+    });
+
+    it('returns the newer CV after a later application', async () => {
+      const agent = await authenticatedAgent();
+      const first = await createVacancyWithToken(agent);
+      const second = await createVacancyWithToken(agent);
+      const email = uniqueEmail();
+      const id = await applyAndGetId(agent, first.applyToken, email);
+      await applyAndGetId(agent, second.applyToken, email, 'cv-text-2.pdf');
+
+      const res = await agent
+        .get(`/candidates/${id}/cv`)
+        .buffer(true)
+        .parse(binaryParser)
+        .expect(200);
+
+      expect((res.body as Buffer).equals(fixtureBytes('cv-text-2.pdf'))).toBe(
+        true,
+      );
+    });
+
+    it("lets another recruiter download the candidate's CV", async () => {
+      const owner = await authenticatedAgent();
+      const { applyToken } = await createVacancyWithToken(owner);
+      const email = uniqueEmail();
+      await applyAndGetId(owner, applyToken, email);
+
+      const other = await authenticatedAgent();
+      const id = await findCandidateId(other, email);
+      const res = await other
+        .get(`/candidates/${id}/cv`)
+        .buffer(true)
+        .parse(binaryParser)
+        .expect(200);
+
+      expect((res.body as Buffer).equals(fixtureBytes('cv-text.pdf'))).toBe(
+        true,
+      );
+    });
+
+    it('encodes a non-ASCII filename per RFC 5987', async () => {
+      const agent = await authenticatedAgent();
+      const { applyToken } = await createVacancyWithToken(agent);
+      const id = await applyAndGetId(
+        agent,
+        applyToken,
+        uniqueEmail(),
+        'cv-text.pdf',
+        'résumé.pdf',
+      );
+
+      const res = await agent.get(`/candidates/${id}/cv`).expect(200);
+
+      expect(res.headers['content-disposition']).toContain(
+        "filename*=UTF-8''r%C3%A9sum%C3%A9.pdf",
+      );
+    });
+
+    it('returns 404 for an unknown id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get(`/candidates/${randomUUID()}/cv`).expect(404);
+    });
+
+    it('rejects a malformed id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get('/candidates/not-a-uuid/cv').expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .get(`/candidates/${randomUUID()}/cv`)
         .expect(401);
     });
   });

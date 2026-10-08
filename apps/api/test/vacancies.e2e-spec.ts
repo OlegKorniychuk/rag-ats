@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
+import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
 function uniqueEmail(): string {
@@ -55,27 +56,20 @@ describe('Vacancies (e2e)', () => {
     return id;
   }
 
-  function applicationPayload(overrides: Record<string, unknown> = {}) {
+  function applicationPayload(overrides: Record<string, string> = {}) {
     return {
       name: 'Jane Applicant',
       email: uniqueEmail(),
-      skills: ['TypeScript', 'Node.js'],
-      experience: 'Built things at a company.',
-      projects: ['Cool project'],
-      summary: 'A backend engineer looking for new challenges.',
       ...overrides,
     };
   }
 
   async function applyToVacancy(
     applyToken: string,
-    overrides: Record<string, unknown> = {},
+    overrides: Record<string, string> = {},
   ): Promise<{ name: string; email: string }> {
     const payload = applicationPayload(overrides);
-    await request(testApp.app.getHttpServer())
-      .post(`/apply/${applyToken}`)
-      .send(payload)
-      .expect(201);
+    await applyWithCv(testApp.app, applyToken, payload).expect(201);
     return { name: payload.name, email: payload.email };
   }
 

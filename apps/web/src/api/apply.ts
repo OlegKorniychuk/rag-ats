@@ -10,9 +10,16 @@ export const getPublicVacancy = (token: string) =>
 
 export const submitApplication = (
   token: string,
-  body: SubmitApplicationRequest,
-) =>
-  apiFetch<SuccessResponse>(`/apply/${encodeURIComponent(token)}`, {
+  values: SubmitApplicationRequest & { cv: File },
+) => {
+  const body = new FormData();
+  body.append('name', values.name);
+  body.append('email', values.email);
+  if (values.githubUrl) body.append('githubUrl', values.githubUrl);
+  if (values.portfolioUrl) body.append('portfolioUrl', values.portfolioUrl);
+  body.append('cv', values.cv, values.cv.name);
+  return apiFetch<SuccessResponse>(`/apply/${encodeURIComponent(token)}`, {
     method: 'POST',
-    json: body,
+    body,
   });
+};

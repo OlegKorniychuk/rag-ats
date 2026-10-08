@@ -25,6 +25,12 @@ function makeCandidate(
     experience: '5 years',
     projects: [],
     summary: '',
+    cv: {
+      id: 'cv1',
+      filename: 'cv.pdf',
+      sizeBytes: 1024,
+      uploadedAt: '2024-01-01T00:00:00.000Z',
+    },
     createdAt: '2024-01-15T00:00:00.000Z',
     ...overrides,
   };
@@ -74,6 +80,22 @@ describe('CandidatesPage', () => {
     expect(screen.queryByText('go')).not.toBeInTheDocument();
     expect(screen.queryByText('rust')).not.toBeInTheDocument();
     expect(screen.getByText('+2')).toBeInTheDocument();
+  });
+
+  it('renders a candidate with no skills and still filters', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates`, () =>
+        HttpResponse.json([makeCandidate({ skills: [] })]),
+      ),
+    );
+    renderApp({ route: '/candidates', session });
+
+    await screen.findByText('Ada Lovelace');
+    await userEvent.type(
+      screen.getByLabelText('Filter by name, email or skill'),
+      'ada',
+    );
+    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
   });
 
   it('narrows rows when typing in the filter and updates the URL', async () => {

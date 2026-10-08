@@ -4,7 +4,7 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "multer"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,

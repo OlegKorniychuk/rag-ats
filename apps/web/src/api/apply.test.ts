@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
 import { getPublicVacancy, submitApplication } from './apply';
@@ -20,24 +20,33 @@ describe('apply api', () => {
     expect(result).toEqual(vacancy);
   });
 
-  it('submitApplication posts to /apply/:token with the body', async () => {
-    let receivedBody: unknown;
+  it('submitApplication posts multipart form data to /apply/:token', async () => {
+    let form: FormData | undefined;
+    let contentType: string | null = null;
     server.use(
       http.post(`${baseUrl}/apply/tok-123`, async ({ request }) => {
-        receivedBody = await request.json();
+        contentType = request.headers.get('content-type');
+        form = await request.formData();
         return HttpResponse.json({ success: true }, { status: 201 });
       }),
     );
-    const body = {
+    const append = vi.spyOn(FormData.prototype, 'append');
+    const result = await submitApplication('tok-123', {
       name: 'Jane Doe',
       email: 'jane@example.com',
-      skills: ['TS'],
-      experience: '3 years',
-      projects: ['Project A'],
-      summary: 'Great candidate',
-    };
-    const result = await submitApplication('tok-123', body);
-    expect(receivedBody).toEqual(body);
+      portfolioUrl: 'https://jane.dev',
+      cv: new File(['%PDF-1.4'], 'cv.pdf', { type: 'application/pdf' }),
+    });
+    expect(contentType).toContain('multipart/form-data');
+    expect(form?.get('name')).toBe('Jane Doe');
+    expect(form?.get('email')).toBe('jane@example.com');
+    expect(form?.get('portfolioUrl')).toBe('https://jane.dev');
+    expect(form?.has('githubUrl')).toBe(false);
+    // jsdom's File loses its filename when serialized by the Node fetch layer,
+    // so assert the filename passed to FormData and the received part's type.
+    expect(append).toHaveBeenCalledWith('cv', expect.any(File), 'cv.pdf');
+    append.mockRestore();
+    expect((form?.get('cv') as Blob).type).toBe('application/pdf');
     expect(result).toEqual({ success: true });
   });
 });

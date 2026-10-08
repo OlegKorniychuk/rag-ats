@@ -108,6 +108,20 @@ describe('Swagger recruiter docs (e2e)', () => {
     expect(schema?.$ref).toBe('#/components/schemas/CandidateResponseDto');
   });
 
+  it('documents GET /candidates/{id}/cv as application/pdf', () => {
+    const operation = doc.paths['/candidates/{id}/cv']?.get;
+    expect(operation).toBeDefined();
+    const content = (
+      operation?.responses?.['200'] as {
+        content?: Record<string, { schema?: { format?: string } }>;
+      }
+    ).content;
+    expect(content?.['application/pdf']?.schema?.format).toBe('binary');
+    expect(operation?.responses?.['400']).toBeDefined();
+    expect(operation?.responses?.['401']).toBeDefined();
+    expect(operation?.responses?.['404']).toBeDefined();
+  });
+
   it('tags every operation under /vacancies, /applications and /candidates', () => {
     for (const [path, operations] of Object.entries(doc.paths)) {
       if (

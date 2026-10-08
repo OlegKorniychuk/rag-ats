@@ -1,9 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
-import { ApiError, apiFetch, setUnauthorizedHandler } from './client';
+import { ApiError, apiFetch, apiUrl, setUnauthorizedHandler } from './client';
 
 const baseUrl = 'http://localhost:3000';
+
+describe('apiUrl', () => {
+  it('prefixes the path with the API base URL', () => {
+    expect(apiUrl('/candidates/c1/cv')).toBe(`${baseUrl}/candidates/c1/cv`);
+  });
+});
 
 describe('apiFetch', () => {
   it('returns parsed JSON on success', async () => {

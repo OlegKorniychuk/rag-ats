@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Box, Button, Stack, TextField } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  FormHelperText,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { submitApplication } from '../api/apply';
 import { ApiError } from '../api/client';
-import { ChipInput } from '../components/ChipInput';
 import {
   applicationSchema,
   type ApplicationFormOutput,
@@ -16,6 +23,16 @@ interface ApplicationFormProps {
   onSubmitted: (name: string) => void;
   onClosed: () => void;
 }
+
+// keeps the input focusable for keyboard users, unlike `hidden`
+const visuallyHiddenInput = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+} as const;
 
 export function ApplicationForm({
   token,
@@ -33,12 +50,9 @@ export function ApplicationForm({
     defaultValues: {
       name: '',
       email: '',
-      skills: [],
-      experience: '',
-      projects: [],
-      summary: '',
       githubUrl: '',
       portfolioUrl: '',
+      cv: undefined,
     },
   });
 
@@ -60,6 +74,8 @@ export function ApplicationForm({
           setFormError("You've already applied to this vacancy");
         } else if (error.status === 404) {
           setFormError('This application link is invalid or has expired');
+        } else if (error.status === 413) {
+          setFormError('CV must be 5 MB or smaller');
         } else {
           setFormError(error.message);
         }
@@ -86,49 +102,6 @@ export function ApplicationForm({
           helperText={errors.email?.message}
           {...register('email')}
         />
-        <Controller
-          name="skills"
-          control={control}
-          render={({ field }) => (
-            <ChipInput
-              label="Skills"
-              value={field.value}
-              onChange={field.onChange}
-              onBlur={field.onBlur}
-              error={!!errors.skills}
-              helperText={errors.skills?.message}
-            />
-          )}
-        />
-        <TextField
-          label="Experience"
-          multiline
-          minRows={3}
-          error={!!errors.experience}
-          helperText={errors.experience?.message}
-          {...register('experience')}
-        />
-        <Controller
-          name="projects"
-          control={control}
-          render={({ field }) => (
-            <ChipInput
-              label="Projects"
-              value={field.value}
-              onChange={field.onChange}
-              onBlur={field.onBlur}
-              helperText="Optional — press Enter to add"
-            />
-          )}
-        />
-        <TextField
-          label="Summary"
-          multiline
-          minRows={3}
-          error={!!errors.summary}
-          helperText={errors.summary?.message}
-          {...register('summary')}
-        />
         <TextField
           label="GitHub URL"
           error={!!errors.githubUrl}
@@ -140,6 +113,37 @@ export function ApplicationForm({
           error={!!errors.portfolioUrl}
           helperText={errors.portfolioUrl?.message}
           {...register('portfolioUrl')}
+        />
+        <Controller
+          name="cv"
+          control={control}
+          render={({ field }) => (
+            <Box>
+              <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+                <Button component="label" variant="outlined">
+                  Upload CV (PDF)
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    style={visuallyHiddenInput}
+                    aria-describedby={errors.cv ? 'cv-error' : undefined}
+                    onChange={(event) =>
+                      field.onChange(event.target.files?.[0])
+                    }
+                    onBlur={field.onBlur}
+                  />
+                </Button>
+                <Typography color="text.secondary">
+                  {field.value?.name ?? 'No file chosen'}
+                </Typography>
+              </Stack>
+              {errors.cv && (
+                <FormHelperText id="cv-error" error role="alert">
+                  {errors.cv.message}
+                </FormHelperText>
+              )}
+            </Box>
+          )}
         />
         <Button type="submit" variant="contained" disabled={isSubmitting}>
           {isSubmitting ? 'Submitting…' : 'Submit application'}

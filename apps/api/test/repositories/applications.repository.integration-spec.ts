@@ -17,6 +17,10 @@ import {
   type CandidatesRepository,
 } from '../../src/db/repositories/candidates.repository.js';
 import {
+  CV_DOCUMENTS_REPOSITORY,
+  type CvDocumentsRepository,
+} from '../../src/db/repositories/cv-documents.repository.js';
+import {
   RECRUITERS_REPOSITORY,
   type NewRecruiter,
   type RecruitersRepository,
@@ -69,6 +73,7 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
   let recruitersRepository: RecruitersRepository;
   let vacanciesRepository: VacanciesRepository;
   let candidatesRepository: CandidatesRepository;
+  let cvDocumentsRepository: CvDocumentsRepository;
   let applicationsRepository: ApplicationsRepository;
   let recruiterId: string;
 
@@ -104,6 +109,7 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     recruitersRepository = moduleRef.get(RECRUITERS_REPOSITORY);
     vacanciesRepository = moduleRef.get(VACANCIES_REPOSITORY);
     candidatesRepository = moduleRef.get(CANDIDATES_REPOSITORY);
+    cvDocumentsRepository = moduleRef.get(CV_DOCUMENTS_REPOSITORY);
     applicationsRepository = moduleRef.get(APPLICATIONS_REPOSITORY);
 
     const recruiter = await recruitersRepository.create(newRecruiter());
@@ -123,13 +129,24 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     return vacancy.id;
   }
 
-  async function seedCandidate(
-    overrides: Partial<NewCandidate> = {},
-  ): Promise<string> {
+  async function seedCandidateWithCv(overrides: Partial<NewCandidate> = {}) {
     const candidate = await candidatesRepository.create(
       newCandidate(overrides),
     );
-    return candidate.id;
+    await cvDocumentsRepository.create({
+      candidateId: candidate.id,
+      filename: 'cv.pdf',
+      sizeBytes: 3,
+      content: Buffer.from('pdf'),
+      text: 'cv text',
+    });
+    return candidate;
+  }
+
+  async function seedCandidate(
+    overrides: Partial<NewCandidate> = {},
+  ): Promise<string> {
+    return (await seedCandidateWithCv(overrides)).id;
   }
 
   it('creates an application defaulting stage to applied', async () => {
@@ -204,9 +221,9 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
   it('findByVacancyIdWithCandidate returns only that vacancy applications, newest first, with candidate populated', async () => {
     const vacancyId = await seedVacancy();
     const otherVacancyId = await seedVacancy();
-    const firstCandidate = await candidatesRepository.create(newCandidate());
-    const secondCandidate = await candidatesRepository.create(newCandidate());
-    const otherCandidate = await candidatesRepository.create(newCandidate());
+    const firstCandidate = await seedCandidateWithCv();
+    const secondCandidate = await seedCandidateWithCv();
+    const otherCandidate = await seedCandidateWithCv();
 
     const first = await applicationsRepository.create({
       vacancyId,
@@ -231,6 +248,31 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     expect(found[0].candidate.email).toBe(secondCandidate.email);
     expect(found[1].candidate.id).toBe(firstCandidate.id);
     expect(found[1].candidate.email).toBe(firstCandidate.email);
+    for (const application of found) {
+      expect(Object.keys(application.candidate.cv).sort()).toEqual([
+        'filename',
+        'id',
+        'sizeBytes',
+        'uploadedAt',
+      ]);
+      expect(application.candidate.cv.filename).toBe('cv.pdf');
+      expect(application.candidate).not.toHaveProperty('cvDocuments');
+    }
+  });
+
+  it('findByVacancyIdWithCandidate throws an invariant error when a candidate has no CV', async () => {
+    const vacancyId = await seedVacancy();
+    const candidate = await candidatesRepository.create(newCandidate());
+    await applicationsRepository.create({
+      vacancyId,
+      candidateId: candidate.id,
+    });
+
+    await expect(
+      applicationsRepository.findByVacancyIdWithCandidate(vacancyId),
+    ).rejects.toThrow(
+      `Invariant violated: candidate ${candidate.id} has no CV`,
+    );
   });
 
   it('findByVacancyIdWithCandidate returns an empty array for a vacancy with no applications', async () => {
