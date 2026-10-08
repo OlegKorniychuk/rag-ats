@@ -45,4 +45,12 @@ export class DrizzleCvDocumentsRepository implements CvDocumentsRepository {
     });
     return row ?? null;
   }
+
+  async findTextById(id: string): Promise<string | null> {
+    const row = await this.txHost.tx.query.cvDocuments.findFirst({
+      where: { id },
+      columns: { text: true },
+    });
+    return row?.text ?? null;
+  }
 }

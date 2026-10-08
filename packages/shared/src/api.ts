@@ -5,6 +5,7 @@
 export type VacancyStatus = 'open' | 'closed';
 export type ApplicationStage =
   'applied' | 'screened' | 'interview' | 'rejected' | 'hired';
+export type ParseStatus = 'pending' | 'parsing' | 'parsed' | 'failed';
 
 /** Dates are serialized as ISO 8601 strings over JSON. */
 export type IsoDateString = string;
@@ -106,7 +107,13 @@ export interface CvDocumentSummary {
   uploadedAt: IsoDateString;
 }
 
-/** GET /candidates, GET /candidates/:id */
+/**
+ * GET /candidates, GET /candidates/:id
+ *
+ * Also returned (202) by POST /candidates/:id/reparse, which has no request
+ * body: it re-queues parsing of the latest CV and is only allowed while
+ * `parseStatus` is `parsed` or `failed`.
+ */
 export interface CandidateResponse {
   id: string;
   name: string;
@@ -118,6 +125,10 @@ export interface CandidateResponse {
   projects: string[];
   summary: string;
   cv: CvDocumentSummary;
+  /** Progress of the async LLM parse that fills the profile fields from the CV. */
+  parseStatus: ParseStatus;
+  /** Short, safe reason when `parseStatus` is `failed`; otherwise null. */
+  parseError: string | null;
   createdAt: IsoDateString;
 }
 

@@ -171,4 +171,16 @@ describe('CvDocumentsRepository (Testcontainers integration)', () => {
 
     expect(found).toBeNull();
   });
+
+  it('findTextById returns the extracted text, or null when unknown', async () => {
+    const candidate = await candidatesRepository.create(newCandidate());
+    const cv = await cvDocumentsRepository.create(
+      newCvDocument(candidate.id, { text: 'Parsed text body' }),
+    );
+
+    expect(await cvDocumentsRepository.findTextById(cv.id)).toBe(
+      'Parsed text body',
+    );
+    expect(await cvDocumentsRepository.findTextById(randomUUID())).toBeNull();
+  });
 });

@@ -6,6 +6,7 @@ import type {
   AuthUserResponse,
   CandidateResponse,
   CvDocumentSummary as CvDocumentSummaryResponse,
+  ParseStatus,
   PublicVacancyResponse,
   VacancyResponse,
   VacancyStatus,
@@ -19,7 +20,11 @@ import type {
 import type { Candidate } from './db/repositories/candidates.repository.js';
 import type { CvDocumentSummary } from './db/repositories/cv-documents.repository.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
-import type { applicationStageEnum, vacancyStatusEnum } from './db/schema.js';
+import type {
+  applicationStageEnum,
+  parseStatusEnum,
+  vacancyStatusEnum,
+} from './db/schema.js';
 
 type Jsonify<T> = T extends Date
   ? string
@@ -72,4 +77,7 @@ export type CheckApplicationStage = Assert<
 >;
 export type CheckVacancyStatus = Assert<
   Equal<(typeof vacancyStatusEnum.enumValues)[number], VacancyStatus>
+>;
+export type CheckParseStatus = Assert<
+  Equal<(typeof parseStatusEnum.enumValues)[number], ParseStatus>
 >;

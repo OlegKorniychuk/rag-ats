@@ -224,6 +224,8 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
 
   it('update persists a partial change and leaves other fields untouched', async () => {
     const created = await candidatesRepository.create(newCandidate());
+    // keep the shared test DB valid for later findAll reads
+    await addCv(created.id);
 
     const updated = await candidatesRepository.update(created.id, {
       skills: ['Go', 'Kubernetes'],
@@ -238,5 +240,178 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
     expect(updated.portfolioUrl).toBe(created.portfolioUrl);
     expect(updated.experience).toBe(created.experience);
     expect(updated.projects).toEqual(created.projects);
+  });
+
+  describe('parse state', () => {
+    const profile = {
+      skills: ['Go', 'Kubernetes'],
+      experience: '4 years of platform work',
+      projects: ['Cluster autoscaler'],
+      summary: 'Platform engineer.',
+    };
+
+    it('a new candidate is pending with no parse error', async () => {
+      const created = await seedCandidate();
+
+      const found = await candidatesRepository.findById(created.id);
+
+      expect(found?.parseStatus).toBe('pending');
+      expect(found?.parseError).toBeNull();
+    });
+
+    it('setParseStatus sets the status, with and without an error', async () => {
+      const created = await seedCandidate();
+
+      await candidatesRepository.setParseStatus(created.id, 'failed', 'boom');
+      let found = await candidatesRepository.findById(created.id);
+      expect(found?.parseStatus).toBe('failed');
+      expect(found?.parseError).toBe('boom');
+
+      await candidatesRepository.setParseStatus(created.id, 'parsing');
+      found = await candidatesRepository.findById(created.id);
+      expect(found?.parseStatus).toBe('parsing');
+      expect(found?.parseError).toBeNull();
+    });
+
+    it('markParsing moves pending/failed/parsing to parsing and clears the error', async () => {
+      for (const from of ['pending', 'failed', 'parsing'] as const) {
+        const created = await seedCandidate();
+        await candidatesRepository.setParseStatus(created.id, from, 'x');
+
+        expect(await candidatesRepository.markParsing(created.id)).toBe(true);
+
+        const found = await candidatesRepository.findById(created.id);
+        expect(found?.parseStatus).toBe('parsing');
+        expect(found?.parseError).toBeNull();
+      }
+    });
+
+    it('markParsing refuses a parsed or unknown candidate and changes nothing', async () => {
+      const created = await seedCandidate();
+      await candidatesRepository.setParseStatus(created.id, 'parsed');
+
+      expect(await candidatesRepository.markParsing(created.id)).toBe(false);
+      expect(
+        (await candidatesRepository.findById(created.id))?.parseStatus,
+      ).toBe('parsed');
+      expect(await candidatesRepository.markParsing(randomUUID())).toBe(false);
+    });
+
+    it('saveParsedProfile writes the profile, marks parsed and clears the error', async () => {
+      const created = await seedCandidate();
+      const state = await candidatesRepository.findParseState(created.id);
+      await candidatesRepository.setParseStatus(created.id, 'failed', 'boom');
+
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        state!.latestCvDocumentId,
+        profile,
+      );
+
+      const found = await candidatesRepository.findById(created.id);
+      expect(found).toMatchObject({
+        ...profile,
+        parseStatus: 'parsed',
+        parseError: null,
+      });
+      const after = await candidatesRepository.findParseState(created.id);
+      expect(after).toEqual({
+        id: created.id,
+        parseStatus: 'parsed',
+        parsedCvDocumentId: state!.latestCvDocumentId,
+        latestCvDocumentId: state!.latestCvDocumentId,
+      });
+      const { rows } = await testDb.pool.query(
+        'SELECT parsed_at FROM candidates WHERE id = $1',
+        [created.id],
+      );
+      expect(rows[0].parsed_at).toBeInstanceOf(Date);
+    });
+
+    it('findParseState tracks the newest CV and is null for unknown ids', async () => {
+      const created = await seedCandidate();
+      const first = await candidatesRepository.findParseState(created.id);
+      expect(first).toMatchObject({
+        parseStatus: 'pending',
+        parsedCvDocumentId: null,
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      await addCv(created.id);
+
+      const second = await candidatesRepository.findParseState(created.id);
+      const latest = await candidatesRepository.findById(created.id);
+      expect(second!.latestCvDocumentId).not.toBe(first!.latestCvDocumentId);
+      expect(second!.latestCvDocumentId).toBe(latest!.cv.id);
+
+      expect(
+        await candidatesRepository.findParseState(randomUUID()),
+      ).toBeNull();
+    });
+
+    it('findParseBacklog returns only pending/parsing candidates with their latest CV', async () => {
+      const pending = await seedCandidate();
+      const parsing = await seedCandidate();
+      const parsed = await seedCandidate();
+      const failed = await seedCandidate();
+      await candidatesRepository.setParseStatus(parsing.id, 'parsing');
+      await candidatesRepository.setParseStatus(parsed.id, 'parsed');
+      await candidatesRepository.setParseStatus(failed.id, 'failed', 'x');
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      await addCv(pending.id);
+
+      const backlog = await candidatesRepository.findParseBacklog();
+
+      const ids = backlog.map((b) => b.candidateId);
+      expect(ids).toContain(pending.id);
+      expect(ids).toContain(parsing.id);
+      expect(ids).not.toContain(parsed.id);
+      expect(ids).not.toContain(failed.id);
+      const pendingLatest = await candidatesRepository.findById(pending.id);
+      expect(backlog.find((b) => b.candidateId === pending.id)).toEqual({
+        candidateId: pending.id,
+        cvDocumentId: pendingLatest!.cv.id,
+      });
+    });
+
+    it('reads never expose internal parse columns or CV content', async () => {
+      const created = await seedCandidate();
+      const state = await candidatesRepository.findParseState(created.id);
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        state!.latestCvDocumentId,
+        profile,
+      );
+      const expectedKeys = [
+        'id',
+        'name',
+        'email',
+        'githubUrl',
+        'portfolioUrl',
+        'skills',
+        'experience',
+        'projects',
+        'summary',
+        'parseStatus',
+        'parseError',
+        'createdAt',
+        'cv',
+      ].sort();
+
+      const byId = await candidatesRepository.findById(created.id);
+      const byEmail = await candidatesRepository.findByEmail(created.email);
+      const all = await candidatesRepository.findAll();
+      const fromAll = all.find((c) => c.id === created.id);
+
+      for (const found of [byId, byEmail, fromAll]) {
+        expect(Object.keys(found!).sort()).toEqual(expectedKeys);
+      }
+      const updated = await candidatesRepository.update(created.id, {
+        name: 'Renamed',
+      });
+      expect(Object.keys(updated).sort()).toEqual(
+        expectedKeys.filter((k) => k !== 'cv'),
+      );
+    });
   });
 });

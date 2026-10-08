@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications } from '../schema.js';
 import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
+import { publicCandidateColumnsWith } from './candidates.repository.js';
 import type {
   NewApplication,
   Application,
@@ -44,7 +45,12 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
   ): Promise<ApplicationWithCandidate[]> {
     const rows = await this.txHost.tx.query.applications.findMany({
       where: { vacancyId },
-      with: { candidate: { with: latestCvSummaryWith } },
+      with: {
+        candidate: {
+          columns: publicCandidateColumnsWith,
+          with: latestCvSummaryWith,
+        },
+      },
       orderBy: { createdAt: 'desc' },
     });
     return rows.map((row) => ({ ...row, candidate: withCv(row.candidate) }));

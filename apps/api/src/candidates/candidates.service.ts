@@ -1,4 +1,11 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Transactional } from '@nestjs-cls/transactional';
+import { JobsService } from '../jobs/jobs.service.js';
 import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
@@ -16,6 +23,7 @@ export class CandidatesService {
     private readonly candidatesRepository: CandidatesRepository,
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocumentsRepository: CvDocumentsRepository,
+    private readonly jobs: JobsService,
   ) {}
 
   async findAll(): Promise<Candidate[]> {
@@ -47,5 +55,26 @@ export class CandidatesService {
     }
 
     return cv;
+  }
+
+  async reparse(id: string): Promise<Candidate> {
+    const cvDocumentId = await this.markPending(id);
+    // After commit, so the worker sees `pending`. If this throws, the
+    // candidate stays `pending` and the startup sweep re-enqueues it.
+    await this.jobs.enqueueParse(id, cvDocumentId);
+    return this.findOne(id);
+  }
+
+  @Transactional()
+  private async markPending(id: string): Promise<string> {
+    const state = await this.candidatesRepository.findParseState(id);
+    if (!state) {
+      throw new NotFoundException('Candidate not found');
+    }
+    if (state.parseStatus === 'pending' || state.parseStatus === 'parsing') {
+      throw new ConflictException('CV parsing is already in progress');
+    }
+    await this.candidatesRepository.setParseStatus(id, 'pending');
+    return state.latestCvDocumentId;
   }
 }

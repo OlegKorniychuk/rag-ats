@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsIn,
   IsInt,
+  IsNumber,
   IsOptional,
   IsString,
   IsUrl,
@@ -38,4 +39,20 @@ export class EnvConfig {
   @IsOptional()
   @IsUrl({ require_tld: false })
   public readonly WEB_ORIGIN: string = 'http://localhost:5173';
+
+  @IsString()
+  @MinLength(1)
+  public readonly OPENAI_API_KEY!: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  public readonly OPENAI_MODEL: string = 'gpt-5.4-mini';
+
+  // pg-boss requires >= 0.5.
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0.5)
+  public readonly JOBS_POLL_INTERVAL_SECONDS: number = 2;
 }

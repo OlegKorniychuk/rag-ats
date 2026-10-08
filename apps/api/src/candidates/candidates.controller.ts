@@ -2,12 +2,16 @@ import {
   Controller,
   Get,
   Header,
+  HttpCode,
   Param,
   ParseUUIDPipe,
+  Post,
   StreamableFile,
 } from '@nestjs/common';
 import {
+  ApiAcceptedResponse,
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -85,5 +89,25 @@ export class CandidatesController {
       disposition: buildContentDisposition(cv.filename),
       length: cv.content.length,
     });
+  }
+
+  @Post(':id/reparse')
+  @HttpCode(202)
+  @ApiOperation({
+    summary: "Re-run LLM parsing of a candidate's latest CV",
+    description:
+      'Allowed when the parse status is `parsed` or `failed`. Sets the status to `pending` and returns immediately; the profile is refreshed asynchronously.',
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiAcceptedResponse({
+    description: 'Parsing queued; the candidate is now pending',
+    type: CandidateResponseDto,
+  })
+  @ApiBadRequestResponse({ description: 'Malformed uuid' })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiNotFoundResponse({ description: 'Unknown candidate id' })
+  @ApiConflictResponse({ description: 'CV parsing is already in progress' })
+  async reparse(@Param('id', ParseUUIDPipe) id: string): Promise<Candidate> {
+    return this.candidatesService.reparse(id);
   }
 }

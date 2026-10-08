@@ -58,7 +58,7 @@ describe('Candidates (e2e)', () => {
 
   async function applyToVacancy(
     applyToken: string,
-    overrides: Record<string, unknown> = {},
+    overrides: Record<string, string> = {},
   ): Promise<{
     name: string;
     email: string;
@@ -114,10 +114,6 @@ describe('Candidates (e2e)', () => {
       expect(res.body).toMatchObject({
         name: applicant.name,
         email: applicant.email.toLowerCase(),
-        skills: [],
-        experience: '',
-        projects: [],
-        summary: '',
       });
       expect(res.body.applications).toBeUndefined();
     });
@@ -148,7 +144,7 @@ describe('Candidates (e2e)', () => {
 
   describe('GET /candidates/:id/cv', () => {
     const binaryParser = (
-      res: NodeJS.ReadableStream,
+      res: request.Response,
       cb: (err: Error | null, body: Buffer) => void,
     ) => {
       const chunks: Buffer[] = [];
