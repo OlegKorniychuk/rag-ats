@@ -19,6 +19,12 @@ interface OpenApiResponse {
 interface OpenApiRequestBody {
   content?: {
     'application/json'?: { schema?: OpenApiSchema };
+    'multipart/form-data'?: {
+      schema?: {
+        required?: string[];
+        properties?: Record<string, { type?: string; format?: string }>;
+      };
+    };
   };
 }
 
@@ -54,39 +60,6 @@ describe('Swagger public docs (e2e)', () => {
     await closeTestApp(testApp);
   });
 
-  it('documents all SubmitApplicationDto properties with the correct required set', () => {
-    const schema = doc.components?.schemas?.SubmitApplicationDto;
-    expect(schema).toBeDefined();
-
-    const properties = Object.keys(schema?.properties ?? {});
-    expect(properties.sort()).toEqual(
-      [
-        'name',
-        'email',
-        'skills',
-        'experience',
-        'projects',
-        'summary',
-        'githubUrl',
-        'portfolioUrl',
-      ].sort(),
-    );
-
-    const required = schema?.required ?? [];
-    expect(required).toEqual(
-      expect.arrayContaining([
-        'name',
-        'email',
-        'skills',
-        'experience',
-        'projects',
-        'summary',
-      ]),
-    );
-    expect(required).not.toContain('githubUrl');
-    expect(required).not.toContain('portfolioUrl');
-  });
-
   it('documents POST /apply/{token} responses', () => {
     const operation = doc.paths['/apply/{token}']?.post;
     expect(operation).toBeDefined();
@@ -97,6 +70,30 @@ describe('Swagger public docs (e2e)', () => {
     expect(operation?.responses?.['400']).toBeDefined();
     expect(operation?.responses?.['404']).toBeDefined();
     expect(operation?.responses?.['409']).toBeDefined();
+    expect(operation?.responses?.['413']).toBeDefined();
+  });
+
+  it('documents POST /apply/{token} as multipart with a binary cv file', () => {
+    const schema =
+      doc.paths['/apply/{token}']?.post?.requestBody?.content?.[
+        'multipart/form-data'
+      ]?.schema;
+    expect(schema?.properties?.cv).toMatchObject({
+      type: 'string',
+      format: 'binary',
+    });
+    expect(schema?.required).toEqual(
+      expect.arrayContaining(['name', 'email', 'cv']),
+    );
+    expect(schema?.required).not.toContain('githubUrl');
+    expect(schema?.required).not.toContain('portfolioUrl');
+    expect(Object.keys(schema?.properties ?? {}).sort()).toEqual([
+      'cv',
+      'email',
+      'githubUrl',
+      'name',
+      'portfolioUrl',
+    ]);
   });
 
   it('documents GET /apply/{token} 200 response as PublicVacancyResponseDto', () => {
