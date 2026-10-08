@@ -41,6 +41,8 @@ function makeCandidate(
       sizeBytes: 1024,
       uploadedAt: '2024-01-01T00:00:00.000Z',
     },
+    parseStatus: 'parsed' as const,
+    parseError: null,
     createdAt: '2024-01-01T00:00:00.000Z',
     ...overrides,
   };
@@ -175,5 +177,29 @@ describe('PipelinePage', () => {
     expect(
       await screen.findByRole('heading', { name: 'Ada Lovelace' }),
     ).toBeInTheDocument();
+  });
+
+  it('shows a parse status chip on unparsed cards only', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            id: 'a1',
+            candidate: makeCandidate({ id: 'c1', parseStatus: 'parsing' }),
+          }),
+          makeApplication({
+            id: 'a2',
+            candidateId: 'c2',
+            candidate: makeCandidate({ id: 'c2', name: 'Grace Hopper' }),
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    expect(await screen.findByText('Parsing…')).toBeInTheDocument();
+    expect(screen.getByText('Grace Hopper')).toBeInTheDocument();
+    expect(screen.getAllByLabelText(/^CV parsing/)).toHaveLength(1);
   });
 });

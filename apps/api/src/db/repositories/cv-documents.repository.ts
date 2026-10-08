@@ -17,4 +17,6 @@ export interface CvDocumentsRepository {
   findLatestContentByCandidate(
     candidateId: string,
   ): Promise<{ filename: string; content: Buffer } | null>;
+  /** The extracted text of one CV, or null when it doesn't exist. */
+  findTextById(id: string): Promise<string | null>;
 }

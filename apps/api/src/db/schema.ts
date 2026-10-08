@@ -9,6 +9,7 @@ import {
   integer,
   bytea,
   index,
+  type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
 
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
@@ -18,6 +19,13 @@ export const applicationStageEnum = pgEnum('application_stage', [
   'interview',
   'rejected',
   'hired',
+]);
+
+export const parseStatusEnum = pgEnum('parse_status', [
+  'pending',
+  'parsing',
+  'parsed',
+  'failed',
 ]);
 
 export const recruiters = pgTable('recruiters', {
@@ -49,6 +57,13 @@ export const candidates = pgTable('candidates', {
   experience: text('experience').notNull(),
   projects: text('projects').array().notNull(),
   summary: text('summary').notNull(),
+  parseStatus: parseStatusEnum('parse_status').notNull().default('pending'),
+  parseError: text('parse_error'),
+  // the CV the current profile was parsed from (internal, never exposed)
+  parsedCvDocumentId: uuid('parsed_cv_document_id').references(
+    (): AnyPgColumn => cvDocuments.id,
+  ),
+  parsedAt: timestamp('parsed_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
@@ -92,6 +107,7 @@ export const cvDocuments = pgTable(
 const schema = {
   vacancyStatusEnum,
   applicationStageEnum,
+  parseStatusEnum,
   recruiters,
   vacancies,
   candidates,

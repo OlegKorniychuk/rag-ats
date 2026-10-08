@@ -3,6 +3,7 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
@@ -28,6 +29,7 @@ import {
   UnreadableCvError,
   isPdf,
 } from '../cv/cv-text-extractor.js';
+import { JobsService } from '../jobs/jobs.service.js';
 import type { SubmitApplicationDto } from './dto/submit-application.dto.js';
 
 const DEFAULT_CV_FILENAME = 'cv.pdf';
@@ -53,6 +55,8 @@ export interface SubmitApplicationResult {
 
 @Injectable()
 export class ApplyService {
+  private readonly logger = new Logger(ApplyService.name);
+
   constructor(
     @Inject(VACANCIES_REPOSITORY)
     private readonly vacanciesRepository: VacanciesRepository,
@@ -63,6 +67,7 @@ export class ApplyService {
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocumentsRepository: CvDocumentsRepository,
     private readonly cvTextExtractor: CvTextExtractor,
+    private readonly jobs: JobsService,
   ) {}
 
   async getByToken(token: string): Promise<PublicVacancy> {
@@ -101,11 +106,31 @@ export class ApplyService {
       throw err;
     }
 
-    return this.saveApplication(token, dto, {
-      filename: normalizeFilename(file.originalname),
-      content: file.buffer,
-      text,
-    });
+    const { candidateId, cvDocumentId } = await this.saveApplication(
+      token,
+      dto,
+      {
+        filename: normalizeFilename(file.originalname),
+        content: file.buffer,
+        text,
+      },
+    );
+
+    // Enqueue only after the transaction committed, so the worker can see the
+    // CV. The application is already saved, so an enqueue failure must not fail
+    // the request: the candidate stays `pending` and the startup sweep
+    // re-enqueues it (a recruiter can also trigger a reparse).
+    try {
+      await this.jobs.enqueueParse(candidateId, cvDocumentId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to enqueue CV parsing for candidate ${candidateId}: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+    }
+
+    return { success: true };
   }
 
   @Transactional()
@@ -113,7 +138,7 @@ export class ApplyService {
     token: string,
     dto: SubmitApplicationDto,
     cv: ParsedCv,
-  ): Promise<SubmitApplicationResult> {
+  ): Promise<{ candidateId: string; cvDocumentId: string }> {
     const vacancy = await this.vacanciesRepository.findByApplyToken(token);
     if (!vacancy) {
       throw new NotFoundException('Vacancy not found');
@@ -157,7 +182,7 @@ export class ApplyService {
           summary: '',
         });
 
-    await this.cvDocumentsRepository.create({
+    const cvDocument = await this.cvDocumentsRepository.create({
       candidateId: candidate.id,
       filename: cv.filename,
       sizeBytes: cv.content.length,
@@ -170,6 +195,10 @@ export class ApplyService {
       candidateId: candidate.id,
     });
 
-    return { success: true };
+    // Repeat applicants keep their old profile visible while the new CV is
+    // re-parsed; new candidates are already pending.
+    await this.candidatesRepository.setParseStatus(candidate.id, 'pending');
+
+    return { candidateId: candidate.id, cvDocumentId: cvDocument.id };
   }
 }

@@ -20,6 +20,7 @@ import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { formatDate } from '../lib/format';
 import { useCandidates } from '../candidates/queries';
 import { filterCandidates } from '../candidates/filter';
+import { ParseStatusChip } from '../candidates/ParseStatusChip';
 
 const MAX_VISIBLE_SKILLS = 5;
 
@@ -115,12 +116,19 @@ export function CandidatesPage() {
                 return (
                   <TableRow key={candidate.id}>
                     <TableCell>
-                      <Link
-                        component={RouterLink}
-                        to={`/candidates/${candidate.id}`}
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ alignItems: 'center' }}
                       >
-                        {candidate.name}
-                      </Link>
+                        <Link
+                          component={RouterLink}
+                          to={`/candidates/${candidate.id}`}
+                        >
+                          {candidate.name}
+                        </Link>
+                        <ParseStatusChip status={candidate.parseStatus} />
+                      </Stack>
                     </TableCell>
                     <TableCell>{candidate.email}</TableCell>
                     <TableCell>

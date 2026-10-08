@@ -10,3 +10,5 @@ process.env.JWT_EXPIRES_IN ??= '1h';
 process.env.PORT ??= '0';
 process.env.NODE_ENV ??= 'test';
 process.env.WEB_ORIGIN ??= 'http://localhost:5173';
+process.env.OPENAI_API_KEY ??= 'test-key';
+process.env.JOBS_POLL_INTERVAL_SECONDS ??= '0.5';

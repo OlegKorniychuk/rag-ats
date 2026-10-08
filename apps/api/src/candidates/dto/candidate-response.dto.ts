@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { parseStatusEnum } from '../../db/schema.js';
 import { CvDocumentSummaryResponseDto } from './cv-document-summary-response.dto.js';
-import type { CandidateResponse } from '@rag-ats/shared';
+import type { CandidateResponse, ParseStatus } from '@rag-ats/shared';
 
 export class CandidateResponseDto implements CandidateResponse {
   @ApiProperty({
@@ -55,6 +56,21 @@ export class CandidateResponseDto implements CandidateResponse {
 
   @ApiProperty({ type: CvDocumentSummaryResponseDto })
   cv: CvDocumentSummaryResponseDto;
+
+  @ApiProperty({
+    enum: parseStatusEnum.enumValues,
+    enumName: 'ParseStatus',
+    example: 'parsed',
+  })
+  parseStatus: ParseStatus;
+
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    example: null,
+    description: 'Short reason when parseStatus is failed; otherwise null',
+  })
+  parseError: string | null;
 
   @ApiProperty({
     type: String,

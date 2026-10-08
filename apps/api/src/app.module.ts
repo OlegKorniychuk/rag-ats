@@ -13,6 +13,7 @@ import { EnvConfig } from './config/env.config.js';
 import { DbModule } from './db/db.module.js';
 import { DRIZZLE } from './db/db.tokens.js';
 import { RepositoriesModule } from './db/repositories.module.js';
+import { JobsModule } from './jobs/jobs.module.js';
 import { VacanciesModule } from './vacancies/vacancies.module.js';
 
 @Module({
@@ -40,6 +41,7 @@ import { VacanciesModule } from './vacancies/vacancies.module.js';
     ApplyModule,
     ApplicationsModule,
     CandidatesModule,
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

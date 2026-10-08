@@ -1,6 +1,8 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { CV_MAX_SIZE_BYTES } from '../src/cv/cv.constants.js';
+import { server } from './msw/server.js';
+import { openaiProfileHandler } from './msw/openai.handlers.js';
 import { applyWithCv, fixtureBytes, fixturePath } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
@@ -97,6 +99,22 @@ describe('Apply (e2e)', () => {
       });
     }
 
+    // Parsing runs async in the background; DB-level assertions on the profile
+    // must wait for it to settle (or hold it) to stay deterministic.
+    async function waitForParsed(candidateId: string) {
+      const deadline = Date.now() + 10_000;
+      for (;;) {
+        const row = await testApp.testDb.db.query.candidates.findFirst({
+          where: { id: candidateId },
+        });
+        if (row?.parseStatus === 'parsed') return row;
+        if (Date.now() > deadline) {
+          throw new Error(`Timed out; last status: ${row?.parseStatus}`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    }
+
     async function cvRows(candidateId: string) {
       return testApp.testDb.db.query.cvDocuments.findMany({
         where: { candidateId },
@@ -121,10 +139,7 @@ describe('Apply (e2e)', () => {
       expect(candidate).toMatchObject({
         name: 'Jane Applicant',
         githubUrl: 'https://github.com/jane',
-        skills: [],
-        projects: [],
-        experience: '',
-        summary: '',
+        parseStatus: expect.stringMatching(/^(pending|parsing|parsed)$/),
       });
 
       const cvs = await cvRows(candidate.id);
@@ -154,6 +169,7 @@ describe('Apply (e2e)', () => {
       }).expect(201);
 
       const [before] = await candidateRows(email);
+      await waitForParsed(before.id);
       const profile = {
         skills: ['TypeScript'],
         projects: ['Project A'],
@@ -166,6 +182,16 @@ describe('Apply (e2e)', () => {
         .update(candidates)
         .set(profile)
         .where(eq(candidates.id, before.id));
+
+      // Hold the second parse so the old profile is observable while pending.
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      server.use(
+        openaiProfileHandler(
+          { skills: ['Replaced'], experience: '', projects: [], summary: '' },
+          { before: () => gate },
+        ),
+      );
 
       await applyWithCv(testApp.app, second.applyToken, {
         name: 'New Name',
@@ -182,7 +208,10 @@ describe('Apply (e2e)', () => {
         portfolioUrl: 'https://old.dev',
         ...profile,
       });
+      expect(rows[0].parseStatus).toMatch(/^(pending|parsing)$/);
       expect(await cvRows(before.id)).toHaveLength(2);
+      release();
+      await waitForParsed(before.id);
 
       const applications = await testApp.testDb.db.query.applications.findMany({
         where: { candidateId: before.id },

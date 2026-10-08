@@ -122,6 +122,17 @@ describe('Swagger recruiter docs (e2e)', () => {
     expect(operation?.responses?.['404']).toBeDefined();
   });
 
+  it('documents POST /candidates/{id}/reparse responses', () => {
+    const operation = doc.paths['/candidates/{id}/reparse']?.post;
+    expect(operation).toBeDefined();
+    const schema = responseSchema(operation, '202');
+    expect(schema?.$ref).toBe('#/components/schemas/CandidateResponseDto');
+    expect(operation?.responses?.['400']).toBeDefined();
+    expect(operation?.responses?.['401']).toBeDefined();
+    expect(operation?.responses?.['404']).toBeDefined();
+    expect(operation?.responses?.['409']).toBeDefined();
+  });
+
   it('tags every operation under /vacancies, /applications and /candidates', () => {
     for (const [path, operations] of Object.entries(doc.paths)) {
       if (

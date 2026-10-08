@@ -1,10 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { CandidateResponse } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
+
+vi.mock('../candidates/parseStatus', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../candidates/parseStatus')>()),
+  PARSE_POLL_INTERVAL_MS: 50,
+}));
 
 const baseUrl = 'http://localhost:3000';
 const session = {
@@ -31,6 +36,8 @@ function makeCandidate(
       sizeBytes: 1024,
       uploadedAt: '2024-01-01T00:00:00.000Z',
     },
+    parseStatus: 'parsed',
+    parseError: null,
     createdAt: '2024-01-15T00:00:00.000Z',
     ...overrides,
   };
@@ -251,5 +258,97 @@ describe('CandidatePage', () => {
     await waitFor(() =>
       expect(router.state.location.pathname).toBe('/candidates'),
     );
+  });
+
+  it('polls while parsing and stops once parsed', async () => {
+    let calls = 0;
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () => {
+        calls += 1;
+        return HttpResponse.json(
+          calls === 1
+            ? makeCandidate({
+                parseStatus: 'pending',
+                skills: [],
+                projects: [],
+                experience: '',
+                summary: '',
+              })
+            : makeCandidate({ parseStatus: 'parsed', skills: ['Rust'] }),
+        );
+      }),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(await screen.findAllByText('Parsing CV…')).toHaveLength(4);
+    expect(screen.getByText('Pending')).toBeInTheDocument();
+
+    expect(await screen.findByText('Rust')).toBeInTheDocument();
+    expect(screen.queryByText('Parsing CV…')).not.toBeInTheDocument();
+    expect(screen.queryByText('Pending')).not.toBeInTheDocument();
+
+    const settled = calls;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    expect(calls).toBe(settled);
+  });
+
+  it('shows the parse error and retries parsing', async () => {
+    let status: CandidateResponse['parseStatus'] = 'failed';
+    let reparseCalls = 0;
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({
+            parseStatus: status,
+            parseError: status === 'failed' ? 'LLM exploded' : null,
+          }),
+        ),
+      ),
+      http.post(`${baseUrl}/candidates/c1/reparse`, () => {
+        reparseCalls += 1;
+        status = 'pending';
+        return HttpResponse.json(makeCandidate({ parseStatus: 'pending' }), {
+          status: 202,
+        });
+      }),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(await screen.findByText('LLM exploded')).toBeInTheDocument();
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Retry parsing' }),
+    );
+
+    expect(await screen.findByText('Pending')).toBeInTheDocument();
+    expect(reparseCalls).toBe(1);
+    expect(screen.queryByText('LLM exploded')).not.toBeInTheDocument();
+  });
+
+  it('shows the error when retrying is rejected', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({ parseStatus: 'failed', parseError: null }),
+        ),
+      ),
+      http.post(`${baseUrl}/candidates/c1/reparse`, () =>
+        HttpResponse.json(
+          { message: 'Parsing already in progress' },
+          { status: 409 },
+        ),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(
+      await screen.findByText('Could not parse the CV'),
+    ).toBeInTheDocument();
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Retry parsing' }),
+    );
+
+    expect(
+      await screen.findByText('Parsing already in progress'),
+    ).toBeInTheDocument();
   });
 });
