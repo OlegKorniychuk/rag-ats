@@ -1,5 +1,6 @@
 import { Link as RouterLink, useParams } from 'react-router';
 import {
+  Alert,
   Button,
   Chip,
   Link,
@@ -14,9 +15,11 @@ import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { apiUrl } from '../api/client';
-import { useCandidate } from '../candidates/queries';
+import { ParseStatusChip } from '../candidates/ParseStatusChip';
+import { isParseInFlight } from '../candidates/parseStatus';
+import { useCandidate, useReparseCandidate } from '../candidates/queries';
 import { formatDate } from '../lib/format';
-import { isNotFound } from '../lib/errors';
+import { errorMessage, isNotFound } from '../lib/errors';
 import { safeExternalUrl } from '../lib/safeUrl';
 
 function formatSize(bytes: number): string {
@@ -24,6 +27,7 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+const PARSING = 'Parsing CV…';
 const NOT_AVAILABLE = 'Not available yet — profile will be filled from the CV';
 
 function ExternalLink({
@@ -48,6 +52,7 @@ function ExternalLink({
 export function CandidatePage() {
   const { id = '' } = useParams();
   const candidate = useCandidate(id);
+  const reparse = useReparseCandidate(id);
 
   const backLink = (
     <Link component={RouterLink} to="/candidates">
@@ -89,20 +94,49 @@ export function CandidatePage() {
     projects,
     summary,
     cv,
+    parseStatus,
+    parseError,
     createdAt,
   } = candidate.data;
+  const placeholder = isParseInFlight(parseStatus) ? PARSING : NOT_AVAILABLE;
 
   return (
     <Stack spacing={3}>
       {backLink}
 
       <Stack spacing={0.5}>
-        <Typography variant="h4">{name}</Typography>
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+          <Typography variant="h4">{name}</Typography>
+          <ParseStatusChip status={parseStatus} />
+        </Stack>
         <Link href={`mailto:${email}`}>{email}</Link>
         <Typography color="text.secondary">
           Added {formatDate(createdAt)}
         </Typography>
       </Stack>
+
+      {parseStatus === 'failed' && (
+        <Alert
+          severity="error"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              disabled={reparse.isPending}
+              onClick={() => reparse.mutate()}
+            >
+              Retry parsing
+            </Button>
+          }
+        >
+          {parseError || 'Could not parse the CV'}
+          {reparse.isError && (
+            <Typography variant="body2" sx={{ mt: 0.5 }}>
+              {errorMessage(reparse.error)}
+            </Typography>
+          )}
+        </Alert>
+      )}
 
       {(githubUrl || portfolioUrl) && (
         <Stack direction="row" spacing={2}>
@@ -134,7 +168,7 @@ export function CandidatePage() {
         {summary ? (
           <Typography sx={{ whiteSpace: 'pre-wrap' }}>{summary}</Typography>
         ) : (
-          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+          <Typography color="text.secondary">{placeholder}</Typography>
         )}
       </Paper>
 
@@ -143,7 +177,7 @@ export function CandidatePage() {
           Skills
         </Typography>
         {skills.length === 0 ? (
-          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+          <Typography color="text.secondary">{placeholder}</Typography>
         ) : (
           <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
             {skills.map((skill) => (
@@ -160,7 +194,7 @@ export function CandidatePage() {
         {experience ? (
           <Typography sx={{ whiteSpace: 'pre-wrap' }}>{experience}</Typography>
         ) : (
-          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+          <Typography color="text.secondary">{placeholder}</Typography>
         )}
       </Paper>
 
@@ -169,7 +203,7 @@ export function CandidatePage() {
           Projects
         </Typography>
         {projects.length === 0 ? (
-          <Typography color="text.secondary">{NOT_AVAILABLE}</Typography>
+          <Typography color="text.secondary">{placeholder}</Typography>
         ) : (
           <List dense>
             {projects.map((project, index) => (

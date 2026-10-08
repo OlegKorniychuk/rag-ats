@@ -31,6 +31,8 @@ function makeCandidate(
       sizeBytes: 1024,
       uploadedAt: '2024-01-01T00:00:00.000Z',
     },
+    parseStatus: 'parsed',
+    parseError: null,
     createdAt: '2024-01-15T00:00:00.000Z',
     ...overrides,
   };
@@ -227,5 +229,22 @@ describe('CandidatesPage', () => {
       'grace',
     );
     expect(await screen.findByText('1 of 2')).toBeInTheDocument();
+  });
+
+  it('shows a status chip for unparsed candidates only', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates`, () =>
+        HttpResponse.json([
+          makeCandidate({ id: '1', name: 'Ada', parseStatus: 'pending' }),
+          makeCandidate({ id: '2', name: 'Bob', parseStatus: 'failed' }),
+          makeCandidate({ id: '3', name: 'Cy', parseStatus: 'parsed' }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/candidates', session });
+
+    expect(await screen.findByText('Pending')).toBeInTheDocument();
+    expect(screen.getByText('Failed')).toBeInTheDocument();
+    expect(screen.queryByText('Parsed')).not.toBeInTheDocument();
   });
 });

@@ -1,8 +1,9 @@
 import type { KeyboardEvent } from 'react';
 import type { ApplicationWithCandidateResponse } from '@rag-ats/shared';
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
 import { useNavigate } from 'react-router';
+import { ParseStatusChip } from '../candidates/ParseStatusChip';
 
 const MAX_VISIBLE_SKILLS = 3;
 
@@ -25,6 +26,11 @@ function CardBody({ application }: ApplicationCardProps) {
       >
         {application.candidate.email}
       </Typography>
+      {application.candidate.parseStatus !== 'parsed' && (
+        <Box sx={{ mb: 1 }}>
+          <ParseStatusChip status={application.candidate.parseStatus} />
+        </Box>
+      )}
       {skills.length > 0 && (
         <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 0.5 }}>
           {visibleSkills.map((skill) => (

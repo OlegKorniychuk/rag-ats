@@ -7,12 +7,20 @@ import {
   listVacancyApplications,
   updateApplicationStage,
 } from '../api/applications';
+import {
+  hasParseInFlight,
+  PARSE_POLL_INTERVAL_MS,
+} from '../candidates/parseStatus';
 import { vacancyKeys } from '../vacancies/queries';
 
 export function useVacancyApplications(vacancyId: string) {
   return useQuery({
     queryKey: vacancyKeys.applications(vacancyId),
     queryFn: () => listVacancyApplications(vacancyId),
+    refetchInterval: (query) =>
+      hasParseInFlight(query.state.data?.map((a) => a.candidate))
+        ? PARSE_POLL_INTERVAL_MS
+        : false,
   });
 }
 
