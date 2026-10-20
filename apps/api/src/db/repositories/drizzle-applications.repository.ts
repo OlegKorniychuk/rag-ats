@@ -5,7 +5,8 @@ import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications } from '../schema.js';
 import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
 import { withGithub } from './github-summary.mapper.js';
-import { publicCandidateColumnsWith } from './candidates.repository.js';
+import { toApplicationScore } from './score.mapper.js';
+import { publicVacancyColumnsWith } from './vacancies.repository.js';
 import type {
   NewApplication,
   Application,
@@ -47,17 +48,29 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
     const rows = await this.txHost.tx.query.applications.findMany({
       where: { vacancyId },
       with: {
+        // parsedCvDocumentId is read only to derive `score.stale`; it is
+        // stripped from the candidate below
         candidate: {
-          columns: publicCandidateColumnsWith,
+          columns: { parsedAt: false },
           with: latestCvSummaryWith,
         },
+        vacancy: { columns: { criteriaHash: true } },
+        score: true,
       },
       orderBy: { createdAt: 'desc' },
     });
-    return rows.map((row) => ({
-      ...row,
-      candidate: withGithub(withCv(row.candidate)),
-    }));
+    return rows.map(({ candidate, vacancy, score, ...application }) => {
+      const { parsedCvDocumentId, ...publicCandidate } = candidate;
+      return {
+        ...application,
+        candidate: withGithub(withCv(publicCandidate)),
+        score: toApplicationScore(score, {
+          candidateParseStatus: candidate.parseStatus,
+          candidateParsedCvDocumentId: parsedCvDocumentId,
+          vacancyCriteriaHash: vacancy.criteriaHash,
+        }),
+      };
+    });
   }
 
   async findByIdWithVacancy(
@@ -65,7 +78,7 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
   ): Promise<ApplicationWithVacancy | null> {
     const row = await this.txHost.tx.query.applications.findFirst({
       where: { id },
-      with: { vacancy: true },
+      with: { vacancy: { columns: publicVacancyColumnsWith } },
     });
     return row ?? null;
   }

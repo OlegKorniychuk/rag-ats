@@ -1,4 +1,5 @@
 import { defineRelations } from 'drizzle-orm';
+import type { ScoreResult, VacancyCriterion } from '@rag-ats/shared';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
 import {
   pgTable,
@@ -30,6 +31,13 @@ export const parseStatusEnum = pgEnum('parse_status', [
   'failed',
 ]);
 
+export const scoreStatusEnum = pgEnum('score_status', [
+  'pending',
+  'scoring',
+  'scored',
+  'failed',
+]);
+
 export const recruiters = pgTable('recruiters', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: text('email').notNull().unique(),
@@ -46,6 +54,10 @@ export const vacancies = pgTable('vacancies', {
   requirements: text('requirements').notNull(),
   applyToken: text('apply_token').notNull().unique(),
   status: vacancyStatusEnum('status').notNull().default('open'),
+  // internal: LLM-extracted criteria and the hash of the title + requirements
+  // they were extracted from (null until the first application is scored)
+  criteria: jsonb('criteria').$type<VacancyCriterion[]>(),
+  criteriaHash: text('criteria_hash'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
@@ -108,15 +120,36 @@ export const cvDocuments = pgTable(
   (t) => [index('cv_documents_candidate_id_idx').on(t.candidateId)],
 );
 
+export const applicationScores = pgTable('application_scores', {
+  applicationId: uuid('application_id')
+    .primaryKey()
+    .references(() => applications.id, { onDelete: 'cascade' }),
+  status: scoreStatusEnum('status').notNull().default('pending'),
+  error: text('error'),
+  // the last good score; kept while a rescore is pending
+  result: jsonb('result').$type<ScoreResult>(),
+  // what `result` was computed from, to derive staleness
+  cvDocumentId: uuid('cv_document_id').references(() => cvDocuments.id),
+  criteriaHash: text('criteria_hash'),
+  model: text('model'),
+  mode: text('mode'),
+  inputTokens: integer('input_tokens'),
+  outputTokens: integer('output_tokens'),
+  scoredAt: timestamp('scored_at'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
 const schema = {
   vacancyStatusEnum,
   applicationStageEnum,
   parseStatusEnum,
+  scoreStatusEnum,
   recruiters,
   vacancies,
   candidates,
   applications,
   cvDocuments,
+  applicationScores,
 };
 
 export const dbRelations = defineRelations(schema, (r) => ({
@@ -129,6 +162,17 @@ export const dbRelations = defineRelations(schema, (r) => ({
     vacancy: r.one.vacancies({
       from: r.applications.vacancyId,
       to: r.vacancies.id,
+      optional: false,
+    }),
+    score: r.one.applicationScores({
+      from: r.applications.id,
+      to: r.applicationScores.applicationId,
+    }),
+  },
+  applicationScores: {
+    application: r.one.applications({
+      from: r.applicationScores.applicationId,
+      to: r.applications.id,
       optional: false,
     }),
   },

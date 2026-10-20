@@ -1,6 +1,17 @@
-import { Body, Controller, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import type { ApplicationScore } from '@rag-ats/shared';
+import {
+  ApiAcceptedResponse,
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -11,6 +22,7 @@ import {
 import type { AuthUser } from '../auth/auth-user.js';
 import { CurrentUser } from '../auth/current-user.decorator.js';
 import type { Application } from '../db/repositories/applications.repository.js';
+import { ApplicationScoreResponseDto } from './dto/application-score-response.dto.js';
 import { ApplicationResponseDto } from './dto/application-response.dto.js';
 import { UpdateApplicationDto } from './dto/update-application.dto.js';
 import { ApplicationsService } from './applications.service.js';
@@ -42,5 +54,30 @@ export class ApplicationsController {
     @Body() dto: UpdateApplicationDto,
   ): Promise<Application> {
     return this.applicationsService.updateStage(user.id, id, dto);
+  }
+
+  @Post(':id/rescore')
+  @HttpCode(202)
+  @ApiOperation({
+    summary: 'Re-run scoring of an application',
+    description:
+      'The application must belong to a vacancy owned by the current recruiter. Sets the score to `pending` (the last result is kept, marked stale) and returns immediately; scoring runs asynchronously.',
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiAcceptedResponse({
+    description: 'Scoring queued; the score is now pending',
+    type: ApplicationScoreResponseDto,
+  })
+  @ApiBadRequestResponse({ description: 'Malformed uuid' })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiNotFoundResponse({
+    description: "Application doesn't exist or belongs to another recruiter",
+  })
+  @ApiConflictResponse({ description: 'Scoring already in progress' })
+  async rescore(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ApplicationScore> {
+    return this.applicationsService.rescore(user.id, id);
   }
 }

@@ -97,6 +97,8 @@ export interface CandidatesRepository {
     githubSnapshot: GithubSnapshot | null,
   ): Promise<void>;
   findParseState(id: string): Promise<CandidateParseState | null>;
+  /** The raw (internal) GitHub snapshot saved with the profile, if any. */
+  findGithubSnapshot(id: string): Promise<GithubSnapshot | null>;
   /** Candidates still `pending`/`parsing`, with their latest CV id. */
   findParseBacklog(): Promise<
     Array<{ candidateId: string; cvDocumentId: string }>

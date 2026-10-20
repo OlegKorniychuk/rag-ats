@@ -10,11 +10,16 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../db/repositories/cv-documents.repository.js';
+import {
+  SCORES_REPOSITORY,
+  type ScoresRepository,
+} from '../db/repositories/scores.repository.js';
 import { GithubProfileFetcher } from '../github/github-profile-fetcher.js';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
 import { parseGithubUsername } from '../github/github-username.js';
 import { CvProfileParser, LlmParseError } from '../llm/cv-profile-parser.js';
 import type { ParseCandidateJob } from './jobs.constants.js';
+import { JobsService } from './jobs.service.js';
 
 export const GENERIC_PARSE_ERROR = 'Could not parse the CV';
 
@@ -29,6 +34,9 @@ export class ParseCandidateWorker {
     private readonly cvDocuments: CvDocumentsRepository,
     private readonly parser: CvProfileParser,
     private readonly githubFetcher: GithubProfileFetcher,
+    @Inject(SCORES_REPOSITORY)
+    private readonly scores: ScoresRepository,
+    private readonly jobs: JobsService,
     private readonly cls: ClsService,
   ) {}
 
@@ -70,25 +78,37 @@ export class ParseCandidateWorker {
         ? await this.githubFetcher.fetch(username)
         : null;
       const profile = await this.parser.parse(text, snapshot);
-      await this.saveIfLatest(candidateId, cvDocumentId, profile, snapshot);
+      const applicationIds = await this.saveIfLatest(
+        candidateId,
+        cvDocumentId,
+        profile,
+        snapshot,
+      );
+      // After the commit, so the scoring workers see the parsed profile.
+      await this.enqueueScores(candidateId, applicationIds);
     } catch (error) {
       await this.recordFailure(candidateId, cvDocumentId, error);
     }
   }
 
+  /**
+   * Saves the profile and, in the same transaction, resets all of the
+   * candidate's scores to `pending` (their results stay, now stale). Returns
+   * the application ids to score once the transaction has committed.
+   */
   @Transactional()
   private async saveIfLatest(
     candidateId: string,
     cvDocumentId: string,
     profile: ParsedProfile,
     snapshot: GithubSnapshot | null,
-  ): Promise<void> {
+  ): Promise<string[]> {
     const current = await this.candidates.findParseState(candidateId);
     if (current?.latestCvDocumentId !== cvDocumentId) {
       this.logger.log(
         `Dropping parse result for candidate ${candidateId}: CV ${cvDocumentId} is no longer the latest`,
       );
-      return;
+      return [];
     }
     await this.candidates.saveParsedProfile(
       candidateId,
@@ -96,6 +116,26 @@ export class ParseCandidateWorker {
       profile,
       snapshot,
     );
+    return this.scores.resetPendingForCandidate(candidateId);
+  }
+
+  /**
+   * The profile is already saved, so a failed enqueue must not fail the parse:
+   * the scores are `pending` and the startup sweep re-enqueues them.
+   */
+  private async enqueueScores(
+    candidateId: string,
+    applicationIds: string[],
+  ): Promise<void> {
+    try {
+      await this.jobs.enqueueScores(applicationIds);
+    } catch (error) {
+      this.logger.error(
+        `Failed to enqueue scoring for candidate ${candidateId}: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+    }
   }
 
   private async recordFailure(

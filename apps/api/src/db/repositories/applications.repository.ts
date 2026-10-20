@@ -1,10 +1,14 @@
+import type { ApplicationScore } from '@rag-ats/shared';
 import { applications } from '../schema.js';
 import type { Candidate } from './candidates.repository.js';
 import type { Vacancy } from './vacancies.repository.js';
 
 export type Application = typeof applications.$inferSelect;
 export type NewApplication = typeof applications.$inferInsert;
-export type ApplicationWithCandidate = Application & { candidate: Candidate };
+export type ApplicationWithCandidate = Application & {
+  candidate: Candidate;
+  score: ApplicationScore;
+};
 export type ApplicationWithVacancy = Application & { vacancy: Vacancy };
 
 export const APPLICATIONS_REPOSITORY = Symbol('APPLICATIONS_REPOSITORY');

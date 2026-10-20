@@ -154,6 +154,11 @@ describe('Apply (e2e)', () => {
       });
       expect(applications).toHaveLength(1);
       expect(applications[0].stage).toBe('applied');
+
+      const score = await testApp.testDb.db.query.applicationScores.findFirst({
+        where: { applicationId: applications[0].id },
+      });
+      expect(score).toMatchObject({ status: 'pending', result: null });
     });
 
     it('reuses a repeat candidate: adds a CV, updates name and links, keeps the profile', async () => {
