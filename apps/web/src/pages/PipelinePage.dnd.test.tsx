@@ -53,6 +53,13 @@ const application = {
     summary: '',
     createdAt: '2024-01-01T00:00:00.000Z',
   },
+  score: {
+    status: 'pending' as const,
+    error: null,
+    waitingForParse: false,
+    stale: false,
+    result: null,
+  },
 };
 
 function dropOnHired() {

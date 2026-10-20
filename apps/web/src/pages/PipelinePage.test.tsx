@@ -1,10 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ApplicationWithCandidateResponse } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
+
+vi.mock('../pipeline/score', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../pipeline/score')>()),
+  SCORE_POLL_INTERVAL_MS: 50,
+}));
 
 const baseUrl = 'http://localhost:3000';
 const session = {
@@ -59,7 +64,26 @@ function makeApplication(
     stage: 'applied',
     createdAt: '2024-01-01T00:00:00.000Z',
     candidate: makeCandidate({}),
+    score: {
+      status: 'pending',
+      error: null,
+      waitingForParse: false,
+      stale: false,
+      result: null,
+    },
     ...overrides,
+  };
+}
+
+function scoreResult(overall: number) {
+  return {
+    overall,
+    rationale: 'Because.',
+    criteria: [],
+    cvDocumentId: 'cv1',
+    model: 'gpt-test',
+    mode: 'full_text' as const,
+    scoredAt: '2024-03-10T00:00:00.000Z',
   };
 }
 
@@ -202,5 +226,125 @@ describe('PipelinePage', () => {
     expect(await screen.findByText('Parsing…')).toBeInTheDocument();
     expect(screen.getByText('Grace Hopper')).toBeInTheDocument();
     expect(screen.getAllByLabelText(/^CV parsing/)).toHaveLength(1);
+  });
+
+  it('sorts cards by score within a column, unscored last', async () => {
+    const scored = (overall: number) => ({
+      status: 'scored' as const,
+      error: null,
+      waitingForParse: false,
+      stale: false,
+      result: scoreResult(overall),
+    });
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            id: 'a1',
+            candidateId: 'c1',
+            candidate: makeCandidate({ id: 'c1', name: 'Unscored Una' }),
+          }),
+          makeApplication({
+            id: 'a2',
+            candidateId: 'c2',
+            candidate: makeCandidate({ id: 'c2', name: 'Low Larry' }),
+            score: scored(30),
+          }),
+          makeApplication({
+            id: 'a3',
+            candidateId: 'c3',
+            candidate: makeCandidate({ id: 'c3', name: 'High Hana' }),
+            score: scored(90),
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    await screen.findByText('High Hana');
+    const column = screen.getByRole('region', { name: 'Applied' });
+    const names = within(column)
+      .getAllByText(/Una|Larry|Hana/)
+      .map((node) => node.textContent);
+    expect(names).toEqual(['High Hana', 'Low Larry', 'Unscored Una']);
+  });
+
+  it('opens the score drawer for a card without navigating', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            id: 'a1',
+            candidate: makeCandidate({ id: 'c1', name: 'Ada Lovelace' }),
+            score: {
+              status: 'scored',
+              error: null,
+              waitingForParse: false,
+              stale: false,
+              result: scoreResult(77),
+            },
+          }),
+          makeApplication({
+            id: 'a2',
+            candidateId: 'c2',
+            candidate: makeCandidate({ id: 'c2', name: 'Grace Hopper' }),
+          }),
+        ]),
+      ),
+    );
+    const { router } = renderApp({ route: '/vacancies/v1', session });
+
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Fit score 77 of 100' }),
+    );
+
+    const drawer = await screen.findByRole('presentation');
+    expect(
+      within(drawer).getByRole('heading', { name: 'Ada Lovelace' }),
+    ).toBeInTheDocument();
+    expect(within(drawer).getByText('Fit for Backend Dev')).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/vacancies/v1');
+  });
+
+  it('polls while a score is pending and stops once it is scored', async () => {
+    let calls = 0;
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        calls += 1;
+        return HttpResponse.json([
+          makeApplication({
+            score:
+              calls === 1
+                ? {
+                    status: 'scoring',
+                    error: null,
+                    waitingForParse: false,
+                    stale: false,
+                    result: null,
+                  }
+                : {
+                    status: 'scored',
+                    error: null,
+                    waitingForParse: false,
+                    stale: false,
+                    result: scoreResult(64),
+                  },
+          }),
+        ]);
+      }),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    expect(await screen.findByText('Scoring…')).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Fit score 64 of 100' }),
+    ).toBeInTheDocument();
+
+    const settled = calls;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    expect(calls).toBe(settled);
   });
 });

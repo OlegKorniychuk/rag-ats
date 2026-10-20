@@ -28,6 +28,13 @@ const application = {
   stage: 'applied',
   createdAt: '2024-01-01T00:00:00.000Z',
   candidate,
+  score: {
+    status: 'pending',
+    error: null,
+    waitingForParse: false,
+    stale: false,
+    result: null,
+  },
 };
 
 function createWrapper() {

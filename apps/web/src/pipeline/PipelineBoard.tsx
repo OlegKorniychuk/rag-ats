@@ -39,12 +39,14 @@ interface PipelineBoardProps {
   vacancyId: string;
   applications: readonly ApplicationWithCandidateResponse[];
   onError: (message: string) => void;
+  onOpenScore: (applicationId: string) => void;
 }
 
 export function PipelineBoard({
   vacancyId,
   applications,
   onError,
+  onOpenScore,
 }: PipelineBoardProps) {
   const updateStage = useUpdateApplicationStage(vacancyId);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -86,6 +88,7 @@ export function PipelineBoard({
             key={stage.id}
             stage={stage}
             applications={grouped[stage.id]}
+            onOpenScore={onOpenScore}
           />
         ))}
       </Box>
