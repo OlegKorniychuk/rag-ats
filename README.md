@@ -1,6 +1,6 @@
 # RAG-ATS
 
-RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is in progress: PDF CV upload, LLM parsing of the CV into a structured profile and GitHub enrichment of that profile (public repos, READMEs and languages) are built; semantic search and fit scoring are not.
+RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is in progress: PDF CV upload, LLM parsing of the CV into a structured profile, GitHub enrichment of that profile (public repos, READMEs and languages) and grounded fit scoring of every application (per-criterion scores backed by verified quotes from the CV or GitHub) are built; semantic search is not.
 
 ## Docs
 
@@ -38,5 +38,5 @@ The API will not boot without `OPENAI_API_KEY` (used to parse CVs in a backgroun
 2. Create a vacancy.
 3. Copy its public apply link from the vacancies list.
 4. Open that link logged out (or in a private window) to submit an application with a PDF CV. The candidate's profile is filled in from the CV (and their public GitHub repos, if a GitHub URL was given) in the background; a Pending/Parsing chip shows progress, and a failed parse can be retried from the candidate page.
-5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board.
+5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board. Each card shows the applicant's fit score once their CV is parsed, and columns are ranked by it; click the score to see the per-criterion breakdown with quotes from the CV or GitHub, or to rescore.
 6. Browse the shared candidate pool at `/candidates`.
