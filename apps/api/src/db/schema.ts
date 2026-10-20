@@ -1,10 +1,12 @@
 import { defineRelations } from 'drizzle-orm';
+import type { GithubSnapshot } from '../github/github-snapshot.js';
 import {
   pgTable,
   uuid,
   text,
   timestamp,
   pgEnum,
+  jsonb,
   unique,
   integer,
   bytea,
@@ -64,6 +66,8 @@ export const candidates = pgTable('candidates', {
     (): AnyPgColumn => cvDocuments.id,
   ),
   parsedAt: timestamp('parsed_at'),
+  // internal: includes bio and README excerpts; reads map it to GithubSummary
+  githubSnapshot: jsonb('github_snapshot').$type<GithubSnapshot>(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

@@ -20,6 +20,13 @@ import { JobsModule } from '../../src/jobs/jobs.module.js';
 import { JobsService } from '../../src/jobs/jobs.service.js';
 import { ParseCandidateWorker } from '../../src/jobs/parse-candidate.worker.js';
 import {
+  captureGithubRequests,
+  githubCatchAllNotFoundHandler,
+  githubHandlers,
+  githubServerErrorHandler,
+  GITHUB_USERNAME,
+} from '../msw/github.handlers.js';
+import {
   captureOpenaiRequests,
   openaiErrorHandler,
   openaiProfileHandler,
@@ -39,9 +46,11 @@ const PROFILE: MockProfile = {
   summary: 'Backend engineer.',
 };
 
-// OpenAI is the only HTTP dependency; unhandled requests fail the test.
-const server = setupServer();
+// OpenAI and GitHub are the only HTTP dependencies, both mocked; any other
+// request fails the test. GitHub answers 404 unless a test installs handlers.
+const server = setupServer(githubCatchAllNotFoundHandler());
 const capture = captureOpenaiRequests();
+const githubCapture = captureGithubRequests();
 
 async function waitFor<T>(
   read: () => Promise<T>,
@@ -121,11 +130,12 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
 
   async function seedCandidate(
     cvTexts: string[] = ['Jane Doe, backend developer'],
+    githubUrl: string | null = `https://github.com/${GITHUB_USERNAME}`,
   ) {
     const candidate = await candidates.create({
       name: 'Jane Doe',
       email: `${randomUUID()}@example.com`,
-      githubUrl: 'https://github.com/janedoe',
+      githubUrl,
       portfolioUrl: null,
       skills: [],
       experience: '',
@@ -165,11 +175,13 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
     testDb = await createTestDatabase();
     server.listen({ onUnhandledFrame: 'error' });
     server.events.on('request:start', capture.listener);
+    server.events.on('request:start', githubCapture.listener);
   }, 120_000);
 
   afterEach(() => {
     server.resetHandlers();
     capture.bodies.length = 0;
+    githubCapture.requests.length = 0;
   });
 
   afterAll(async () => {
@@ -286,7 +298,7 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
       const { candidateId, cvIds } = await seedCandidate();
       // A newer job finished (parsed) between this job's stale check and its
       // status write: simulate by parsing from a different, unrelated CV id.
-      await candidates.saveParsedProfile(candidateId, cvIds[0], PROFILE);
+      await candidates.saveParsedProfile(candidateId, cvIds[0], PROFILE, null);
       await testDb.pool.query(
         'UPDATE candidates SET parsed_cv_document_id = NULL WHERE id = $1',
         [candidateId],
@@ -313,6 +325,144 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
 
       expect(capture.bodies).toHaveLength(1);
       expect((await readState(candidateId))?.parseStatus).toBe('parsed');
+    });
+  });
+
+  describe('GitHub enrichment', () => {
+    beforeAll(async () => {
+      // Earlier suites leave pending/parsing candidates; settle them so the
+      // startup sweep doesn't add LLM/GitHub traffic to these assertions.
+      await testDb.pool.query(
+        "UPDATE candidates SET parse_status = 'failed' WHERE parse_status IN ('pending', 'parsing')",
+      );
+      await boot();
+    }, 60_000);
+    afterAll(shutdown);
+
+    const userPath = `/users/${GITHUB_USERNAME}`;
+    const rawSnapshot = async (candidateId: string) =>
+      (
+        await testDb.pool.query<{ github_snapshot: any }>(
+          'SELECT github_snapshot FROM candidates WHERE id = $1',
+          [candidateId],
+        )
+      ).rows[0].github_snapshot;
+    const run = (candidateId: string, cvDocumentId: string) =>
+      moduleRef!
+        .get(ParseCandidateWorker)
+        .handle({ candidateId, cvDocumentId });
+
+    it('fetches GitHub, feeds the LLM and saves the snapshot with the profile', async () => {
+      server.use(openaiProfileHandler(PROFILE), ...githubHandlers());
+      const { candidateId, cvIds } = await seedCandidate();
+
+      await moduleRef!.get(JobsService).enqueueParse(candidateId, cvIds[0]);
+      const parsed = await waitForStatus(candidateId, 'parsed');
+
+      expect(parsed).toMatchObject({ ...PROFILE, parseError: null });
+      expect(parsed?.github).toMatchObject({
+        username: GITHUB_USERNAME,
+        status: 'ok',
+      });
+      expect(parsed?.github?.repos.map((r) => r.name)).toEqual([
+        'charlie',
+        'bravo',
+        'alpha',
+        'delta',
+        'echo',
+        'foxtrot',
+      ]);
+      expect(JSON.stringify(parsed)).not.toContain('readmeExcerpt');
+      const raw = await rawSnapshot(candidateId);
+      expect(raw.bio).toBe('Backend engineer. TypeScript and Go.');
+      expect(raw.repos[0].readmeExcerpt).toContain('Charlie is a tiny Python');
+
+      expect(capture.bodies).toHaveLength(1);
+      const user = capture.bodies[0].input.find((m: any) => m.role === 'user');
+      expect(user.content).toContain('<github>');
+      expect(user.content).toContain('Backend engineer. TypeScript and Go.');
+      expect(user.content).toContain('Charlie is a tiny Python');
+    });
+
+    it('parses CV-only and saves a not_found snapshot for an unknown user', async () => {
+      server.use(openaiProfileHandler(PROFILE));
+      const { candidateId, cvIds } = await seedCandidate();
+
+      await run(candidateId, cvIds[0]);
+
+      const parsed = await readState(candidateId);
+      expect(parsed).toMatchObject({ parseStatus: 'parsed', ...PROFILE });
+      expect(parsed?.github).toMatchObject({
+        username: GITHUB_USERNAME,
+        status: 'not_found',
+        repos: [],
+      });
+      const user = capture.bodies[0].input.find((m: any) => m.role === 'user');
+      expect(user.content).toBe('<cv>\nJane Doe, backend developer\n</cv>');
+    });
+
+    it('parses CV-only and saves an unavailable snapshot when GitHub errors', async () => {
+      server.use(openaiProfileHandler(PROFILE), githubServerErrorHandler());
+      const { candidateId, cvIds } = await seedCandidate();
+
+      await run(candidateId, cvIds[0]);
+
+      const parsed = await readState(candidateId);
+      expect(parsed).toMatchObject({ parseStatus: 'parsed', parseError: null });
+      expect(parsed?.github?.status).toBe('unavailable');
+      expect(capture.bodies).toHaveLength(1);
+    });
+
+    it('makes no GitHub request and saves no snapshot without a GitHub URL', async () => {
+      server.use(openaiProfileHandler(PROFILE), ...githubHandlers());
+      const { candidateId, cvIds } = await seedCandidate(['cv'], null);
+
+      await run(candidateId, cvIds[0]);
+
+      expect(githubCapture.requests).toHaveLength(0);
+      const parsed = await readState(candidateId);
+      expect(parsed?.parseStatus).toBe('parsed');
+      expect(parsed?.github).toBeNull();
+      expect(await rawSnapshot(candidateId)).toBeNull();
+    });
+
+    it('makes no GitHub request for a URL that is not a GitHub profile', async () => {
+      server.use(openaiProfileHandler(PROFILE), ...githubHandlers());
+      const { candidateId, cvIds } = await seedCandidate(
+        ['cv'],
+        'https://gitlab.com/janedoe',
+      );
+
+      await run(candidateId, cvIds[0]);
+
+      expect(githubCapture.requests).toHaveLength(0);
+      const parsed = await readState(candidateId);
+      expect(parsed?.parseStatus).toBe('parsed');
+      expect(parsed?.github).toBeNull();
+    });
+
+    it('refetches GitHub on reparse and updates the snapshot', async () => {
+      server.use(openaiProfileHandler(PROFILE));
+      const { candidateId, cvIds } = await seedCandidate();
+
+      await run(candidateId, cvIds[0]);
+      expect((await readState(candidateId))?.github?.status).toBe('not_found');
+      const firstRun = githubCapture.requests.length;
+      expect(firstRun).toBeGreaterThan(0);
+
+      // Reparse = the same job again, after the candidate is reset to pending.
+      server.use(openaiProfileHandler(PROFILE), ...githubHandlers());
+      await testDb.pool.query(
+        "UPDATE candidates SET parse_status = 'pending', parsed_cv_document_id = NULL WHERE id = $1",
+        [candidateId],
+      );
+      await run(candidateId, cvIds[0]);
+
+      expect(githubCapture.requests.length).toBeGreaterThan(firstRun);
+      expect(githubCapture.requests.some((r) => r.path === userPath)).toBe(
+        true,
+      );
+      expect((await readState(candidateId))?.github?.status).toBe('ok');
     });
   });
 

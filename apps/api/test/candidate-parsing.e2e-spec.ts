@@ -3,6 +3,12 @@ import request from 'supertest';
 import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 import {
+  GITHUB_READMES_FIXTURE,
+  GITHUB_USER_FIXTURE,
+  GITHUB_USERNAME,
+  githubHandlers,
+} from './msw/github.handlers.js';
+import {
   captureOpenaiRequests,
   openaiProfileHandler,
   openaiRefusalHandler,
@@ -67,11 +73,16 @@ describe('CV parsing (e2e)', () => {
     };
   }
 
-  async function apply(applyToken: string, email: string, fixture?: string) {
+  async function apply(
+    applyToken: string,
+    email: string,
+    fixture?: string,
+    githubUrl?: string,
+  ) {
     await applyWithCv(
       testApp.app,
       applyToken,
-      { name: 'Jane Applicant', email },
+      { name: 'Jane Applicant', email, githubUrl },
       fixture,
     ).expect(201);
     const list = await agent.get('/candidates').expect(200);
@@ -118,6 +129,77 @@ describe('CV parsing (e2e)', () => {
       ...DEFAULT_MOCK_PROFILE,
       parseStatus: 'parsed',
     });
+  });
+
+  it('enriches the parse with GitHub data and exposes only the public summary', async () => {
+    server.use(...githubHandlers());
+    const { applyToken } = await createVacancy();
+    const candidateId = await apply(
+      applyToken,
+      uniqueEmail(),
+      undefined,
+      `https://github.com/${GITHUB_USERNAME}`,
+    );
+
+    const parsed = await waitForParseStatus(
+      testApp.app,
+      cookie,
+      candidateId,
+      'parsed',
+    );
+
+    expect(parsed).toMatchObject(DEFAULT_MOCK_PROFILE);
+    expect(parsed.github).toMatchObject({
+      username: GITHUB_USERNAME,
+      status: 'ok',
+    });
+    const github = parsed.github as {
+      repos: { name: string }[];
+      languages: { name: string; repoCount: number }[];
+    };
+    expect(github.repos.map((r) => r.name)).toEqual([
+      'charlie',
+      'bravo',
+      'alpha',
+      'delta',
+      'echo',
+      'foxtrot',
+    ]);
+    expect(github.languages).toContainEqual({
+      name: 'TypeScript',
+      repoCount: 3,
+    });
+
+    const json = JSON.stringify(parsed);
+    expect(json).not.toContain('readmeExcerpt');
+    expect(json).not.toContain('bio');
+    expect(json).not.toContain(GITHUB_USER_FIXTURE.bio);
+    expect(json).not.toContain('Charlie is a tiny Python');
+    expect(json).not.toContain(GITHUB_READMES_FIXTURE.bravo.slice(0, 40));
+
+    const sent = JSON.stringify(capture.bodies.at(-1));
+    expect(sent).toContain('<github>');
+    expect(sent).toContain('Charlie is a tiny Python');
+  });
+
+  it('parses CV-only with github.status not_found by default (GitHub mocked 404)', async () => {
+    const { applyToken } = await createVacancy();
+    const candidateId = await apply(
+      applyToken,
+      uniqueEmail(),
+      undefined,
+      'https://github.com/someone-unknown',
+    );
+
+    const parsed = await waitForParseStatus(
+      testApp.app,
+      cookie,
+      candidateId,
+      'parsed',
+    );
+
+    expect(parsed.github).toMatchObject({ status: 'not_found', repos: [] });
+    expect(JSON.stringify(capture.bodies.at(-1))).not.toContain('<github>');
   });
 
   it('re-parses from the new CV when a repeat applicant uploads another one', async () => {

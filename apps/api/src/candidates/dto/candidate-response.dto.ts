@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { parseStatusEnum } from '../../db/schema.js';
 import { CvDocumentSummaryResponseDto } from './cv-document-summary-response.dto.js';
+import { GithubSummaryResponseDto } from './github-summary-response.dto.js';
 import type { CandidateResponse, ParseStatus } from '@rag-ats/shared';
 
 export class CandidateResponseDto implements CandidateResponse {
@@ -56,6 +57,14 @@ export class CandidateResponseDto implements CandidateResponse {
 
   @ApiProperty({ type: CvDocumentSummaryResponseDto })
   cv: CvDocumentSummaryResponseDto;
+
+  @ApiProperty({
+    type: GithubSummaryResponseDto,
+    nullable: true,
+    description:
+      'Null when there is no parseable GitHub URL or before the first fetch',
+  })
+  github: GithubSummaryResponseDto | null;
 
   @ApiProperty({
     enum: parseStatusEnum.enumValues,

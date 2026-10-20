@@ -11,10 +11,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import type { ParseStatus } from '@rag-ats/shared';
 import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { apiUrl } from '../api/client';
+import { GithubSection } from '../candidates/GithubSection';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 import { isParseInFlight } from '../candidates/parseStatus';
 import { useCandidate, useReparseCandidate } from '../candidates/queries';
@@ -28,7 +30,14 @@ function formatSize(bytes: number): string {
 }
 
 const PARSING = 'Parsing CV…';
-const NOT_AVAILABLE = 'Not available yet — profile will be filled from the CV';
+const NOT_FOUND = 'Not found in the CV';
+const PARSE_FAILED = 'Not available — the CV could not be parsed';
+
+/** What an empty profile field means depends on how far the parse got. */
+function emptyFieldText(status: ParseStatus): string {
+  if (isParseInFlight(status)) return PARSING;
+  return status === 'failed' ? PARSE_FAILED : NOT_FOUND;
+}
 
 function ExternalLink({
   label,
@@ -94,11 +103,12 @@ export function CandidatePage() {
     projects,
     summary,
     cv,
+    github,
     parseStatus,
     parseError,
     createdAt,
   } = candidate.data;
-  const placeholder = isParseInFlight(parseStatus) ? PARSING : NOT_AVAILABLE;
+  const placeholder = emptyFieldText(parseStatus);
 
   return (
     <Stack spacing={3}>
@@ -160,6 +170,8 @@ export function CandidatePage() {
           {formatDate(cv.uploadedAt)}
         </Typography>
       </Stack>
+
+      <GithubSection github={github} />
 
       <Paper sx={{ p: 2 }}>
         <Typography variant="h6" gutterBottom>

@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications } from '../schema.js';
 import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
+import { withGithub } from './github-summary.mapper.js';
 import { publicCandidateColumnsWith } from './candidates.repository.js';
 import type {
   NewApplication,
@@ -53,7 +54,10 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
       },
       orderBy: { createdAt: 'desc' },
     });
-    return rows.map((row) => ({ ...row, candidate: withCv(row.candidate) }));
+    return rows.map((row) => ({
+      ...row,
+      candidate: withGithub(withCv(row.candidate)),
+    }));
   }
 
   async findByIdWithVacancy(

@@ -6,6 +6,8 @@ import type {
   AuthUserResponse,
   CandidateResponse,
   CvDocumentSummary as CvDocumentSummaryResponse,
+  GithubStatus,
+  GithubSummary as GithubSummaryResponse,
   ParseStatus,
   PublicVacancyResponse,
   VacancyResponse,
@@ -19,6 +21,8 @@ import type {
 } from './db/repositories/applications.repository.js';
 import type { Candidate } from './db/repositories/candidates.repository.js';
 import type { CvDocumentSummary } from './db/repositories/cv-documents.repository.js';
+import type { GithubSnapshot } from './github/github-snapshot.js';
+import { toGithubSummary } from './github/github-snapshot.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
 import type {
   applicationStageEnum,
@@ -80,4 +84,13 @@ export type CheckVacancyStatus = Assert<
 >;
 export type CheckParseStatus = Assert<
   Equal<(typeof parseStatusEnum.enumValues)[number], ParseStatus>
+>;
+export type CheckGithubSummary = Assert<
+  Equal<
+    Simplify<Jsonify<ReturnType<typeof toGithubSummary>>>,
+    Simplify<GithubSummaryResponse>
+  >
+>;
+export type CheckGithubSnapshotStatus = Assert<
+  Equal<GithubSnapshot['status'], GithubStatus>
 >;

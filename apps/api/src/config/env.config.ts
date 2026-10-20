@@ -55,4 +55,10 @@ export class EnvConfig {
   @IsNumber()
   @Min(0.5)
   public readonly JOBS_POLL_INTERVAL_SECONDS: number = 2;
+
+  // Optional GitHub token; raises the API rate limit (60 -> 5000 requests/h).
+  // Empty string counts as unset. Never log it.
+  @IsOptional()
+  @IsString()
+  public readonly GITHUB_TOKEN?: string;
 }

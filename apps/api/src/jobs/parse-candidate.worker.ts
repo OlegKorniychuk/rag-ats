@@ -10,6 +10,9 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../db/repositories/cv-documents.repository.js';
+import { GithubProfileFetcher } from '../github/github-profile-fetcher.js';
+import type { GithubSnapshot } from '../github/github-snapshot.js';
+import { parseGithubUsername } from '../github/github-username.js';
 import { CvProfileParser, LlmParseError } from '../llm/cv-profile-parser.js';
 import type { ParseCandidateJob } from './jobs.constants.js';
 
@@ -25,6 +28,7 @@ export class ParseCandidateWorker {
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocuments: CvDocumentsRepository,
     private readonly parser: CvProfileParser,
+    private readonly githubFetcher: GithubProfileFetcher,
     private readonly cls: ClsService,
   ) {}
 
@@ -58,9 +62,15 @@ export class ParseCandidateWorker {
       if (!(await this.candidates.markParsing(candidateId))) return;
       const text = await this.cvDocuments.findTextById(cvDocumentId);
       if (text === null) throw new Error('CV document not found');
-      // Slow network call: deliberately outside any DB transaction.
-      const profile = await this.parser.parse(text);
-      await this.saveIfLatest(candidateId, cvDocumentId, profile);
+      // Slow network calls: deliberately outside any DB transaction. GitHub
+      // never throws (failures become a snapshot status), so it cannot fail
+      // the parse; no usable URL means no GitHub call at all.
+      const username = parseGithubUsername(state.githubUrl);
+      const snapshot = username
+        ? await this.githubFetcher.fetch(username)
+        : null;
+      const profile = await this.parser.parse(text, snapshot);
+      await this.saveIfLatest(candidateId, cvDocumentId, profile, snapshot);
     } catch (error) {
       await this.recordFailure(candidateId, cvDocumentId, error);
     }
@@ -71,6 +81,7 @@ export class ParseCandidateWorker {
     candidateId: string,
     cvDocumentId: string,
     profile: ParsedProfile,
+    snapshot: GithubSnapshot | null,
   ): Promise<void> {
     const current = await this.candidates.findParseState(candidateId);
     if (current?.latestCvDocumentId !== cvDocumentId) {
@@ -79,7 +90,12 @@ export class ParseCandidateWorker {
       );
       return;
     }
-    await this.candidates.saveParsedProfile(candidateId, cvDocumentId, profile);
+    await this.candidates.saveParsedProfile(
+      candidateId,
+      cvDocumentId,
+      profile,
+      snapshot,
+    );
   }
 
   private async recordFailure(

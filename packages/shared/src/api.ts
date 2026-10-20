@@ -6,6 +6,8 @@ export type VacancyStatus = 'open' | 'closed';
 export type ApplicationStage =
   'applied' | 'screened' | 'interview' | 'rejected' | 'hired';
 export type ParseStatus = 'pending' | 'parsing' | 'parsed' | 'failed';
+/** Outcome of the last GitHub fetch for a candidate. */
+export type GithubStatus = 'ok' | 'not_found' | 'unavailable';
 
 /** Dates are serialized as ISO 8601 strings over JSON. */
 export type IsoDateString = string;
@@ -107,6 +109,31 @@ export interface CvDocumentSummary {
   uploadedAt: IsoDateString;
 }
 
+/** A public GitHub repository, as shown on the candidate page. */
+export interface GithubRepoSummary {
+  name: string;
+  url: string;
+  description: string | null;
+  language: string | null;
+  stars: number;
+  topics: string[];
+  pushedAt: IsoDateString;
+}
+
+/**
+ * Public GitHub data fetched when the candidate's CV was last parsed. When
+ * `status` is not `ok`, `repos` and `languages` are empty.
+ */
+export interface GithubSummary {
+  username: string;
+  profileUrl: string;
+  status: GithubStatus;
+  fetchedAt: IsoDateString;
+  repos: GithubRepoSummary[];
+  /** Primary-language counts across the candidate's owned, non-fork repos. */
+  languages: { name: string; repoCount: number }[];
+}
+
 /**
  * GET /candidates, GET /candidates/:id
  *
@@ -125,6 +152,8 @@ export interface CandidateResponse {
   projects: string[];
   summary: string;
   cv: CvDocumentSummary;
+  /** Null when there is no (parseable) GitHub URL or before the first fetch. */
+  github: GithubSummary | null;
   /** Progress of the async LLM parse that fills the profile fields from the CV. */
   parseStatus: ParseStatus;
   /** Short, safe reason when `parseStatus` is `failed`; otherwise null. */

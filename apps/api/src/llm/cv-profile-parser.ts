@@ -6,8 +6,11 @@ import {
   cvProfileSchema,
   type ParsedProfile,
 } from './cv-profile.schema.js';
+import type { GithubSnapshot } from '../github/github-snapshot.js';
 import {
+  buildGithubBlock,
   CV_PROFILE_SYSTEM_PROMPT,
+  CV_PROFILE_WITH_GITHUB_SYSTEM_PROMPT,
   cvProfileUserPrompt,
 } from './prompts/cv-profile.prompt.js';
 
@@ -50,14 +53,25 @@ export class CvProfileParser {
 
   constructor(private readonly llm: LlmClient) {}
 
-  async parse(cvText: string): Promise<ParsedProfile> {
+  /**
+   * The GitHub block is sent only for a successful snapshot; `not_found` /
+   * `unavailable` (or no snapshot) yields a CV-only request.
+   */
+  async parse(
+    cvText: string,
+    github?: GithubSnapshot | null,
+  ): Promise<ParsedProfile> {
     const text = normaliseText(cvText);
+    const githubBlock =
+      github?.status === 'ok' ? buildGithubBlock(github) : null;
 
     let result;
     try {
       result = await this.llm.parseStructured({
-        system: CV_PROFILE_SYSTEM_PROMPT,
-        user: cvProfileUserPrompt(text),
+        system: githubBlock
+          ? CV_PROFILE_WITH_GITHUB_SYSTEM_PROMPT
+          : CV_PROFILE_SYSTEM_PROMPT,
+        user: cvProfileUserPrompt(text, githubBlock),
         schema: cvProfileSchema,
         schemaName: CV_PROFILE_SCHEMA_NAME,
       });

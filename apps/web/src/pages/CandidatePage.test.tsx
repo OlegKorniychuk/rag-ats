@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { CandidateResponse } from '@rag-ats/shared';
 import { server } from '../test/server';
@@ -37,6 +37,7 @@ function makeCandidate(
       uploadedAt: '2024-01-01T00:00:00.000Z',
     },
     parseStatus: 'parsed',
+    github: null,
     parseError: null,
     createdAt: '2024-01-15T00:00:00.000Z',
     ...overrides,
@@ -47,7 +48,7 @@ const formattedDate = new Intl.DateTimeFormat(undefined, {
   dateStyle: 'medium',
 }).format(new Date('2024-01-15T00:00:00.000Z'));
 
-const placeholder = 'Not available yet — profile will be filled from the CV';
+const placeholder = 'Not found in the CV';
 
 describe('CandidatePage', () => {
   it('links to the CV in a new tab and shows its metadata', async () => {
@@ -136,6 +137,29 @@ describe('CandidatePage', () => {
     expect(await screen.findByText(placeholder)).toBeInTheDocument();
   });
 
+  it('says empty fields are unavailable when the parse failed', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({
+            parseStatus: 'failed',
+            parseError: 'LLM exploded',
+            skills: [],
+            projects: [],
+            experience: '',
+            summary: '',
+          }),
+        ),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(
+      await screen.findAllByText('Not available — the CV could not be parsed'),
+    ).toHaveLength(4);
+    expect(screen.queryByText(placeholder)).not.toBeInTheDocument();
+  });
+
   it('shows the placeholder when there are no skills', async () => {
     server.use(
       http.get(`${baseUrl}/candidates/c1`, () =>
@@ -197,6 +221,56 @@ describe('CandidatePage', () => {
       screen.queryByRole('link', { name: 'GitHub' }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText('javascript:alert(1)')).toBeInTheDocument();
+  });
+
+  it('shows the GitHub section for a candidate with GitHub data', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({
+            github: {
+              username: 'ada',
+              profileUrl: 'https://github.com/ada',
+              status: 'ok',
+              fetchedAt: '2024-02-01T00:00:00.000Z',
+              languages: [{ name: 'TypeScript', repoCount: 4 }],
+              repos: [
+                {
+                  name: 'engine',
+                  url: 'https://github.com/ada/engine',
+                  description: 'Analytical engine emulator',
+                  language: 'TypeScript',
+                  stars: 42,
+                  topics: [],
+                  pushedAt: '2024-01-20T00:00:00.000Z',
+                },
+              ],
+            },
+          }),
+        ),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    const section = await screen.findByRole('region', { name: 'GitHub' });
+    expect(
+      within(section).getByRole('link', { name: 'engine' }),
+    ).toHaveAttribute('href', 'https://github.com/ada/engine');
+    expect(within(section).getByText('TypeScript · 4')).toBeInTheDocument();
+  });
+
+  it('hides the GitHub section when there is no GitHub data', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(makeCandidate({ github: null })),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    await screen.findByRole('heading', { name: 'Ada Lovelace' });
+    expect(
+      screen.queryByRole('region', { name: 'GitHub' }),
+    ).not.toBeInTheDocument();
   });
 
   it('renders the email as a mailto link', async () => {
