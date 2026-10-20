@@ -48,7 +48,7 @@ const formattedDate = new Intl.DateTimeFormat(undefined, {
   dateStyle: 'medium',
 }).format(new Date('2024-01-15T00:00:00.000Z'));
 
-const placeholder = 'Not available yet — profile will be filled from the CV';
+const placeholder = 'Not found in the CV';
 
 describe('CandidatePage', () => {
   it('links to the CV in a new tab and shows its metadata', async () => {
@@ -135,6 +135,29 @@ describe('CandidatePage', () => {
     renderApp({ route: '/candidates/c1', session });
 
     expect(await screen.findByText(placeholder)).toBeInTheDocument();
+  });
+
+  it('says empty fields are unavailable when the parse failed', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(
+          makeCandidate({
+            parseStatus: 'failed',
+            parseError: 'LLM exploded',
+            skills: [],
+            projects: [],
+            experience: '',
+            summary: '',
+          }),
+        ),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(
+      await screen.findAllByText('Not available — the CV could not be parsed'),
+    ).toHaveLength(4);
+    expect(screen.queryByText(placeholder)).not.toBeInTheDocument();
   });
 
   it('shows the placeholder when there are no skills', async () => {
