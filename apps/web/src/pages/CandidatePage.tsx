@@ -15,6 +15,7 @@ import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { apiUrl } from '../api/client';
+import { GithubSection } from '../candidates/GithubSection';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 import { isParseInFlight } from '../candidates/parseStatus';
 import { useCandidate, useReparseCandidate } from '../candidates/queries';
@@ -94,6 +95,7 @@ export function CandidatePage() {
     projects,
     summary,
     cv,
+    github,
     parseStatus,
     parseError,
     createdAt,
@@ -160,6 +162,8 @@ export function CandidatePage() {
           {formatDate(cv.uploadedAt)}
         </Typography>
       </Stack>
+
+      <GithubSection github={github} />
 
       <Paper sx={{ p: 2 }}>
         <Typography variant="h6" gutterBottom>
