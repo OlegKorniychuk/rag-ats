@@ -16,12 +16,22 @@ import {
 import { GithubModule } from '../github/github.module.js';
 import { LlmModule } from '../llm/llm.module.js';
 import {
+  SCORES_REPOSITORY,
+  type ScoresRepository,
+} from '../db/repositories/scores.repository.js';
+import { ExtractVacancyCriteriaWorker } from './extract-vacancy-criteria.worker.js';
+import {
+  EXTRACT_VACANCY_CRITERIA_QUEUE,
   PARSE_CANDIDATE_QUEUE,
+  SCORE_APPLICATION_QUEUE,
+  type ExtractVacancyCriteriaJob,
   type ParseCandidateJob,
+  type ScoreApplicationJob,
 } from './jobs.constants.js';
 import { JobsService } from './jobs.service.js';
 import { PG_BOSS } from './jobs.tokens.js';
 import { ParseCandidateWorker } from './parse-candidate.worker.js';
+import { ScoreApplicationWorker } from './score-application.worker.js';
 
 const STOP_TIMEOUT_MS = 5_000;
 
@@ -41,6 +51,8 @@ const STOP_TIMEOUT_MS = 5_000;
     },
     JobsService,
     ParseCandidateWorker,
+    ExtractVacancyCriteriaWorker,
+    ScoreApplicationWorker,
   ],
   exports: [JobsService],
 })
@@ -53,9 +65,13 @@ export class JobsModule
     @Inject(PG_BOSS) private readonly boss: PgBoss,
     private readonly config: EnvConfig,
     private readonly jobs: JobsService,
-    private readonly worker: ParseCandidateWorker,
+    private readonly parseWorker: ParseCandidateWorker,
+    private readonly criteriaWorker: ExtractVacancyCriteriaWorker,
+    private readonly scoreWorker: ScoreApplicationWorker,
     @Inject(CANDIDATES_REPOSITORY)
     private readonly candidates: CandidatesRepository,
+    @Inject(SCORES_REPOSITORY)
+    private readonly scores: ScoresRepository,
   ) {}
 
   async onApplicationBootstrap() {
@@ -63,24 +79,53 @@ export class JobsModule
       this.logger.error(`pg-boss error: ${error.message}`),
     );
     await this.boss.start();
-    // Failures are recorded on the candidate; the SDK already retries
-    // transient HTTP errors, so no job-level retries.
+    // Failures are recorded on the row (candidate / score); the SDK already
+    // retries transient HTTP errors, so no job-level retries.
+    // Queue policies make `singletonKey` a uniqueness key: `exclusive` = one
+    // queued or running job per vacancy; `short` = one queued job per
+    // application (a running one doesn't block the next).
     await this.boss.createQueue(PARSE_CANDIDATE_QUEUE, { retryLimit: 0 });
+    await this.boss.createQueue(EXTRACT_VACANCY_CRITERIA_QUEUE, {
+      retryLimit: 0,
+      policy: 'exclusive',
+    });
+    await this.boss.createQueue(SCORE_APPLICATION_QUEUE, {
+      retryLimit: 0,
+      policy: 'short',
+    });
+    const workOptions = {
+      localConcurrency: 2,
+      batchSize: 1,
+      pollingIntervalSeconds: this.config.JOBS_POLL_INTERVAL_SECONDS,
+    };
     await this.boss.work<ParseCandidateJob>(
       PARSE_CANDIDATE_QUEUE,
-      {
-        localConcurrency: 2,
-        batchSize: 1,
-        pollingIntervalSeconds: this.config.JOBS_POLL_INTERVAL_SECONDS,
-      },
+      workOptions,
       async (jobs: Job<ParseCandidateJob>[]) => {
-        for (const job of jobs) await this.worker.handle(job.data);
+        for (const job of jobs) await this.parseWorker.handle(job.data);
+      },
+    );
+    await this.boss.work<ExtractVacancyCriteriaJob>(
+      EXTRACT_VACANCY_CRITERIA_QUEUE,
+      workOptions,
+      async (jobs: Job<ExtractVacancyCriteriaJob>[]) => {
+        for (const job of jobs) await this.criteriaWorker.handle(job.data);
+      },
+    );
+    await this.boss.work<ScoreApplicationJob>(
+      SCORE_APPLICATION_QUEUE,
+      workOptions,
+      async (jobs: Job<ScoreApplicationJob>[]) => {
+        for (const job of jobs) await this.scoreWorker.handle(job.data);
       },
     );
     await this.sweepBacklog();
   }
 
-  /** Re-enqueues candidates left pending/parsing (e.g. a crash before enqueue). */
+  /**
+   * Re-enqueues candidates left pending/parsing and scores left pending/scoring
+   * for parsed candidates (e.g. a crash before enqueue or mid-job).
+   */
   private async sweepBacklog() {
     const backlog = await this.candidates.findParseBacklog();
     for (const { candidateId, cvDocumentId } of backlog) {
@@ -88,6 +133,13 @@ export class JobsModule
     }
     if (backlog.length > 0) {
       this.logger.log(`Startup sweep enqueued ${backlog.length} parse job(s)`);
+    }
+    const scoreBacklog = await this.scores.findBacklog();
+    await this.jobs.enqueueScores(scoreBacklog);
+    if (scoreBacklog.length > 0) {
+      this.logger.log(
+        `Startup sweep enqueued ${scoreBacklog.length} score job(s)`,
+      );
     }
   }
 

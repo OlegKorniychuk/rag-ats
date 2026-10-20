@@ -120,6 +120,14 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       .where(eq(candidates.id, id));
   }
 
+  async findGithubSnapshot(id: string): Promise<GithubSnapshot | null> {
+    const row = await this.txHost.tx.query.candidates.findFirst({
+      where: { id },
+      columns: { githubSnapshot: true },
+    });
+    return row?.githubSnapshot ?? null;
+  }
+
   async findParseState(id: string): Promise<CandidateParseState | null> {
     const row = await this.txHost.tx.query.candidates.findFirst({
       where: { id },

@@ -6,6 +6,10 @@ export type VacancyStatus = 'open' | 'closed';
 export type ApplicationStage =
   'applied' | 'screened' | 'interview' | 'rejected' | 'hired';
 export type ParseStatus = 'pending' | 'parsing' | 'parsed' | 'failed';
+/** Progress of the background scoring of one application. */
+export type ScoreStatus = 'pending' | 'scoring' | 'scored' | 'failed';
+/** How much a vacancy criterion weighs: `must` counts double `nice` in the overall score. */
+export type CriterionImportance = 'must' | 'nice';
 /** Outcome of the last GitHub fetch for a candidate. */
 export type GithubStatus = 'ok' | 'not_found' | 'unavailable';
 
@@ -161,7 +165,66 @@ export interface CandidateResponse {
   createdAt: IsoDateString;
 }
 
+/**
+ * One requirement extracted from a vacancy. Internal storage shape (not part of
+ * VacancyResponse); `id` is stable within a vacancy (`c1`..`cN`).
+ */
+export interface VacancyCriterion {
+  id: string;
+  text: string;
+  importance: CriterionImportance;
+}
+
+/** A verbatim snippet backing a criterion score, checked against its source. */
+export interface ScoreQuote {
+  source: 'cv' | 'github';
+  text: string;
+}
+
+/** The score of one vacancy criterion, with its evidence. */
+export interface CriterionScore {
+  criterionId: string;
+  criterion: string;
+  importance: CriterionImportance;
+  /** 0-100. */
+  score: number;
+  reasoning: string;
+  quotes: ScoreQuote[];
+}
+
+/** A completed, grounded score of an application. */
+export interface ScoreResult {
+  /** 0-100, the importance-weighted mean of the criteria scores. */
+  overall: number;
+  rationale: string;
+  criteria: CriterionScore[];
+  /** The CV the score was computed from. */
+  cvDocumentId: string;
+  model: string;
+  mode: 'full_text';
+  scoredAt: IsoDateString;
+}
+
+/**
+ * The background fit score of an application. `result` keeps the last good
+ * score while a rescore is pending; `stale` is true when that result was not
+ * computed from the candidate's current CV or the vacancy's current criteria.
+ */
+export interface ApplicationScore {
+  status: ScoreStatus;
+  /** Short, safe reason when `status` is `failed`; otherwise null. */
+  error: string | null;
+  /** True while the candidate's CV is not yet `parsed`. */
+  waitingForParse: boolean;
+  stale: boolean;
+  result: ScoreResult | null;
+}
+
+/** POST /applications/:id/rescore -> 202, the freshly reset (pending) score. */
+export type RescoreResponse = ApplicationScore;
+
 /** GET /vacancies/:id/applications */
 export type ApplicationWithCandidateResponse = ApplicationResponse & {
   candidate: CandidateResponse;
+  score: ApplicationScore;
 };

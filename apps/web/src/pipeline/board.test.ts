@@ -34,6 +34,13 @@ function makeApplication(
     stage: 'applied',
     createdAt: '2024-01-01T00:00:00.000Z',
     candidate,
+    score: {
+      status: 'pending',
+      error: null,
+      waitingForParse: false,
+      stale: false,
+      result: null,
+    },
     ...overrides,
   };
 }
@@ -89,6 +96,69 @@ describe('groupByStage', () => {
     });
     const result = groupByStage([later, earlier]);
     expect(result.applied.map((a) => a.id)).toEqual(['a1', 'a2']);
+  });
+
+  it('sorts by overall score descending, unscored last, ties by createdAt', () => {
+    const scored = (
+      overall: number,
+    ): ApplicationWithCandidateResponse['score'] => ({
+      status: 'scored',
+      error: null,
+      waitingForParse: false,
+      stale: false,
+      result: {
+        overall,
+        rationale: '',
+        criteria: [],
+        cvDocumentId: 'cv1',
+        model: 'm',
+        mode: 'full_text',
+        scoredAt: '2024-01-01T00:00:00.000Z',
+      },
+    });
+    const staleResult = (overall: number) => ({
+      ...scored(overall),
+      status: 'pending' as const,
+      stale: true,
+    });
+    const apps = [
+      makeApplication({
+        id: 'unscored-new',
+        createdAt: '2024-01-05T00:00:00.000Z',
+      }),
+      makeApplication({
+        id: 'low',
+        score: scored(40),
+        createdAt: '2024-01-01T00:00:00.000Z',
+      }),
+      makeApplication({
+        id: 'tie-late',
+        score: scored(80),
+        createdAt: '2024-01-04T00:00:00.000Z',
+      }),
+      makeApplication({
+        id: 'stale-high',
+        score: staleResult(90),
+        createdAt: '2024-01-06T00:00:00.000Z',
+      }),
+      makeApplication({
+        id: 'tie-early',
+        score: scored(80),
+        createdAt: '2024-01-02T00:00:00.000Z',
+      }),
+      makeApplication({
+        id: 'unscored-old',
+        createdAt: '2024-01-03T00:00:00.000Z',
+      }),
+    ];
+    expect(groupByStage(apps).applied.map((a) => a.id)).toEqual([
+      'stale-high',
+      'tie-early',
+      'tie-late',
+      'low',
+      'unscored-old',
+      'unscored-new',
+    ]);
   });
 
   it('does not mutate the input array', () => {

@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
+import { CV_PROFILE_SCHEMA_NAME } from '../src/llm/cv-profile.schema.js';
 import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 import {
@@ -32,7 +33,8 @@ describe('CV parsing (e2e)', () => {
   let testApp: TestApp;
   let cookie: string[];
   let agent: ReturnType<typeof request.agent>;
-  const capture = captureOpenaiRequests();
+  // Scoring now also calls OpenAI after a parse; count only parse requests.
+  const capture = captureOpenaiRequests(CV_PROFILE_SCHEMA_NAME);
 
   beforeAll(async () => {
     testApp = await createTestApp();

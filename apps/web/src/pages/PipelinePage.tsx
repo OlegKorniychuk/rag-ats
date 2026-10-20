@@ -6,6 +6,7 @@ import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { isNotFound } from '../lib/errors';
 import { PipelineBoard } from '../pipeline/PipelineBoard';
+import { ScoreDrawer } from '../pipeline/ScoreDrawer';
 import { useVacancyApplications } from '../pipeline/queries';
 import { useVacancy } from '../vacancies/queries';
 
@@ -14,6 +15,7 @@ export function PipelinePage() {
   const vacancy = useVacancy(id);
   const applications = useVacancyApplications(id);
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const backLink = (
     <Link component={RouterLink} to="/vacancies">
@@ -47,6 +49,9 @@ export function PipelinePage() {
 
   const isOpen = vacancy.data.status === 'open';
   const applicationsData = applications.data ?? [];
+  const selectedApplication =
+    applicationsData.find((application) => application.id === selectedId) ??
+    null;
 
   return (
     <Stack spacing={3}>
@@ -74,6 +79,14 @@ export function PipelinePage() {
         vacancyId={id}
         applications={applicationsData}
         onError={setSnackbarMessage}
+        onOpenScore={setSelectedId}
+      />
+
+      <ScoreDrawer
+        vacancyId={id}
+        vacancyTitle={vacancy.data.title}
+        application={selectedApplication}
+        onClose={() => setSelectedId(null)}
       />
 
       <Snackbar

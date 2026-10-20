@@ -17,6 +17,23 @@ export const STAGES = (Object.keys(STAGE_LABELS) as ApplicationStage[]).map(
 
 export type Stage = (typeof STAGES)[number];
 
+// Highest score first (a stale result still counts with its old number), then
+// unscored, ties broken by application date, oldest first.
+function compareApplications(
+  a: ApplicationWithCandidateResponse,
+  b: ApplicationWithCandidateResponse,
+): number {
+  const scoreA = a.score.result?.overall;
+  const scoreB = b.score.result?.overall;
+  if (scoreA !== undefined && scoreB !== undefined && scoreA !== scoreB) {
+    return scoreB - scoreA;
+  }
+  if ((scoreA === undefined) !== (scoreB === undefined)) {
+    return scoreA === undefined ? 1 : -1;
+  }
+  return Date.parse(a.createdAt) - Date.parse(b.createdAt);
+}
+
 export function groupByStage(
   applications: readonly ApplicationWithCandidateResponse[],
 ): Record<ApplicationStage, ApplicationWithCandidateResponse[]> {
@@ -27,9 +44,7 @@ export function groupByStage(
     groups[application.stage].push(application);
   }
   for (const stage of STAGES) {
-    groups[stage.id].sort(
-      (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
-    );
+    groups[stage.id].sort(compareApplications);
   }
   return groups;
 }

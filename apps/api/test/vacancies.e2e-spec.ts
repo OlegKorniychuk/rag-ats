@@ -266,7 +266,15 @@ describe('Vacancies (e2e)', () => {
       expect(firstApp).toMatchObject({
         stage: 'applied',
         candidate: { name: first.name, email: first.email.toLowerCase() },
+        score: {
+          status: 'pending',
+          error: null,
+          waitingForParse: expect.any(Boolean),
+          stale: false,
+          result: null,
+        },
       });
+      expect(firstApp?.candidate).not.toHaveProperty('parsedCvDocumentId');
 
       const secondApp = byEmail.get(second.email.toLowerCase());
       expect(secondApp).toMatchObject({

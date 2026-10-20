@@ -16,6 +16,10 @@ import {
   type CandidatesRepository,
 } from '../db/repositories/candidates.repository.js';
 import {
+  SCORES_REPOSITORY,
+  type ScoresRepository,
+} from '../db/repositories/scores.repository.js';
+import {
   VACANCIES_REPOSITORY,
   type Vacancy,
   type VacanciesRepository,
@@ -66,6 +70,8 @@ export class ApplyService {
     private readonly applicationsRepository: ApplicationsRepository,
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocumentsRepository: CvDocumentsRepository,
+    @Inject(SCORES_REPOSITORY)
+    private readonly scoresRepository: ScoresRepository,
     private readonly cvTextExtractor: CvTextExtractor,
     private readonly jobs: JobsService,
   ) {}
@@ -106,15 +112,12 @@ export class ApplyService {
       throw err;
     }
 
-    const { candidateId, cvDocumentId } = await this.saveApplication(
-      token,
-      dto,
-      {
+    const { candidateId, cvDocumentId, applicationId } =
+      await this.saveApplication(token, dto, {
         filename: normalizeFilename(file.originalname),
         content: file.buffer,
         text,
-      },
-    );
+      });
 
     // Enqueue only after the transaction committed, so the worker can see the
     // CV. The application is already saved, so an enqueue failure must not fail
@@ -129,6 +132,20 @@ export class ApplyService {
         }`,
       );
     }
+    // The candidate is `pending` again here, so the score job normally returns
+    // at once and the parse completion (which resets and enqueues all of the
+    // candidate's scores) does the real work; this keeps the job queued even
+    // if that is ever skipped. Same failure handling as above: the `pending`
+    // score is recovered by the startup sweep.
+    try {
+      await this.jobs.enqueueScore(applicationId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to enqueue scoring for application ${applicationId}: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+    }
 
     return { success: true };
   }
@@ -138,7 +155,11 @@ export class ApplyService {
     token: string,
     dto: SubmitApplicationDto,
     cv: ParsedCv,
-  ): Promise<{ candidateId: string; cvDocumentId: string }> {
+  ): Promise<{
+    candidateId: string;
+    cvDocumentId: string;
+    applicationId: string;
+  }> {
     const vacancy = await this.vacanciesRepository.findByApplyToken(token);
     if (!vacancy) {
       throw new NotFoundException('Vacancy not found');
@@ -190,15 +211,20 @@ export class ApplyService {
       text: cv.text,
     });
 
-    await this.applicationsRepository.create({
+    const application = await this.applicationsRepository.create({
       vacancyId: vacancy.id,
       candidateId: candidate.id,
     });
+    await this.scoresRepository.createPending(application.id);
 
     // Repeat applicants keep their old profile visible while the new CV is
     // re-parsed; new candidates are already pending.
     await this.candidatesRepository.setParseStatus(candidate.id, 'pending');
 
-    return { candidateId: candidate.id, cvDocumentId: cvDocument.id };
+    return {
+      candidateId: candidate.id,
+      cvDocumentId: cvDocument.id,
+      applicationId: application.id,
+    };
   }
 }

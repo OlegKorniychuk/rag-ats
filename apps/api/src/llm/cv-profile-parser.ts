@@ -23,7 +23,7 @@ export class LlmParseError extends Error {
   }
 }
 
-function normaliseText(text: string): string {
+export function normaliseText(text: string): string {
   return text
     .replace(/[ \t]+/g, ' ')
     .replace(/\n{3,}/g, '\n\n')

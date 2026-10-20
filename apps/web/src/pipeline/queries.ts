@@ -5,22 +5,27 @@ import type {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   listVacancyApplications,
+  rescoreApplication,
   updateApplicationStage,
 } from '../api/applications';
 import {
   hasParseInFlight,
   PARSE_POLL_INTERVAL_MS,
 } from '../candidates/parseStatus';
+import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from './score';
 import { vacancyKeys } from '../vacancies/queries';
 
 export function useVacancyApplications(vacancyId: string) {
   return useQuery({
     queryKey: vacancyKeys.applications(vacancyId),
     queryFn: () => listVacancyApplications(vacancyId),
-    refetchInterval: (query) =>
-      hasParseInFlight(query.state.data?.map((a) => a.candidate))
-        ? PARSE_POLL_INTERVAL_MS
-        : false,
+    refetchInterval: (query) => {
+      const data = query.state.data;
+      if (hasParseInFlight(data?.map((a) => a.candidate))) {
+        return PARSE_POLL_INTERVAL_MS;
+      }
+      return hasScoreInFlight(data) ? SCORE_POLL_INTERVAL_MS : false;
+    },
   });
 }
 
@@ -50,5 +55,16 @@ export function useUpdateApplicationStage(vacancyId: string) {
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey }),
+  });
+}
+
+export function useRescoreApplication(vacancyId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => rescoreApplication(id),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: vacancyKeys.applications(vacancyId),
+      }),
   });
 }

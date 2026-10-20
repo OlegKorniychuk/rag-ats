@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import type { ApplicationWithCandidateResponse } from '@rag-ats/shared';
 import { CandidateResponseDto } from '../../candidates/dto/candidate-response.dto.js';
 import { ApplicationResponseDto } from './application-response.dto.js';
+import { ApplicationScoreResponseDto } from './application-score-response.dto.js';
 
 export class ApplicationWithCandidateResponseDto
   extends ApplicationResponseDto
@@ -9,4 +10,7 @@ export class ApplicationWithCandidateResponseDto
 {
   @ApiProperty({ type: () => CandidateResponseDto })
   candidate: CandidateResponseDto;
+
+  @ApiProperty({ type: () => ApplicationScoreResponseDto })
+  score: ApplicationScoreResponseDto;
 }

@@ -1,6 +1,7 @@
 // Guards against drift between Drizzle rows/DTOs and @rag-ats/shared's API types; type-only, no runtime effect.
 import type {
   ApplicationResponse,
+  ApplicationScore,
   ApplicationStage,
   ApplicationWithCandidateResponse,
   AuthUserResponse,
@@ -10,6 +11,7 @@ import type {
   GithubSummary as GithubSummaryResponse,
   ParseStatus,
   PublicVacancyResponse,
+  ScoreStatus,
   VacancyResponse,
   VacancyStatus,
 } from '@rag-ats/shared';
@@ -23,10 +25,15 @@ import type { Candidate } from './db/repositories/candidates.repository.js';
 import type { CvDocumentSummary } from './db/repositories/cv-documents.repository.js';
 import type { GithubSnapshot } from './github/github-snapshot.js';
 import { toGithubSummary } from './github/github-snapshot.js';
+import type {
+  ScoreRow,
+  toApplicationScore,
+} from './db/repositories/score.mapper.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
 import type {
   applicationStageEnum,
   parseStatusEnum,
+  scoreStatusEnum,
   vacancyStatusEnum,
 } from './db/schema.js';
 
@@ -93,4 +100,16 @@ export type CheckGithubSummary = Assert<
 >;
 export type CheckGithubSnapshotStatus = Assert<
   Equal<GithubSnapshot['status'], GithubStatus>
+>;
+export type CheckScoreStatus = Assert<
+  Equal<(typeof scoreStatusEnum.enumValues)[number], ScoreStatus>
+>;
+export type CheckScoreRowStatus = Assert<
+  Equal<ScoreRow['status'], ScoreStatus>
+>;
+export type CheckApplicationScore = Assert<
+  Equal<
+    Simplify<Jsonify<ReturnType<typeof toApplicationScore>>>,
+    Simplify<ApplicationScore>
+  >
 >;

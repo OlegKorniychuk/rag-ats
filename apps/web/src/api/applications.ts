@@ -2,6 +2,7 @@ import type {
   ApplicationResponse,
   ApplicationStage,
   ApplicationWithCandidateResponse,
+  RescoreResponse,
   UpdateApplicationRequest,
 } from '@rag-ats/shared';
 import { apiFetch } from './client';
@@ -16,3 +17,6 @@ export const updateApplicationStage = (id: string, stage: ApplicationStage) =>
     method: 'PATCH',
     json: { stage } satisfies UpdateApplicationRequest,
   });
+
+export const rescoreApplication = (id: string) =>
+  apiFetch<RescoreResponse>(`/applications/${id}/rescore`, { method: 'POST' });

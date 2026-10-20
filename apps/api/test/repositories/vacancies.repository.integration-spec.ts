@@ -16,6 +16,7 @@ import {
   type NewVacancy,
   type VacanciesRepository,
 } from '../../src/db/repositories/vacancies.repository.js';
+import { vacancyCriteriaHash } from '../../src/scoring/criteria-hash.js';
 import {
   createTestDatabase,
   teardownTestDatabase,
@@ -182,5 +183,85 @@ describe('VacanciesRepository (Testcontainers integration)', () => {
     const found = await vacanciesRepository.findByApplyToken(randomUUID());
 
     expect(found).toBeNull();
+  });
+
+  describe('saveCriteria', () => {
+    const criteria = [
+      { id: 'c1', text: 'Node.js', importance: 'must' as const },
+      { id: 'c2', text: 'Kubernetes', importance: 'nice' as const },
+    ];
+
+    async function readInternal(id: string) {
+      const { rows } = await testDb.pool.query(
+        'SELECT criteria, criteria_hash FROM vacancies WHERE id = $1',
+        [id],
+      );
+      return rows[0] as { criteria: unknown; criteria_hash: string | null };
+    }
+
+    it('stores criteria when the hash still matches the vacancy text', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+      const hash = vacancyCriteriaHash(vacancy.title, vacancy.requirements);
+
+      const saved = await vacanciesRepository.saveCriteria(
+        vacancy.id,
+        criteria,
+        hash,
+      );
+
+      expect(saved).toBe(true);
+      expect(await readInternal(vacancy.id)).toEqual({
+        criteria,
+        criteria_hash: hash,
+      });
+    });
+
+    it('returns false and stores nothing after the title or requirements changed', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+      const staleHash = vacancyCriteriaHash(
+        vacancy.title,
+        vacancy.requirements,
+      );
+      await vacanciesRepository.update(vacancy.id, {
+        requirements: 'Go and Kafka',
+      });
+
+      const saved = await vacanciesRepository.saveCriteria(
+        vacancy.id,
+        criteria,
+        staleHash,
+      );
+
+      expect(saved).toBe(false);
+      expect(await readInternal(vacancy.id)).toEqual({
+        criteria: null,
+        criteria_hash: null,
+      });
+    });
+
+    it('returns false for an unknown vacancy', async () => {
+      expect(
+        await vacanciesRepository.saveCriteria(randomUUID(), criteria, 'x'),
+      ).toBe(false);
+    });
+
+    it('never exposes the internal columns on reads', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+      await vacanciesRepository.saveCriteria(
+        vacancy.id,
+        criteria,
+        vacancyCriteriaHash(vacancy.title, vacancy.requirements),
+      );
+
+      for (const read of [
+        await vacanciesRepository.findById(vacancy.id),
+        await vacanciesRepository.findByApplyToken(vacancy.applyToken),
+        (await vacanciesRepository.findByRecruiterId(recruiterId))[0],
+        await vacanciesRepository.update(vacancy.id, { title: 'Renamed' }),
+      ]) {
+        expect(read).not.toHaveProperty('criteria');
+        expect(read).not.toHaveProperty('criteriaHash');
+      }
+    });
   });
 });

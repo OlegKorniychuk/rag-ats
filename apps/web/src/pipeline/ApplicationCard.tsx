@@ -4,21 +4,34 @@ import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
 import { useNavigate } from 'react-router';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
+import { ScoreBadge } from './ScoreBadge';
 
 const MAX_VISIBLE_SKILLS = 3;
 
 interface ApplicationCardProps {
   application: ApplicationWithCandidateResponse;
+  onOpenScore: (applicationId: string) => void;
 }
 
-function CardBody({ application }: ApplicationCardProps) {
+function CardBody({ application, onOpenScore }: ApplicationCardProps) {
   const { skills } = application.candidate;
   const visibleSkills = skills.slice(0, MAX_VISIBLE_SKILLS);
   const extraCount = skills.length - visibleSkills.length;
 
   return (
     <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-      <Typography variant="subtitle2">{application.candidate.name}</Typography>
+      <Stack
+        direction="row"
+        sx={{ alignItems: 'center', justifyContent: 'space-between', gap: 1 }}
+      >
+        <Typography variant="subtitle2">
+          {application.candidate.name}
+        </Typography>
+        <ScoreBadge
+          score={application.score}
+          onClick={() => onOpenScore(application.id)}
+        />
+      </Stack>
       <Typography
         variant="caption"
         color="text.secondary"
@@ -46,15 +59,20 @@ function CardBody({ application }: ApplicationCardProps) {
 }
 
 // Rendered inside DragOverlay: a plain visual clone, not a draggable/droppable node.
-export function ApplicationCardOverlay({ application }: ApplicationCardProps) {
+export function ApplicationCardOverlay({
+  application,
+}: Pick<ApplicationCardProps, 'application'>) {
   return (
     <Card variant="outlined" sx={{ boxShadow: 6 }}>
-      <CardBody application={application} />
+      <CardBody application={application} onOpenScore={() => undefined} />
     </Card>
   );
 }
 
-export function ApplicationCard({ application }: ApplicationCardProps) {
+export function ApplicationCard({
+  application,
+  onOpenScore,
+}: ApplicationCardProps) {
   const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: application.id,
@@ -86,7 +104,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
       {...listeners}
       onKeyDown={handleKeyDown}
     >
-      <CardBody application={application} />
+      <CardBody application={application} onOpenScore={onOpenScore} />
     </Card>
   );
 }

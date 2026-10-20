@@ -7,9 +7,14 @@ import type { Stage } from './board';
 interface PipelineColumnProps {
   stage: Stage;
   applications: readonly ApplicationWithCandidateResponse[];
+  onOpenScore: (applicationId: string) => void;
 }
 
-export function PipelineColumn({ stage, applications }: PipelineColumnProps) {
+export function PipelineColumn({
+  stage,
+  applications,
+  onOpenScore,
+}: PipelineColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.id });
 
   return (
@@ -42,7 +47,11 @@ export function PipelineColumn({ stage, applications }: PipelineColumnProps) {
           </Typography>
         )}
         {applications.map((application) => (
-          <ApplicationCard key={application.id} application={application} />
+          <ApplicationCard
+            key={application.id}
+            application={application}
+            onOpenScore={onOpenScore}
+          />
         ))}
       </Stack>
     </Paper>
