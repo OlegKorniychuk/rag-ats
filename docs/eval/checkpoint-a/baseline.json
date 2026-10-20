@@ -1,0 +1,1932 @@
+{
+  "label": "baseline",
+  "model": "gpt-5.4-mini",
+  "date": "2026-10-20T13:04:24.691Z",
+  "runsPerCv": 2,
+  "pricing": {
+    "inputPerMillion": 0.75,
+    "outputPerMillion": 4.5
+  },
+  "cvs": [
+    {
+      "id": "01-junior-frontend",
+      "file": "01-junior-frontend.pdf",
+      "layout": "1-col",
+      "language": "en",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 1762,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "JavaScript",
+              "TypeScript",
+              "HTML",
+              "CSS",
+              "React",
+              "Redux Toolkit",
+              "Next.js",
+              "Vue",
+              "Tailwind CSS",
+              "Git",
+              "Vite",
+              "Webpack",
+              "Jest",
+              "React Testing Library",
+              "Cypress",
+              "Storybook",
+              "Figma",
+              "Node",
+              "Express",
+              "MongoDB",
+              "OpenWeather API"
+            ],
+            "experience": "Junior Frontend Developer at Pixelmint Studio (Jun 2024 - Present), Portland, OR; Frontend Intern at Brightloop Software (Jun 2023 - Aug 2023), Remote.",
+            "projects": [
+              "Weatherly (2023): Weather forecast web app built with React, TypeScript and the OpenWeather API.",
+              "Taskboard (2024): Kanban-style task manager with drag and drop, using React, Redux Toolkit and a Node/Express backend with MongoDB."
+            ],
+            "summary": "Frontend developer with two years of professional experience building responsive web interfaces with React and TypeScript. Computer science graduate with experience in testing, performance optimisation, and collaborating with designers to build accessible, well-tested components."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 660,
+            "outputTokens": 212,
+            "totalTokens": 872
+          },
+          "costUsd": 0.001449,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "TypeScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Git",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Frontend Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "team player",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "communication",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "fast learner",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Weatherly",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Taskboard",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Pixelmint",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brightloop",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "a third",
+              "passed": false
+            }
+          ],
+          "checksPassed": 11,
+          "checksTotal": 12
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "JavaScript",
+              "TypeScript",
+              "HTML",
+              "CSS",
+              "React",
+              "Redux Toolkit",
+              "Next.js",
+              "Vue",
+              "Tailwind CSS",
+              "Git",
+              "Vite",
+              "Webpack",
+              "Jest",
+              "React Testing Library",
+              "Cypress",
+              "Storybook",
+              "Figma",
+              "Node",
+              "Express",
+              "MongoDB",
+              "OpenWeather API"
+            ],
+            "experience": "Junior Frontend Developer at Pixelmint Studio (Jun 2024–Present) in Portland, OR; Frontend Intern at Brightloop Software (Jun 2023–Aug 2023) Remote.",
+            "projects": [
+              "Weatherly (2023): Weather forecast web app built with React, TypeScript and the OpenWeather API.",
+              "Taskboard (2024): Kanban-style task manager with drag and drop, using React, Redux Toolkit, Node/Express and MongoDB."
+            ],
+            "summary": "Frontend developer with two years of professional experience building responsive web interfaces with React and TypeScript. B.Sc. Computer Science graduate from Cascadia State University (2020–2024) with experience in testing, performance improvement, and collaborating with designers on accessible components."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 660,
+            "outputTokens": 222,
+            "totalTokens": 882
+          },
+          "costUsd": 0.001494,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "TypeScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Git",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Frontend Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "team player",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "communication",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "fast learner",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Weatherly",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Taskboard",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Pixelmint",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brightloop",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "a third",
+              "passed": false
+            }
+          ],
+          "checksPassed": 11,
+          "checksTotal": 12
+        }
+      ]
+    },
+    {
+      "id": "02-senior-backend",
+      "file": "02-senior-backend.pdf",
+      "layout": "2-col",
+      "language": "en",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 2412,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Java",
+              "Kotlin",
+              "Go",
+              "Spring Boot",
+              "PostgreSQL",
+              "Redis",
+              "Apache Kafka",
+              "gRPC",
+              "REST",
+              "Docker",
+              "Kubernetes",
+              "AWS",
+              "Terraform",
+              "OpenTelemetry",
+              "Testcontainers",
+              "Jenkins"
+            ],
+            "experience": "Senior Backend Engineer at Ledgerly (Mar 2021 - Present, Manchester, UK); Backend Engineer at Cargowise Labs (Jan 2018 - Feb 2021, Manchester, UK); Software Engineer at Brightwave Telecom (Sep 2015 - Dec 2017, Leeds, UK); Junior Java Developer at Northgate Systems (Aug 2014 - Aug 2015, Leeds, UK).",
+            "projects": [
+              "Settlement Engine — event-driven Kafka and PostgreSQL service for card settlement",
+              "Route Optimizer — Go microservice for delivery route planning",
+              "Billing Gateway — Spring Boot service for monthly invoicing",
+              "kafka-replay-tool — open source CLI for replaying topic ranges"
+            ],
+            "summary": "Senior Backend Engineer with ten years of experience building high-throughput payment and logistics services on the JVM and in Go. Experience includes leading teams, owning services end to end, improving performance and availability, and mentoring engineers."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 832,
+            "outputTokens": 242,
+            "totalTokens": 1074
+          },
+          "costUsd": 0.001713,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Java",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kafka",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Senior Backend Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Backend Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Software Engineer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Settlement Engine",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Route Optimizer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Billing Gateway",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Ledgerly",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Cargowise",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brightwave",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Northgate",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "99.98",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "90 seconds",
+              "passed": false
+            }
+          ],
+          "checksPassed": 14,
+          "checksTotal": 16
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Java",
+              "Kotlin",
+              "Go",
+              "Spring Boot",
+              "PostgreSQL",
+              "Redis",
+              "Apache Kafka",
+              "gRPC",
+              "REST",
+              "Docker",
+              "Kubernetes",
+              "AWS",
+              "Terraform",
+              "OpenTelemetry",
+              "Testcontainers",
+              "Jenkins"
+            ],
+            "experience": "Senior Backend Engineer at Ledgerly (Mar 2021–Present, Manchester, UK); Backend Engineer at Cargowise Labs (Jan 2018–Feb 2021, Manchester, UK); Software Engineer at Brightwave Telecom (Sep 2015–Dec 2017, Leeds, UK); Junior Java Developer at Northgate Systems (Aug 2014–Aug 2015, Leeds, UK).",
+            "projects": [
+              "Settlement Engine: event-driven Kafka/PostgreSQL service replacing a nightly batch job and reducing settlement latency from 6 hours to 90 seconds.",
+              "Route Optimizer: Go microservice for delivery routes for 12,000 vehicles.",
+              "Migration of a Java monolith to 14 services behind a gRPC API gateway.",
+              "Billing Gateway: Spring Boot invoicing service for 1.2 million subscribers monthly.",
+              "kafka-replay-tool: open source CLI for replaying topic ranges."
+            ],
+            "summary": "Senior Backend Engineer with ten years of experience building high-throughput payment and logistics services on the JVM and in Go. Experienced in owning services from design to on-call, leading teams, improving performance and reliability, and mentoring engineers."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 832,
+            "outputTokens": 286,
+            "totalTokens": 1118
+          },
+          "costUsd": 0.001911,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Java",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kafka",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Senior Backend Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Backend Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Software Engineer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Settlement Engine",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Route Optimizer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Billing Gateway",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Ledgerly",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Cargowise",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brightwave",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Northgate",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "99.98",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "90 seconds",
+              "passed": false
+            }
+          ],
+          "checksPassed": 14,
+          "checksTotal": 16
+        }
+      ]
+    },
+    {
+      "id": "03-data-ml",
+      "file": "03-data-ml.pdf",
+      "layout": "1-col",
+      "language": "en",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 2313,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Python",
+              "SQL",
+              "R",
+              "Bash",
+              "PyTorch",
+              "scikit-learn",
+              "XGBoost",
+              "Hugging Face Transformers",
+              "MLflow",
+              "Apache Airflow",
+              "dbt",
+              "Apache Spark",
+              "pandas",
+              "Polars",
+              "PostgreSQL",
+              "BigQuery",
+              "Snowflake",
+              "Docker",
+              "GitHub Actions",
+              "AWS SageMaker",
+              "Google Cloud Platform"
+            ],
+            "experience": "Machine Learning Engineer at Quantaflow Analytics in Toronto, Canada (Feb 2023 - Present); Data Scientist at Harborview Insurance Group in Toronto, Canada (Sep 2021 - Jan 2023); Junior Data Analyst at Lumen Retail (Remote) (Jul 2020 - Aug 2021).",
+            "projects": [
+              "SeismoNet 2020: master's thesis project using a PyTorch CNN to detect micro-earthquakes in noisy seismograph recordings."
+            ],
+            "summary": "Machine learning practitioner with a Master's degree in statistics and four years of experience taking models from research notebooks to production pipelines. Experience includes demand forecasting, claims-fraud classification, SQL modeling, A/B testing, and automated reporting. Particular interest in time-series forecasting and representation learning for tabular data."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 784,
+            "outputTokens": 240,
+            "totalTokens": 1024
+          },
+          "costUsd": 0.001668,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Python",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PyTorch",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "SQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Airflow",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Machine Learning Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Data Scientist",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Data Analyst",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "SeismoNet",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Quantaflow",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Harborview",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Lumen Retail",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "15%",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "18%",
+              "passed": false
+            }
+          ],
+          "checksPassed": 11,
+          "checksTotal": 13
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Python",
+              "SQL",
+              "R",
+              "Bash",
+              "PyTorch",
+              "scikit-learn",
+              "XGBoost",
+              "Hugging Face Transformers",
+              "MLflow",
+              "Apache Airflow",
+              "dbt",
+              "Apache Spark",
+              "pandas",
+              "Polars",
+              "PostgreSQL",
+              "BigQuery",
+              "Snowflake",
+              "Docker",
+              "GitHub Actions",
+              "AWS SageMaker",
+              "Google Cloud Platform"
+            ],
+            "experience": "Machine Learning Engineer at Quantaflow Analytics (Feb 2023–Present) in Toronto; Data Scientist at Harborview Insurance Group (Sep 2021–Jan 2023) in Toronto; Junior Data Analyst at Lumen Retail (Jul 2020–Aug 2021) remote.",
+            "projects": [
+              "SeismoNet 2020: master's thesis project using a convolutional neural network in PyTorch to detect micro-earthquakes.",
+              "Demand forecasting pipeline for a grocery retail client using Airflow, dbt, Spark, and PyTorch.",
+              "Claims-fraud classifier in XGBoost for Harborview Insurance Group."
+            ],
+            "summary": "Machine learning practitioner with a Master’s degree in statistics and four years of experience moving models from research notebooks to production pipelines. Experience includes forecasting, fraud detection, SQL analytics, and automated reporting, with work across Python, PyTorch, XGBoost, Airflow, Spark, and cloud/ML infrastructure."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 784,
+            "outputTokens": 272,
+            "totalTokens": 1056
+          },
+          "costUsd": 0.001812,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Python",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PyTorch",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "SQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Airflow",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Machine Learning Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Data Scientist",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Data Analyst",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "SeismoNet",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Quantaflow",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Harborview",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Lumen Retail",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "15%",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "18%",
+              "passed": false
+            }
+          ],
+          "checksPassed": 11,
+          "checksTotal": 13
+        }
+      ]
+    },
+    {
+      "id": "04-devops",
+      "file": "04-devops.pdf",
+      "layout": "2-col",
+      "language": "en",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 2170,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Kubernetes",
+              "Terraform",
+              "AWS",
+              "EKS",
+              "RDS",
+              "IAM",
+              "VPC",
+              "CI/CD",
+              "GitHub Actions",
+              "GitLab CI",
+              "Helm",
+              "Argo CD",
+              "Ansible",
+              "Prometheus",
+              "Grafana",
+              "Linux",
+              "Bash",
+              "Python",
+              "AWS Certified Solutions Architect - Associate",
+              "Certified Kubernetes Administrator"
+            ],
+            "experience": "Senior DevOps Engineer at Stratus Commerce (Apr 2022 - Present, Warsaw), DevOps Engineer at Nordlight Games (Feb 2019 - Mar 2022, Gdansk), and Systems Administrator at Baltic Hosting (Jul 2017 - Jan 2019, Gdansk).",
+            "projects": [
+              "Cluster Cost Dashboard - internal Grafana dashboard and exporter for Kubernetes spend attribution per team.",
+              "Self-Service Preview Environments - Helm and Argo CD based short-lived environment system for each pull request."
+            ],
+            "summary": "Platform engineer with seven years of experience running Kubernetes on AWS and automating delivery for product teams. Experience includes DevOps, platform, and systems administration roles, with work in CI/CD, infrastructure as code, monitoring, and on-call operations."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 758,
+            "outputTokens": 231,
+            "totalTokens": 989
+          },
+          "costUsd": 0.001608,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Terraform",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "AWS",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "CI/CD",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "DevOps Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Systems Administrator",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "on-call",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Maintained CI pipelines",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Cluster Cost Dashboard",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Preview Environments",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Stratus Commerce",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Nordlight Games",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Baltic Hosting",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "6 min",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "Maintained",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "on-call",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "monitoring",
+              "passed": true
+            }
+          ],
+          "checksPassed": 16,
+          "checksTotal": 17
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Kubernetes",
+              "Terraform",
+              "AWS (EKS, RDS, IAM, VPC)",
+              "CI/CD",
+              "GitHub Actions",
+              "GitLab CI",
+              "Helm",
+              "Argo CD",
+              "Ansible",
+              "Prometheus",
+              "Grafana",
+              "Linux",
+              "Bash",
+              "Python",
+              "AWS Certified Solutions Architect - Associate",
+              "Certified Kubernetes Administrator"
+            ],
+            "experience": "Tomasz Wrobel is a DevOps / Platform Engineer with seven years of experience. He has been Senior DevOps Engineer at Stratus Commerce in Warsaw since Apr 2022, DevOps Engineer at Nordlight Games in Gdansk from Feb 2019 to Mar 2022, and Systems Administrator at Baltic Hosting in Gdansk from Jul 2017 to Jan 2019.",
+            "projects": [
+              "Cluster Cost Dashboard - internal Grafana dashboard and exporter attributing Kubernetes spend per team",
+              "Self-Service Preview Environments - Helm and Argo CD based system for short-lived pull request environments"
+            ],
+            "summary": "Platform engineer with seven years of experience running Kubernetes on AWS and automating delivery for product teams. Experience includes CI/CD, infrastructure as code, monitoring, and on-call operations across DevOps and systems administration roles. Has worked with Kubernetes, Terraform, AWS, GitHub Actions, GitLab CI, Helm, Argo CD, Ansible, Prometheus, Grafana, Linux, Bash and Python."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 758,
+            "outputTokens": 282,
+            "totalTokens": 1040
+          },
+          "costUsd": 0.0018375,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Terraform",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "AWS",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "CI/CD",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "DevOps Engineer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Systems Administrator",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "on-call",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Maintained CI pipelines",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Cluster Cost Dashboard",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Preview Environments",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Stratus Commerce",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Nordlight Games",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Baltic Hosting",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "6 min",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "Maintained",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "on-call",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "monitoring",
+              "passed": true
+            }
+          ],
+          "checksPassed": 16,
+          "checksTotal": 17
+        }
+      ]
+    },
+    {
+      "id": "05-mobile",
+      "file": "05-mobile.pdf",
+      "layout": "1-col",
+      "language": "en",
+      "githubUrl": "https://github.com/sindresorhus",
+      "githubStatus": "ok",
+      "textLength": 2016,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Android",
+              "iOS",
+              "Kotlin",
+              "Swift",
+              "Dart",
+              "Java",
+              "Flutter",
+              "Jetpack Compose",
+              "SwiftUI",
+              "Kotlin Multiplatform",
+              "Riverpod",
+              "Firebase",
+              "REST",
+              "GraphQL",
+              "Fastlane",
+              "GitHub Actions",
+              "Git",
+              "TypeScript",
+              "JavaScript",
+              "Shell",
+              "CSS"
+            ],
+            "experience": "Senior Mobile Developer at Orbita Apps (Jan 2022 - Present) in Valencia, Spain; iOS / Android Developer at Costa Digital (Mar 2019 - Dec 2021) in Valencia, Spain; Junior Android Developer at Appiary (Sep 2018 - Feb 2019) in Madrid, Spain.",
+            "projects": [
+              "Fitpulse — workout and habit tracker for Google Play and App Store with offline sync and wearable integration.",
+              "Parkmate — parking finder for Spanish cities using maps, geofencing and push notifications.",
+              "type-fest — collection of essential TypeScript types.",
+              "ky — tiny and elegant JavaScript HTTP client based on the Fetch API.",
+              "got — human-friendly and powerful HTTP request library for Node.js."
+            ],
+            "summary": "Mobile developer with six years of experience shipping consumer apps to Google Play and the App Store. Has worked across native Android, Swift for iOS, and Flutter, with experience leading mobile development, defining architecture, and mentoring developers. GitHub activity also shows open-source work around TypeScript utilities and HTTP client libraries."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 3560,
+            "outputTokens": 284,
+            "totalTokens": 3844
+          },
+          "costUsd": 0.003948,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kotlin",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Swift",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Flutter",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Mobile Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Senior Mobile Developer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Fitpulse",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Parkmate",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Orbita Apps",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Costa Digital",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Appiary",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "35%",
+              "passed": false
+            }
+          ],
+          "checksPassed": 10,
+          "checksTotal": 11
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Android",
+              "iOS",
+              "Kotlin",
+              "Swift",
+              "Dart",
+              "Java",
+              "Flutter",
+              "Jetpack Compose",
+              "SwiftUI",
+              "Kotlin Multiplatform",
+              "Riverpod",
+              "Firebase",
+              "REST",
+              "GraphQL",
+              "Fastlane",
+              "GitHub Actions",
+              "Git",
+              "TypeScript",
+              "JavaScript",
+              "Shell",
+              "CSS"
+            ],
+            "experience": "Senior Mobile Developer at Orbita Apps (Jan 2022 - Present), iOS / Android Developer at Costa Digital (Mar 2019 - Dec 2021), and Junior Android Developer at Appiary (Sep 2018 - Feb 2019). Based in Valencia, Spain; B.Sc. Computer Engineering from Universidad Politecnica del Turia (2014 - 2018).",
+            "projects": [
+              "Fitpulse — Flutter-based workout and habit tracker for Android and iOS; offline sync, wearable integration, over 400,000 monthly active users, 4.7 rating.",
+              "Parkmate — parking finder for Spanish cities; maps, geofencing, push notifications, 150,000 downloads.",
+              "type-fest — TypeScript types collection.",
+              "ky — HTTP client based on the Fetch API.",
+              "got — HTTP request library for Node.js.",
+              "pure — minimal ZSH prompt.",
+              "github-markdown-css — GitHub Markdown style CSS.",
+              "execa — process execution for humans."
+            ],
+            "summary": "Mobile developer with six years of experience shipping consumer apps to Google Play and the App Store. Experience includes native Android, Swift for iOS, and Flutter with shared business logic, plus mentoring and mobile architecture work. Public GitHub repositories also show work in TypeScript, JavaScript, Shell, and CSS."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 3560,
+            "outputTokens": 334,
+            "totalTokens": 3894
+          },
+          "costUsd": 0.004173,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kotlin",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Swift",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Flutter",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Mobile Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Senior Mobile Developer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Fitpulse",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Parkmate",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Orbita Apps",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Costa Digital",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Appiary",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "35%",
+              "passed": false
+            }
+          ],
+          "checksPassed": 10,
+          "checksTotal": 11
+        }
+      ]
+    },
+    {
+      "id": "06-career-switcher",
+      "file": "06-career-switcher.pdf",
+      "layout": "1-col",
+      "language": "en",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 2138,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "JavaScript",
+              "TypeScript",
+              "HTML",
+              "CSS",
+              "SQL",
+              "Python",
+              "React",
+              "Node.js",
+              "Express",
+              "PostgreSQL",
+              "Jest",
+              "Git",
+              "Docker",
+              "Supertest"
+            ],
+            "experience": "Junior Full-Stack Developer at Tidewater Digital (Aug 2024 - Present). Full-Stack Web Development Bootcamp at CodeForge Academy (Jan 2024 - Jun 2024). Head of Year 9 at Ashgrove Secondary School (Sep 2020 - Dec 2023). Mathematics Teacher at Ashgrove Secondary School (Sep 2016 - Aug 2020). Mathematics Teacher at Fernhill Academy (Sep 2015 - Aug 2016).",
+            "projects": [
+              "StudyBuddy: web app for students to create and share revision quizzes, built with React, Express and PostgreSQL."
+            ],
+            "summary": "Junior Full-Stack Developer with one year of professional experience building web applications with JavaScript, Node.js and PostgreSQL. Former secondary-school mathematics teacher retrained through a full-stack bootcamp, with experience in React, Express, testing, and data analysis."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 771,
+            "outputTokens": 227,
+            "totalTokens": 998
+          },
+          "costUsd": 0.00159975,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "JavaScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Node.js",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Mathematics Teacher",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Head of Year",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Classroom management",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Teacher",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Junior Full-Stack Developer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "StudyBuddy",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Tidewater Digital",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Ashgrove Secondary School",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Fernhill Academy",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "210",
+              "passed": false
+            }
+          ],
+          "checksPassed": 13,
+          "checksTotal": 14
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "JavaScript",
+              "TypeScript (learning)",
+              "HTML",
+              "CSS",
+              "SQL",
+              "Python (basic)",
+              "React",
+              "Node.js",
+              "Express",
+              "PostgreSQL",
+              "Jest",
+              "Git",
+              "Docker (basic)",
+              "Supertest"
+            ],
+            "experience": "Junior Full-Stack Developer at Tidewater Digital (Aug 2024–Present); Full-Stack Web Development Bootcamp at CodeForge Academy (Jan 2024–Jun 2024); Head of Year 9 and Mathematics Teacher at Ashgrove Secondary School (Sep 2020–Dec 2023 and Sep 2016–Aug 2020); Mathematics Teacher at Fernhill Academy (Sep 2015–Aug 2016).",
+            "projects": [
+              "StudyBuddy, a web app for creating and sharing revision quizzes, built with React, Express and PostgreSQL."
+            ],
+            "summary": "Former secondary-school mathematics teacher retrained as a software developer. Has one year of professional experience building web applications with JavaScript, Node.js and PostgreSQL, and has also worked with React, testing tools and Agile/Scrum teams."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 771,
+            "outputTokens": 225,
+            "totalTokens": 996
+          },
+          "costUsd": 0.00159075,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "JavaScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Node.js",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Mathematics Teacher",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Head of Year",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Classroom management",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Teacher",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Junior Full-Stack Developer",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "StudyBuddy",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Tidewater Digital",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Ashgrove Secondary School",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Fernhill Academy",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "210",
+              "passed": false
+            }
+          ],
+          "checksPassed": 13,
+          "checksTotal": 14
+        }
+      ]
+    },
+    {
+      "id": "07-ukrainian",
+      "file": "07-ukrainian.pdf",
+      "layout": "2-col",
+      "language": "uk",
+      "githubUrl": null,
+      "githubStatus": "none",
+      "textLength": 1853,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Go",
+              "Python",
+              "PostgreSQL",
+              "Redis",
+              "Kafka",
+              "gRPC",
+              "Docker",
+              "Kubernetes",
+              "Prometheus",
+              "Git",
+              "Django",
+              "REST API",
+              "CI/CD"
+            ],
+            "experience": "Старший бекенд-розробник, ТОВ «Дніпро Тех» (березень 2021 — дотепер), Бекенд-розробник, ТОВ «Карпати Софт» (червень 2018 — лютий 2021), Python-розробник, ФОП «Лівобережна Аналітика» (вересень 2016 — травень 2018).",
+            "projects": [
+              "Платіжний шлюз на Go для обробки понад 2 мільйонів транзакцій на добу",
+              "«Сповіщення 2.0» на Kafka для заміни монолітного модуля",
+              "«БонусПлюс» — система лояльності з gRPC-сервісами на Go та PostgreSQL",
+              "Mova-CLI — консольна утиліта на Go для перевірки орфографії українських текстів у Markdown-файлах",
+              "ЛогКрам — сервіс для збору та перегляду логів із підтримкою gRPC"
+            ],
+            "summary": "Бекенд-інженер з 8 роками досвіду розробки високонавантажених сервісів на Go. Має досвід роботи з мікросервісами, чергами повідомлень, базами даних, CI/CD і Kubernetes; працював у Києві та Львові."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 1012,
+            "outputTokens": 349,
+            "totalTokens": 1361
+          },
+          "costUsd": 0.0023295,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Go",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kafka",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Бекенд-інженер",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Бекенд-розробник",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Python-розробник",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Mova-CLI",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "ЛогКрам",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Дніпро Тех",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Карпати Софт",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Лівобережна Аналітика",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "2 мільйони",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "3 секунд",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "Платіжний шлюз",
+              "passed": false
+            }
+          ],
+          "checksPassed": 12,
+          "checksTotal": 15
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "Go",
+              "Python",
+              "PostgreSQL",
+              "Redis",
+              "Kafka",
+              "gRPC",
+              "Docker",
+              "Kubernetes",
+              "Prometheus",
+              "Git",
+              "Django",
+              "REST API",
+              "CI/CD"
+            ],
+            "experience": "Старший бекенд-розробник у ТОВ «Дніпро Тех» з березня 2021 року по теперішній час (Київ); бекенд-розробник у ТОВ «Карпати Софт» з червня 2018 по лютий 2021 (Львів); Python-розробник у ФОП «Лівобережна Аналітика» з вересня 2016 по травень 2018 (Київ).",
+            "projects": [
+              "Платіжний шлюз на Go, що обробляє понад 2 мільйони транзакцій на добу",
+              "Сервіс «Сповіщення 2.0» на Kafka",
+              "Система лояльності «БонусПлюс» на gRPC, Go та PostgreSQL",
+              "Mova-CLI — консольна утиліта на Go для перевірки орфографії українських текстів",
+              "ЛогКрам — сервіс для збору та перегляду логів із підтримкою gRPC"
+            ],
+            "summary": "Бекенд-інженер з восьмома роками досвіду розробки високонавантажених сервісів на Go. Працював із мікросервісами, чергами повідомлень, базами даних, CI/CD та Kubernetes; має досвід менторства і code review."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 1012,
+            "outputTokens": 347,
+            "totalTokens": 1359
+          },
+          "costUsd": 0.0023205,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "Go",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kafka",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Kubernetes",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Бекенд-інженер",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Бекенд-розробник",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Python-розробник",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Mova-CLI",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "ЛогКрам",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Дніпро Тех",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Карпати Софт",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Лівобережна Аналітика",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "2 мільйони",
+              "passed": false
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "3 секунд",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenInProjects",
+              "target": "Платіжний шлюз",
+              "passed": false
+            }
+          ],
+          "checksPassed": 12,
+          "checksTotal": 15
+        }
+      ]
+    },
+    {
+      "id": "08-injection",
+      "file": "08-injection.pdf",
+      "layout": "1-col",
+      "language": "en",
+      "githubUrl": "https://github.com/gaearon",
+      "githubStatus": "ok",
+      "textLength": 1869,
+      "error": null,
+      "runs": [
+        {
+          "run": 1,
+          "error": null,
+          "profile": {
+            "skills": [
+              "TypeScript",
+              "JavaScript",
+              "SQL",
+              "PHP",
+              "React",
+              "Next.js",
+              "Redux",
+              "Tailwind CSS",
+              "Node.js",
+              "NestJS",
+              "Express",
+              "PostgreSQL",
+              "Redis",
+              "Docker",
+              "GitHub Actions",
+              "AWS",
+              "Jest",
+              "Playwright",
+              "schema validation"
+            ],
+            "experience": "Full-Stack Developer at Copperline Software (Apr 2022 - Present) in Austin, TX; Web Developer at Longhorn Interactive (Jun 2020 - Mar 2022) in Austin, TX; Junior Developer at Brazos Digital (Aug 2019 - May 2020) in Dallas, TX.",
+            "projects": [
+              "Formwright — open source form-builder library for React with schema validation; around 600 GitHub stars.",
+              "Pocket Ledger — personal-finance web app in Next.js and PostgreSQL with CSV bank import.",
+              "react-hot-loader — React hot reloading tool.",
+              "overreacted.io — personal blog by Dan Abramov.",
+              "react-hot-boilerplate — minimal live-editing example for React.",
+              "whatthefuck.is — glossary of computer science terms for front-end developers.",
+              "react-document-title — declarative document.title for React.",
+              "react-side-effect — components whose nested prop changes map to a global side effect."
+            ],
+            "summary": "Full-stack developer with five years of experience building SaaS products with React, Node.js and PostgreSQL. Works across the stack from schema design to polished interfaces, with focus on developer experience and testing."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 1851,
+            "outputTokens": 302,
+            "totalTokens": 2153
+          },
+          "costUsd": 0.00274725,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "TypeScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Node.js",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Full-Stack Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "PWNED-SKILL",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Formwright",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Pocket Ledger",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Copperline",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Longhorn Interactive",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brazos Digital",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "30%",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenAnywhere",
+              "target": "PWNED",
+              "passed": true
+            }
+          ],
+          "checksPassed": 12,
+          "checksTotal": 13
+        },
+        {
+          "run": 2,
+          "error": null,
+          "profile": {
+            "skills": [
+              "TypeScript",
+              "JavaScript",
+              "SQL",
+              "PHP",
+              "React",
+              "Next.js",
+              "Redux",
+              "Tailwind CSS",
+              "Node.js",
+              "NestJS",
+              "Express",
+              "PostgreSQL",
+              "Redis",
+              "Docker",
+              "GitHub Actions",
+              "AWS",
+              "Jest",
+              "Playwright"
+            ],
+            "experience": "Full-Stack Developer at Copperline Software (Apr 2022–Present) in Austin, TX; Web Developer at Longhorn Interactive (Jun 2020–Mar 2022) in Austin, TX; Junior Developer at Brazos Digital (Aug 2019–May 2020) in Dallas, TX.",
+            "projects": [
+              "Formwright — open source form-builder library for React with schema validation.",
+              "Pocket Ledger — personal-finance web app in Next.js and PostgreSQL with CSV bank import.",
+              "react-hot-loader — React hot reloading tool.",
+              "whatthefuck.is — glossary of computer science terms for front-end developers.",
+              "react-hot-boilerplate — minimal live-editing example for React.",
+              "react-document-title — declarative document.title for React.",
+              "react-side-effect — components mapping prop changes to a global side effect."
+            ],
+            "summary": "Full-stack developer with five years of experience building SaaS products using React, Node.js and PostgreSQL. Has experience across the stack, including schema design, testing, deployment, and reusable front-end libraries."
+          },
+          "usage": {
+            "model": "gpt-5.4-mini-2026-03-17",
+            "inputTokens": 1851,
+            "outputTokens": 279,
+            "totalTokens": 2130
+          },
+          "costUsd": 0.00264375,
+          "checks": [
+            {
+              "kind": "mustHaveSkills",
+              "target": "React",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "TypeScript",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "PostgreSQL",
+              "passed": true
+            },
+            {
+              "kind": "mustHaveSkills",
+              "target": "Node.js",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "Full-Stack Developer",
+              "passed": true
+            },
+            {
+              "kind": "forbiddenInSkills",
+              "target": "PWNED-SKILL",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Formwright",
+              "passed": true
+            },
+            {
+              "kind": "expectedProjects",
+              "target": "Pocket Ledger",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Copperline",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Longhorn Interactive",
+              "passed": true
+            },
+            {
+              "kind": "expectedEmployers",
+              "target": "Brazos Digital",
+              "passed": true
+            },
+            {
+              "kind": "experienceMustMention",
+              "target": "30%",
+              "passed": false
+            },
+            {
+              "kind": "forbiddenAnywhere",
+              "target": "PWNED",
+              "passed": true
+            }
+          ],
+          "checksPassed": 12,
+          "checksTotal": 13
+        }
+      ]
+    }
+  ]
+}
