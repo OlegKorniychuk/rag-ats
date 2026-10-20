@@ -6,16 +6,18 @@ export const cvProfileSchema = z.object({
   skills: z
     .array(z.string())
     .describe(
-      'Technologies, tools, frameworks and languages explicitly mentioned in the CV',
+      'Technologies, languages, frameworks, tools and technical methods; never job titles or soft skills',
     ),
   experience: z
     .string()
     .describe(
-      'Concise prose summary of work roles, companies and durations as stated in the CV',
+      'One line per role, newest first: "Title — Company (start – end): 1–2 key achievements with their metrics"',
     ),
   projects: z
     .array(z.string())
-    .describe('One short line per notable project mentioned in the CV'),
+    .describe(
+      'One line per named project: "Name — what it is"; unnamed duties are not projects',
+    ),
   summary: z
     .string()
     .describe('A 2-3 sentence professional summary of the candidate'),

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Priya Raman - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 15mm;
+      }
+      body {
+        font-family: 'DejaVu Sans', 'Liberation Sans', sans-serif;
+        font-size: 9.5pt;
+        line-height: 1.4;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      h1 {
+        font-size: 21pt;
+        margin: 0;
+        color: #12355b;
+      }
+      .title {
+        font-size: 11.5pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9pt;
+        color: #555;
+        margin-bottom: 8px;
+      }
+      h2 {
+        font-size: 11pt;
+        color: #12355b;
+        border-bottom: 1.5px solid #12355b;
+        margin: 14px 0 6px;
+        padding-bottom: 2px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td,
+      th {
+        border: 1px solid #bbb;
+        padding: 4px 7px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #eef2f7;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+      }
+      .sub {
+        color: #555;
+        margin-bottom: 2px;
+      }
+      ul {
+        margin: 3px 0 8px;
+        padding-left: 17px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Priya Raman</h1>
+    <div class="title">Data Scientist / Machine Learning Engineer</div>
+    <div class="contact">
+      priya.raman@example.com &middot; +1 555 0173 &middot; Toronto, Canada
+    </div>
+
+    <h2>Summary</h2>
+    <p>
+      Machine learning practitioner with a Master's degree in statistics and
+      four years of experience taking models from research notebooks to
+      production pipelines. Particular interest in time-series forecasting and
+      representation learning for tabular data.
+    </p>
+
+    <h2>Technical skills</h2>
+    <table>
+      <tr>
+        <th style="width: 28%">Category</th>
+        <th>Tools</th>
+      </tr>
+      <tr>
+        <td>Languages</td>
+        <td>Python, SQL, R, Bash</td>
+      </tr>
+      <tr>
+        <td>ML / DL</td>
+        <td>
+          PyTorch, scikit-learn, XGBoost, Hugging Face Transformers, MLflow
+        </td>
+      </tr>
+      <tr>
+        <td>Data engineering</td>
+        <td>Apache Airflow, dbt, Apache Spark, pandas, Polars</td>
+      </tr>
+      <tr>
+        <td>Databases</td>
+        <td>PostgreSQL, BigQuery, Snowflake</td>
+      </tr>
+      <tr>
+        <td>Infrastructure</td>
+        <td>Docker, GitHub Actions, AWS SageMaker, Google Cloud Platform</td>
+      </tr>
+    </table>
+
+    <h2>Experience</h2>
+    <div class="row">
+      <span>Machine Learning Engineer, Quantaflow Analytics</span
+      ><span>Feb 2023 - Present</span>
+    </div>
+    <div class="sub">Toronto, Canada</div>
+    <ul>
+      <li>
+        Own the demand forecasting pipeline for a grocery retail client: Airflow
+        DAGs orchestrate feature building in dbt and Spark, then training in
+        PyTorch.
+      </li>
+      <li>
+        Replaced a gradient boosting baseline with a temporal fusion
+        transformer, improving weekly forecast WAPE from 21% to 15%.
+      </li>
+      <li>
+        Set up MLflow tracking and a model registry, making every production
+        model reproducible from a single run id.
+      </li>
+      <li>
+        Reduced nightly batch scoring time from 3 hours to 25 minutes by moving
+        feature joins from pandas to Polars.
+      </li>
+    </ul>
+
+    <div class="row">
+      <span>Data Scientist, Harborview Insurance Group</span
+      ><span>Sep 2021 - Jan 2023</span>
+    </div>
+    <div class="sub">Toronto, Canada</div>
+    <ul>
+      <li>
+        Built a claims-fraud classifier in XGBoost that surfaced 18% more
+        fraudulent claims at the same investigator workload.
+      </li>
+      <li>
+        Wrote SQL models and dashboards used weekly by the actuarial team.
+      </li>
+      <li>
+        Ran A/B tests on customer communication templates and reported results
+        to product management.
+      </li>
+    </ul>
+
+    <div class="row">
+      <span>Junior Data Analyst, Lumen Retail</span
+      ><span>Jul 2020 - Aug 2021</span>
+    </div>
+    <div class="sub">Remote</div>
+    <ul>
+      <li>
+        Automated weekly sales reporting with Python and SQL, saving the team
+        about 6 hours a week.
+      </li>
+    </ul>
+
+    <h2>Research</h2>
+    <div class="row"><span>Project: SeismoNet</span><span>2020</span></div>
+    <ul>
+      <li>
+        Master's thesis project: a convolutional neural network in PyTorch that
+        detects micro-earthquakes in noisy seismograph recordings, outperforming
+        the STA/LTA baseline by 12 points of F1.
+      </li>
+    </ul>
+
+    <h2>Publication</h2>
+    <ul>
+      <li>
+        Raman, P., Okonkwo, T. (2021). "Detecting low-magnitude seismic events
+        with lightweight convolutional networks."
+        <i>Journal of Applied Geophysical Data</i>, 14(3), 211-226.
+      </li>
+    </ul>
+
+    <h2>Education</h2>
+    <div class="row">
+      <span>M.Sc. Statistics, Lakeshore University</span
+      ><span>2018 - 2020</span>
+    </div>
+    <div class="row">
+      <span>B.Sc. Mathematics, Lakeshore University</span
+      ><span>2014 - 2018</span>
+    </div>
+  </body>
+</html>

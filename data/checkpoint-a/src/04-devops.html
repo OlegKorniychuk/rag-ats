@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tomasz Wrobel - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Liberation Sans', Arial, sans-serif;
+        font-size: 9.8pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 8mm 14mm 14mm;
+      }
+      .side {
+        width: 62mm;
+        background: #eef3ee;
+        padding: 14mm 8mm;
+        min-height: 296mm;
+        border-left: 3px solid #2e6b3f;
+      }
+      h1 {
+        font-size: 23pt;
+        margin: 0;
+        color: #2e6b3f;
+      }
+      .role {
+        font-size: 12pt;
+        color: #444;
+        margin-bottom: 8px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #2e6b3f;
+        border-bottom: 1px solid #2e6b3f;
+        margin: 14px 0 6px;
+        padding-bottom: 2px;
+      }
+      .side h2 {
+        margin-top: 0;
+      }
+      .side h2 + ul + h2 {
+        margin-top: 16px;
+      }
+      .job {
+        margin-bottom: 9px;
+      }
+      .job h3 {
+        font-size: 10.8pt;
+        margin: 0;
+      }
+      .meta {
+        color: #555;
+        font-size: 9.2pt;
+        margin-bottom: 2px;
+      }
+      ul {
+        margin: 3px 0;
+        padding-left: 16px;
+      }
+      .side ul {
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="main">
+        <h1>Tomasz Wrobel</h1>
+        <div class="role">DevOps / Platform Engineer</div>
+
+        <h2>Summary</h2>
+        <p>
+          Platform engineer with seven years of experience running Kubernetes on
+          AWS and automating delivery for product teams. Focused on repeatable
+          infrastructure, fast pipelines and calm on-call rotations.
+        </p>
+
+        <h2>Work experience</h2>
+        <div class="job">
+          <h3>Senior DevOps Engineer, Stratus Commerce</h3>
+          <div class="meta">Apr 2022 - Present &middot; Warsaw, Poland</div>
+          <ul>
+            <li>
+              Maintained CI pipelines in GitHub Actions for 60+ repositories.
+            </li>
+            <li>
+              Participated in the on-call rotation and handled production
+              incidents.
+            </li>
+            <li>
+              Managed Kubernetes clusters on EKS and upgraded them across four
+              minor versions without downtime.
+            </li>
+            <li>
+              Wrote Terraform modules for networking, EKS and RDS, adopted by
+              all product teams.
+            </li>
+            <li>
+              Reduced average build time from 18 to 6 minutes through caching
+              and parallel jobs.
+            </li>
+            <li>
+              Responsible for monitoring with Prometheus and Grafana, and for
+              cost reviews.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>DevOps Engineer, Nordlight Games</h3>
+          <div class="meta">Feb 2019 - Mar 2022 &middot; Gdansk, Poland</div>
+          <ul>
+            <li>
+              Took part in release management and supported developers with
+              deployment issues.
+            </li>
+            <li>
+              Led the move of about 200 hand-built AWS resources into Terraform,
+              removing configuration drift.
+            </li>
+            <li>
+              Built a GitLab CI/CD platform with canary deployments for the game
+              backend services.
+            </li>
+            <li>
+              Ran the on-call rotation for matchmaking services during three
+              major game launches.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Systems Administrator, Baltic Hosting</h3>
+          <div class="meta">Jul 2017 - Jan 2019 &middot; Gdansk, Poland</div>
+          <ul>
+            <li>
+              Administered around 120 Linux servers, handled backups, patching
+              and user requests.
+            </li>
+            <li>
+              Wrote Ansible playbooks that replaced manual server provisioning.
+            </li>
+          </ul>
+        </div>
+
+        <h2>Selected projects</h2>
+        <ul>
+          <li>
+            <b>Cluster Cost Dashboard</b> - internal Grafana dashboard and
+            exporter that attributes Kubernetes spend per team; led to a 22% cut
+            in idle capacity.
+          </li>
+          <li>
+            <b>Self-Service Preview Environments</b> - Helm and Argo CD based
+            system that creates a short-lived environment for every pull
+            request.
+          </li>
+        </ul>
+      </div>
+      <div class="side">
+        <h2>Contact</h2>
+        <ul style="list-style: none; padding-left: 0">
+          <li>tomasz.wrobel@example.com</li>
+          <li>+48 555 0119</li>
+          <li>Warsaw, Poland</li>
+        </ul>
+        <h2>Core skills</h2>
+        <ul>
+          <li>Kubernetes</li>
+          <li>Terraform</li>
+          <li>AWS (EKS, RDS, IAM, VPC)</li>
+          <li>CI/CD</li>
+          <li>GitHub Actions</li>
+          <li>GitLab CI</li>
+          <li>Helm</li>
+          <li>Argo CD</li>
+          <li>Ansible</li>
+          <li>Prometheus</li>
+          <li>Grafana</li>
+          <li>Linux</li>
+          <li>Bash</li>
+          <li>Python</li>
+        </ul>
+        <h2>Certifications</h2>
+        <ul>
+          <li>AWS Certified Solutions Architect - Associate</li>
+          <li>Certified Kubernetes Administrator</li>
+        </ul>
+        <h2>Languages</h2>
+        <ul>
+          <li>Polish - native</li>
+          <li>English - fluent</li>
+        </ul>
+        <h2>Education</h2>
+        <ul style="list-style: none; padding-left: 0">
+          <li>
+            B.Eng. Computer Networks<br />Gdansk Technical College, 2013 - 2017
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
