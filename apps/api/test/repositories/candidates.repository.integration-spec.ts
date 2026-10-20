@@ -15,6 +15,7 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../../src/db/repositories/cv-documents.repository.js';
+import type { GithubSnapshot } from '../../src/github/github-snapshot.js';
 import {
   createTestDatabase,
   teardownTestDatabase,
@@ -34,6 +35,37 @@ function newCandidate(overrides: Partial<NewCandidate> = {}): NewCandidate {
     ...overrides,
   };
 }
+
+const snapshot: GithubSnapshot = {
+  username: 'janedoe',
+  profileUrl: 'https://github.com/janedoe',
+  status: 'ok',
+  fetchedAt: '2026-01-15T09:30:00.000Z',
+  bio: 'SECRET-BIO backend dev',
+  repos: [
+    {
+      name: 'nest-api-starter',
+      url: 'https://github.com/janedoe/nest-api-starter',
+      description: 'Opinionated NestJS starter',
+      language: 'TypeScript',
+      stars: 42,
+      topics: ['nestjs', 'postgres'],
+      pushedAt: '2026-01-10T12:00:00.000Z',
+      readmeExcerpt: 'SECRET-README # Nest starter',
+    },
+    {
+      name: 'dotfiles',
+      url: 'https://github.com/janedoe/dotfiles',
+      description: null,
+      language: null,
+      stars: 0,
+      topics: [],
+      pushedAt: '2025-12-01T08:00:00.000Z',
+      readmeExcerpt: null,
+    },
+  ],
+  languages: [{ name: 'TypeScript', repoCount: 1 }],
+};
 
 describe('CandidatesRepository (Testcontainers integration)', () => {
   let testDb: TestDatabase;
@@ -306,6 +338,7 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
         created.id,
         state!.latestCvDocumentId,
         profile,
+        null,
       );
 
       const found = await candidatesRepository.findById(created.id);
@@ -320,12 +353,115 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
         parseStatus: 'parsed',
         parsedCvDocumentId: state!.latestCvDocumentId,
         latestCvDocumentId: state!.latestCvDocumentId,
+        githubUrl: 'https://github.com/janedoe',
       });
       const { rows } = await testDb.pool.query(
         'SELECT parsed_at FROM candidates WHERE id = $1',
         [created.id],
       );
       expect(rows[0].parsed_at).toBeInstanceOf(Date);
+    });
+
+    it('saveParsedProfile stores the GitHub snapshot and reads expose only the mapped summary', async () => {
+      const created = await seedCandidate();
+      const state = await candidatesRepository.findParseState(created.id);
+
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        state!.latestCvDocumentId,
+        profile,
+        snapshot,
+      );
+
+      const expectedGithub = {
+        username: 'janedoe',
+        profileUrl: 'https://github.com/janedoe',
+        status: 'ok',
+        fetchedAt: '2026-01-15T09:30:00.000Z',
+        repos: [
+          {
+            name: 'nest-api-starter',
+            url: 'https://github.com/janedoe/nest-api-starter',
+            description: 'Opinionated NestJS starter',
+            language: 'TypeScript',
+            stars: 42,
+            topics: ['nestjs', 'postgres'],
+            pushedAt: '2026-01-10T12:00:00.000Z',
+          },
+          {
+            name: 'dotfiles',
+            url: 'https://github.com/janedoe/dotfiles',
+            description: null,
+            language: null,
+            stars: 0,
+            topics: [],
+            pushedAt: '2025-12-01T08:00:00.000Z',
+          },
+        ],
+        languages: [{ name: 'TypeScript', repoCount: 1 }],
+      };
+      const byId = await candidatesRepository.findById(created.id);
+      const byEmail = await candidatesRepository.findByEmail(
+        (await candidatesRepository.findById(created.id))!.email,
+      );
+      const fromAll = (await candidatesRepository.findAll()).find(
+        (c) => c.id === created.id,
+      );
+      for (const found of [byId, byEmail, fromAll]) {
+        expect(found!.github).toEqual(expectedGithub);
+        const json = JSON.stringify(found);
+        expect(json).not.toContain('readmeExcerpt');
+        expect(json).not.toContain('SECRET-README');
+        expect(json).not.toContain('bio');
+        expect(json).not.toContain('SECRET-BIO');
+        expect(json).not.toContain('githubSnapshot');
+      }
+
+      // the stored snapshot itself keeps the internal fields
+      const { rows } = await testDb.pool.query(
+        'SELECT github_snapshot FROM candidates WHERE id = $1',
+        [created.id],
+      );
+      expect(rows[0].github_snapshot).toEqual(snapshot);
+    });
+
+    it('github is null without a snapshot and a re-save with null clears it', async () => {
+      const created = await seedCandidate();
+      const state = await candidatesRepository.findParseState(created.id);
+      expect(
+        (await candidatesRepository.findById(created.id))!.github,
+      ).toBeNull();
+
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        state!.latestCvDocumentId,
+        profile,
+        snapshot,
+      );
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        state!.latestCvDocumentId,
+        profile,
+        null,
+      );
+
+      expect(
+        (await candidatesRepository.findById(created.id))!.github,
+      ).toBeNull();
+    });
+
+    it('findParseState returns githubUrl, null when the candidate has none', async () => {
+      const withUrl = await seedCandidate({
+        githubUrl: 'https://github.com/someone',
+      });
+      const withoutUrl = await seedCandidate({ githubUrl: null });
+
+      expect(
+        (await candidatesRepository.findParseState(withUrl.id))!.githubUrl,
+      ).toBe('https://github.com/someone');
+      expect(
+        (await candidatesRepository.findParseState(withoutUrl.id))!.githubUrl,
+      ).toBeNull();
     });
 
     it('findParseState tracks the newest CV and is null for unknown ids', async () => {
@@ -381,6 +517,7 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
         created.id,
         state!.latestCvDocumentId,
         profile,
+        null,
       );
       const expectedKeys = [
         'id',
@@ -396,6 +533,7 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
         'parseError',
         'createdAt',
         'cv',
+        'github',
       ].sort();
 
       const byId = await candidatesRepository.findById(created.id);
@@ -410,7 +548,7 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
         name: 'Renamed',
       });
       expect(Object.keys(updated).sort()).toEqual(
-        expectedKeys.filter((k) => k !== 'cv'),
+        expectedKeys.filter((k) => k !== 'cv' && k !== 'github'),
       );
     });
   });

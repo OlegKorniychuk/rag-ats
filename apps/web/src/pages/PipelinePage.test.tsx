@@ -42,6 +42,7 @@ function makeCandidate(
       uploadedAt: '2024-01-01T00:00:00.000Z',
     },
     parseStatus: 'parsed' as const,
+    github: null,
     parseError: null,
     createdAt: '2024-01-01T00:00:00.000Z',
     ...overrides,

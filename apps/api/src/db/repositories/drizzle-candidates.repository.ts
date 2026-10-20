@@ -5,6 +5,8 @@ import type { ParseStatus } from '@rag-ats/shared';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { candidates } from '../schema.js';
 import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
+import { withGithub } from './github-summary.mapper.js';
+import type { GithubSnapshot } from '../../github/github-snapshot.js';
 import {
   publicCandidateColumns,
   publicCandidateColumnsWith,
@@ -41,7 +43,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       with: latestCvSummaryWith,
       orderBy: { createdAt: 'desc' },
     });
-    return rows.map(withCv);
+    return rows.map((row) => withGithub(withCv(row)));
   }
 
   async findById(id: string): Promise<Candidate | null> {
@@ -50,7 +52,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       columns: publicCandidateColumnsWith,
       with: latestCvSummaryWith,
     });
-    return row ? withCv(row) : null;
+    return row ? withGithub(withCv(row)) : null;
   }
 
   async findByEmail(email: string): Promise<Candidate | null> {
@@ -59,7 +61,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       columns: publicCandidateColumnsWith,
       with: latestCvSummaryWith,
     });
-    return row ? withCv(row) : null;
+    return row ? withGithub(withCv(row)) : null;
   }
 
   async update(id: string, data: Partial<NewCandidate>): Promise<CandidateRow> {
@@ -100,6 +102,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
     id: string,
     cvDocumentId: string,
     profile: ParsedProfile,
+    githubSnapshot: GithubSnapshot | null,
   ): Promise<void> {
     await this.txHost.tx
       .update(candidates)
@@ -108,6 +111,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
         experience: profile.experience,
         projects: profile.projects,
         summary: profile.summary,
+        githubSnapshot,
         parseStatus: 'parsed',
         parseError: null,
         parsedCvDocumentId: cvDocumentId,
@@ -119,7 +123,12 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
   async findParseState(id: string): Promise<CandidateParseState | null> {
     const row = await this.txHost.tx.query.candidates.findFirst({
       where: { id },
-      columns: { id: true, parseStatus: true, parsedCvDocumentId: true },
+      columns: {
+        id: true,
+        parseStatus: true,
+        parsedCvDocumentId: true,
+        githubUrl: true,
+      },
       with: {
         cvDocuments: {
           columns: { id: true },
@@ -135,6 +144,7 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       parseStatus: row.parseStatus,
       parsedCvDocumentId: row.parsedCvDocumentId,
       latestCvDocumentId: latest.id,
+      githubUrl: row.githubUrl,
     };
   }
 

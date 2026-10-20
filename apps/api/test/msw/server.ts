@@ -1,5 +1,6 @@
 import { setupServer } from 'msw/node';
 import { HttpNetworkFrame } from 'msw/experimental';
+import { githubCatchAllNotFoundHandler } from './github.handlers.js';
 import { openaiProfileHandler, type MockProfile } from './openai.handlers.js';
 
 export const DEFAULT_MOCK_PROFILE: MockProfile = {
@@ -9,8 +10,14 @@ export const DEFAULT_MOCK_PROFILE: MockProfile = {
   summary: 'Backend engineer focused on TypeScript.',
 };
 
-/** Shared server for e2e; specs override per test with `server.use(...)`. */
-export const server = setupServer(openaiProfileHandler(DEFAULT_MOCK_PROFILE));
+/**
+ * Shared server for e2e; specs override per test with `server.use(...)`.
+ * GitHub answers 404 by default, so parses stay CV-only and deterministic.
+ */
+export const server = setupServer(
+  openaiProfileHandler(DEFAULT_MOCK_PROFILE),
+  githubCatchAllNotFoundHandler(),
+);
 
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1']);
 

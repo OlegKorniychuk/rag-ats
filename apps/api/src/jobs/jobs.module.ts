@@ -13,6 +13,7 @@ import {
   CANDIDATES_REPOSITORY,
   type CandidatesRepository,
 } from '../db/repositories/candidates.repository.js';
+import { GithubModule } from '../github/github.module.js';
 import { LlmModule } from '../llm/llm.module.js';
 import {
   PARSE_CANDIDATE_QUEUE,
@@ -25,7 +26,7 @@ import { ParseCandidateWorker } from './parse-candidate.worker.js';
 const STOP_TIMEOUT_MS = 5_000;
 
 @Module({
-  imports: [LlmModule],
+  imports: [LlmModule, GithubModule],
   providers: [
     {
       provide: PG_BOSS,
