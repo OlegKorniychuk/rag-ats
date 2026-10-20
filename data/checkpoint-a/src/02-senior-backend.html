@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Daniel Okafor - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Liberation Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        background: #263445;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        min-height: 296mm;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm 14mm 10mm;
+      }
+      .side h2 {
+        font-size: 10.5pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 16px 0 6px;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .label {
+        color: #aab6c4;
+        font-size: 8.5pt;
+      }
+      h1 {
+        font-size: 24pt;
+        margin: 0;
+      }
+      .role {
+        font-size: 12pt;
+        color: #444;
+        margin-bottom: 10px;
+      }
+      .main h2 {
+        font-size: 12pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 8px;
+      }
+      .job {
+        margin-bottom: 10px;
+      }
+      .job h3 {
+        font-size: 11pt;
+        margin: 0;
+      }
+      .job .meta {
+        color: #555;
+        font-size: 9.5pt;
+        margin-bottom: 2px;
+      }
+      ul.b {
+        margin: 3px 0;
+        padding-left: 16px;
+      }
+      ul.b li {
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="side">
+        <h2>Contact</h2>
+        <ul>
+          <li>daniel.okafor@example.com</li>
+          <li>+44 555 0188</li>
+          <li>Manchester, UK</li>
+          <li>linkedin.example.com/in/dokafor</li>
+        </ul>
+        <h2>Skills</h2>
+        <ul>
+          <li>Java</li>
+          <li>Kotlin</li>
+          <li>Go</li>
+          <li>Spring Boot</li>
+          <li>PostgreSQL</li>
+          <li>Redis</li>
+          <li>Apache Kafka</li>
+          <li>gRPC &amp; REST</li>
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>AWS</li>
+          <li>Terraform</li>
+          <li>OpenTelemetry</li>
+        </ul>
+        <h2>Languages</h2>
+        <ul>
+          <li>English - native</li>
+          <li>Igbo - native</li>
+          <li>German - B1</li>
+        </ul>
+        <h2>Education</h2>
+        <ul>
+          <li>
+            M.Sc. Software Engineering<br /><span class="label"
+              >University of Northfield, 2012 - 2014</span
+            >
+          </li>
+          <li>
+            B.Sc. Computer Science<br /><span class="label"
+              >University of Northfield, 2009 - 2012</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="main">
+        <h1>Daniel Okafor</h1>
+        <div class="role">Senior Backend Engineer</div>
+
+        <h2>Profile</h2>
+        <p>
+          Backend engineer with ten years of experience designing
+          high-throughput payment and logistics services on the JVM and in Go.
+          Comfortable owning a service from design to on-call, and mentoring
+          engineers along the way.
+        </p>
+
+        <h2>Experience</h2>
+        <div class="job">
+          <h3>Senior Backend Engineer, Ledgerly</h3>
+          <div class="meta">Mar 2021 - Present &middot; Manchester, UK</div>
+          <ul class="b">
+            <li>
+              Lead a team of five building the card-settlement platform,
+              processing 4 million transactions per day with 99.98%
+              availability.
+            </li>
+            <li>
+              Designed Settlement Engine, an event-driven service on Kafka and
+              PostgreSQL that replaced a nightly batch job and cut settlement
+              latency from 6 hours to 90 seconds.
+            </li>
+            <li>
+              Reduced infrastructure spend by 28% by right-sizing Kubernetes
+              workloads and moving cold data to S3.
+            </li>
+            <li>
+              Introduced distributed tracing with OpenTelemetry, shortening mean
+              time to resolve incidents by 40%.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Backend Engineer, Cargowise Labs</h3>
+          <div class="meta">Jan 2018 - Feb 2021 &middot; Manchester, UK</div>
+          <ul class="b">
+            <li>
+              Built Route Optimizer, a Go microservice that planned delivery
+              routes for 12,000 vehicles and saved customers an estimated 9% in
+              fuel.
+            </li>
+            <li>
+              Migrated a Java monolith to 14 services behind a gRPC API gateway
+              with zero customer-visible downtime.
+            </li>
+            <li>
+              Cut p99 API latency from 800 ms to 120 ms by introducing Redis
+              caching and query tuning.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Software Engineer, Brightwave Telecom</h3>
+          <div class="meta">Sep 2015 - Dec 2017 &middot; Leeds, UK</div>
+          <ul class="b">
+            <li>
+              Developed the Billing Gateway, a Spring Boot service generating
+              invoices for 1.2 million subscribers each month.
+            </li>
+            <li>
+              Wrote the integration test suite with Testcontainers, raising
+              coverage from 35% to 82%.
+            </li>
+            <li>
+              Mentored four graduate engineers through the company onboarding
+              programme.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Junior Java Developer, Northgate Systems</h3>
+          <div class="meta">Aug 2014 - Aug 2015 &middot; Leeds, UK</div>
+          <ul class="b">
+            <li>
+              Implemented REST endpoints and batch jobs for an insurance quoting
+              application.
+            </li>
+            <li>
+              Automated deployments with Jenkins, reducing release time from
+              half a day to 30 minutes.
+            </li>
+          </ul>
+        </div>
+
+        <h2>Talks &amp; open source</h2>
+        <ul class="b">
+          <li>
+            Speaker, Manchester Java User Group (2022): "Event sourcing without
+            the pain".
+          </li>
+          <li>
+            Maintainer of kafka-replay-tool, a small open source CLI for
+            replaying topic ranges.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

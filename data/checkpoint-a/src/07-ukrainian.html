@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <title>Олексій Шевченко - резюме</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'DejaVu Sans', 'Noto Sans', sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.42;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 62mm;
+        background: #1f3b5c;
+        color: #f0f3f7;
+        padding: 14mm 8mm;
+        min-height: 296mm;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid #6f87a3;
+        padding-bottom: 2px;
+        margin: 16px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .label {
+        color: #b6c4d4;
+        font-size: 8.5pt;
+      }
+      h1 {
+        font-size: 21pt;
+        margin: 0;
+        color: #1f3b5c;
+      }
+      .role {
+        font-size: 12pt;
+        color: #444;
+        margin-bottom: 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        color: #1f3b5c;
+        border-bottom: 2px solid #1f3b5c;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+      }
+      .job {
+        margin-bottom: 9px;
+      }
+      .job h3 {
+        font-size: 10.5pt;
+        margin: 0;
+      }
+      .meta {
+        color: #555;
+        font-size: 9pt;
+        margin-bottom: 2px;
+      }
+      ul.b {
+        margin: 3px 0;
+        padding-left: 16px;
+      }
+      ul.b li {
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="side">
+        <h2>Контакти</h2>
+        <ul>
+          <li>oleksii.shevchenko@example.com</li>
+          <li>+380 555 01 23</li>
+          <li>Київ, Україна</li>
+        </ul>
+        <h2>Навички</h2>
+        <ul>
+          <li>Go</li>
+          <li>Python</li>
+          <li>PostgreSQL</li>
+          <li>Redis</li>
+          <li>Kafka</li>
+          <li>gRPC</li>
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>Prometheus</li>
+          <li>Git</li>
+        </ul>
+        <h2>Мови</h2>
+        <ul>
+          <li>Українська - рідна</li>
+          <li>Англійська - B2</li>
+          <li>Польська - A2</li>
+        </ul>
+        <h2>Освіта</h2>
+        <ul>
+          <li>
+            Магістр, комп'ютерні науки<br /><span class="label"
+              >КНУ імені Тараса Шевченка, 2014 - 2016</span
+            >
+          </li>
+          <li>
+            Бакалавр, прикладна математика<br /><span class="label"
+              >КНУ імені Тараса Шевченка, 2010 - 2014</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="main">
+        <h1>Олексій Шевченко</h1>
+        <div class="role">Бекенд-інженер (Go)</div>
+
+        <h2>Про себе</h2>
+        <p>
+          Бекенд-інженер з вісьмома роками досвіду розробки високонавантажених
+          сервісів на Go. Проєктую мікросервіси, працюю з чергами повідомлень і
+          базами даних, люблю надійний та простий код.
+        </p>
+
+        <h2>Досвід роботи</h2>
+        <div class="job">
+          <h3>Старший бекенд-розробник, ТОВ «Дніпро Тех»</h3>
+          <div class="meta">Березень 2021 - дотепер &middot; Київ</div>
+          <ul class="b">
+            <li>
+              Розробляю платіжний шлюз на Go, який обробляє понад 2 мільйони
+              транзакцій на добу.
+            </li>
+            <li>
+              Створив сервіс «Сповіщення 2.0» на Kafka, що замінив старий
+              монолітний модуль і скоротив затримку доставки з 40 до 3 секунд.
+            </li>
+            <li>
+              Оптимізував запити до PostgreSQL та додав кешування в Redis,
+              завдяки чому час відповіді API зменшився на 60%.
+            </li>
+            <li>Веду код-рев'ю та наставляю двох молодших розробників.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Бекенд-розробник, ТОВ «Карпати Софт»</h3>
+          <div class="meta">Червень 2018 - Лютий 2021 &middot; Львів</div>
+          <ul class="b">
+            <li>
+              Розробив систему лояльності «БонусПлюс» для мережі роздрібних
+              магазинів: gRPC-сервіси на Go та PostgreSQL.
+            </li>
+            <li>
+              Налаштував CI/CD і розгортання в Kubernetes, скоротивши час релізу
+              з одного дня до 20 хвилин.
+            </li>
+            <li>
+              Написав інтеграційні тести, які підвищили покриття коду з 40% до
+              78%.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Python-розробник, ФОП «Лівобережна Аналітика»</h3>
+          <div class="meta">Вересень 2016 - Травень 2018 &middot; Київ</div>
+          <ul class="b">
+            <li>
+              Розробляв внутрішні інструменти для обробки даних та REST API на
+              Python і Django.
+            </li>
+            <li>Автоматизував щотижневі звіти для відділу продажів.</li>
+          </ul>
+        </div>
+
+        <h2>Особисті проєкти</h2>
+        <ul class="b">
+          <li>
+            <b>Mova-CLI</b> - консольна утиліта на Go для перевірки орфографії
+            українських текстів у Markdown-файлах.
+          </li>
+          <li>
+            <b>ЛогКрам</b> - невеликий сервіс для збору та перегляду логів із
+            підтримкою gRPC.
+          </li>
+        </ul>
+
+        <h2>Сертифікати</h2>
+        <ul class="b">
+          <li>Certified Kubernetes Application Developer (CKAD), 2022</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
