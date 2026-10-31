@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { addCandidateToVacancy } from '../api/vacancies';
 import {
   getCandidate,
   listCandidateApplications,
   listCandidates,
   reparseCandidate,
 } from '../api/candidates';
+import { vacancyKeys } from '../vacancies/queries';
 import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from '../pipeline/score';
 import { hasParseInFlight, PARSE_POLL_INTERVAL_MS } from './parseStatus';
 
@@ -58,5 +60,22 @@ export function useReparseCandidate(id: string) {
           queryKey[0] === 'vacancies' && queryKey[2] === 'applications',
       });
     },
+  });
+}
+
+export function useAddCandidateToVacancy(candidateId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (vacancyId: string) =>
+      addCandidateToVacancy(vacancyId, candidateId),
+    onSuccess: (_data, vacancyId) =>
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: candidateKeys.applications(candidateId),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: vacancyKeys.applications(vacancyId),
+        }),
+      ]),
   });
 }

@@ -10,6 +10,7 @@ import type {
 } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { CandidateVacancies } from './CandidateVacancies';
+import { ADDED_FROM_POOL_LABEL as ADDED } from './AddedFromPoolIcon';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -140,9 +141,13 @@ describe('CandidateVacancies', () => {
     await screen.findByRole('link', { name: 'Old role' });
     const [closedAdded, plain] = screen.getAllByRole('listitem');
     expect(within(closedAdded).getByText('Closed')).toBeInTheDocument();
-    expect(within(closedAdded).getByText('Added')).toBeInTheDocument();
+    expect(
+      within(closedAdded).getByRole('img', { name: ADDED }),
+    ).toBeInTheDocument();
     expect(within(plain).queryByText('Closed')).not.toBeInTheDocument();
-    expect(within(plain).queryByText('Added')).not.toBeInTheDocument();
+    expect(
+      within(plain).queryByRole('img', { name: ADDED }),
+    ).not.toBeInTheDocument();
   });
 
   it('shows an empty state when the candidate is on no vacancies', async () => {

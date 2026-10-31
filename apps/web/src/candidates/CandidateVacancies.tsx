@@ -13,6 +13,7 @@ import type { CandidateApplicationResponse } from '@rag-ats/shared';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { stageLabel } from '../pipeline/board';
 import { ScoreBadge } from '../pipeline/ScoreBadge';
+import { AddedFromPoolIcon } from './AddedFromPoolIcon';
 import { useCandidateApplications } from './queries';
 
 const HEADING_ID = 'candidate-vacancies-heading';
@@ -41,9 +42,7 @@ function VacancyRow({
           <Chip label="Closed" size="small" variant="outlined" />
         )}
         <Chip label={stageLabel(application.stage)} size="small" />
-        {application.source === 'added' && (
-          <Chip label="Added" size="small" variant="outlined" />
-        )}
+        {application.source === 'added' && <AddedFromPoolIcon />}
       </Stack>
       <ScoreBadge score={application.score} />
     </ListItem>

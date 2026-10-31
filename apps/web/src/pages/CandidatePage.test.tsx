@@ -8,6 +8,7 @@ import type {
 } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
+import { ADDED_FROM_POOL_LABEL as ADDED } from '../candidates/AddedFromPoolIcon';
 
 vi.mock('../candidates/parseStatus', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../candidates/parseStatus')>()),
@@ -303,7 +304,9 @@ describe('CandidatePage', () => {
       await within(section).findByRole('link', { name: 'Backend Dev' }),
     ).toHaveAttribute('href', '/vacancies/v1');
     expect(within(section).getByText('Screened')).toBeInTheDocument();
-    expect(within(section).getByText('Added')).toBeInTheDocument();
+    expect(
+      within(section).getByRole('img', { name: ADDED }),
+    ).toBeInTheDocument();
   });
 
   it('keeps the rest of the page when the vacancies section fails', async () => {

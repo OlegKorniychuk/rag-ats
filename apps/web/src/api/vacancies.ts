@@ -1,4 +1,6 @@
 import type {
+  AddApplicationRequest,
+  ApplicationWithCandidateResponse,
   CreateVacancyRequest,
   UpdateVacancyRequest,
   VacancyResponse,
@@ -18,3 +20,12 @@ export const updateVacancy = (id: string, body: UpdateVacancyRequest) =>
     method: 'PATCH',
     json: body,
   });
+
+export const addCandidateToVacancy = (vacancyId: string, candidateId: string) =>
+  apiFetch<ApplicationWithCandidateResponse>(
+    `/vacancies/${vacancyId}/applications`,
+    {
+      method: 'POST',
+      json: { candidateId } satisfies AddApplicationRequest,
+    },
+  );
