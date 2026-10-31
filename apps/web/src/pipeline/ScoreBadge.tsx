@@ -1,6 +1,7 @@
-import type { KeyboardEvent, MouseEvent } from 'react';
+import type { KeyboardEvent, MouseEvent, ReactElement } from 'react';
 import type { ApplicationScore } from '@rag-ats/shared';
-import { Chip, CircularProgress } from '@mui/material';
+import { Chip, CircularProgress, Tooltip } from '@mui/material';
+import HistoryIcon from '@mui/icons-material/History';
 import { isScoreInFlight, scoreBand } from './score';
 
 interface ScoreBadgeProps {
@@ -34,9 +35,13 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
   const { label, aria } = describe(score);
   const inFlight = isScoreInFlight(score);
   const previous = score.result?.overall;
+  // Scored against older requirements and not being redone (a closed vacancy
+  // edited since): greyed out like an in-flight stale score, but with a
+  // history marker instead of a spinner, so it doesn't pass for a current one.
+  const outdated = score.status === 'scored' && score.stale;
 
   const color =
-    score.status === 'scored' && previous !== undefined
+    score.status === 'scored' && previous !== undefined && !outdated
       ? scoreBand(previous)
       : score.status === 'failed'
         ? 'error'
@@ -44,14 +49,25 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
 
   const sx = {
     fontWeight: 600,
-    ...(inFlight && previous !== undefined && { opacity: 0.6 }),
+    ...(((inFlight && previous !== undefined) || outdated) && { opacity: 0.6 }),
   };
   const icon = inFlight ? (
     <CircularProgress size={12} color="inherit" />
+  ) : outdated ? (
+    <HistoryIcon />
   ) : undefined;
 
+  const withTooltip = (chip: ReactElement) =>
+    outdated ? (
+      <Tooltip title="Outdated: scored against older requirements">
+        {chip}
+      </Tooltip>
+    ) : (
+      chip
+    );
+
   if (!onClick) {
-    return (
+    return withTooltip(
       <Chip
         role="img"
         size="small"
@@ -60,7 +76,7 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
         icon={icon}
         aria-label={aria}
         sx={sx}
-      />
+      />,
     );
   }
 
@@ -74,7 +90,7 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
     event.stopPropagation();
   };
 
-  return (
+  return withTooltip(
     <Chip
       component="button"
       type="button"
@@ -86,6 +102,6 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       sx={{ cursor: 'pointer', ...sx }}
-    />
+    />,
   );
 }

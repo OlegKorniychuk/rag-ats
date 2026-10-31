@@ -6,6 +6,7 @@ import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { isNotFound } from '../lib/errors';
 import { PipelineBoard } from '../pipeline/PipelineBoard';
+import { RescoreBanner } from '../pipeline/RescoreBanner';
 import { ScoreDrawer } from '../pipeline/ScoreDrawer';
 import { useVacancyApplications } from '../pipeline/queries';
 import { useVacancy } from '../vacancies/queries';
@@ -74,6 +75,11 @@ export function PipelinePage() {
           No applicants yet — share the apply link to get started
         </Typography>
       )}
+
+      <RescoreBanner
+        vacancyStatus={vacancy.data.status}
+        applications={applicationsData}
+      />
 
       <PipelineBoard
         vacancyId={id}

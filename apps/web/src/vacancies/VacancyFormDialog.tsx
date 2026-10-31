@@ -12,10 +12,11 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { ApiError } from '../api/client';
 import { vacancySchema, type VacancyFormValues } from './schema';
 import { useCreateVacancy, useUpdateVacancy } from './queries';
+import { changesCriteria } from './rescore';
 
 interface VacancyFormDialogProps {
   open: boolean;
@@ -50,6 +51,7 @@ function VacancyForm({ vacancy, onClose, onSaved }: VacancyFormProps) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<VacancyFormValues>({
     resolver: zodResolver(vacancySchema),
@@ -59,6 +61,13 @@ function VacancyForm({ vacancy, onClose, onSaved }: VacancyFormProps) {
     },
   });
 
+  const [title, requirements] = useWatch({
+    control,
+    name: ['title', 'requirements'],
+  });
+  const criteriaChanged =
+    !!vacancy && changesCriteria(vacancy, { title, requirements });
+
   const onSubmit = handleSubmit(async (values) => {
     setFormError(null);
     try {
@@ -67,7 +76,11 @@ function VacancyForm({ vacancy, onClose, onSaved }: VacancyFormProps) {
           id: vacancy.id,
           body: { title: values.title, requirements: values.requirements },
         });
-        onSaved('Vacancy updated');
+        onSaved(
+          changesCriteria(vacancy, values) && vacancy.status === 'open'
+            ? 'Vacancy updated · re-scoring applicants'
+            : 'Vacancy updated',
+        );
       } else {
         await createVacancy.mutateAsync(values);
         onSaved('Vacancy created');
@@ -109,6 +122,13 @@ function VacancyForm({ vacancy, onClose, onSaved }: VacancyFormProps) {
             helperText={errors.requirements?.message}
             {...register('requirements')}
           />
+          {vacancy && criteriaChanged && (
+            <Alert severity="info">
+              {vacancy.status === 'open'
+                ? 'Saving will re-score every applicant against the new requirements.'
+                : "This vacancy is closed: applicants' scores will be marked outdated and re-scored when you reopen it."}
+            </Alert>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>

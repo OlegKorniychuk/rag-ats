@@ -29,6 +29,7 @@ import {
 } from '../db/repositories/vacancies.repository.js';
 import { APPLICATION_UNIQUE_CONSTRAINT } from '../db/schema.js';
 import { JobsService } from '../jobs/jobs.service.js';
+import { vacancyCriteriaHash } from '../scoring/criteria-hash.js';
 import type { CreateVacancyDto } from './dto/create-vacancy.dto.js';
 import type { UpdateVacancyDto } from './dto/update-vacancy.dto.js';
 
@@ -62,14 +63,63 @@ export class VacanciesService {
     vacancyId: string,
     dto: UpdateVacancyDto,
   ): Promise<Vacancy> {
-    await this.getOwnedVacancy(recruiterId, vacancyId);
+    const { vacancy, rescored } = await this.updateAndResetScores(
+      recruiterId,
+      vacancyId,
+      dto,
+    );
+
+    // After commit, so the worker sees the reset scores. One extraction is
+    // shared by every applicant (the job is exclusive per vacancy and enqueues
+    // the pending scores once the criteria are current), unlike per-score jobs
+    // that would each try to queue it. The update is already saved, so an
+    // enqueue failure must not fail the request: the scores stay `pending` and
+    // the startup sweep recovers those of parsed candidates.
+    if (rescored) {
+      try {
+        await this.jobs.enqueueCriteria(vacancyId);
+      } catch (error) {
+        this.logger.error(
+          `Failed to enqueue criteria extraction for vacancy ${vacancyId}: ${
+            error instanceof Error ? error.message : 'unknown error'
+          }`,
+        );
+      }
+    }
+
+    return vacancy;
+  }
+
+  @Transactional()
+  private async updateAndResetScores(
+    recruiterId: string,
+    vacancyId: string,
+    dto: UpdateVacancyDto,
+  ): Promise<{ vacancy: Vacancy; rescored: boolean }> {
+    const before = await this.getOwnedVacancy(recruiterId, vacancyId);
 
     const patch: Partial<NewVacancy> = {};
     if (dto.title !== undefined) patch.title = dto.title;
     if (dto.requirements !== undefined) patch.requirements = dto.requirements;
     if (dto.status !== undefined) patch.status = dto.status;
 
-    return this.vacanciesRepository.update(vacancyId, patch);
+    const vacancy = await this.vacanciesRepository.update(vacancyId, patch);
+
+    // A closed vacancy costs no LLM calls: edits only leave its scores stale
+    // (outdated, not in flight) until it is reopened, which rescores them.
+    const hash = vacancyCriteriaHash(vacancy.title, vacancy.requirements);
+    const criteriaChanged =
+      hash !== vacancyCriteriaHash(before.title, before.requirements);
+    const reopened = before.status === 'closed' && vacancy.status === 'open';
+    if (vacancy.status !== 'open' || !(criteriaChanged || reopened)) {
+      return { vacancy, rescored: false };
+    }
+
+    const reset = await this.scoresRepository.resetOutdatedForVacancy(
+      vacancyId,
+      hash,
+    );
+    return { vacancy, rescored: reset.length > 0 };
   }
 
   async findAllMine(recruiterId: string): Promise<Vacancy[]> {

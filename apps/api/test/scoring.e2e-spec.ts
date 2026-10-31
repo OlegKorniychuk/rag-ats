@@ -1,13 +1,18 @@
 import { randomUUID } from 'crypto';
+import type { ApplicationScore } from '@rag-ats/shared';
 import request from 'supertest';
 import { normaliseForMatch } from '../src/scoring/verify-quotes.js';
 import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 import {
+  captureOpenaiRequests,
   criterionIdsFromRequest,
   fabricatedScoreResponse,
+  openaiCriteriaHandler,
   openaiScoreHandler,
+  schemaNameOf,
   scoreFromRequest,
+  type MockCriterion,
 } from './msw/openai.handlers.js';
 import { server } from './msw/server.js';
 import { waitForScoreStatus } from './score.util.js';
@@ -20,6 +25,7 @@ describe('Application scoring (e2e)', () => {
   let testApp: TestApp;
   let cookie: string[];
   let agent: ReturnType<typeof request.agent>;
+  const capture = captureOpenaiRequests();
 
   async function registerAgent() {
     const email = uniqueEmail();
@@ -42,10 +48,12 @@ describe('Application scoring (e2e)', () => {
 
   beforeAll(async () => {
     testApp = await createTestApp();
+    server.events.on('request:start', capture.listener);
     ({ agent, cookie } = await registerAgent());
   }, 60_000);
 
   afterAll(async () => {
+    server.events.removeListener('request:start', capture.listener);
     await closeTestApp(testApp);
   });
 
@@ -211,6 +219,203 @@ describe('Application scoring (e2e)', () => {
       await request(testApp.app.getHttpServer())
         .post(`/applications/${randomUUID()}/rescore`)
         .expect(401);
+    });
+  });
+
+  describe('PATCH /vacancies/:id (auto-rescore)', () => {
+    const NEW_CRITERIA: MockCriterion[] = [
+      { text: 'Experience with Kubernetes', importance: 'must' },
+      { text: 'Knowledge of Terraform', importance: 'nice' },
+    ];
+    // a settle period for "nothing happens" assertions
+    const SETTLE_MS = 750;
+
+    const settle = () =>
+      new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
+
+    const requestsFor = (schema: string) =>
+      capture.bodies.filter((body) => schemaNameOf(body) === schema);
+
+    /** Holds the next criteria extraction open until `release()`. */
+    function holdCriteria(criteria: MockCriterion[]) {
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      server.use(openaiCriteriaHandler(criteria, { before: () => gate }));
+      return { release };
+    }
+
+    async function listScores(vacancyId: string) {
+      const res = await agent
+        .get(`/vacancies/${vacancyId}/applications`)
+        .expect(200);
+      return (res.body as Array<{ id: string; score: ApplicationScore }>).map(
+        (a) => ({ id: a.id, score: a.score }),
+      );
+    }
+
+    /** A vacancy with `count` applicants, all scored; capture is cleared. */
+    async function scoredVacancy(count = 1) {
+      const vacancy = await createVacancy();
+      const applicationIds: string[] = [];
+      for (let i = 0; i < count; i++) {
+        const { applicationId } = await apply(vacancy.id, vacancy.applyToken);
+        applicationIds.push(applicationId);
+      }
+      const scores: ApplicationScore[] = [];
+      for (const id of applicationIds) {
+        scores.push(await waitFor(vacancy.id, id, 'scored'));
+      }
+      capture.bodies.length = 0;
+      return { ...vacancy, applicationIds, scores };
+    }
+
+    function expectCriteria(
+      score: ApplicationScore,
+      criteria: MockCriterion[],
+    ) {
+      expect(score.result!.criteria.map((c) => c.criterion)).toEqual(
+        criteria.map((c) => c.text),
+      );
+    }
+
+    it('rescores every applicant after the requirements of an open vacancy change', async () => {
+      const vacancy = await scoredVacancy(2);
+      const hold = holdCriteria(NEW_CRITERIA);
+      const requirements = `Kubernetes and Terraform ${randomUUID()}`;
+
+      const res = await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ requirements })
+        .expect(200);
+      expect(res.body).toMatchObject({ id: vacancy.id, requirements });
+
+      // extraction is held, so the reset is observable: old result kept, stale
+      const during = await listScores(vacancy.id);
+      expect(during).toHaveLength(2);
+      for (const { id, score } of during) {
+        expect(score).toMatchObject({
+          status: 'pending',
+          stale: true,
+          error: null,
+        });
+        expect(score.result).toEqual(
+          vacancy.scores[vacancy.applicationIds.indexOf(id)].result,
+        );
+      }
+
+      hold.release();
+      for (const id of vacancy.applicationIds) {
+        const score = await waitFor(vacancy.id, id, 'scored');
+        expect(score.stale).toBe(false);
+        expectCriteria(score, NEW_CRITERIA);
+      }
+      // one shared extraction for both applicants, on the new requirements
+      const extractions = requestsFor('vacancy_criteria');
+      expect(extractions).toHaveLength(1);
+      expect(JSON.stringify(extractions[0])).toContain(requirements);
+      expect(requestsFor('application_score')).toHaveLength(2);
+    });
+
+    it('rescores after a title-only change', async () => {
+      const vacancy = await scoredVacancy();
+      server.use(openaiCriteriaHandler(NEW_CRITERIA));
+
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ title: 'Platform Engineer' })
+        .expect(200);
+
+      const score = await waitFor(
+        vacancy.id,
+        vacancy.applicationIds[0],
+        'scored',
+      );
+      expect(score.stale).toBe(false);
+      expectCriteria(score, NEW_CRITERIA);
+      expect(requestsFor('vacancy_criteria')).toHaveLength(1);
+    });
+
+    it('does nothing for a whitespace-only change or a status-only close', async () => {
+      const vacancy = await scoredVacancy();
+      const before = await listScores(vacancy.id);
+      const current = (await agent.get(`/vacancies/${vacancy.id}`).expect(200))
+        .body as { title: string; requirements: string };
+
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({
+          title: `  ${current.title}  `,
+          requirements: current.requirements.replace(/ /g, '   '),
+        })
+        .expect(200);
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+      await settle();
+
+      expect(capture.bodies).toHaveLength(0);
+      expect(await listScores(vacancy.id)).toEqual(before);
+      expect(before[0].score).toMatchObject({
+        status: 'scored',
+        stale: false,
+      });
+    });
+
+    it('only marks scores stale while the vacancy is closed, and rescores on reopen', async () => {
+      const vacancy = await scoredVacancy();
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ requirements: `Kubernetes only ${randomUUID()}` })
+        .expect(200);
+      await settle();
+
+      expect(capture.bodies).toHaveLength(0);
+      const [closed] = await listScores(vacancy.id);
+      expect(closed.score).toMatchObject({ status: 'scored', stale: true });
+      expect(closed.score.result).toEqual(vacancy.scores[0].result);
+
+      const hold = holdCriteria(NEW_CRITERIA);
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ status: 'open' })
+        .expect(200);
+
+      const [reopened] = await listScores(vacancy.id);
+      expect(reopened.score).toMatchObject({ status: 'pending', stale: true });
+
+      hold.release();
+      const score = await waitFor(
+        vacancy.id,
+        vacancy.applicationIds[0],
+        'scored',
+      );
+      expect(score.stale).toBe(false);
+      expectCriteria(score, NEW_CRITERIA);
+      expect(requestsFor('vacancy_criteria')).toHaveLength(1);
+    });
+
+    it('makes no LLM call when reopening with nothing outdated', async () => {
+      const vacancy = await scoredVacancy();
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+      await agent
+        .patch(`/vacancies/${vacancy.id}`)
+        .send({ status: 'open' })
+        .expect(200);
+      await settle();
+
+      expect(capture.bodies).toHaveLength(0);
+      const [only] = await listScores(vacancy.id);
+      expect(only.score).toMatchObject({ status: 'scored', stale: false });
+      expect(only.score.result).toEqual(vacancy.scores[0].result);
     });
   });
 

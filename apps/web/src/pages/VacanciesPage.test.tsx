@@ -243,7 +243,9 @@ describe('VacanciesPage', () => {
     await userEvent.type(screen.getByLabelText('Title'), 'Senior Backend Dev');
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
 
-    expect(await screen.findByText('Vacancy updated')).toBeInTheDocument();
+    expect(
+      await screen.findByText('Vacancy updated · re-scoring applicants'),
+    ).toBeInTheDocument();
     expect(lastPatchBody).toEqual({
       title: 'Senior Backend Dev',
       requirements: 'TS',
@@ -306,5 +308,114 @@ describe('VacanciesPage', () => {
       await screen.findByText('title should not be empty'),
     ).toBeInTheDocument();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+});
+
+const openNote =
+  'Saving will re-score every applicant against the new requirements.';
+const closedNote =
+  "This vacancy is closed: applicants' scores will be marked outdated and re-scored when you reopen it.";
+
+function stubEditableVacancy(
+  initial: Omit<typeof vacancy, 'status'> & {
+    status: 'open' | 'closed';
+  } = vacancy,
+) {
+  let vacancies = [initial];
+  server.use(
+    http.get(`${baseUrl}/vacancies`, () => HttpResponse.json(vacancies)),
+    http.patch(`${baseUrl}/vacancies/1`, async ({ request }) => {
+      const body = await request.json();
+      vacancies = vacancies.map((v) => ({ ...v, ...(body as object) }));
+      return HttpResponse.json(vacancies[0]);
+    }),
+  );
+}
+
+describe('VacancyFormDialog re-score note', () => {
+  async function openEdit() {
+    renderApp({ route: '/vacancies', session });
+    await screen.findByText('Backend Dev');
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Edit Backend Dev' }),
+    );
+    await screen.findByRole('heading', { name: 'Edit vacancy' });
+  }
+
+  it('is hidden initially and appears once the requirements change', async () => {
+    stubEditableVacancy();
+    await openEdit();
+
+    expect(screen.queryByText(openNote)).not.toBeInTheDocument();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), ' and SQL');
+
+    expect(screen.getByText(openNote)).toBeInTheDocument();
+  });
+
+  it('appears when the title changes', async () => {
+    stubEditableVacancy();
+    await openEdit();
+
+    await userEvent.type(screen.getByLabelText('Title'), ' II');
+
+    expect(screen.getByText(openNote)).toBeInTheDocument();
+  });
+
+  it('uses the closed wording for a closed vacancy', async () => {
+    stubEditableVacancy({ ...vacancy, status: 'closed' });
+    await openEdit();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), ' and SQL');
+
+    expect(screen.getByText(closedNote)).toBeInTheDocument();
+    expect(screen.queryByText(openNote)).not.toBeInTheDocument();
+  });
+
+  it('stays hidden for whitespace-only edits and hides again after reverting', async () => {
+    stubEditableVacancy();
+    await openEdit();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), '   ');
+    expect(screen.queryByText(openNote)).not.toBeInTheDocument();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), 'X');
+    expect(screen.getByText(openNote)).toBeInTheDocument();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), '{Backspace}');
+    expect(screen.queryByText(openNote)).not.toBeInTheDocument();
+  });
+
+  it('is never shown in create mode', async () => {
+    server.use(http.get(`${baseUrl}/vacancies`, () => HttpResponse.json([])));
+    renderApp({ route: '/vacancies', session });
+
+    await screen.findByText('No vacancies yet');
+    await userEvent.click(screen.getByRole('button', { name: 'New vacancy' }));
+    await userEvent.type(screen.getByLabelText('Title'), 'Backend Dev');
+    await userEvent.type(screen.getByLabelText('Requirements'), 'TS');
+
+    expect(screen.queryByText(openNote)).not.toBeInTheDocument();
+    expect(screen.queryByText(closedNote)).not.toBeInTheDocument();
+  });
+
+  it('shows the plain snackbar when the criteria did not change', async () => {
+    stubEditableVacancy();
+    await openEdit();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), '   ');
+    await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(await screen.findByText('Vacancy updated')).toBeInTheDocument();
+  });
+
+  it('shows the plain snackbar when a closed vacancy is edited', async () => {
+    stubEditableVacancy({ ...vacancy, status: 'closed' });
+    await openEdit();
+
+    await userEvent.type(screen.getByLabelText('Requirements'), ' and SQL');
+    await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(await screen.findByText('Vacancy updated')).toBeInTheDocument();
   });
 });

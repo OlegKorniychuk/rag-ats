@@ -62,6 +62,16 @@ export interface ScoresRepository {
    * results, which become stale) and returns those application ids.
    */
   resetPendingForCandidate(candidateId: string): Promise<string[]>;
+  /**
+   * Resets the vacancy's scores whose `criteria_hash` differs from the given
+   * one to `pending` (keeping results, which become stale) and returns those
+   * application ids. Never-scored rows (null hash) and `failed` rows with an
+   * old hash count as outdated; rows on the current hash are left alone.
+   */
+  resetOutdatedForVacancy(
+    vacancyId: string,
+    criteriaHash: string,
+  ): Promise<string[]>;
   findPendingByVacancy(vacancyId: string): Promise<string[]>;
   /** `pending`/`scoring` scores whose candidate is `parsed`. */
   findBacklog(): Promise<string[]>;
