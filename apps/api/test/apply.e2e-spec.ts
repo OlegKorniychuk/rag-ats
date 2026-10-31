@@ -154,6 +154,7 @@ describe('Apply (e2e)', () => {
       });
       expect(applications).toHaveLength(1);
       expect(applications[0].stage).toBe('applied');
+      expect(applications[0].source).toBe('applied');
 
       const score = await testApp.testDb.db.query.applicationScores.findFirst({
         where: { applicationId: applications[0].id },

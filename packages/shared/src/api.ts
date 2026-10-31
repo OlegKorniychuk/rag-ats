@@ -5,6 +5,8 @@
 export type VacancyStatus = 'open' | 'closed';
 export type ApplicationStage =
   'applied' | 'screened' | 'interview' | 'rejected' | 'hired';
+/** How an application came to exist: the candidate applied, or a recruiter added them from the pool. */
+export type ApplicationSource = 'applied' | 'added';
 export type ParseStatus = 'pending' | 'parsing' | 'parsed' | 'failed';
 /** Progress of the background scoring of one application. */
 export type ScoreStatus = 'pending' | 'scoring' | 'scored' | 'failed';
@@ -46,6 +48,11 @@ export interface UpdateVacancyRequest {
 /** PATCH /applications/:id body */
 export interface UpdateApplicationRequest {
   stage: ApplicationStage;
+}
+
+/** POST /vacancies/:id/applications body: adds an existing pool candidate to the vacancy. */
+export interface AddApplicationRequest {
+  candidateId: string;
 }
 
 /**
@@ -102,6 +109,7 @@ export interface ApplicationResponse {
   vacancyId: string;
   candidateId: string;
   stage: ApplicationStage;
+  source: ApplicationSource;
   createdAt: IsoDateString;
 }
 
@@ -223,8 +231,27 @@ export interface ApplicationScore {
 /** POST /applications/:id/rescore -> 202, the freshly reset (pending) score. */
 export type RescoreResponse = ApplicationScore;
 
-/** GET /vacancies/:id/applications */
+/**
+ * GET /vacancies/:id/applications
+ *
+ * Also returned (201) by POST /vacancies/:id/applications.
+ */
 export type ApplicationWithCandidateResponse = ApplicationResponse & {
   candidate: CandidateResponse;
   score: ApplicationScore;
 };
+
+/**
+ * GET /candidates/:id/applications: the candidate's applications on the
+ * current recruiter's vacancies only, newest first.
+ */
+export interface CandidateApplicationResponse {
+  id: string;
+  vacancyId: string;
+  vacancyTitle: string;
+  vacancyStatus: VacancyStatus;
+  stage: ApplicationStage;
+  source: ApplicationSource;
+  createdAt: IsoDateString;
+  score: ApplicationScore;
+}

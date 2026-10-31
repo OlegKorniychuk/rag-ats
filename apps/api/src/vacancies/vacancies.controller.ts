@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -22,6 +23,7 @@ import { CurrentUser } from '../auth/current-user.decorator.js';
 import type { ApplicationWithCandidate } from '../db/repositories/applications.repository.js';
 import type { Vacancy } from '../db/repositories/vacancies.repository.js';
 import { ApplicationWithCandidateResponseDto } from '../applications/dto/application-with-candidate-response.dto.js';
+import { AddApplicationDto } from './dto/add-application.dto.js';
 import { CreateVacancyDto } from './dto/create-vacancy.dto.js';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto.js';
 import { VacancyResponseDto } from './dto/vacancy-response.dto.js';
@@ -94,6 +96,36 @@ export class VacanciesController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<ApplicationWithCandidate[]> {
     return this.vacanciesService.findApplications(user.id, id);
+  }
+
+  @Post(':id/applications')
+  @ApiOperation({
+    summary: 'Add an existing pool candidate to a vacancy',
+    description:
+      'Creates an application with source `added` and queues its scoring. If the candidate is still being parsed, the score waits for the parse.',
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiCreatedResponse({
+    description: 'The new application, with candidate details',
+    type: ApplicationWithCandidateResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Validation failed or malformed uuid',
+  })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiNotFoundResponse({
+    description:
+      "Vacancy doesn't exist or belongs to another recruiter, or unknown candidate id",
+  })
+  @ApiConflictResponse({
+    description: 'Vacancy is closed, or the candidate is already on it',
+  })
+  async addCandidate(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: AddApplicationDto,
+  ): Promise<ApplicationWithCandidate> {
+    return this.vacanciesService.addCandidate(user.id, id, dto.candidateId);
   }
 
   @Patch(':id')

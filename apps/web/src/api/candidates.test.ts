@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
-import { getCandidate, listCandidates } from './candidates';
+import {
+  getCandidate,
+  listCandidateApplications,
+  listCandidates,
+} from './candidates';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -33,5 +37,15 @@ describe('candidates api', () => {
     );
     const result = await getCandidate('1');
     expect(result).toEqual(candidate);
+  });
+
+  it('listCandidateApplications gets /candidates/:id/applications', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/a%2Fb/applications`, () =>
+        HttpResponse.json([]),
+      ),
+    );
+    const result = await listCandidateApplications('a/b');
+    expect(result).toEqual([]);
   });
 });

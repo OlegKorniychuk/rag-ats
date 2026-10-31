@@ -2,6 +2,10 @@ import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
+import { openaiProfileHandler } from './msw/openai.handlers.js';
+import { DEFAULT_MOCK_PROFILE, server } from './msw/server.js';
+import { waitForParseStatus } from './parse.util.js';
+import { waitForScoreStatus } from './score.util.js';
 
 function uniqueEmail(): string {
   return `${randomUUID()}@example.com`;
@@ -18,16 +22,31 @@ describe('Vacancies (e2e)', () => {
     await closeTestApp(testApp);
   });
 
-  async function authenticatedAgent(): Promise<
-    ReturnType<typeof request.agent>
-  > {
+  // The cookie is for the polling helpers, which take it instead of an agent.
+  async function authenticatedSession(): Promise<{
+    agent: ReturnType<typeof request.agent>;
+    cookie: string[];
+  }> {
     const email = uniqueEmail();
     const password = 'password123';
     const agent = request.agent(testApp.app.getHttpServer());
 
     await agent.post('/auth/register').send({ email, password }).expect(201);
-    await agent.post('/auth/login').send({ email, password }).expect(201);
+    const login = await agent
+      .post('/auth/login')
+      .send({ email, password })
+      .expect(201);
 
+    return {
+      agent,
+      cookie: login.headers['set-cookie'] as unknown as string[],
+    };
+  }
+
+  async function authenticatedAgent(): Promise<
+    ReturnType<typeof request.agent>
+  > {
+    const { agent } = await authenticatedSession();
     return agent;
   }
 
@@ -265,6 +284,7 @@ describe('Vacancies (e2e)', () => {
       const firstApp = byEmail.get(first.email.toLowerCase());
       expect(firstApp).toMatchObject({
         stage: 'applied',
+        source: 'applied',
         candidate: { name: first.name, email: first.email.toLowerCase() },
         score: {
           status: 'pending',
@@ -318,6 +338,285 @@ describe('Vacancies (e2e)', () => {
 
       await request(testApp.app.getHttpServer())
         .get(`/vacancies/${id}/applications`)
+        .expect(401);
+    });
+  });
+
+  describe('POST /vacancies/:id/applications', () => {
+    async function findCandidateId(
+      agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+      email: string,
+    ): Promise<string> {
+      const res = await agent.get('/candidates').expect(200);
+      const match = (res.body as { id: string; email: string }[]).find(
+        (c) => c.email === email.toLowerCase(),
+      );
+      if (!match) throw new Error('candidate not found in list');
+      return match.id;
+    }
+
+    /** Applies a new candidate to a fresh vacancy; returns the ids. */
+    async function candidateOnVacancy(
+      agent: Awaited<ReturnType<typeof authenticatedAgent>>,
+    ) {
+      const vacancy = await createVacancyWithToken(agent);
+      const applicant = await applyToVacancy(vacancy.applyToken);
+      const candidateId = await findCandidateId(agent, applicant.email);
+      return { vacancy, candidateId };
+    }
+
+    it('adds a parsed pool candidate: 201 with source "added", then scores it with quotes', async () => {
+      const { agent, cookie } = await authenticatedSession();
+      const { vacancy: vacancyA, candidateId } =
+        await candidateOnVacancy(agent);
+      await waitForParseStatus(testApp.app, cookie, candidateId, 'parsed');
+      const vacancyB = await createVacancyWithToken(agent, {
+        title: 'Platform Engineer',
+      });
+
+      const res = await agent
+        .post(`/vacancies/${vacancyB.id}/applications`)
+        .send({ candidateId })
+        .expect(201);
+
+      expect(res.body).toMatchObject({
+        vacancyId: vacancyB.id,
+        candidateId,
+        stage: 'applied',
+        source: 'added',
+        candidate: { id: candidateId, parseStatus: 'parsed' },
+        score: { error: null, waitingForParse: false },
+      });
+      // scoring runs in the background: depending on timing the response
+      // already shows it started (or even finished)
+      expect(['pending', 'scoring', 'scored']).toContain(res.body.score.status);
+      expect(res.body.candidate).not.toHaveProperty('parsedCvDocumentId');
+      const applicationId = res.body.id as string;
+
+      const score = await waitForScoreStatus(
+        testApp.app,
+        cookie,
+        vacancyB.id,
+        applicationId,
+        'scored',
+      );
+      expect(score.result!.criteria.length).toBeGreaterThan(0);
+      for (const criterion of score.result!.criteria) {
+        expect(criterion.quotes.length).toBeGreaterThan(0);
+      }
+
+      const list = await agent
+        .get(`/vacancies/${vacancyB.id}/applications`)
+        .expect(200);
+      expect(list.body).toHaveLength(1);
+      expect(list.body[0]).toMatchObject({
+        id: applicationId,
+        source: 'added',
+        candidate: { id: candidateId },
+        score: { status: 'scored' },
+      });
+
+      // the original application is untouched
+      const original = await agent
+        .get(`/vacancies/${vacancyA.id}/applications`)
+        .expect(200);
+      expect(original.body).toHaveLength(1);
+      expect(original.body[0].source).toBe('applied');
+    });
+
+    it('waits for a pending parse, then scores the added candidate', async () => {
+      const { agent, cookie } = await authenticatedSession();
+      const vacancyA = await createVacancyWithToken(agent);
+      const vacancyB = await createVacancyWithToken(agent, {
+        title: 'Platform Engineer',
+      });
+
+      // hold the parse so the candidate is still unparsed when added
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      let started!: () => void;
+      const parseStarted = new Promise<void>((resolve) => (started = resolve));
+      server.use(
+        openaiProfileHandler(DEFAULT_MOCK_PROFILE, {
+          before: async () => {
+            started();
+            await gate;
+          },
+        }),
+      );
+
+      try {
+        const applicant = await applyToVacancy(vacancyA.applyToken);
+        const candidateId = await findCandidateId(agent, applicant.email);
+        await parseStarted;
+
+        const res = await agent
+          .post(`/vacancies/${vacancyB.id}/applications`)
+          .send({ candidateId })
+          .expect(201);
+
+        expect(res.body.source).toBe('added');
+        expect(res.body.candidate.parseStatus).toBe('parsing');
+        expect(res.body.score).toMatchObject({
+          status: 'pending',
+          waitingForParse: true,
+        });
+        const applicationId = res.body.id as string;
+
+        // still waiting while the parse is held
+        const waiting = await agent
+          .get(`/vacancies/${vacancyB.id}/applications`)
+          .expect(200);
+        expect(waiting.body[0].score).toMatchObject({
+          status: 'pending',
+          waitingForParse: true,
+        });
+
+        release();
+        await waitForParseStatus(testApp.app, cookie, candidateId, 'parsed');
+        const score = await waitForScoreStatus(
+          testApp.app,
+          cookie,
+          vacancyB.id,
+          applicationId,
+          'scored',
+        );
+        expect(score.waitingForParse).toBe(false);
+        expect(score.result!.criteria.length).toBeGreaterThan(0);
+      } finally {
+        release();
+      }
+    });
+
+    it('answers 409 for a candidate already on the vacancy, applied or added', async () => {
+      const agent = await authenticatedAgent();
+      const { vacancy, candidateId } = await candidateOnVacancy(agent);
+      const other = await createVacancyWithToken(agent);
+
+      const applied = await agent
+        .post(`/vacancies/${vacancy.id}/applications`)
+        .send({ candidateId })
+        .expect(409);
+      expect(applied.body.message).toBe('Candidate is already on this vacancy');
+
+      await agent
+        .post(`/vacancies/${other.id}/applications`)
+        .send({ candidateId })
+        .expect(201);
+      const added = await agent
+        .post(`/vacancies/${other.id}/applications`)
+        .send({ candidateId })
+        .expect(409);
+      expect(added.body.message).toBe('Candidate is already on this vacancy');
+
+      const list = await agent
+        .get(`/vacancies/${other.id}/applications`)
+        .expect(200);
+      expect(list.body).toHaveLength(1);
+    });
+
+    it('answers 201 once and 409 for a concurrent duplicate add, never 500', async () => {
+      const agent = await authenticatedAgent();
+      const { candidateId } = await candidateOnVacancy(agent);
+      const target = await createVacancyWithToken(agent);
+
+      const responses = await Promise.all(
+        [1, 2].map(() =>
+          agent
+            .post(`/vacancies/${target.id}/applications`)
+            .send({ candidateId }),
+        ),
+      );
+
+      expect(responses.map((r) => r.status).sort()).toEqual([201, 409]);
+      const conflict = responses.find((r) => r.status === 409)!;
+      expect(conflict.body.message).toBe(
+        'Candidate is already on this vacancy',
+      );
+      const list = await agent
+        .get(`/vacancies/${target.id}/applications`)
+        .expect(200);
+      expect(list.body).toHaveLength(1);
+    });
+
+    it('answers 409 for a closed vacancy', async () => {
+      const agent = await authenticatedAgent();
+      const { candidateId } = await candidateOnVacancy(agent);
+      const closed = await createVacancyWithToken(agent);
+      await agent
+        .patch(`/vacancies/${closed.id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+
+      const res = await agent
+        .post(`/vacancies/${closed.id}/applications`)
+        .send({ candidateId })
+        .expect(409);
+
+      expect(res.body.message).toBe('Vacancy is closed');
+      const list = await agent
+        .get(`/vacancies/${closed.id}/applications`)
+        .expect(200);
+      expect(list.body).toEqual([]);
+    });
+
+    it("answers 404 for another recruiter's vacancy and an unknown vacancy", async () => {
+      const owner = await authenticatedAgent();
+      const { candidateId } = await candidateOnVacancy(owner);
+      const ownerVacancy = await createVacancyWithToken(owner);
+      const otherRecruiter = await authenticatedAgent();
+
+      const foreign = await otherRecruiter
+        .post(`/vacancies/${ownerVacancy.id}/applications`)
+        .send({ candidateId })
+        .expect(404);
+      expect(foreign.body.message).toBe('Vacancy not found');
+      const unknown = await owner
+        .post(`/vacancies/${randomUUID()}/applications`)
+        .send({ candidateId })
+        .expect(404);
+      expect(unknown.body.message).toBe('Vacancy not found');
+
+      const list = await owner
+        .get(`/vacancies/${ownerVacancy.id}/applications`)
+        .expect(200);
+      expect(list.body).toEqual([]);
+    });
+
+    it('answers 404 for an unknown candidate', async () => {
+      const agent = await authenticatedAgent();
+      const vacancy = await createVacancyWithToken(agent);
+
+      const res = await agent
+        .post(`/vacancies/${vacancy.id}/applications`)
+        .send({ candidateId: randomUUID() })
+        .expect(404);
+
+      expect(res.body.message).toBe('Candidate not found');
+    });
+
+    it('rejects a malformed or missing candidateId and a malformed vacancy id', async () => {
+      const agent = await authenticatedAgent();
+      const vacancy = await createVacancyWithToken(agent);
+
+      await agent
+        .post(`/vacancies/${vacancy.id}/applications`)
+        .send({ candidateId: 'not-a-uuid' })
+        .expect(400);
+      await agent
+        .post(`/vacancies/${vacancy.id}/applications`)
+        .send({})
+        .expect(400);
+      await agent
+        .post('/vacancies/not-a-uuid/applications')
+        .send({ candidateId: randomUUID() })
+        .expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .post(`/vacancies/${randomUUID()}/applications`)
+        .send({ candidateId: randomUUID() })
         .expect(401);
     });
   });

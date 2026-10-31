@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router';
 import {
   Alert,
@@ -8,14 +9,17 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  Snackbar,
   Stack,
   Typography,
 } from '@mui/material';
-import type { ParseStatus } from '@rag-ats/shared';
+import type { ParseStatus, VacancyResponse } from '@rag-ats/shared';
 import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { apiUrl } from '../api/client';
+import { AddToVacancyDialog } from '../candidates/AddToVacancyDialog';
+import { CandidateVacancies } from '../candidates/CandidateVacancies';
 import { GithubSection } from '../candidates/GithubSection';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 import { isParseInFlight } from '../candidates/parseStatus';
@@ -62,6 +66,8 @@ export function CandidatePage() {
   const { id = '' } = useParams();
   const candidate = useCandidate(id);
   const reparse = useReparseCandidate(id);
+  const [dialog, setDialog] = useState({ open: false, openCount: 0 });
+  const [added, setAdded] = useState<VacancyResponse | null>(null);
 
   const backLink = (
     <Link component={RouterLink} to="/candidates">
@@ -110,19 +116,35 @@ export function CandidatePage() {
   } = candidate.data;
   const placeholder = emptyFieldText(parseStatus);
 
+  const openDialog = () =>
+    setDialog((d) => ({ open: true, openCount: d.openCount + 1 }));
+  const closeDialog = () => setDialog((d) => ({ ...d, open: false }));
+  const handleAdded = (vacancy: VacancyResponse) => {
+    closeDialog();
+    setAdded(vacancy);
+  };
+
   return (
     <Stack spacing={3}>
       {backLink}
 
-      <Stack spacing={0.5}>
-        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-          <Typography variant="h4">{name}</Typography>
-          <ParseStatusChip status={parseStatus} />
+      <Stack
+        direction="row"
+        sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}
+      >
+        <Stack spacing={0.5}>
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+            <Typography variant="h4">{name}</Typography>
+            <ParseStatusChip status={parseStatus} />
+          </Stack>
+          <Link href={`mailto:${email}`}>{email}</Link>
+          <Typography color="text.secondary">
+            Added {formatDate(createdAt)}
+          </Typography>
         </Stack>
-        <Link href={`mailto:${email}`}>{email}</Link>
-        <Typography color="text.secondary">
-          Added {formatDate(createdAt)}
-        </Typography>
+        <Button variant="contained" onClick={openDialog}>
+          Add to vacancy
+        </Button>
       </Stack>
 
       {parseStatus === 'failed' && (
@@ -170,6 +192,8 @@ export function CandidatePage() {
           {formatDate(cv.uploadedAt)}
         </Typography>
       </Stack>
+
+      <CandidateVacancies candidateId={id} />
 
       <GithubSection github={github} />
 
@@ -226,6 +250,35 @@ export function CandidatePage() {
           </List>
         )}
       </Paper>
+
+      <AddToVacancyDialog
+        key={dialog.openCount}
+        open={dialog.open}
+        candidateId={id}
+        onClose={closeDialog}
+        onAdded={handleAdded}
+      />
+
+      <Snackbar
+        open={added !== null}
+        autoHideDuration={6000}
+        onClose={(_event, reason) => {
+          if (reason !== 'clickaway') setAdded(null);
+        }}
+        message={added ? `Added to ${added.title}` : ''}
+        action={
+          added && (
+            <Button
+              color="inherit"
+              size="small"
+              component={RouterLink}
+              to={`/vacancies/${encodeURIComponent(added.id)}`}
+            >
+              View pipeline
+            </Button>
+          )
+        }
+      />
     </Stack>
   );
 }

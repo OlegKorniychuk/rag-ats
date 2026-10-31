@@ -5,7 +5,8 @@ import { isScoreInFlight, scoreBand } from './score';
 
 interface ScoreBadgeProps {
   score: ApplicationScore;
-  onClick: () => void;
+  /** Without it the badge is a plain, non-interactive chip. */
+  onClick?: () => void;
 }
 
 function describe(score: ApplicationScore): { label: string; aria: string } {
@@ -41,6 +42,28 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
         ? 'error'
         : 'default';
 
+  const sx = {
+    fontWeight: 600,
+    ...(inFlight && previous !== undefined && { opacity: 0.6 }),
+  };
+  const icon = inFlight ? (
+    <CircularProgress size={12} color="inherit" />
+  ) : undefined;
+
+  if (!onClick) {
+    return (
+      <Chip
+        role="img"
+        size="small"
+        label={label}
+        color={color}
+        icon={icon}
+        aria-label={aria}
+        sx={sx}
+      />
+    );
+  }
+
   // The card is draggable and navigates on click/Enter/Space: keep the badge's
   // activation from reaching those handlers.
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -58,17 +81,11 @@ export function ScoreBadge({ score, onClick }: ScoreBadgeProps) {
       size="small"
       label={label}
       color={color}
-      icon={
-        inFlight ? <CircularProgress size={12} color="inherit" /> : undefined
-      }
+      icon={icon}
       aria-label={aria}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      sx={{
-        cursor: 'pointer',
-        fontWeight: 600,
-        ...(inFlight && previous !== undefined && { opacity: 0.6 }),
-      }}
+      sx={{ cursor: 'pointer', ...sx }}
     />
   );
 }

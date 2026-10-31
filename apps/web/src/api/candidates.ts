@@ -1,4 +1,7 @@
-import type { CandidateResponse } from '@rag-ats/shared';
+import type {
+  CandidateApplicationResponse,
+  CandidateResponse,
+} from '@rag-ats/shared';
 import { apiFetch } from './client';
 
 export const listCandidates = () =>
@@ -11,3 +14,8 @@ export const reparseCandidate = (id: string) =>
   apiFetch<CandidateResponse>(`/candidates/${encodeURIComponent(id)}/reparse`, {
     method: 'POST',
   });
+
+export const listCandidateApplications = (id: string) =>
+  apiFetch<CandidateApplicationResponse[]>(
+    `/candidates/${encodeURIComponent(id)}/applications`,
+  );

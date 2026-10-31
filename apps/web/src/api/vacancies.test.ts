@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
 import {
+  addCandidateToVacancy,
   createVacancy,
   getVacancy,
   listVacancies,
@@ -64,5 +65,19 @@ describe('vacancies api', () => {
     const result = await updateVacancy('1', { status: 'closed' });
     expect(receivedBody).toEqual({ status: 'closed' });
     expect(result).toEqual({ ...vacancy, status: 'closed' });
+  });
+
+  it('addCandidateToVacancy posts the candidate id to /vacancies/:id/applications', async () => {
+    let receivedBody: unknown;
+    const created = { id: 'a1', vacancyId: '1', candidateId: 'c1' };
+    server.use(
+      http.post(`${baseUrl}/vacancies/1/applications`, async ({ request }) => {
+        receivedBody = await request.json();
+        return HttpResponse.json(created, { status: 201 });
+      }),
+    );
+    const result = await addCandidateToVacancy('1', 'c1');
+    expect(receivedBody).toEqual({ candidateId: 'c1' });
+    expect(result).toEqual(created);
   });
 });

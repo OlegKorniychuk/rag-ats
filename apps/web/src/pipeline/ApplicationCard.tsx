@@ -3,6 +3,7 @@ import type { ApplicationWithCandidateResponse } from '@rag-ats/shared';
 import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
 import { useNavigate } from 'react-router';
+import { AddedFromPoolIcon } from '../candidates/AddedFromPoolIcon';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 import { ScoreBadge } from './ScoreBadge';
 
@@ -24,9 +25,12 @@ function CardBody({ application, onOpenScore }: ApplicationCardProps) {
         direction="row"
         sx={{ alignItems: 'center', justifyContent: 'space-between', gap: 1 }}
       >
-        <Typography variant="subtitle2">
-          {application.candidate.name}
-        </Typography>
+        <Stack direction="row" sx={{ alignItems: 'center', gap: 0.5 }}>
+          <Typography variant="subtitle2">
+            {application.candidate.name}
+          </Typography>
+          {application.source === 'added' && <AddedFromPoolIcon />}
+        </Stack>
         <ScoreBadge
           score={application.score}
           onClick={() => onOpenScore(application.id)}

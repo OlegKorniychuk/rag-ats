@@ -2,9 +2,12 @@
 import type {
   ApplicationResponse,
   ApplicationScore,
+  ApplicationSource,
   ApplicationStage,
   ApplicationWithCandidateResponse,
+  AddApplicationRequest,
   AuthUserResponse,
+  CandidateApplicationResponse,
   CandidateResponse,
   CvDocumentSummary as CvDocumentSummaryResponse,
   GithubStatus,
@@ -20,6 +23,7 @@ import type { AuthUser } from './auth/auth-user.js';
 import type {
   Application,
   ApplicationWithCandidate,
+  CandidateApplication,
 } from './db/repositories/applications.repository.js';
 import type { Candidate } from './db/repositories/candidates.repository.js';
 import type { CvDocumentSummary } from './db/repositories/cv-documents.repository.js';
@@ -30,7 +34,9 @@ import type {
   toApplicationScore,
 } from './db/repositories/score.mapper.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
+import type { AddApplicationDto } from './vacancies/dto/add-application.dto.js';
 import type {
+  applicationSourceEnum,
   applicationStageEnum,
   parseStatusEnum,
   scoreStatusEnum,
@@ -112,4 +118,16 @@ export type CheckApplicationScore = Assert<
     Simplify<Jsonify<ReturnType<typeof toApplicationScore>>>,
     Simplify<ApplicationScore>
   >
+>;
+export type CheckApplicationSource = Assert<
+  Equal<(typeof applicationSourceEnum.enumValues)[number], ApplicationSource>
+>;
+export type CheckCandidateApplication = Assert<
+  Equal<
+    Simplify<Jsonify<CandidateApplication>>,
+    Simplify<CandidateApplicationResponse>
+  >
+>;
+export type CheckAddApplicationDto = Assert<
+  Equal<Simplify<AddApplicationDto>, Simplify<AddApplicationRequest>>
 >;

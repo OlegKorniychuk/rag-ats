@@ -99,4 +99,43 @@ describe('ScoreBadge', () => {
     expect(onClick).toHaveBeenCalledTimes(2);
     expect(onParentKeyDown).not.toHaveBeenCalled();
   });
+
+  describe('without onClick', () => {
+    it('renders a non-interactive chip with the same label and aria text', () => {
+      render(
+        <ScoreBadge
+          score={makeScore({ status: 'scored', result: result(82) })}
+        />,
+      );
+      const badge = screen.getByRole('img', { name: 'Fit score 82 of 100' });
+      expect(badge).toHaveTextContent('82');
+      expect(screen.queryByRole('button')).not.toBeInTheDocument();
+      expect(badge.tagName).not.toBe('BUTTON');
+    });
+
+    it('keeps the in-flight and waiting states', () => {
+      const { rerender } = render(
+        <ScoreBadge score={makeScore({ status: 'scoring' })} />,
+      );
+      const scoring = screen.getByRole('img', { name: 'Fit score: Scoring…' });
+      expect(scoring).toHaveTextContent('Scoring…');
+      expect(scoring.querySelector('[role="progressbar"]')).not.toBeNull();
+
+      rerender(<ScoreBadge score={makeScore({ waitingForParse: true })} />);
+      expect(screen.getByRole('img')).toHaveTextContent('Waiting for CV');
+    });
+
+    it('does not swallow clicks meant for a parent', async () => {
+      const onParentClick = vi.fn();
+      render(
+        <div onClick={onParentClick}>
+          <ScoreBadge
+            score={makeScore({ status: 'scored', result: result(90) })}
+          />
+        </div>,
+      );
+      await userEvent.click(screen.getByRole('img'));
+      expect(onParentClick).toHaveBeenCalledTimes(1);
+    });
+  });
 });

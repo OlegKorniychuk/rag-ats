@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import type { ApplicationWithCandidateResponse } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
+import { ADDED_FROM_POOL_LABEL as ADDED } from '../candidates/AddedFromPoolIcon';
 
 vi.mock('../pipeline/score', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../pipeline/score')>()),
@@ -62,6 +63,7 @@ function makeApplication(
     vacancyId: 'v1',
     candidateId: 'c1',
     stage: 'applied',
+    source: 'applied',
     createdAt: '2024-01-01T00:00:00.000Z',
     candidate: makeCandidate({}),
     score: {
@@ -226,6 +228,41 @@ describe('PipelinePage', () => {
     expect(await screen.findByText('Parsing…')).toBeInTheDocument();
     expect(screen.getByText('Grace Hopper')).toBeInTheDocument();
     expect(screen.getAllByLabelText(/^CV parsing/)).toHaveLength(1);
+  });
+
+  it('marks cards added from the pool only', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            id: 'a1',
+            source: 'added',
+            candidate: makeCandidate({ id: 'c1', name: 'Ada Lovelace' }),
+          }),
+          makeApplication({
+            id: 'a2',
+            source: 'applied',
+            candidateId: 'c2',
+            candidate: makeCandidate({ id: 'c2', name: 'Grace Hopper' }),
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    const ada = (await screen.findByText('Ada Lovelace')).closest(
+      '.MuiCard-root',
+    );
+    const grace = screen.getByText('Grace Hopper').closest('.MuiCard-root');
+    expect(ada).not.toBeNull();
+    expect(grace).not.toBeNull();
+    expect(
+      within(ada as HTMLElement).getByRole('img', { name: ADDED }),
+    ).toBeInTheDocument();
+    expect(
+      within(grace as HTMLElement).queryByRole('img', { name: ADDED }),
+    ).not.toBeInTheDocument();
   });
 
   it('sorts cards by score within a column, unscored last', async () => {
