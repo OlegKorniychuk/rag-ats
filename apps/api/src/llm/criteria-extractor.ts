@@ -10,7 +10,7 @@ import {
   vacancyCriteriaUserPrompt,
 } from './prompts/vacancy-criteria.prompt.js';
 
-export const MAX_CRITERIA = 10;
+export const MAX_CRITERIA = 15;
 
 export type CriterionImportanceValue = 'must' | 'nice';
 

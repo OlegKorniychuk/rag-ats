@@ -9,7 +9,7 @@ export const vacancyCriteriaSchema = z.object({
         text: z
           .string()
           .describe(
-            'One short, self-contained requirement (a single skill, experience or qualification) that can be assessed on its own',
+            'One self-contained requirement as the vacancy states it, keeping its examples and alternatives inside it',
           ),
         importance: z
           .enum(['must', 'nice'])
@@ -18,7 +18,7 @@ export const vacancyCriteriaSchema = z.object({
           ),
       }),
     )
-    .describe('3 to 10 criteria derived from the vacancy'),
+    .describe('3 to 15 criteria, one per stated requirement'),
 });
 
 export type VacancyCriteriaOutput = z.infer<typeof vacancyCriteriaSchema>;

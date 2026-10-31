@@ -31,11 +31,13 @@ export const applicationScoreSchema = z.object({
               text: z
                 .string()
                 .describe(
-                  'An exact, verbatim excerpt (8-300 characters) copied from that source',
+                  'An exact, verbatim excerpt (2-300 characters) copied from that source',
                 ),
             }),
           )
-          .describe('1-3 verbatim quotes supporting the score'),
+          .describe(
+            '0-3 verbatim quotes that are evidence for this criterion; empty for a score of 0 when the CV is silent about it',
+          ),
       }),
     )
     .describe('Exactly one entry per listed criterion id'),

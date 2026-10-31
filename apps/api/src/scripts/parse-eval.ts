@@ -10,19 +10,12 @@
  * printed. Relative --manifest / --out-dir paths resolve from the repo root.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, isAbsolute, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { plainToInstance } from 'class-transformer';
-import { validateSync } from 'class-validator';
-import { config as loadDotenv } from 'dotenv';
 import { Logger } from '@nestjs/common';
-import { EnvConfig } from '../config/env.config.js';
 import { CvTextExtractor, isPdf } from '../cv/cv-text-extractor.js';
 import { GithubClient } from '../github/github-client.js';
 import { GithubProfileFetcher } from '../github/github-profile-fetcher.js';
-import type { GithubSnapshot } from '../github/github-snapshot.js';
-import { parseGithubUsername } from '../github/github-username.js';
 import { CvProfileParser } from '../llm/cv-profile-parser.js';
 import { LlmClient, type LlmUsage } from '../llm/llm-client.js';
 import { allChecksFailed, runChecks } from './parse-eval/checks.js';
@@ -35,80 +28,9 @@ import {
 import { loadManifest } from './parse-eval/manifest.js';
 import { renderMarkdown } from './parse-eval/report.js';
 import { rescore } from './parse-eval/rescore.js';
-import type {
-  CvResult,
-  EvalResult,
-  GithubEvalStatus,
-  RunResult,
-} from './parse-eval/result.js';
-
-// dist/scripts/parse-eval.js -> repo root is four levels up.
-const REPO_ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
-const API_ENV_FILE = join(REPO_ROOT, 'apps', 'api', '.env');
-
-const fromRoot = (p: string): string =>
-  isAbsolute(p) ? p : resolve(REPO_ROOT, p);
-
-class UsageError extends Error {}
-
-function parseNumber(
-  name: string,
-  raw: string | undefined,
-  fallback: number,
-  integer = false,
-): number {
-  if (raw === undefined) return fallback;
-  const value = Number(raw);
-  if (
-    !Number.isFinite(value) ||
-    value < 0 ||
-    (integer && (!Number.isInteger(value) || value < 1))
-  ) {
-    throw new UsageError(
-      `--${name} must be ${integer ? 'a positive integer' : 'a non-negative number'}`,
-    );
-  }
-  return value;
-}
-
-/**
- * Same schema and validator options as the app's TypedConfigModule, but the
- * error lists only property names and rules, never values (which may be
- * secrets).
- */
-function loadEnv(): EnvConfig {
-  loadDotenv({ path: API_ENV_FILE, quiet: true }); // does not override real env
-  const config = plainToInstance(EnvConfig, process.env, {
-    exposeDefaultValues: true,
-  });
-  const errors = validateSync(config, {
-    forbidUnknownValues: true,
-    whitelist: true,
-  });
-  if (errors.length > 0) {
-    const details = errors
-      .map(
-        (e) =>
-          `  - ${e.property}: ${Object.values(e.constraints ?? {}).join('; ')}`,
-      )
-      .join('\n');
-    throw new UsageError(
-      `Invalid environment (loaded from process env and ${API_ENV_FILE}):\n${details}`,
-    );
-  }
-  return config;
-}
-
-async function fetchGithub(
-  fetcher: GithubProfileFetcher,
-  githubUrl: string | null,
-): Promise<{ status: GithubEvalStatus; snapshot: GithubSnapshot | null }> {
-  if (githubUrl === null) return { status: 'none', snapshot: null };
-  const username = parseGithubUsername(githubUrl);
-  if (username === null) return { status: 'invalid_url', snapshot: null };
-  const snapshot = await fetcher.fetch(username);
-  return { status: snapshot.status, snapshot };
-}
+import type { CvResult, EvalResult, RunResult } from './parse-eval/result.js';
+import { fromRoot, loadEnv, parseNumber, UsageError } from './shared/cli.js';
+import { fetchGithub } from './shared/github.js';
 
 async function main(): Promise<void> {
   const { values } = parseArgs({
