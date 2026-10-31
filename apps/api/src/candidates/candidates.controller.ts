@@ -20,7 +20,11 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import type { AuthUser } from '../auth/auth-user.js';
+import { CurrentUser } from '../auth/current-user.decorator.js';
+import type { CandidateApplication } from '../db/repositories/applications.repository.js';
 import type { Candidate } from '../db/repositories/candidates.repository.js';
+import { CandidateApplicationResponseDto } from './dto/candidate-application-response.dto.js';
 import { CandidateResponseDto } from './dto/candidate-response.dto.js';
 import { buildContentDisposition } from './cv-response-headers.js';
 import { CandidatesService } from './candidates.service.js';
@@ -58,6 +62,28 @@ export class CandidatesController {
   @ApiNotFoundResponse({ description: 'Unknown candidate id' })
   async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Candidate> {
     return this.candidatesService.findOne(id);
+  }
+
+  @Get(':id/applications')
+  @ApiOperation({
+    summary:
+      "List a candidate's applications on the current recruiter's vacancies",
+    description:
+      "Only the current recruiter's own vacancies are included, newest first: the pool is shared, pipelines are not.",
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiOkResponse({
+    description: "The candidate's applications on the recruiter's vacancies",
+    type: [CandidateApplicationResponseDto],
+  })
+  @ApiBadRequestResponse({ description: 'Malformed uuid' })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiNotFoundResponse({ description: 'Unknown candidate id' })
+  async findApplications(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CandidateApplication[]> {
+    return this.candidatesService.findApplications(user.id, id);
   }
 
   @Get(':id/cv')

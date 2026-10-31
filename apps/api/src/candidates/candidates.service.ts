@@ -7,6 +7,11 @@ import {
 import { Transactional } from '@nestjs-cls/transactional';
 import { JobsService } from '../jobs/jobs.service.js';
 import {
+  APPLICATIONS_REPOSITORY,
+  type ApplicationsRepository,
+  type CandidateApplication,
+} from '../db/repositories/applications.repository.js';
+import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../db/repositories/cv-documents.repository.js';
@@ -23,6 +28,8 @@ export class CandidatesService {
     private readonly candidatesRepository: CandidatesRepository,
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocumentsRepository: CvDocumentsRepository,
+    @Inject(APPLICATIONS_REPOSITORY)
+    private readonly applicationsRepository: ApplicationsRepository,
     private readonly jobs: JobsService,
   ) {}
 
@@ -38,6 +45,19 @@ export class CandidatesService {
     }
 
     return candidate;
+  }
+
+  async findApplications(
+    recruiterId: string,
+    candidateId: string,
+  ): Promise<CandidateApplication[]> {
+    await this.findOne(candidateId);
+    // the pool is shared but pipelines are not: the repository only returns
+    // applications on this recruiter's vacancies
+    return this.applicationsRepository.findByCandidateForRecruiter(
+      candidateId,
+      recruiterId,
+    );
   }
 
   async findLatestCv(

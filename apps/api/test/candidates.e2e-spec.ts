@@ -269,4 +269,122 @@ describe('Candidates (e2e)', () => {
         .expect(401);
     });
   });
+
+  describe('GET /candidates/:id/applications', () => {
+    it("lists the candidate's applications on the recruiter's own vacancies only, newest first", async () => {
+      const recruiterA = await authenticatedAgent();
+      const vacancyA = await createVacancyWithToken(recruiterA, {
+        title: 'Role A',
+      });
+      const applicant = await applyToVacancy(vacancyA.applyToken);
+      const candidateId = await findCandidateId(recruiterA, applicant.email);
+      const vacancyB = await createVacancyWithToken(recruiterA, {
+        title: 'Role B',
+      });
+      await recruiterA
+        .post(`/vacancies/${vacancyB.id}/applications`)
+        .send({ candidateId })
+        .expect(201);
+      const closed = await createVacancyWithToken(recruiterA, {
+        title: 'Role closed',
+      });
+      await recruiterA
+        .post(`/vacancies/${closed.id}/applications`)
+        .send({ candidateId })
+        .expect(201);
+      await recruiterA
+        .patch(`/vacancies/${closed.id}`)
+        .send({ status: 'closed' })
+        .expect(200);
+
+      // a second recruiter puts the same candidate on their own vacancy
+      const recruiterB = await authenticatedAgent();
+      const foreignVacancy = await createVacancyWithToken(recruiterB, {
+        title: 'Foreign role',
+      });
+      await recruiterB
+        .post(`/vacancies/${foreignVacancy.id}/applications`)
+        .send({ candidateId })
+        .expect(201);
+
+      const mine = await recruiterA
+        .get(`/candidates/${candidateId}/applications`)
+        .expect(200);
+
+      expect(
+        (mine.body as { vacancyTitle: string }[]).map((a) => a.vacancyTitle),
+      ).toEqual(['Role closed', 'Role B', 'Role A']);
+      expect(mine.body[0]).toMatchObject({
+        vacancyId: closed.id,
+        vacancyStatus: 'closed',
+        stage: 'applied',
+        source: 'added',
+        createdAt: expect.any(String),
+        score: {
+          status: expect.any(String),
+          error: null,
+          stale: false,
+          waitingForParse: expect.any(Boolean),
+        },
+      });
+      expect(mine.body[1]).toMatchObject({
+        vacancyId: vacancyB.id,
+        vacancyStatus: 'open',
+        source: 'added',
+      });
+      expect(mine.body[2]).toMatchObject({
+        vacancyId: vacancyA.id,
+        vacancyTitle: 'Role A',
+        vacancyStatus: 'open',
+        source: 'applied',
+      });
+      expect(JSON.stringify(mine.body)).not.toContain(foreignVacancy.id);
+
+      const theirs = await recruiterB
+        .get(`/candidates/${candidateId}/applications`)
+        .expect(200);
+      expect(theirs.body).toHaveLength(1);
+      expect(theirs.body[0]).toMatchObject({
+        vacancyId: foreignVacancy.id,
+        vacancyTitle: 'Foreign role',
+        source: 'added',
+      });
+    });
+
+    it("returns an empty array when the candidate is not on any of the recruiter's vacancies", async () => {
+      const recruiterA = await authenticatedAgent();
+      const { applyToken } = await createVacancyWithToken(recruiterA);
+      const applicant = await applyToVacancy(applyToken);
+      const candidateId = await findCandidateId(recruiterA, applicant.email);
+
+      const recruiterB = await authenticatedAgent();
+      const res = await recruiterB
+        .get(`/candidates/${candidateId}/applications`)
+        .expect(200);
+
+      expect(res.body).toEqual([]);
+    });
+
+    it('returns 404 for an unknown id', async () => {
+      const agent = await authenticatedAgent();
+
+      const res = await agent
+        .get(`/candidates/${randomUUID()}/applications`)
+        .expect(404);
+
+      expect(res.body.message).toBe('Candidate not found');
+    });
+
+    it('rejects a malformed id', async () => {
+      const agent = await authenticatedAgent();
+
+      await agent.get('/candidates/not-a-uuid/applications').expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .get(`/candidates/${randomUUID()}/applications`)
+        .expect(401);
+    });
+  });
 });

@@ -15,6 +15,10 @@ import {
   type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
 
+/** Name of the (vacancy, candidate) unique constraint, for mapping its violation to a 409. */
+export const APPLICATION_UNIQUE_CONSTRAINT =
+  'applications_vacancy_id_candidate_id_unique';
+
 export const vacancyStatusEnum = pgEnum('vacancy_status', ['open', 'closed']);
 export const applicationStageEnum = pgEnum('application_stage', [
   'applied',
@@ -102,12 +106,7 @@ export const applications = pgTable(
     source: applicationSourceEnum('source').notNull().default('applied'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
-  (t) => [
-    unique('applications_vacancy_id_candidate_id_unique').on(
-      t.vacancyId,
-      t.candidateId,
-    ),
-  ],
+  (t) => [unique(APPLICATION_UNIQUE_CONSTRAINT).on(t.vacancyId, t.candidateId)],
 );
 
 export const cvDocuments = pgTable(

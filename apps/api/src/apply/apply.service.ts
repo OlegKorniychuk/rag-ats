@@ -33,6 +33,8 @@ import {
   UnreadableCvError,
   isPdf,
 } from '../cv/cv-text-extractor.js';
+import { isUniqueViolation } from '../common/pg-errors.js';
+import { APPLICATION_UNIQUE_CONSTRAINT } from '../db/schema.js';
 import { JobsService } from '../jobs/jobs.service.js';
 import type { SubmitApplicationDto } from './dto/submit-application.dto.js';
 
@@ -52,6 +54,12 @@ function normalizeFilename(originalname: string): string {
 }
 
 export type PublicVacancy = Pick<Vacancy, 'title' | 'requirements' | 'status'>;
+
+interface SavedApplication {
+  candidateId: string;
+  cvDocumentId: string;
+  applicationId: string;
+}
 
 export interface SubmitApplicationResult {
   success: true;
@@ -112,12 +120,22 @@ export class ApplyService {
       throw err;
     }
 
-    const { candidateId, cvDocumentId, applicationId } =
-      await this.saveApplication(token, dto, {
+    let saved: SavedApplication;
+    try {
+      saved = await this.saveApplication(token, dto, {
         filename: normalizeFilename(file.originalname),
         content: file.buffer,
         text,
       });
+    } catch (error) {
+      // a concurrent duplicate passed the check in saveApplication and lost
+      // the race on the unique constraint: same answer as the check
+      if (isUniqueViolation(error, APPLICATION_UNIQUE_CONSTRAINT)) {
+        throw new ConflictException('Already applied to this vacancy');
+      }
+      throw error;
+    }
+    const { candidateId, cvDocumentId, applicationId } = saved;
 
     // Enqueue only after the transaction committed, so the worker can see the
     // CV. The application is already saved, so an enqueue failure must not fail
@@ -155,11 +173,7 @@ export class ApplyService {
     token: string,
     dto: SubmitApplicationDto,
     cv: ParsedCv,
-  ): Promise<{
-    candidateId: string;
-    cvDocumentId: string;
-    applicationId: string;
-  }> {
+  ): Promise<SavedApplication> {
     const vacancy = await this.vacanciesRepository.findByApplyToken(token);
     if (!vacancy) {
       throw new NotFoundException('Vacancy not found');
