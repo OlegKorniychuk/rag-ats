@@ -78,10 +78,10 @@ describe('CriteriaExtractor', () => {
     ]);
   });
 
-  it('caps at 10 criteria', async () => {
+  it('caps at MAX_CRITERIA (15) criteria', async () => {
     server.use(
       openaiCriteriaHandler(
-        Array.from({ length: 14 }, (_, i) => ({
+        Array.from({ length: 18 }, (_, i) => ({
           text: `Skill ${i + 1}`,
           importance: 'must' as const,
         })),
@@ -89,10 +89,10 @@ describe('CriteriaExtractor', () => {
     );
 
     const { criteria } = await makeExtractor().extract('Dev', 'reqs');
-    expect(criteria).toHaveLength(10);
-    expect(criteria[9]).toEqual({
-      id: 'c10',
-      text: 'Skill 10',
+    expect(criteria).toHaveLength(15);
+    expect(criteria[14]).toEqual({
+      id: 'c15',
+      text: 'Skill 15',
       importance: 'must',
     });
   });
