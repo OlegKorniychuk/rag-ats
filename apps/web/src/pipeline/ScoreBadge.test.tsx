@@ -68,6 +68,39 @@ describe('ScoreBadge', () => {
     expect(badge.querySelector('[role="progressbar"]')).not.toBeNull();
   });
 
+  it('greys out an outdated score that is not being recomputed', async () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ status: 'scored', stale: true, result: result(71) })}
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button', {
+      name: 'Fit score 71 of 100 (outdated)',
+    });
+    expect(badge).toHaveTextContent('71');
+    expect(badge).toHaveClass('MuiChip-colorDefault');
+    expect(badge.querySelector('[data-testid="HistoryIcon"]')).not.toBeNull();
+    expect(badge.querySelector('[role="progressbar"]')).toBeNull();
+
+    await userEvent.hover(badge);
+    expect(await screen.findByRole('tooltip')).toHaveTextContent(
+      'Outdated: scored against older requirements',
+    );
+  });
+
+  it('keeps the band colour and no marker for a current score', () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ status: 'scored', result: result(82) })}
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button');
+    expect(badge).toHaveClass('MuiChip-colorSuccess');
+    expect(badge.querySelector('[data-testid="HistoryIcon"]')).toBeNull();
+  });
+
   it('shows a failed chip', () => {
     render(
       <ScoreBadge
