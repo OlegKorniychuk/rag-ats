@@ -39,6 +39,11 @@ function CardBody({ application, onOpenScore }: ApplicationCardProps) {
       >
         {application.candidate.email}
       </Typography>
+      {application.source === 'added' && (
+        <Box sx={{ mb: 1 }}>
+          <Chip label="Added" size="small" variant="outlined" />
+        </Box>
+      )}
       {application.candidate.parseStatus !== 'parsed' && (
         <Box sx={{ mb: 1 }}>
           <ParseStatusChip status={application.candidate.parseStatus} />

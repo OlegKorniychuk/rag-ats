@@ -229,6 +229,39 @@ describe('PipelinePage', () => {
     expect(screen.getAllByLabelText(/^CV parsing/)).toHaveLength(1);
   });
 
+  it('shows an "Added" chip on cards added from the pool only', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            id: 'a1',
+            source: 'added',
+            candidate: makeCandidate({ id: 'c1', name: 'Ada Lovelace' }),
+          }),
+          makeApplication({
+            id: 'a2',
+            source: 'applied',
+            candidateId: 'c2',
+            candidate: makeCandidate({ id: 'c2', name: 'Grace Hopper' }),
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    const ada = (await screen.findByText('Ada Lovelace')).closest(
+      '.MuiCard-root',
+    );
+    const grace = screen.getByText('Grace Hopper').closest('.MuiCard-root');
+    expect(ada).not.toBeNull();
+    expect(grace).not.toBeNull();
+    expect(within(ada as HTMLElement).getByText('Added')).toBeInTheDocument();
+    expect(
+      within(grace as HTMLElement).queryByText('Added'),
+    ).not.toBeInTheDocument();
+  });
+
   it('sorts cards by score within a column, unscored last', async () => {
     const scored = (overall: number) => ({
       status: 'scored' as const,

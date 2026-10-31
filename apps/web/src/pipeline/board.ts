@@ -11,6 +11,9 @@ const STAGE_LABELS = {
   hired: 'Hired',
 } satisfies Record<ApplicationStage, string>;
 
+export const stageLabel = (stage: ApplicationStage): string =>
+  STAGE_LABELS[stage];
+
 export const STAGES = (Object.keys(STAGE_LABELS) as ApplicationStage[]).map(
   (id) => ({ id, label: STAGE_LABELS[id] }),
 );

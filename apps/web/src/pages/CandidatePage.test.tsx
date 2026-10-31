@@ -1,8 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { CandidateResponse } from '@rag-ats/shared';
+import type {
+  CandidateApplicationResponse,
+  CandidateResponse,
+} from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
 
@@ -51,6 +54,15 @@ const formattedDate = new Intl.DateTimeFormat(undefined, {
 const placeholder = 'Not found in the CV';
 
 describe('CandidatePage', () => {
+  // Every candidate page also loads the vacancies section.
+  beforeEach(() => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1/applications`, () =>
+        HttpResponse.json([]),
+      ),
+    );
+  });
+
   it('links to the CV in a new tab and shows its metadata', async () => {
     server.use(
       http.get(`${baseUrl}/candidates/c1`, () =>
@@ -257,6 +269,59 @@ describe('CandidatePage', () => {
       within(section).getByRole('link', { name: 'engine' }),
     ).toHaveAttribute('href', 'https://github.com/ada/engine');
     expect(within(section).getByText('TypeScript · 4')).toBeInTheDocument();
+  });
+
+  it("shows the vacancies section with the candidate's applications", async () => {
+    const application: CandidateApplicationResponse = {
+      id: 'a1',
+      vacancyId: 'v1',
+      vacancyTitle: 'Backend Dev',
+      vacancyStatus: 'open',
+      stage: 'screened',
+      source: 'added',
+      createdAt: '2024-01-20T00:00:00.000Z',
+      score: {
+        status: 'pending',
+        error: null,
+        waitingForParse: false,
+        stale: false,
+        result: null,
+      },
+    };
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(makeCandidate({})),
+      ),
+      http.get(`${baseUrl}/candidates/c1/applications`, () =>
+        HttpResponse.json([application]),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    const section = await screen.findByRole('region', { name: 'Vacancies' });
+    expect(
+      await within(section).findByRole('link', { name: 'Backend Dev' }),
+    ).toHaveAttribute('href', '/vacancies/v1');
+    expect(within(section).getByText('Screened')).toBeInTheDocument();
+    expect(within(section).getByText('Added')).toBeInTheDocument();
+  });
+
+  it('keeps the rest of the page when the vacancies section fails', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates/c1`, () =>
+        HttpResponse.json(makeCandidate({})),
+      ),
+      http.get(
+        `${baseUrl}/candidates/c1/applications`,
+        () => new HttpResponse(null, { status: 500 }),
+      ),
+    );
+    renderApp({ route: '/candidates/c1', session });
+
+    expect(
+      await screen.findByText(/Could not load vacancies/),
+    ).toBeInTheDocument();
+    expect(screen.getByText('A pioneering programmer.')).toBeInTheDocument();
   });
 
   it('hides the GitHub section when there is no GitHub data', async () => {

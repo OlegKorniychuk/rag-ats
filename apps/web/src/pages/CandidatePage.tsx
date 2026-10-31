@@ -16,6 +16,7 @@ import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { apiUrl } from '../api/client';
+import { CandidateVacancies } from '../candidates/CandidateVacancies';
 import { GithubSection } from '../candidates/GithubSection';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 import { isParseInFlight } from '../candidates/parseStatus';
@@ -170,6 +171,8 @@ export function CandidatePage() {
           {formatDate(cv.uploadedAt)}
         </Typography>
       </Stack>
+
+      <CandidateVacancies candidateId={id} />
 
       <GithubSection github={github} />
 

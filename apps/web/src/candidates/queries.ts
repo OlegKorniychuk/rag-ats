@@ -1,14 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   getCandidate,
+  listCandidateApplications,
   listCandidates,
   reparseCandidate,
 } from '../api/candidates';
+import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from '../pipeline/score';
 import { hasParseInFlight, PARSE_POLL_INTERVAL_MS } from './parseStatus';
 
 export const candidateKeys = {
   all: ['candidates'] as const,
   detail: (id: string) => ['candidates', id] as const,
+  applications: (id: string) => ['candidates', id, 'applications'] as const,
 };
 
 export function useCandidates() {
@@ -28,6 +31,17 @@ export function useCandidate(id: string) {
       query.state.data && hasParseInFlight([query.state.data])
         ? PARSE_POLL_INTERVAL_MS
         : false,
+  });
+}
+
+// Scores of a candidate that is still parsing are already pending, so polling
+// on score progress alone also covers the parse.
+export function useCandidateApplications(id: string) {
+  return useQuery({
+    queryKey: candidateKeys.applications(id),
+    queryFn: () => listCandidateApplications(id),
+    refetchInterval: (query) =>
+      hasScoreInFlight(query.state.data) ? SCORE_POLL_INTERVAL_MS : false,
   });
 }
 
