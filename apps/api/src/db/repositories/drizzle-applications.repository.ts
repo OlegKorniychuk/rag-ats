@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
 import { eq } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
+import { vacancyCriteriaHash } from '../../scoring/criteria-hash.js';
 import { applications } from '../schema.js';
 import { latestCvSummaryWith, withCv } from './cv-summary.mapper.js';
 import { withGithub } from './github-summary.mapper.js';
@@ -66,7 +67,9 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
       where: { candidateId, vacancy: { recruiterId } },
       with: {
         candidate: { columns: { parseStatus: true, parsedCvDocumentId: true } },
-        vacancy: { columns: { title: true, status: true, criteriaHash: true } },
+        vacancy: {
+          columns: { title: true, status: true, requirements: true },
+        },
         score: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -82,7 +85,10 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
       score: toApplicationScore(row.score, {
         candidateParseStatus: row.candidate.parseStatus,
         candidateParsedCvDocumentId: row.candidate.parsedCvDocumentId,
-        vacancyCriteriaHash: row.vacancy.criteriaHash,
+        vacancyCriteriaHash: vacancyCriteriaHash(
+          row.vacancy.title,
+          row.vacancy.requirements,
+        ),
       }),
     }));
   }
@@ -121,7 +127,7 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
           columns: { parsedAt: false },
           with: latestCvSummaryWith,
         },
-        vacancy: { columns: { criteriaHash: true } },
+        vacancy: { columns: { title: true, requirements: true } },
         score: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -134,7 +140,10 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
         score: toApplicationScore(score, {
           candidateParseStatus: candidate.parseStatus,
           candidateParsedCvDocumentId: parsedCvDocumentId,
-          vacancyCriteriaHash: vacancy.criteriaHash,
+          vacancyCriteriaHash: vacancyCriteriaHash(
+            vacancy.title,
+            vacancy.requirements,
+          ),
         }),
       };
     });

@@ -18,7 +18,11 @@ export interface ScoreRow {
 export interface ScoreContext {
   candidateParseStatus: ParseStatus;
   candidateParsedCvDocumentId: string | null;
-  vacancyCriteriaHash: string | null;
+  /**
+   * Hash of the vacancy's CURRENT title + requirements (not of the stored
+   * criteria), so an edit marks scores stale before anything is re-extracted.
+   */
+  vacancyCriteriaHash: string;
 }
 
 /**

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import type { ApplicationScore } from '@rag-ats/shared';
 import { TransactionHost } from '@nestjs-cls/transactional';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, sql } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
+import { vacancyCriteriaHash } from '../../scoring/criteria-hash.js';
 import { toApplicationScore } from './score.mapper.js';
 import { applicationScores, applications, candidates } from '../schema.js';
 import type {
@@ -76,14 +77,17 @@ export class DrizzleScoresRepository implements ScoresRepository {
         candidate: {
           columns: { parseStatus: true, parsedCvDocumentId: true },
         },
-        vacancy: { columns: { criteriaHash: true } },
+        vacancy: { columns: { title: true, requirements: true } },
       },
     });
     if (!row) return null;
     return toApplicationScore(row.score, {
       candidateParseStatus: row.candidate.parseStatus,
       candidateParsedCvDocumentId: row.candidate.parsedCvDocumentId,
-      vacancyCriteriaHash: row.vacancy.criteriaHash,
+      vacancyCriteriaHash: vacancyCriteriaHash(
+        row.vacancy.title,
+        row.vacancy.requirements,
+      ),
     });
   }
 
@@ -146,6 +150,30 @@ export class DrizzleScoresRepository implements ScoresRepository {
             .select({ id: applications.id })
             .from(applications)
             .where(eq(applications.candidateId, candidateId)),
+        ),
+      )
+      .returning({ applicationId: applicationScores.applicationId });
+    return rows.map((row) => row.applicationId);
+  }
+
+  async resetOutdatedForVacancy(
+    vacancyId: string,
+    criteriaHash: string,
+  ): Promise<string[]> {
+    const rows = await this.txHost.tx
+      .update(applicationScores)
+      .set({ status: 'pending', error: null, updatedAt: new Date() })
+      .where(
+        and(
+          inArray(
+            applicationScores.applicationId,
+            this.txHost.tx
+              .select({ id: applications.id })
+              .from(applications)
+              .where(eq(applications.vacancyId, vacancyId)),
+          ),
+          // IS DISTINCT FROM, so a null hash (never scored) counts as outdated
+          sql`${applicationScores.criteriaHash} IS DISTINCT FROM ${criteriaHash}`,
         ),
       )
       .returning({ applicationId: applicationScores.applicationId });

@@ -70,11 +70,15 @@ function makeResult(cvDocumentId: string, overall = 80): ScoreResult {
   };
 }
 
-function makeSaved(cvDocumentId: string, overall = 80): SavedScore {
+function makeSaved(
+  cvDocumentId: string,
+  overall = 80,
+  criteriaHash = 'hash-1',
+): SavedScore {
   return {
     result: makeResult(cvDocumentId, overall),
     cvDocumentId,
-    criteriaHash: 'hash-1',
+    criteriaHash,
     model: 'gpt-test',
     mode: 'full_text',
     inputTokens: 1200,
@@ -309,6 +313,83 @@ describe('ScoresRepository (Testcontainers integration)', () => {
   it('resetPendingForCandidate returns an empty list for a candidate with no applications', async () => {
     const { candidateId } = await seedCandidate(true);
     expect(await scores.resetPendingForCandidate(candidateId)).toEqual([]);
+  });
+
+  describe('resetOutdatedForVacancy', () => {
+    it("resets only the vacancy's scores on a different hash, keeping results", async () => {
+      const vacancy = await seedVacancy();
+      const outdated = await seedApplication({
+        vacancyId: vacancy.id,
+        parsed: true,
+      });
+      await scores.saveResult(
+        outdated.applicationId,
+        makeSaved(outdated.cvId, 80, 'old'),
+      );
+      const failedOutdated = await seedApplication({
+        vacancyId: vacancy.id,
+        parsed: true,
+      });
+      await scores.saveResult(
+        failedOutdated.applicationId,
+        makeSaved(failedOutdated.cvId, 70, 'old'),
+      );
+      await scores.markFailed(failedOutdated.applicationId, 'boom');
+      const neverScored = await seedApplication({ vacancyId: vacancy.id });
+      await scores.markFailed(neverScored.applicationId, 'boom');
+      const current = await seedApplication({
+        vacancyId: vacancy.id,
+        parsed: true,
+      });
+      await scores.saveResult(
+        current.applicationId,
+        makeSaved(current.cvId, 90, 'new'),
+      );
+      const otherVacancy = await seedApplication({ parsed: true });
+      await scores.saveResult(
+        otherVacancy.applicationId,
+        makeSaved(otherVacancy.cvId, 60, 'old'),
+      );
+
+      const ids = await scores.resetOutdatedForVacancy(vacancy.id, 'new');
+
+      expect(ids.sort()).toEqual(
+        [
+          outdated.applicationId,
+          failedOutdated.applicationId,
+          neverScored.applicationId,
+        ].sort(),
+      );
+      const resetRow = await rawScore(outdated.applicationId);
+      expect(resetRow.status).toBe('pending');
+      expect(resetRow.error).toBeNull();
+      expect(resetRow.result).toEqual(makeResult(outdated.cvId, 80));
+      expect(resetRow.criteriaHash).toBe('old');
+      const failedRow = await rawScore(failedOutdated.applicationId);
+      expect(failedRow.status).toBe('pending');
+      expect(failedRow.error).toBeNull();
+      expect(failedRow.result).toEqual(makeResult(failedOutdated.cvId, 70));
+      const neverRow = await rawScore(neverScored.applicationId);
+      expect(neverRow.status).toBe('pending');
+      expect(neverRow.error).toBeNull();
+      expect(neverRow.result).toBeNull();
+      expect((await rawScore(current.applicationId)).status).toBe('scored');
+      expect((await rawScore(otherVacancy.applicationId)).status).toBe(
+        'scored',
+      );
+    });
+
+    it('returns an empty list when every score is on the current hash', async () => {
+      const { applicationId, vacancyId, cvId } = await seedApplication({
+        parsed: true,
+      });
+      await scores.saveResult(applicationId, makeSaved(cvId, 80, 'new'));
+
+      expect(await scores.resetOutdatedForVacancy(vacancyId, 'new')).toEqual(
+        [],
+      );
+      expect((await rawScore(applicationId)).status).toBe('scored');
+    });
   });
 
   it('findPendingByVacancy returns only pending scores of that vacancy', async () => {
