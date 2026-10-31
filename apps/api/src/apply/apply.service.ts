@@ -214,6 +214,7 @@ export class ApplyService {
     const application = await this.applicationsRepository.create({
       vacancyId: vacancy.id,
       candidateId: candidate.id,
+      source: 'applied',
     });
     await this.scoresRepository.createPending(application.id);
 

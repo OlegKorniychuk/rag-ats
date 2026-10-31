@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { ApplicationResponse, ApplicationStage } from '@rag-ats/shared';
-import { applicationStageEnum } from '../../db/schema.js';
+import type {
+  ApplicationResponse,
+  ApplicationSource,
+  ApplicationStage,
+} from '@rag-ats/shared';
+import {
+  applicationSourceEnum,
+  applicationStageEnum,
+} from '../../db/schema.js';
 
 export class ApplicationResponseDto implements ApplicationResponse {
   @ApiProperty({
@@ -26,6 +33,14 @@ export class ApplicationResponseDto implements ApplicationResponse {
     example: 'applied',
   })
   stage: ApplicationStage;
+
+  @ApiProperty({
+    enum: applicationSourceEnum.enumValues,
+    example: 'applied',
+    description:
+      'Whether the candidate applied themselves or a recruiter added them from the pool',
+  })
+  source: ApplicationSource;
 
   @ApiProperty({
     type: String,

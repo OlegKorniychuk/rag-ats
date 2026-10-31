@@ -265,6 +265,7 @@ describe('Vacancies (e2e)', () => {
       const firstApp = byEmail.get(first.email.toLowerCase());
       expect(firstApp).toMatchObject({
         stage: 'applied',
+        source: 'applied',
         candidate: { name: first.name, email: first.email.toLowerCase() },
         score: {
           status: 'pending',

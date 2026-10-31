@@ -1,0 +1,2 @@
+CREATE TYPE "application_source" AS ENUM('applied', 'added');--> statement-breakpoint
+ALTER TABLE "applications" ADD COLUMN "source" "application_source" DEFAULT 'applied'::"application_source" NOT NULL;

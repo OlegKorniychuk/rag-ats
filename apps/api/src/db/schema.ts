@@ -24,6 +24,11 @@ export const applicationStageEnum = pgEnum('application_stage', [
   'hired',
 ]);
 
+export const applicationSourceEnum = pgEnum('application_source', [
+  'applied',
+  'added',
+]);
+
 export const parseStatusEnum = pgEnum('parse_status', [
   'pending',
   'parsing',
@@ -94,6 +99,7 @@ export const applications = pgTable(
       .notNull()
       .references(() => candidates.id),
     stage: applicationStageEnum('stage').notNull().default('applied'),
+    source: applicationSourceEnum('source').notNull().default('applied'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (t) => [

@@ -74,6 +74,42 @@ function newCandidate(overrides: Partial<NewCandidate> = {}): NewCandidate {
   };
 }
 
+const profile = {
+  skills: ['TS'],
+  experience: '5 years',
+  projects: [],
+  summary: 'Engineer.',
+};
+
+function savedScore(cvDocumentId: string, criteriaHash: string): SavedScore {
+  return {
+    result: {
+      overall: 90,
+      rationale: 'Strong.',
+      criteria: [
+        {
+          criterionId: 'c1',
+          criterion: 'Node.js',
+          importance: 'must',
+          score: 90,
+          reasoning: 'Yes.',
+          quotes: [{ source: 'cv', text: 'Built Node.js services' }],
+        },
+      ],
+      cvDocumentId,
+      model: 'gpt-test',
+      mode: 'full_text',
+      scoredAt: '2026-01-15T09:30:00.000Z',
+    },
+    cvDocumentId,
+    criteriaHash,
+    model: 'gpt-test',
+    mode: 'full_text',
+    inputTokens: 10,
+    outputTokens: 5,
+  };
+}
+
 describe('ApplicationsRepository (Testcontainers integration)', () => {
   let testDb: TestDatabase;
   let recruitersRepository: RecruitersRepository;
@@ -168,6 +204,22 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     expect(created.vacancyId).toBe(vacancyId);
     expect(created.candidateId).toBe(candidateId);
     expect(created.stage).toBe('applied');
+    expect(created.source).toBe('applied');
+  });
+
+  it('stores an explicit source', async () => {
+    const vacancyId = await seedVacancy();
+    const candidateId = await seedCandidate();
+
+    const created = await applicationsRepository.create({
+      vacancyId,
+      candidateId,
+      source: 'added',
+    });
+
+    expect(created.source).toBe('added');
+    const found = await applicationsRepository.findByIdWithVacancy(created.id);
+    expect(found?.source).toBe('added');
   });
 
   it('findByVacancyAndCandidate returns the row for a known pair', async () => {
@@ -292,6 +344,179 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
     expect(found).toEqual([]);
   });
 
+  it('findByIdWithCandidate returns the application with candidate and mapped score', async () => {
+    const vacancyId = await seedVacancy();
+    const candidate = await seedCandidateWithCv();
+    const created = await applicationsRepository.create({
+      vacancyId,
+      candidateId: candidate.id,
+      source: 'added',
+    });
+    await scoresRepository.createPending(created.id);
+
+    const found = await applicationsRepository.findByIdWithCandidate(
+      created.id,
+    );
+
+    expect(found).toMatchObject({
+      id: created.id,
+      vacancyId,
+      source: 'added',
+      candidate: { id: candidate.id, email: candidate.email },
+      score: {
+        status: 'pending',
+        error: null,
+        waitingForParse: true,
+        stale: false,
+        result: null,
+      },
+    });
+    expect(found?.candidate.cv.filename).toBe('cv.pdf');
+    expect(found?.candidate).not.toHaveProperty('parsedCvDocumentId');
+    expect(found).not.toHaveProperty('vacancy');
+  });
+
+  it('findByIdWithCandidate returns null for an unknown id', async () => {
+    const found =
+      await applicationsRepository.findByIdWithCandidate(randomUUID());
+
+    expect(found).toBeNull();
+  });
+
+  describe('findByCandidateForRecruiter', () => {
+    it('returns only the recruiter vacancies, newest first, with vacancy fields and score', async () => {
+      const otherRecruiter = await recruitersRepository.create(newRecruiter());
+      const candidate = await candidatesRepository.create(newCandidate());
+      const cv = await cvDocumentsRepository.create({
+        candidateId: candidate.id,
+        filename: 'cv.pdf',
+        sizeBytes: 3,
+        content: Buffer.from('pdf'),
+        text: 'cv text',
+      });
+      await candidatesRepository.saveParsedProfile(
+        candidate.id,
+        cv.id,
+        profile,
+        null,
+      );
+
+      const scoredVacancy = await vacanciesRepository.create(
+        newVacancy(recruiterId, { title: 'Scored role' }),
+      );
+      const hash = vacancyCriteriaHash(
+        scoredVacancy.title,
+        scoredVacancy.requirements,
+      );
+      await vacanciesRepository.saveCriteria(
+        scoredVacancy.id,
+        [{ id: 'c1', text: 'Node.js', importance: 'must' }],
+        hash,
+      );
+      const closedVacancy = await vacanciesRepository.create(
+        newVacancy(recruiterId, { title: 'Closed role', status: 'closed' }),
+      );
+      const foreignVacancy = await vacanciesRepository.create(
+        newVacancy(otherRecruiter.id, { title: 'Foreign role' }),
+      );
+
+      const scoredApplication = await applicationsRepository.create({
+        vacancyId: scoredVacancy.id,
+        candidateId: candidate.id,
+        source: 'applied',
+      });
+      await scoresRepository.createPending(scoredApplication.id);
+      await scoresRepository.saveResult(
+        scoredApplication.id,
+        savedScore(cv.id, hash),
+      );
+      const foreignApplication = await applicationsRepository.create({
+        vacancyId: foreignVacancy.id,
+        candidateId: candidate.id,
+      });
+      await scoresRepository.createPending(foreignApplication.id);
+      const closedApplication = await applicationsRepository.create({
+        vacancyId: closedVacancy.id,
+        candidateId: candidate.id,
+        source: 'added',
+      });
+      await scoresRepository.createPending(closedApplication.id);
+
+      const found = await applicationsRepository.findByCandidateForRecruiter(
+        candidate.id,
+        recruiterId,
+      );
+
+      expect(found.map((a) => a.id)).toEqual([
+        closedApplication.id,
+        scoredApplication.id,
+      ]);
+      expect(found[0]).toEqual({
+        id: closedApplication.id,
+        vacancyId: closedVacancy.id,
+        vacancyTitle: 'Closed role',
+        vacancyStatus: 'closed',
+        stage: 'applied',
+        source: 'added',
+        createdAt: closedApplication.createdAt,
+        score: {
+          status: 'pending',
+          error: null,
+          waitingForParse: false,
+          stale: false,
+          result: null,
+        },
+      });
+      expect(found[1]).toMatchObject({
+        vacancyTitle: 'Scored role',
+        vacancyStatus: 'open',
+        source: 'applied',
+        score: { status: 'scored', stale: false, waitingForParse: false },
+      });
+      expect(found[1].score.result?.overall).toBe(90);
+
+      const foreign = await applicationsRepository.findByCandidateForRecruiter(
+        candidate.id,
+        otherRecruiter.id,
+      );
+      expect(foreign.map((a) => a.id)).toEqual([foreignApplication.id]);
+    });
+
+    it('flags waitingForParse when the candidate is not parsed', async () => {
+      const vacancyId = await seedVacancy();
+      const candidateId = await seedCandidate();
+      const application = await applicationsRepository.create({
+        vacancyId,
+        candidateId,
+        source: 'added',
+      });
+      await scoresRepository.createPending(application.id);
+
+      const [found] = await applicationsRepository.findByCandidateForRecruiter(
+        candidateId,
+        recruiterId,
+      );
+
+      expect(found.score).toMatchObject({
+        status: 'pending',
+        waitingForParse: true,
+        result: null,
+      });
+    });
+
+    it('returns an empty array when the candidate is on none of the recruiter vacancies', async () => {
+      const otherRecruiter = await recruitersRepository.create(newRecruiter());
+      const candidateId = await seedCandidate();
+
+      const found = await applicationsRepository.findByCandidateForRecruiter(
+        candidateId,
+        otherRecruiter.id,
+      );
+
+      expect(found).toEqual([]);
+    });
+  });
+
   it('findByIdWithVacancy returns the application with vacancy populated', async () => {
     const vacancyId = await seedVacancy();
     const candidateId = await seedCandidate();
@@ -338,45 +563,6 @@ describe('ApplicationsRepository (Testcontainers integration)', () => {
   });
 
   describe('findByVacancyIdWithCandidate score', () => {
-    const profile = {
-      skills: ['TS'],
-      experience: '5 years',
-      projects: [],
-      summary: 'Engineer.',
-    };
-
-    function savedScore(
-      cvDocumentId: string,
-      criteriaHash: string,
-    ): SavedScore {
-      return {
-        result: {
-          overall: 90,
-          rationale: 'Strong.',
-          criteria: [
-            {
-              criterionId: 'c1',
-              criterion: 'Node.js',
-              importance: 'must',
-              score: 90,
-              reasoning: 'Yes.',
-              quotes: [{ source: 'cv', text: 'Built Node.js services' }],
-            },
-          ],
-          cvDocumentId,
-          model: 'gpt-test',
-          mode: 'full_text',
-          scoredAt: '2026-01-15T09:30:00.000Z',
-        },
-        cvDocumentId,
-        criteriaHash,
-        model: 'gpt-test',
-        mode: 'full_text',
-        inputTokens: 10,
-        outputTokens: 5,
-      };
-    }
-
     // a parsed candidate applied to a vacancy whose criteria were extracted
     async function seedParsedApplication() {
       const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));

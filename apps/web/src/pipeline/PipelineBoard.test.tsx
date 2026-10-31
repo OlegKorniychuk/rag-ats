@@ -47,6 +47,7 @@ function makeApplication(
     vacancyId: 'v1',
     candidateId: 'c1',
     stage: 'applied',
+    source: 'applied',
     createdAt: '2024-01-01T00:00:00.000Z',
     candidate,
     score: {
