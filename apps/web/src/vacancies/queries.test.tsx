@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { server } from '../test/server';
+import { useVacancyApplications } from '../pipeline/queries';
 import { useCreateVacancy, useUpdateVacancy, useVacancies } from './queries';
 
 const baseUrl = 'http://localhost:3000';
@@ -104,5 +105,35 @@ describe('vacancies queries', () => {
     await waitFor(() =>
       expect(result.current.list.data?.[0].status).toBe('closed'),
     );
+  });
+
+  it('useUpdateVacancy refetches the vacancy applications on success', async () => {
+    let applicationFetches = 0;
+    server.use(
+      http.get(`${baseUrl}/vacancies/1/applications`, () => {
+        applicationFetches += 1;
+        return HttpResponse.json([]);
+      }),
+      http.patch(`${baseUrl}/vacancies/1`, () => HttpResponse.json(vacancy)),
+    );
+
+    const { result } = renderHook(
+      () => ({
+        applications: useVacancyApplications('1'),
+        update: useUpdateVacancy(),
+      }),
+      { wrapper: createWrapper() },
+    );
+
+    await waitFor(() => expect(applicationFetches).toBe(1));
+
+    await act(async () => {
+      await result.current.update.mutateAsync({
+        id: '1',
+        body: { requirements: 'TS, Node' },
+      });
+    });
+
+    await waitFor(() => expect(applicationFetches).toBe(2));
   });
 });

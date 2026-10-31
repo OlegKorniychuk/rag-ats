@@ -384,4 +384,66 @@ describe('PipelinePage', () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     expect(calls).toBe(settled);
   });
+
+  it('shows the re-scoring banner while stale scores are in flight', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            score: {
+              status: 'pending',
+              error: null,
+              waitingForParse: false,
+              stale: true,
+              result: scoreResult(70),
+            },
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    expect(
+      await screen.findByText(/Re-scoring 1 applicant\./),
+    ).toBeInTheDocument();
+  });
+
+  it('warns that scores are outdated on a closed vacancy', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () =>
+        HttpResponse.json({ ...vacancy, status: 'closed' }),
+      ),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([
+          makeApplication({
+            score: {
+              status: 'scored',
+              error: null,
+              waitingForParse: false,
+              stale: true,
+              result: scoreResult(70),
+            },
+          }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    expect(await screen.findByText(/Scores are outdated/)).toBeInTheDocument();
+  });
+
+  it('shows no banner when scores are current', async () => {
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+        HttpResponse.json([makeApplication({})]),
+      ),
+    );
+    renderApp({ route: '/vacancies/v1', session });
+
+    await screen.findByText('Ada Lovelace');
+    expect(screen.queryByText(/Re-scoring/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Scores are outdated/)).not.toBeInTheDocument();
+  });
 });

@@ -18,3 +18,9 @@ export const hasScoreInFlight = (
 ): boolean =>
   applications?.some((application) => isScoreInFlight(application.score)) ??
   false;
+
+export const isStaleInFlight = (score: ApplicationScore): boolean =>
+  score.stale && isScoreInFlight(score);
+
+export const isStaleSettled = (score: ApplicationScore): boolean =>
+  score.stale && !isScoreInFlight(score);
