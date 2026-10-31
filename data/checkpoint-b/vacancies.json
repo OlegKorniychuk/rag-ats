@@ -1,0 +1,79 @@
+{
+  "description": "Checkpoint B synthetic vacancy set (fictional vacancies, no real companies), scored against the Checkpoint A CVs (data/checkpoint-a/manifest.json). Each vacancy is written to exercise one calibration note from docs/sdd.md section 11: years requirements, parenthetical examples, the 10-criterion cap and soft requirements. `expect` maps a CV id to a light expected band for the overall score: strong (>= 75), partial (40-74) or weak (< 40). Only clear-cut pairs get a band; ambiguous pairs are left out on purpose. `mustCoverTerms` (optional) lists one keyword per requirement; each must appear, case-insensitively, in at least one extracted criterion text, so a requirement dropped by the extractor becomes measurable.",
+  "vacancies": [
+    {
+      "id": "backend-java",
+      "title": "Senior Backend Engineer (Java)",
+      "requirements": "We build the card-settlement platform behind a fast-growing payments product and need a senior engineer to help us scale it. You will design and run event-driven services that process millions of transactions a day.\n\nMust have:\n- 5+ years of professional backend development experience, including designing and running services in production.\n- Strong command of a modern typed backend language. We mainly write Java 21, but engineers with deep Go or Kotlin experience are welcome.\n- Hands-on experience with Apache Kafka and event-driven architectures.\n- Solid PostgreSQL skills: schema design, query tuning and migrations.\n- Experience deploying and operating services on Kubernetes.\n- Experience mentoring other engineers and reviewing their code.\n\nNice to have:\n- Experience building gRPC services.\n- Experience using Redis for caching.",
+      "notes": "Exercises the years requirement (5+ years) and the must/nice split. The language requirement explicitly accepts Go or Kotlin, so 07-ukrainian (8 years of Go with Kafka, PostgreSQL, Kubernetes, gRPC, Redis and mentoring) is expected strong even without Java; the nice items are ones both strong CVs have, so a missing nice item cannot drag them below 75. 02-senior-backend is the direct match. Weak: 01 (frontend, 2 years), 03 (data/ML, Python only), 05 (mobile, no Kafka, PostgreSQL or Kubernetes) and 06 (1 year of full-stack, no Kafka or Kubernetes). 04 (infrastructure, no backend language) and 08 (Node/Nest, no Kafka or Kubernetes) are ambiguous and left out.",
+      "expect": {
+        "02-senior-backend": "strong",
+        "07-ukrainian": "strong",
+        "01-junior-frontend": "weak",
+        "03-data-ml": "weak",
+        "05-mobile": "weak",
+        "06-career-switcher": "weak"
+      }
+    },
+    {
+      "id": "frontend-react",
+      "title": "Frontend Developer (React)",
+      "requirements": "Join the product team behind our B2B invoicing dashboard. You will turn designs into fast, accessible and well-tested interfaces, working in a small team of frontend and backend engineers.\n\nMust have:\n- 2+ years of professional experience building web applications with React and TypeScript.\n- Solid HTML and CSS, including responsive layouts (Tailwind CSS, CSS Modules).\n- Experience with client-side state management (Redux Toolkit, Zustand, React Query).\n- Experience writing automated tests for the UI (Jest, React Testing Library, Playwright).\n- Experience building reusable UI components and shared component libraries.\n\nNice to have:\n- Experience working closely with designers (Figma, Storybook, component libraries).\n- Experience with Next.js.",
+      "notes": "Exercises parenthetical splitting: four parent requirements carry parenthetical example lists that must stay inside their parent criterion rather than becoming separate must-haves. Years is 2+ so that 01-junior-frontend (two years of professional React/TypeScript, stated in its summary) can be strong; 08-injection (5 years React/TypeScript, Jest, Playwright, Redux, Next.js, a reusable form-builder library) is the other strong. Designers/Figma is nice-to-have so 08, which never mentions designers, stays above 75. Weak: 02, 03, 04, 05 and 07 have no web frontend experience (05 is Flutter/native mobile). 06 (1 year of React, Jest) is ambiguous and left out.",
+      "expect": {
+        "08-injection": "strong",
+        "01-junior-frontend": "strong",
+        "02-senior-backend": "weak",
+        "03-data-ml": "weak",
+        "04-devops": "weak",
+        "05-mobile": "weak",
+        "07-ukrainian": "weak"
+      }
+    },
+    {
+      "id": "data-ml",
+      "title": "Machine Learning Engineer",
+      "requirements": "We forecast demand for grocery retailers and need a machine learning engineer to own our forecasting pipelines from raw data to production models. The role covers data engineering as well as modelling.\n\nRequirements:\n- 3+ years of experience taking machine learning models into production.\n- Strong Python for data work, including pandas and scikit-learn.\n- Deep learning experience with PyTorch.\n- Advanced SQL: window functions, joins over large tables and query optimisation.\n- Building and scheduling data pipelines with Apache Airflow.\n- Data transformation and modelling with dbt.\n- Distributed data processing with Apache Spark.\n- Time-series forecasting methods and how to evaluate them.\n- Experiment tracking and model registry with MLflow.\n- Training or serving models on a managed cloud ML platform such as AWS SageMaker or Vertex AI.\n- Packaging ML code with Docker and automating checks in a CI pipeline.\n- Designing and analysing A/B tests and reporting statistically sound results.\n- Working with cloud data warehouses such as BigQuery or Snowflake.\n- Explaining model results to non-technical stakeholders.\n\nNice to have:\n- Experience with Hugging Face Transformers.",
+      "notes": "Exercises the 10-criterion cap: 14 separate requirements plus one nice item, so an extractor capped at 10 must drop some; mustCoverTerms lists one keyword per requirement (case-insensitive substring of some extracted criterion) so drops become measurable. Only 03-data-ml (Python, PyTorch, SQL, Airflow, dbt, Spark, time-series, MLflow, SageMaker, A/B tests, BigQuery, 4 years) is a direct match, so this vacancy has only ONE strong expectation: none of the other seven CVs has ML or data-engineering experience, and forcing a second strong would not be honest. Weak: every other CV, which at best share generic items (SQL/PostgreSQL, Docker, a CI tool, Python basics) against a requirement list dominated by ML and data tooling.",
+      "expect": {
+        "03-data-ml": "strong",
+        "01-junior-frontend": "weak",
+        "02-senior-backend": "weak",
+        "04-devops": "weak",
+        "05-mobile": "weak",
+        "06-career-switcher": "weak",
+        "07-ukrainian": "weak",
+        "08-injection": "weak"
+      },
+      "mustCoverTerms": [
+        "years",
+        "pandas",
+        "PyTorch",
+        "SQL",
+        "Airflow",
+        "dbt",
+        "Spark",
+        "forecast",
+        "MLflow",
+        "SageMaker",
+        "Docker",
+        "A/B",
+        "BigQuery",
+        "stakeholder"
+      ]
+    },
+    {
+      "id": "devops-platform",
+      "title": "Platform Engineer",
+      "requirements": "Our platform team runs the infrastructure and delivery tooling for around forty product engineers. You will make shipping to production fast, repeatable and boring.\n\nMust have:\n- 3+ years of professional experience in DevOps, SRE or platform engineering.\n- Infrastructure as code with Terraform: reusable modules, remote state and drift management.\n- Running Kubernetes in production on a managed cloud service such as EKS or GKE.\n- Building and maintaining CI/CD pipelines (GitHub Actions, GitLab CI).\n- Monitoring and alerting for production services (Prometheus, Grafana).\n- Scripting and automation in Bash or Python.\n- An ownership mindset: you take responsibility for services end to end, from rollout to incident follow-up, and do not wait to be asked.\n\nNice to have:\n- GitOps tooling such as Helm and Argo CD.\n- Experience reducing cloud cost.",
+      "notes": "Exercises the years requirement (3+ years), the soft requirement (ownership mindset) and a few parentheticals. 04-devops (7 years, Terraform modules, EKS, GitHub Actions/GitLab CI, Prometheus/Grafana, Helm and Argo CD, cost dashboard, certified) is the only clear strong, so this vacancy has only ONE strong expectation: 02-senior-backend (Terraform, Kubernetes, AWS, CI and on-call but only in a backend role, with thin IaC detail) and 07-ukrainian (Kubernetes, CI/CD, Prometheus, no Terraform) are probably partial, but not clear-cut, and are left out rather than forced. Weak: 01, 03, 05 and 06 have no infrastructure or Kubernetes experience beyond Docker or a CI tool for app releases. 08 (Docker, GitHub Actions to AWS) is ambiguous and left out.",
+      "expect": {
+        "04-devops": "strong",
+        "01-junior-frontend": "weak",
+        "03-data-ml": "weak",
+        "05-mobile": "weak",
+        "06-career-switcher": "weak"
+      }
+    }
+  ]
+}
