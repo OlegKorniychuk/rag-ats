@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { ScoreResult } from '@rag-ats/shared';
+import type { ScoreResult, ScoringMode } from '@rag-ats/shared';
 import { CriterionScoreResponseDto } from './criterion-score-response.dto.js';
 
 export class ScoreResultResponseDto implements ScoreResult {
@@ -29,8 +29,13 @@ export class ScoreResultResponseDto implements ScoreResult {
   @ApiProperty({ example: 'gpt-5-mini' })
   model: string;
 
-  @ApiProperty({ enum: ['full_text'], example: 'full_text' })
-  mode: 'full_text';
+  @ApiProperty({
+    enum: ['full_text', 'rag'],
+    example: 'full_text',
+    description:
+      'Whether the whole CV was scored at once or per criterion from retrieved chunks',
+  })
+  mode: ScoringMode;
 
   @ApiProperty({
     type: String,

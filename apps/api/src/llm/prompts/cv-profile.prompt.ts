@@ -46,6 +46,18 @@ function neutralise(text: string): string {
   return text.replace(/<(\/?\s*github\s*>)/gi, '&lt;$1');
 }
 
+/**
+ * Defuses opening and closing tags named in `tags` (`<chunk`, `</ evidence`, ...)
+ * inside untrusted text, whatever follows the name, so it cannot forge or close
+ * a delimiter block.
+ */
+export function neutraliseTags(text: string, tags: string[]): string {
+  return text.replace(
+    new RegExp(`<(\\/?\\s*(?:${tags.join('|')})(?![\\p{L}\\p{N}_-]))`, 'giu'),
+    '&lt;$1',
+  );
+}
+
 function oneLine(text: string): string {
   return neutralise(text.replace(/\s+/g, ' ').trim());
 }

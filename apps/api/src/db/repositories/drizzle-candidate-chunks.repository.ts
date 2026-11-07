@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
-import { cosineDistance, eq, notInArray, sql } from 'drizzle-orm';
+import {
+  and,
+  cosineDistance,
+  eq,
+  notInArray,
+  sql,
+  type SQL,
+} from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { applications, candidateChunks } from '../schema.js';
 import type {
@@ -48,6 +55,21 @@ export class DrizzleCandidateChunksRepository implements CandidateChunksReposito
     options: FindNearestOptions = {},
   ): Promise<ChunkHit[]> {
     const distance = cosineDistance(candidateChunks.embedding, embedding);
+    const conditions: SQL[] = [];
+    if (options.candidateId) {
+      conditions.push(eq(candidateChunks.candidateId, options.candidateId));
+    }
+    if (options.excludeVacancyId) {
+      conditions.push(
+        notInArray(
+          candidateChunks.candidateId,
+          this.txHost.tx
+            .select({ candidateId: applications.candidateId })
+            .from(applications)
+            .where(eq(applications.vacancyId, options.excludeVacancyId)),
+        ),
+      );
+    }
     const rows = await this.txHost.tx
       .select({
         candidateId: candidateChunks.candidateId,
@@ -56,17 +78,7 @@ export class DrizzleCandidateChunksRepository implements CandidateChunksReposito
         similarity: sql<number>`1 - (${distance})`,
       })
       .from(candidateChunks)
-      .where(
-        options.excludeVacancyId
-          ? notInArray(
-              candidateChunks.candidateId,
-              this.txHost.tx
-                .select({ candidateId: applications.candidateId })
-                .from(applications)
-                .where(eq(applications.vacancyId, options.excludeVacancyId)),
-            )
-          : undefined,
-      )
+      .where(conditions.length > 0 ? and(...conditions) : undefined)
       .orderBy(distance)
       .limit(limit);
     return rows.map((row) => ({

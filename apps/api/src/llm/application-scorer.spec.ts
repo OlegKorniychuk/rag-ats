@@ -132,6 +132,7 @@ describe('ApplicationScorer', () => {
         score: 80,
         reasoning: 'Evidence found for c1.',
         quotes: [CV_QUOTE],
+        retrieved: null,
       },
       expect.objectContaining({ criterionId: 'c2', importance: 'must' }),
       expect.objectContaining({
@@ -371,5 +372,219 @@ describe('ApplicationScorer', () => {
     );
     expect(usageLogs).toHaveLength(2);
     expect(JSON.stringify(logSpy.mock.calls)).not.toContain('Jane Doe');
+  });
+});
+
+describe('ApplicationScorer.scoreRag', () => {
+  const TS_CHUNK = {
+    source: 'cv' as const,
+    text: 'Built REST APIs with NestJS and TypeScript for 5 years.',
+    similarity: 0.8,
+  };
+  const DOCKER_CHUNK = {
+    source: 'cv' as const,
+    text: 'Used Docker in CI and Kubernetes at Acme.',
+    similarity: 0.7,
+  };
+  const REPO_CHUNK = {
+    source: 'github' as const,
+    text: '## alpha (language: TypeScript, stars: 50)\nAlpha is a REST service built with NestJS.',
+    similarity: 0.6,
+  };
+  const EVIDENCE = [
+    { criterionId: 'c1', chunks: [TS_CHUNK, REPO_CHUNK] },
+    { criterionId: 'c2', chunks: [REPO_CHUNK, TS_CHUNK] },
+    { criterionId: 'c3', chunks: [DOCKER_CHUNK] },
+  ];
+  const quotesByCriterion = (
+    quotes: Record<string, { source: 'cv' | 'github'; text: string }>,
+  ): MockScoreResponse => ({
+    rationale: 'Fit based on the retrieved evidence.',
+    criteria: IDS.map((criterionId) => ({
+      criterionId,
+      score: 80,
+      reasoning: `Evidence found for ${criterionId}.`,
+      quotes: [quotes[criterionId]],
+    })),
+  });
+  const OWN_QUOTES = {
+    c1: { source: 'cv' as const, text: 'Built REST APIs with NestJS' },
+    c2: { source: 'github' as const, text: 'Alpha is a REST service' },
+    c3: { source: 'cv' as const, text: 'Used Docker in CI' },
+  };
+
+  it('scores from the retrieved chunks and attaches them per criterion', async () => {
+    server.use(openaiScoreHandler(quotesByCriterion(OWN_QUOTES)));
+
+    const result = await makeScorer().scoreRag({
+      criteria: CRITERIA,
+      evidence: EVIDENCE,
+    });
+
+    expect(capture.bodies).toHaveLength(1);
+    const body = capture.bodies[0];
+    expect(messageContent(body, 'system')).toMatch(/place to look first/);
+    const user = userOf(body);
+    expect(user).toContain(
+      'c1 [must] TypeScript experience — evidence: e1, e2',
+    );
+    expect(user).toContain('c3 [nice] Docker knowledge — evidence: e3');
+    expect(user).toContain('<evidence>');
+    expect(user).not.toContain('<cv>');
+    expect(result.criteria.map((c) => c.retrieved)).toEqual([
+      [TS_CHUNK, REPO_CHUNK],
+      [REPO_CHUNK, TS_CHUNK],
+      [DOCKER_CHUNK],
+    ]);
+    expect(result.criteria[0]).toMatchObject({
+      criterionId: 'c1',
+      quotes: [OWN_QUOTES.c1],
+      score: 80,
+    });
+    expect(result.overall).toBe(80);
+    expect(result.usage).toEqual({
+      inputTokens: 1200,
+      outputTokens: 300,
+      model: 'gpt-5.4-mini',
+    });
+  });
+
+  it('accepts a quote from a chunk retrieved only for another criterion', async () => {
+    const crossQuote = { ...OWN_QUOTES, c1: OWN_QUOTES.c3 };
+    server.use(openaiScoreHandler(quotesByCriterion(crossQuote)));
+
+    const result = await makeScorer().scoreRag({
+      criteria: CRITERIA,
+      evidence: EVIDENCE,
+    });
+
+    expect(capture.bodies).toHaveLength(1);
+    expect(result.criteria[0].quotes).toEqual([OWN_QUOTES.c3]);
+    // retrieval stays per criterion
+    expect(result.criteria[0].retrieved).toEqual([TS_CHUNK, REPO_CHUNK]);
+    expect(result.criteria[2].retrieved).toEqual([DOCKER_CHUNK]);
+  });
+
+  it('retries after a quote from an unretrieved chunk, naming the problem, and sums usage', async () => {
+    const unretrieved = {
+      source: 'cv' as const,
+      text: 'Led a team of ten engineers in Berlin',
+    };
+    server.use(
+      sequence([
+        quotesByCriterion({ ...OWN_QUOTES, c1: unretrieved }),
+        quotesByCriterion(OWN_QUOTES),
+      ]),
+    );
+
+    const result = await makeScorer().scoreRag({
+      criteria: CRITERIA,
+      evidence: EVIDENCE,
+    });
+
+    expect(capture.bodies).toHaveLength(2);
+    const [first, second] = capture.bodies;
+    expect(userOf(first)).not.toContain('<feedback>');
+    expect(userOf(second)).toContain('<feedback>');
+    expect(userOf(second)).toContain(
+      'Criterion c1: quote "Led a team of ten engineers in Berlin" is not a verbatim excerpt of <cv>',
+    );
+    expect(userOf(second)).toMatch(/never from text outside <evidence>/);
+    expect(userOf(second).startsWith(userOf(first))).toBe(true);
+    expect(messageContent(second, 'system')).toBe(
+      messageContent(first, 'system'),
+    );
+    expect(result.usage).toEqual({
+      inputTokens: 2000,
+      outputTokens: 400,
+      model: 'gpt-5.4-mini',
+    });
+    expect(result.criteria[0].quotes).toEqual([OWN_QUOTES.c1]);
+    expect(result.criteria[0].retrieved).toEqual([TS_CHUNK, REPO_CHUNK]);
+  });
+
+  it('throws LlmGroundingError after two answers quoting an unretrieved chunk', async () => {
+    server.use(
+      sequence([
+        quotesByCriterion({
+          ...OWN_QUOTES,
+          c1: { source: 'cv', text: 'Led a team of ten engineers in Berlin' },
+        }),
+      ]),
+    );
+
+    const promise = makeScorer().scoreRag({
+      criteria: CRITERIA,
+      evidence: EVIDENCE,
+    });
+    await expect(promise).rejects.toBeInstanceOf(LlmGroundingError);
+    expect(capture.bodies).toHaveLength(2);
+  });
+
+  it('rejects a quote straddling two retrieved chunks', async () => {
+    server.use(
+      sequence([
+        quotesByCriterion({
+          ...OWN_QUOTES,
+          c1: { source: 'cv', text: 'for 5 years. Used Docker in CI' },
+        }),
+      ]),
+    );
+    await expect(
+      makeScorer().scoreRag({ criteria: CRITERIA, evidence: EVIDENCE }),
+    ).rejects.toBeInstanceOf(LlmGroundingError);
+  });
+
+  it('verifies against the chunk text as sent (defused tags) and rejects github quotes without github chunks', async () => {
+    const tagged = {
+      source: 'cv' as const,
+      text: 'Wrote <chunk> parsers in TypeScript',
+      similarity: 0.5,
+    };
+    server.use(
+      openaiScoreHandler(
+        quotesByCriterion({
+          ...OWN_QUOTES,
+          c1: { source: 'cv', text: 'Wrote &lt;chunk> parsers' },
+        }),
+      ),
+    );
+    const ok = await makeScorer().scoreRag({
+      criteria: CRITERIA,
+      evidence: [{ criterionId: 'c1', chunks: [tagged] }, ...EVIDENCE.slice(1)],
+    });
+    expect(ok.criteria[0].retrieved).toEqual([tagged]);
+
+    // No github chunk was retrieved for the application at all.
+    server.use(
+      sequence([quotesByCriterion({ ...OWN_QUOTES, c3: OWN_QUOTES.c2 })]),
+    );
+    await expect(
+      makeScorer().scoreRag({
+        criteria: CRITERIA,
+        evidence: [
+          { criterionId: 'c1', chunks: [TS_CHUNK] },
+          { criterionId: 'c2', chunks: [TS_CHUNK] },
+          { criterionId: 'c3', chunks: [DOCKER_CHUNK] },
+        ],
+      }),
+    ).rejects.toBeInstanceOf(LlmGroundingError);
+  });
+
+  it('retries on unknown, duplicate and missing criterion ids', async () => {
+    const unknown = quotesByCriterion(OWN_QUOTES);
+    unknown.criteria[2].criterionId = 'c9';
+    const duplicate = quotesByCriterion(OWN_QUOTES);
+    duplicate.criteria[1].criterionId = 'c1';
+    server.use(sequence([unknown, duplicate]));
+
+    await expect(
+      makeScorer().scoreRag({ criteria: CRITERIA, evidence: EVIDENCE }),
+    ).rejects.toBeInstanceOf(LlmGroundingError);
+
+    const second = userOf(capture.bodies[1]);
+    expect(second).toContain('Unknown criterion id "c9"');
+    expect(second).toContain('Criterion c3 is missing');
+    expect(userOf(capture.bodies[1])).toContain('<feedback>');
   });
 });

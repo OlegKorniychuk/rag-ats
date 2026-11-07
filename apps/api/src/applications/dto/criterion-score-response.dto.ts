@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import type { CriterionImportance, CriterionScore } from '@rag-ats/shared';
+import { RetrievedChunkResponseDto } from './retrieved-chunk-response.dto.js';
 import { ScoreQuoteResponseDto } from './score-quote-response.dto.js';
 
 export class CriterionScoreResponseDto implements CriterionScore {
@@ -22,4 +23,12 @@ export class CriterionScoreResponseDto implements CriterionScore {
 
   @ApiProperty({ type: () => [ScoreQuoteResponseDto] })
   quotes: ScoreQuoteResponseDto[];
+
+  @ApiProperty({
+    type: () => [RetrievedChunkResponseDto],
+    nullable: true,
+    description:
+      'rag mode: the chunks this criterion was scored from, best first; null in full_text mode',
+  })
+  retrieved: RetrievedChunkResponseDto[] | null;
 }

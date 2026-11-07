@@ -55,6 +55,20 @@ export function toApplicationScore(
     error: row.error,
     waitingForParse,
     stale,
-    result: row.result,
+    result: row.result && withRetrieved(row.result),
+  };
+}
+
+/**
+ * Results stored before RAG scoring have no `retrieved` on their criteria;
+ * the contract says null (full text) rather than missing.
+ */
+function withRetrieved(result: ScoreResult): ScoreResult {
+  return {
+    ...result,
+    criteria: result.criteria.map((c) => ({
+      ...c,
+      retrieved: c.retrieved ?? null,
+    })),
   };
 }

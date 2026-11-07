@@ -61,6 +61,7 @@ function makeResult(cvDocumentId: string, overall = 80): ScoreResult {
         score: overall,
         reasoning: 'Uses Node.js.',
         quotes: [{ source: 'cv', text: 'Built Node.js services' }],
+        retrieved: null,
       },
     ],
     cvDocumentId,
@@ -407,6 +408,22 @@ describe('ScoresRepository (Testcontainers integration)', () => {
     expect(await scores.findPendingByVacancy(vacancy.id)).toEqual([
       pending.applicationId,
     ]);
+  });
+
+  it('findPendingByCandidate returns only pending scores of that candidate', async () => {
+    const first = await seedApplication({});
+    const second = await seedApplication({ candidateId: first.candidateId });
+    const scoredApp = await seedApplication({
+      candidateId: first.candidateId,
+    });
+    await scores.saveResult(scoredApp.applicationId, makeSaved(first.cvId));
+    const failedApp = await seedApplication({ candidateId: first.candidateId });
+    await scores.markFailed(failedApp.applicationId, 'boom');
+    await seedApplication({});
+
+    expect(
+      (await scores.findPendingByCandidate(first.candidateId)).sort(),
+    ).toEqual([first.applicationId, second.applicationId].sort());
   });
 
   it('findBacklog returns pending/scoring scores of parsed candidates only', async () => {

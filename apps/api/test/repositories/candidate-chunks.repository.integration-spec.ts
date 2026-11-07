@@ -439,5 +439,60 @@ describe('CandidateChunksRepository (Testcontainers integration)', () => {
       ]);
       expect(emptyOptions).toEqual(plain);
     });
+
+    it('restricts to one candidate and combines with excludeVacancyId', async () => {
+      const recruiter = await recruiters.create({
+        email: `${randomUUID()}@example.com`,
+        passwordHash: 'hashed-password',
+      });
+      const vacancy = await vacancies.create({
+        recruiterId: recruiter.id,
+        title: 'Engineer',
+        requirements: 'Things',
+        applyToken: randomUUID(),
+      });
+      const a = await seed();
+      const b = await seed();
+      await chunks.replaceForCandidate(
+        a.candidateId,
+        a.cvId,
+        [
+          { source: 'cv', text: 'a1', embedding: planar(40, 0.3) },
+          { source: 'github', text: 'a2', embedding: planar(40, 0.1) },
+        ],
+        'm',
+      );
+      await chunks.replaceForCandidate(
+        b.candidateId,
+        b.cvId,
+        [{ source: 'cv', text: 'b1', embedding: planar(40, 0.2) }],
+        'm',
+      );
+
+      const query = planar(40, 0);
+      const onlyA = await chunks.findNearest(query, 5, {
+        candidateId: a.candidateId,
+      });
+      const limited = await chunks.findNearest(query, 1, {
+        candidateId: a.candidateId,
+      });
+      const none = await chunks.findNearest(query, 5, {
+        candidateId: randomUUID(),
+      });
+      await applications.create({
+        vacancyId: vacancy.id,
+        candidateId: a.candidateId,
+      });
+      const excluded = await chunks.findNearest(query, 5, {
+        candidateId: a.candidateId,
+        excludeVacancyId: vacancy.id,
+      });
+
+      expect(onlyA.map((h) => h.text)).toEqual(['a2', 'a1']);
+      expect(onlyA.every((h) => h.candidateId === a.candidateId)).toBe(true);
+      expect(limited.map((h) => h.text)).toEqual(['a2']);
+      expect(none).toEqual([]);
+      expect(excluded).toEqual([]);
+    });
   });
 });

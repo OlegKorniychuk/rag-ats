@@ -19,6 +19,17 @@ export interface VerifyQuotesSources {
   github: string | null;
 }
 
+/**
+ * Separator between chunks in a joined source. `¶` survives NFKC, so after
+ * `normaliseForMatch` the chunks stay apart (" ¶ ") and a quote cannot span two.
+ */
+export const CHUNK_SEPARATOR = '\n¶\n';
+
+/** Joins chunk texts into one verification source with `CHUNK_SEPARATOR`. */
+export function joinChunks(texts: string[]): string {
+  return texts.join(CHUNK_SEPARATOR);
+}
+
 export interface VerifyQuotesResult {
   valid: boolean;
   problems: string[];

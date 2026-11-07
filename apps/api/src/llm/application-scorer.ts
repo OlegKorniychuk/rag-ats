@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import type { RetrievedChunk } from '@rag-ats/shared';
 import OpenAI from 'openai';
 import { LlmClient, type LlmUsage } from './llm-client.js';
 import {
@@ -10,11 +11,20 @@ import {
   APPLICATION_SCORE_SYSTEM_PROMPT,
   applicationScoreUserPrompt,
 } from './prompts/application-score.prompt.js';
+import {
+  APPLICATION_SCORE_RAG_SYSTEM_PROMPT,
+  applicationScoreRagUserPrompt,
+  ragGroundingSources,
+  type CriterionEvidence,
+} from './prompts/application-score-rag.prompt.js';
 import { buildGithubBlock } from './prompts/cv-profile.prompt.js';
 import { normaliseText } from './cv-profile-parser.js';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
 import { computeOverall } from '../scoring/compute-overall.js';
-import { verifyQuotes } from '../scoring/verify-quotes.js';
+import {
+  verifyQuotes,
+  type VerifyQuotesSources,
+} from '../scoring/verify-quotes.js';
 
 export const MAX_QUOTES_PER_CRITERION = 3;
 export const MAX_QUOTE_CHARS = 300;
@@ -52,6 +62,8 @@ export interface ScoredCriterion {
   score: number;
   reasoning: string;
   quotes: ScoredQuote[];
+  /** `rag` mode: the chunks the criterion was scored from; null in full text. */
+  retrieved: RetrievedChunk[] | null;
 }
 
 export interface ApplicationScoreResult {
@@ -81,16 +93,55 @@ export class ApplicationScorer {
     const cv = normaliseText(params.cvText);
     const githubBlock =
       params.github?.status === 'ok' ? buildGithubBlock(params.github) : null;
+
+    return this.runAttempts({
+      criteria,
+      system: APPLICATION_SCORE_SYSTEM_PROMPT,
+      userPrompt: (feedback) =>
+        applicationScoreUserPrompt(criteria, cv, githubBlock, feedback),
+      sources: { cv, github: githubBlock },
+      retrievedFor: () => null,
+    });
+  }
+
+  /**
+   * RAG mode: each criterion is scored from the chunks retrieved for it
+   * (`evidence`, best first), but a quote is verified against every chunk
+   * retrieved for the application, never against unretrieved text.
+   */
+  async scoreRag(params: {
+    criteria: ScoringCriterion[];
+    evidence: CriterionEvidence[];
+  }): Promise<ApplicationScoreResult> {
+    const { criteria, evidence } = params;
+    const chunksById = new Map(evidence.map((e) => [e.criterionId, e.chunks]));
+
+    return this.runAttempts({
+      criteria,
+      system: APPLICATION_SCORE_RAG_SYSTEM_PROMPT,
+      userPrompt: (feedback) =>
+        applicationScoreRagUserPrompt(criteria, evidence, feedback),
+      sources: ragGroundingSources(evidence.flatMap((e) => e.chunks)),
+      retrievedFor: (id) => chunksById.get(id) ?? [],
+    });
+  }
+
+  /** Shared by both modes: call → normalise → verify → retry once → assemble. */
+  private async runAttempts(params: {
+    criteria: ScoringCriterion[];
+    system: string;
+    userPrompt: (feedback: string[] | null) => string;
+    sources: VerifyQuotesSources;
+    retrievedFor: (criterionId: string) => RetrievedChunk[] | null;
+  }): Promise<ApplicationScoreResult> {
+    const { criteria, system, userPrompt, sources, retrievedFor } = params;
     const expectedIds = criteria.map((c) => c.id);
 
     const usage = { inputTokens: 0, outputTokens: 0, model: this.llm.model };
     let feedback: string[] | null = null;
 
     for (let attempt = 1; attempt <= 2; attempt++) {
-      const output = await this.callModel(
-        applicationScoreUserPrompt(criteria, cv, githubBlock, feedback),
-        usage,
-      );
+      const output = await this.callModel(system, userPrompt(feedback), usage);
       const normalised: ApplicationScoreOutput = {
         rationale: output.rationale.trim(),
         criteria: output.criteria.map((c) => ({
@@ -104,11 +155,7 @@ export class ApplicationScorer {
         })),
       };
 
-      const check = verifyQuotes(
-        normalised,
-        { cv, github: githubBlock },
-        expectedIds,
-      );
+      const check = verifyQuotes(normalised, sources, expectedIds);
       if (!check.valid) {
         this.logger.warn(
           `Score attempt ${attempt} failed quote verification: problems=${check.problems.length}`,
@@ -131,6 +178,7 @@ export class ApplicationScorer {
             source: q.source,
             text: q.text.slice(0, MAX_QUOTE_CHARS),
           })),
+          retrieved: retrievedFor(input.id),
         };
       });
       return {
@@ -145,13 +193,14 @@ export class ApplicationScorer {
   }
 
   private async callModel(
+    system: string,
     user: string,
     usage: { inputTokens: number; outputTokens: number; model: string },
   ): Promise<ApplicationScoreOutput> {
     let result;
     try {
       result = await this.llm.parseStructured({
-        system: APPLICATION_SCORE_SYSTEM_PROMPT,
+        system,
         user,
         schema: applicationScoreSchema,
         schemaName: APPLICATION_SCORE_SCHEMA_NAME,

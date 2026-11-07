@@ -1,3 +1,4 @@
+import type { ScoringMode } from '@rag-ats/shared';
 import { Type } from 'class-transformer';
 import {
   IsIn,
@@ -53,6 +54,12 @@ export class EnvConfig {
   @IsString()
   @MinLength(1)
   public readonly OPENAI_EMBEDDING_MODEL: string = 'text-embedding-3-small';
+
+  // `full_text` scores from the whole CV; `rag` from chunks retrieved per
+  // criterion. Applies to new scores only.
+  @IsOptional()
+  @IsIn(['full_text', 'rag'])
+  public readonly SCORING_MODE: ScoringMode = 'full_text';
 
   // pg-boss requires >= 0.5.
   @IsOptional()

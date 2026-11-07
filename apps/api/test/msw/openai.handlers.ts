@@ -245,11 +245,95 @@ export function fabricatedScoreResponse(
   );
 }
 
-/** Valid response quoting the first `chars` characters of the `<cv>` sent. */
+export interface RequestEvidenceChunk {
+  id: string;
+  source: 'cv' | 'github';
+  /** As the model saw it (tags defused). */
+  text: string;
+}
+
+/**
+ * Evidence of a `rag` score request: the chunks listed for each criterion
+ * (`evidence: e1, e3` on its `<criteria>` line), resolved from `<evidence>`.
+ * Empty when the request has no `<evidence>` block (full-text mode).
+ */
+export function evidenceFromRequest(
+  body: OpenaiRequestBody,
+): Map<string, RequestEvidenceChunk[]> {
+  const user = messageContent(body, 'user');
+  const chunks = new Map<string, RequestEvidenceChunk>();
+  const chunkPattern =
+    /<chunk id="([^"]+)" source="(cv|github)">\n([\s\S]*?)\n<\/chunk>/g;
+  for (const match of (extractTag(user, 'evidence') ?? '').matchAll(
+    chunkPattern,
+  )) {
+    chunks.set(match[1], {
+      id: match[1],
+      source: match[2] as 'cv' | 'github',
+      text: match[3],
+    });
+  }
+  const evidence = new Map<string, RequestEvidenceChunk[]>();
+  for (const line of (extractTag(user, 'criteria') ?? '').split('\n')) {
+    const match = /^(\S+) \[(?:must|nice)\] .* — evidence: (.+)$/.exec(line);
+    if (!match) continue;
+    evidence.set(
+      match[1],
+      match[2] === 'none'
+        ? []
+        : match[2]
+            .split(', ')
+            .map((id) => chunks.get(id))
+            .filter((c): c is RequestEvidenceChunk => !!c),
+    );
+  }
+  return evidence;
+}
+
+/**
+ * Valid `rag` response: each criterion quotes the first `chars` characters of
+ * its own first evidence chunk (score 0 and no quote when it has none).
+ */
+export function scoreFromEvidence(
+  body: OpenaiRequestBody,
+  options: { score?: number; chars?: number } = {},
+): MockScoreResponse {
+  const evidence = evidenceFromRequest(body);
+  return {
+    criteria: criterionIdsFromRequest(body).map((criterionId) => {
+      const first = evidence.get(criterionId)?.[0];
+      return {
+        criterionId,
+        score: first ? (options.score ?? 80) : 0,
+        reasoning: `Evidence found for ${criterionId}.`,
+        quotes: first
+          ? [
+              {
+                source: first.source,
+                text: normaliseForMatch(first.text)
+                  .slice(0, options.chars ?? 40)
+                  .trim(),
+              },
+            ]
+          : [],
+      };
+    }),
+    rationale: 'Solid match based on the retrieved evidence.',
+  };
+}
+
+/**
+ * Valid response quoting the first `chars` characters of the `<cv>` sent, or,
+ * for a `rag` request (it has `<evidence>` instead of `<cv>`), of each
+ * criterion's own first chunk.
+ */
 export function scoreFromRequest(
   body: OpenaiRequestBody,
   options: { score?: number; chars?: number } = {},
 ): MockScoreResponse {
+  if (extractTag(messageContent(body, 'user'), 'evidence') !== null) {
+    return scoreFromEvidence(body, options);
+  }
   const cv = sourceFromRequest(body, 'cv') ?? '';
   const text = normaliseForMatch(cv)
     .slice(0, options.chars ?? 40)

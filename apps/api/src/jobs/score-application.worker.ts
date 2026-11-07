@@ -1,6 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
+import type { RetrievedChunk, ScoringMode } from '@rag-ats/shared';
 import { ClsService } from 'nestjs-cls';
+import { EnvConfig } from '../config/env.config.js';
+import {
+  CANDIDATE_CHUNKS_REPOSITORY,
+  type CandidateChunksRepository,
+} from '../db/repositories/candidate-chunks.repository.js';
 import {
   CANDIDATES_REPOSITORY,
   type CandidatesRepository,
@@ -17,7 +23,11 @@ import {
   ApplicationScorer,
   LlmScoreError,
   type ApplicationScoreResult,
+  type ScoringCriterion,
 } from '../llm/application-scorer.js';
+import type { CriterionEvidence } from '../llm/prompts/application-score-rag.prompt.js';
+import { LlmClient } from '../llm/llm-client.js';
+import { RAG_CHUNKS_PER_CRITERION } from '../rag/nearest-chunks.js';
 import { vacancyCriteriaHash } from '../scoring/criteria-hash.js';
 import type { ScoreApplicationJob } from './jobs.constants.js';
 import { JobsService } from './jobs.service.js';
@@ -37,9 +47,13 @@ export class ScoreApplicationWorker {
     private readonly candidates: CandidatesRepository,
     @Inject(CV_DOCUMENTS_REPOSITORY)
     private readonly cvDocuments: CvDocumentsRepository,
+    @Inject(CANDIDATE_CHUNKS_REPOSITORY)
+    private readonly chunks: CandidateChunksRepository,
     private readonly scorer: ApplicationScorer,
+    private readonly llm: LlmClient,
     private readonly jobs: JobsService,
     private readonly cls: ClsService,
+    private readonly config: EnvConfig,
   ) {}
 
   /** Own CLS context per job (see ParseCandidateWorker.handle). */
@@ -60,14 +74,12 @@ export class ScoreApplicationWorker {
     // Waiting for the CV: staying `pending` is right, the parse job enqueues
     // scoring when it finishes.
     if (state.candidateParseStatus !== 'parsed' || !cvDocumentId) return;
-    // Duplicate job: already scored against this CV and these criteria.
-    if (
-      state.status === 'scored' &&
-      state.scoreCvDocumentId === cvDocumentId &&
-      state.scoreCriteriaHash === hash
-    ) {
-      return;
-    }
+    // Nothing requested: every path that wants a (re)score first resets the
+    // row to `pending` (apply/add, a new CV, rescore, an open-vacancy edit,
+    // reopen). A leftover duplicate job (e.g. queued by both the parse and the
+    // embed job) must not rescore a `scored` row, even an outdated one: a
+    // closed vacancy's outdated scores wait for the reopen (step 6).
+    if (state.status === 'scored') return;
 
     // Criteria missing or outdated: extraction runs first and enqueues the
     // vacancy's pending scores (this one included) when it is done.
@@ -76,25 +88,28 @@ export class ScoreApplicationWorker {
       return;
     }
     const criteria = state.vacancyCriteria;
+    const mode = this.config.SCORING_MODE;
 
     try {
+      // `rag` scores from the candidate's chunks: until they are built from
+      // the parsed CV, stay `pending`; the embed job enqueues this score when
+      // it finishes (no LLM call, nothing marked).
+      if (mode === 'rag' && !(await this.isEmbedded(state.candidateId))) return;
+
       // Guarded: a newer job may already have finished (`scored`).
       if (!(await this.scores.markScoring(applicationId))) return;
 
-      const cvText = await this.cvDocuments.findTextById(cvDocumentId);
-      if (cvText === null) throw new Error('CV document not found');
-      const github = await this.candidates.findGithubSnapshot(
-        state.candidateId,
-      );
-
-      // Slow network call: deliberately outside any DB transaction.
-      const scored = await this.scorer.score({ criteria, cvText, github });
+      const scored =
+        mode === 'rag'
+          ? await this.scoreFromChunks(state.candidateId, criteria)
+          : await this.scoreFullText(state.candidateId, cvDocumentId, criteria);
 
       const outcome = await this.saveIfCurrent(
         applicationId,
         cvDocumentId,
         hash,
         scored,
+        mode,
       );
       if (outcome === 'criteria_changed') {
         await this.requeue(applicationId);
@@ -102,6 +117,50 @@ export class ScoreApplicationWorker {
     } catch (error) {
       await this.recordFailure(applicationId, error);
     }
+  }
+
+  private async isEmbedded(candidateId: string): Promise<boolean> {
+    const embed = await this.candidates.findEmbedState(candidateId);
+    return (
+      !!embed?.parsedCvDocumentId &&
+      embed.embeddedCvDocumentId === embed.parsedCvDocumentId
+    );
+  }
+
+  private async scoreFullText(
+    candidateId: string,
+    cvDocumentId: string,
+    criteria: ScoringCriterion[],
+  ): Promise<ApplicationScoreResult> {
+    const cvText = await this.cvDocuments.findTextById(cvDocumentId);
+    if (cvText === null) throw new Error('CV document not found');
+    const github = await this.candidates.findGithubSnapshot(candidateId);
+
+    // Slow network call: deliberately outside any DB transaction.
+    return this.scorer.score({ criteria, cvText, github });
+  }
+
+  /** `rag` mode: the candidate's nearest chunks per criterion, then score from them only. */
+  private async scoreFromChunks(
+    candidateId: string,
+    criteria: ScoringCriterion[],
+  ): Promise<ApplicationScoreResult> {
+    const { vectors } = await this.llm.embed(criteria.map((c) => c.text));
+    const evidence: CriterionEvidence[] = [];
+    for (const [index, criterion] of criteria.entries()) {
+      const hits = await this.chunks.findNearest(
+        vectors[index],
+        RAG_CHUNKS_PER_CRITERION,
+        { candidateId },
+      );
+      const chunks: RetrievedChunk[] = hits.map((hit) => ({
+        source: hit.source,
+        text: hit.text,
+        similarity: Math.round(hit.similarity * 1000) / 1000,
+      }));
+      evidence.push({ criterionId: criterion.id, chunks });
+    }
+    return this.scorer.scoreRag({ criteria, evidence });
   }
 
   /**
@@ -136,6 +195,7 @@ export class ScoreApplicationWorker {
     cvDocumentId: string,
     criteriaHash: string,
     scored: ApplicationScoreResult,
+    mode: ScoringMode,
   ): Promise<SaveOutcome> {
     const current = await this.scores.findScoreState(applicationId);
     if (!current) return 'cv_changed';
@@ -165,13 +225,13 @@ export class ScoreApplicationWorker {
         criteria: scored.criteria,
         cvDocumentId,
         model: scored.usage.model,
-        mode: 'full_text',
+        mode,
         scoredAt: new Date().toISOString(),
       },
       cvDocumentId,
       criteriaHash,
       model: scored.usage.model,
-      mode: 'full_text',
+      mode,
       inputTokens: scored.usage.inputTokens,
       outputTokens: scored.usage.outputTokens,
     });

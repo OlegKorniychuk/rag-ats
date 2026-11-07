@@ -94,6 +94,7 @@ function savedScore(cvDocumentId: string, criteriaHash: string): SavedScore {
           score: 90,
           reasoning: 'Yes.',
           quotes: [{ source: 'cv', text: 'Built Node.js services' }],
+          retrieved: null,
         },
       ],
       cvDocumentId,

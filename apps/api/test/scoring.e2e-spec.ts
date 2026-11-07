@@ -9,12 +9,14 @@ import {
   criterionIdsFromRequest,
   fabricatedScoreResponse,
   openaiCriteriaHandler,
+  messageContent,
   openaiScoreHandler,
   schemaNameOf,
   scoreFromRequest,
   type MockCriterion,
 } from './msw/openai.handlers.js';
 import { server } from './msw/server.js';
+import { waitForEmbedded } from './embed.util.js';
 import { waitForScoreStatus } from './score.util.js';
 
 function uniqueEmail(): string {
@@ -138,6 +140,7 @@ describe('Application scoring (e2e)', () => {
     expect(result.mode).toBe('full_text');
     const cv = normaliseForMatch(await cvTextOf(applicationId));
     for (const criterion of result.criteria) {
+      expect(criterion.retrieved).toBeNull();
       expect(criterion.quotes.length).toBeGreaterThan(0);
       for (const quote of criterion.quotes) {
         expect(['cv', 'github']).toContain(quote.source);
@@ -433,5 +436,134 @@ describe('Application scoring (e2e)', () => {
     expect(score.error).toBe('Could not ground the score in the CV');
     expect(score.result).toBeNull();
     expect(score.stale).toBe(false);
+  });
+});
+
+describe('Application scoring in rag mode (e2e)', () => {
+  let testApp: TestApp;
+  let agent: ReturnType<typeof request.agent>;
+  let cookie: string[];
+  const capture = captureOpenaiRequests('application_score');
+
+  beforeAll(async () => {
+    // Its own app and database: SCORING_MODE=rag for this app only.
+    testApp = await createTestApp({ env: { SCORING_MODE: 'rag' } });
+    server.events.on('request:start', capture.listener);
+    const email = uniqueEmail();
+    const password = 'password123';
+    const http = testApp.app.getHttpServer();
+    await request(http).post('/auth/register').send({ email, password });
+    agent = request.agent(http);
+    const login = await agent
+      .post('/auth/login')
+      .send({ email, password })
+      .expect(201);
+    cookie = login.headers['set-cookie'] as unknown as string[];
+  }, 60_000);
+
+  afterEach(() => {
+    capture.bodies.length = 0;
+  });
+
+  afterAll(async () => {
+    server.events.removeListener('request:start', capture.listener);
+    await closeTestApp(testApp);
+  });
+
+  /** Creates a vacancy, applies to it and returns the application and candidate ids. */
+  async function applyToNewVacancy() {
+    const created = await agent
+      .post('/vacancies')
+      .send({
+        title: 'Backend Engineer',
+        requirements: `TypeScript, REST APIs and Docker ${randomUUID()}`,
+      })
+      .expect(201);
+    const vacancyId = created.body.id as string;
+    const email = uniqueEmail();
+    await applyWithCv(testApp.app, created.body.applyToken, {
+      name: 'Jane Applicant',
+      email,
+    }).expect(201);
+    const list = await agent.get(`/vacancies/${vacancyId}/applications`);
+    const applicationId = (
+      list.body as Array<{ id: string; candidate: { email: string } }>
+    ).find((a) => a.candidate.email === email.toLowerCase())!.id;
+    const { rows } = await testApp.testDb.pool.query<{ id: string }>(
+      'SELECT id FROM candidates WHERE email = $1',
+      [email.toLowerCase()],
+    );
+    return { vacancyId, applicationId, candidateId: rows[0].id };
+  }
+
+  const waitFor = (
+    vacancyId: string,
+    applicationId: string,
+    status: Parameters<typeof waitForScoreStatus>[4],
+  ) =>
+    waitForScoreStatus(testApp.app, cookie, vacancyId, applicationId, status);
+
+  function expectGrounded(score: ApplicationScore) {
+    const result = score.result!;
+    expect(result.mode).toBe('rag');
+    expect(result.criteria.length).toBeGreaterThanOrEqual(3);
+    // A quote may sit in any chunk retrieved for the application.
+    const allRetrieved = result.criteria.flatMap((c) => c.retrieved!);
+    for (const criterion of result.criteria) {
+      const retrieved = criterion.retrieved!;
+      expect(retrieved.length).toBeGreaterThan(0);
+      expect(retrieved.length).toBeLessThanOrEqual(3);
+      expect(criterion.quotes.length).toBeGreaterThan(0);
+      for (const quote of criterion.quotes) {
+        expect(
+          allRetrieved.some(
+            (chunk) =>
+              chunk.source === quote.source &&
+              normaliseForMatch(chunk.text).includes(
+                normaliseForMatch(quote.text),
+              ),
+          ),
+        ).toBe(true);
+      }
+    }
+  }
+
+  it('embeds the new candidate, then scores from retrieved chunks with quotes inside the retrieved set', async () => {
+    const { vacancyId, applicationId, candidateId } = await applyToNewVacancy();
+
+    const score = await waitFor(vacancyId, applicationId, 'scored');
+    const embeddedCv = await waitForEmbedded(testApp.app, candidateId);
+
+    expect(score).toMatchObject({ status: 'scored', stale: false });
+    expect(score.result!.cvDocumentId).toBe(embeddedCv);
+    expectGrounded(score);
+    // The model got the retrieved evidence, never the whole CV. (A score job
+    // queued by both the parse and the embed job may run twice.)
+    expect(capture.bodies.length).toBeGreaterThanOrEqual(1);
+    for (const body of capture.bodies) {
+      const user = messageContent(body, 'user');
+      expect(user).toContain('<evidence>');
+      expect(user).not.toContain('<cv>');
+    }
+  });
+
+  it('stays in rag mode on rescore', async () => {
+    const { vacancyId, applicationId } = await applyToNewVacancy();
+    const first = await waitFor(vacancyId, applicationId, 'scored');
+
+    await agent.post(`/applications/${applicationId}/rescore`).expect(202);
+    const again = await waitFor(vacancyId, applicationId, 'scored');
+
+    expect(again.stale).toBe(false);
+    expect(Date.parse(again.result!.scoredAt)).toBeGreaterThanOrEqual(
+      Date.parse(first.result!.scoredAt),
+    );
+    expectGrounded(again);
+    expect(capture.bodies.length).toBeGreaterThanOrEqual(2);
+    expect(
+      capture.bodies.every((body) =>
+        messageContent(body, 'user').includes('<evidence>'),
+      ),
+    ).toBe(true);
   });
 });

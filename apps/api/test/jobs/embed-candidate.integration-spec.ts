@@ -1,13 +1,18 @@
 import { randomUUID } from 'crypto';
-import { Global, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapter-drizzle-orm';
 import { Test, type TestingModule } from '@nestjs/testing';
+import { jest } from '@jest/globals';
 import { setupServer } from 'msw/node';
 import { ClsModule } from 'nestjs-cls';
 import { EnvConfig } from '../../src/config/env.config.js';
 import { DRIZZLE } from '../../src/db/db.tokens.js';
 import { RepositoriesModule } from '../../src/db/repositories.module.js';
+import {
+  APPLICATIONS_REPOSITORY,
+  type ApplicationsRepository,
+} from '../../src/db/repositories/applications.repository.js';
 import {
   CANDIDATE_CHUNKS_REPOSITORY,
   type CandidateChunksRepository,
@@ -20,6 +25,18 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../../src/db/repositories/cv-documents.repository.js';
+import {
+  RECRUITERS_REPOSITORY,
+  type RecruitersRepository,
+} from '../../src/db/repositories/recruiters.repository.js';
+import {
+  SCORES_REPOSITORY,
+  type ScoresRepository,
+} from '../../src/db/repositories/scores.repository.js';
+import {
+  VACANCIES_REPOSITORY,
+  type VacanciesRepository,
+} from '../../src/db/repositories/vacancies.repository.js';
 import type { GithubSnapshot } from '../../src/github/github-snapshot.js';
 import { EmbedCandidateWorker } from '../../src/jobs/embed-candidate.worker.js';
 import { JobsModule } from '../../src/jobs/jobs.module.js';
@@ -105,6 +122,10 @@ describe('Embed candidate jobs (Testcontainers + MSW + real pg-boss)', () => {
   let candidates: CandidatesRepository;
   let cvDocuments: CvDocumentsRepository;
   let chunks: CandidateChunksRepository;
+  let scores: ScoresRepository;
+  let applications: ApplicationsRepository;
+  let vacancies: VacanciesRepository;
+  let recruiters: RecruitersRepository;
   let worker: EmbedCandidateWorker;
 
   async function boot() {
@@ -154,7 +175,31 @@ describe('Embed candidate jobs (Testcontainers + MSW + real pg-boss)', () => {
     candidates = moduleRef.get(CANDIDATES_REPOSITORY);
     cvDocuments = moduleRef.get(CV_DOCUMENTS_REPOSITORY);
     chunks = moduleRef.get(CANDIDATE_CHUNKS_REPOSITORY);
+    scores = moduleRef.get(SCORES_REPOSITORY);
+    applications = moduleRef.get(APPLICATIONS_REPOSITORY);
+    vacancies = moduleRef.get(VACANCIES_REPOSITORY);
+    recruiters = moduleRef.get(RECRUITERS_REPOSITORY);
     worker = moduleRef.get(EmbedCandidateWorker);
+  }
+
+  /** An application of the candidate with a `pending` score; returns its id. */
+  async function seedPendingScore(candidateId: string) {
+    const recruiter = await recruiters.create({
+      email: `${randomUUID()}@example.com`,
+      passwordHash: 'hashed-password',
+    });
+    const vacancy = await vacancies.create({
+      recruiterId: recruiter.id,
+      title: 'Backend Engineer',
+      requirements: 'Node.js',
+      applyToken: randomUUID(),
+    });
+    const application = await applications.create({
+      vacancyId: vacancy.id,
+      candidateId,
+    });
+    await scores.createPending(application.id);
+    return application.id;
   }
 
   async function shutdown() {
@@ -220,6 +265,7 @@ describe('Embed candidate jobs (Testcontainers + MSW + real pg-boss)', () => {
   }, 120_000);
 
   afterEach(() => {
+    jest.restoreAllMocks();
     server.resetHandlers();
     capture.bodies.length = 0;
   });
@@ -434,13 +480,96 @@ describe('Embed candidate jobs (Testcontainers + MSW + real pg-boss)', () => {
     });
   });
 
+  describe('score trigger', () => {
+    beforeAll(async () => {
+      await boot();
+    }, 60_000);
+    afterAll(shutdown);
+
+    // The queue is stubbed: what matters here is which scores get enqueued.
+    const stubEnqueue = () =>
+      jest
+        .spyOn(moduleRef!.get(JobsService), 'enqueueScores')
+        .mockResolvedValue();
+
+    it('enqueues the pending scores of the candidate once the chunks are saved', async () => {
+      const { candidateId, cvId } = await seed();
+      const pending = await seedPendingScore(candidateId);
+      const done = await seedPendingScore(candidateId);
+      await scores.markFailed(done, 'x');
+      const other = await seed();
+      await seedPendingScore(other.candidateId);
+      const enqueue = stubEnqueue();
+
+      await worker.handle({ candidateId, cvDocumentId: cvId });
+
+      expect(await embeddedId(candidateId)).toBe(cvId);
+      expect(enqueue).toHaveBeenCalledTimes(1);
+      expect(enqueue).toHaveBeenCalledWith([pending]);
+    });
+
+    it('works for a candidate without applications', async () => {
+      const { candidateId, cvId } = await seed();
+      const enqueue = stubEnqueue();
+
+      await worker.handle({ candidateId, cvDocumentId: cvId });
+
+      expect(await embeddedId(candidateId)).toBe(cvId);
+      expect(enqueue).toHaveBeenCalledWith([]);
+    });
+
+    it('does not enqueue anything when the job is skipped or dropped', async () => {
+      const { candidateId, cvId } = await seed();
+      await seedPendingScore(candidateId);
+      await worker.handle({ candidateId, cvDocumentId: cvId });
+      const enqueue = stubEnqueue();
+
+      await worker.handle({ candidateId, cvDocumentId: cvId }); // duplicate
+      const stale = await seed();
+      await seedPendingScore(stale.candidateId);
+      const newCvId = await addCv(stale.candidateId, 'newer cv', 5);
+      await candidates.saveParsedProfile(
+        stale.candidateId,
+        newCvId,
+        PROFILE,
+        null,
+      );
+      await worker.handle({
+        candidateId: stale.candidateId,
+        cvDocumentId: stale.cvId,
+      });
+
+      expect(enqueue).not.toHaveBeenCalled();
+    });
+
+    it('only logs a failure to enqueue: the embedding stays saved and the job succeeds', async () => {
+      const { candidateId, cvId } = await seed();
+      await seedPendingScore(candidateId);
+      jest
+        .spyOn(moduleRef!.get(JobsService), 'enqueueScores')
+        .mockRejectedValue(new Error('queue down'));
+      jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+
+      await expect(
+        worker.handle({ candidateId, cvDocumentId: cvId }),
+      ).resolves.toBeUndefined();
+
+      expect(await embeddedId(candidateId)).toBe(cvId);
+      expect((await chunkRows(candidateId)).length).toBeGreaterThan(0);
+    });
+  });
+
   describe('startup sweep', () => {
     afterEach(shutdown);
 
     it('embeds parsed candidates whose chunks are missing', async () => {
       // No JobsModule is running here: seed first, then boot. Unparsed
       // leftovers of earlier tests would be re-parsed (an unmocked OpenAI
-      // call), so settle them first.
+      // call), so settle them first, and the scores seeded above (scoring
+      // them would call OpenAI for criteria too).
+      await testDb.pool.query(
+        "UPDATE application_scores SET status = 'failed' WHERE status IN ('pending', 'scoring')",
+      );
       await testDb.pool.query(
         "UPDATE candidates SET parse_status = 'failed' WHERE parse_status IN ('pending', 'parsing')",
       );
