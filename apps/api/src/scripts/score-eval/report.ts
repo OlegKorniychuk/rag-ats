@@ -1,5 +1,6 @@
 import { PRICING_CAVEAT } from '../parse-eval/cost.js';
 import { spread } from './checks.js';
+import { coverageStats, previewChunk, type CoverageStats } from './rag.js';
 import type { EvalResult, ExtractionResult, PairResult } from './result.js';
 
 const usd = (value: number): string => `$${value.toFixed(4)}`;
@@ -31,6 +32,37 @@ export interface Totals {
   scoringInput: number;
   scoringOutput: number;
   scoringCost: number;
+  /** `rag` mode: tokens and cost of the CV chunk and criteria embeddings (0 otherwise). */
+  embeddingTokens: number;
+  embeddingCost: number;
+  /** Chat (extraction + scoring) plus embeddings. */
+  totalCost: number;
+  /** Evidence coverage over the scored pairs that have one; null in full text. */
+  evidenceCoverage: CoverageStats | null;
+}
+
+const sumOf = (values: number[]): number => values.reduce((a, b) => a + b, 0);
+
+/** Embedding tokens and cost for the CV chunks (once) and, per run, the criteria. */
+function embeddingTotals(
+  result: EvalResult,
+  run?: number,
+): { tokens: number; cost: number } {
+  const cvs = run === undefined ? result.cvs : [];
+  const extractions =
+    run === undefined
+      ? result.extractions
+      : result.extractions.filter((e) => e.run === run);
+  return {
+    tokens: sumOf([
+      ...cvs.map((c) => c.embeddingTokens ?? 0),
+      ...extractions.map((e) => e.embeddingTokens ?? 0),
+    ]),
+    cost: sumOf([
+      ...cvs.map((c) => c.embeddingCostUsd ?? 0),
+      ...extractions.map((e) => e.embeddingCostUsd ?? 0),
+    ]),
+  };
 }
 
 export function computeTotals(result: EvalResult): Totals {
@@ -47,7 +79,8 @@ export function computeTotals(result: EvalResult): Totals {
     .map(spread)
     .filter((s): s is number => s !== null);
 
-  const sum = (values: number[]): number => values.reduce((a, b) => a + b, 0);
+  const sum = sumOf;
+  const embedding = embeddingTotals(result);
   const expected = pairs.filter((p) => p.bandResult !== 'none');
 
   return {
@@ -67,7 +100,76 @@ export function computeTotals(result: EvalResult): Totals {
     scoringInput: sum(pairs.map((p) => p.usage?.inputTokens ?? 0)),
     scoringOutput: sum(pairs.map((p) => p.usage?.outputTokens ?? 0)),
     scoringCost: sum(pairs.map((p) => p.costUsd)),
+    embeddingTokens: embedding.tokens,
+    embeddingCost: embedding.cost,
+    totalCost:
+      sum(extractions.map((e) => e.costUsd)) +
+      sum(pairs.map((p) => p.costUsd)) +
+      embedding.cost,
+    evidenceCoverage: coverageStats(scored.map((p) => p.evidenceCoverage)),
   };
+}
+
+const DASH = '—';
+
+const pctOf = (ratio: number): string => `${(ratio * 100).toFixed(0)}%`;
+
+const coverageCell = (stats: CoverageStats | null): string =>
+  stats === null
+    ? DASH
+    : `${pctOf(stats.mean)} / ${pctOf(stats.min)} / ${pctOf(stats.max)}`;
+
+/**
+ * One row per run (plus the once-per-invocation CV chunk embedding in `rag`
+ * mode and a total). Embedding and coverage columns read "—" in full text.
+ */
+function resultsTable(result: EvalResult): string[] {
+  const rag = result.mode === 'rag';
+  const modeLabel = rag ? 'RAG' : 'Full text';
+  const runs = [
+    ...new Set([
+      ...result.pairs.map((p) => p.run),
+      ...result.extractions.map((e) => e.run),
+    ]),
+  ].sort((a, b) => a - b);
+  const t = computeTotals(result);
+
+  const rows = runs.map((run) => {
+    const pairs = result.pairs.filter((p) => p.run === run);
+    const scored = pairs.filter((p) => p.status === 'scored');
+    const embedding = embeddingTotals(result, run);
+    const cost =
+      sumOf(
+        result.extractions.filter((e) => e.run === run).map((e) => e.costUsd),
+      ) +
+      sumOf(pairs.map((p) => p.costUsd)) +
+      embedding.cost;
+    return `| ${run} | ${modeLabel} | ${pairs.length} | ${scored.length} | ${
+      rag ? embedding.tokens : DASH
+    } | ${rag ? coverageCell(coverageStats(scored.map((p) => p.evidenceCoverage))) : DASH} | ${usd(cost)} |`;
+  });
+  if (rag) {
+    const setup = result.cvs.reduce(
+      (n, c) => ({
+        tokens: n.tokens + (c.embeddingTokens ?? 0),
+        cost: n.cost + (c.embeddingCostUsd ?? 0),
+      }),
+      { tokens: 0, cost: 0 },
+    );
+    rows.unshift(
+      `| CV chunks (once) | ${modeLabel} | ${DASH} | ${DASH} | ${setup.tokens} | ${DASH} | ${usd(setup.cost)} |`,
+    );
+  }
+  rows.push(
+    `| Total | ${modeLabel} | ${t.pairs} | ${t.scored} | ${
+      rag ? t.embeddingTokens : DASH
+    } | ${rag ? coverageCell(t.evidenceCoverage) : DASH} | ${usd(t.totalCost)} |`,
+  );
+  return [
+    '| Run | Mode | Pairs | Scored | Embedding tokens | Evidence coverage (mean / min / max) | Cost |',
+    '| --- | --- | --- | --- | --- | --- | --- |',
+    ...rows,
+  ];
 }
 
 function matrixCell(pairs: PairResult[]): string {
@@ -127,6 +229,14 @@ function extractionBlock(extraction: ExtractionResult): string[] {
     ),
     '',
   );
+  if (extraction.embeddingError) {
+    lines.push(`Criteria embedding failed: ${extraction.embeddingError}`, '');
+  } else if (extraction.embeddingTokens !== undefined) {
+    lines.push(
+      `Criteria embedding: ${extraction.embeddingTokens} tokens, ${usd(extraction.embeddingCostUsd ?? 0)}.`,
+      '',
+    );
+  }
   if (extraction.coverage) {
     const { covered, missing } = extraction.coverage;
     const total = covered.length + missing.length;
@@ -160,17 +270,38 @@ function pairDetails(pair: PairResult, expectedLabel: string): string[] {
     '',
     `Tokens: ${pair.usage?.inputTokens ?? 0} in / ${pair.usage?.outputTokens ?? 0} out, ${usd(pair.costUsd)}. Grounded: ${pair.grounded?.ok ? 'yes' : 'NO'}.`,
     '',
-    '| Criterion | Importance | Score | Reasoning | Quotes |',
-    '| --- | --- | --- | --- | --- |',
+  ];
+  const cov = pair.evidenceCoverage;
+  if (cov) {
+    lines.push(
+      `Evidence coverage: ${cov.shown}/${cov.total} chunks shown to the model${cov.ratio === null ? '' : ` (${pctOf(cov.ratio)})`}.`,
+      '',
+    );
+  }
+  const withRetrieved = pair.criteria.some((c) => c.retrieved !== undefined);
+  lines.push(
+    withRetrieved
+      ? '| Criterion | Importance | Score | Reasoning | Quotes | Retrieved |'
+      : '| Criterion | Importance | Score | Reasoning | Quotes |',
+    withRetrieved
+      ? '| --- | --- | --- | --- | --- | --- |'
+      : '| --- | --- | --- | --- | --- |',
     ...pair.criteria.map((c) => {
       const quotes =
         c.quotes.length === 0
           ? '_none_'
           : c.quotes.map((q) => `[${q.source}] "${cell(q.text)}"`).join('<br>');
-      return `| ${c.id}: ${cell(c.text)} | ${c.importance} | ${c.score} | ${cell(c.reasoning)} | ${quotes} |`;
+      const retrieved = withRetrieved
+        ? ` ${
+            c.retrieved === undefined || c.retrieved.length === 0
+              ? '_none_'
+              : c.retrieved.map((r) => cell(previewChunk(r))).join('<br>')
+          } |`
+        : '';
+      return `| ${c.id}: ${cell(c.text)} | ${c.importance} | ${c.score} | ${cell(c.reasoning)} | ${quotes} |${retrieved}`;
     }),
     '',
-  ];
+  );
   if (pair.grounded && !pair.grounded.ok) {
     lines.push(
       '**Grounding problems**',
@@ -208,6 +339,11 @@ export function renderMarkdown(result: EvalResult): string {
     `- Model: ${result.model}`,
     `- Runs: ${result.runs}`,
     `- Pricing: $${pricing.inputPerMillion} / $${pricing.outputPerMillion} per 1M input / output tokens`,
+    ...(result.mode === 'rag'
+      ? [
+          `- Mode: RAG, ${result.k ?? '?'} chunk(s) per criterion, embeddings ${result.embeddingModel ?? 'unknown'} at $${result.embeddingPrice ?? '?'} per 1M tokens`,
+        ]
+      : []),
     `- Caveat: ${PRICING_CAVEAT}`,
     '',
     '## Totals',
@@ -220,7 +356,21 @@ export function renderMarkdown(result: EvalResult): string {
     `- Spread across runs: mean ${fixed(t.meanSpread)}, max ${fixed(t.maxSpread)} (${t.spreadPairs} pairs with 2+ scored runs)`,
     `- Extraction: ${t.extractionInput} in / ${t.extractionOutput} out tokens, ${usd(t.extractionCost)}`,
     `- Scoring: ${t.scoringInput} in / ${t.scoringOutput} out tokens, ${usd(t.scoringCost)}`,
-    `- Total cost: ${usd(t.extractionCost + t.scoringCost)}`,
+    ...(result.mode === 'rag'
+      ? [
+          `- Embeddings: ${t.embeddingTokens} tokens, ${usd(t.embeddingCost)}`,
+          `- Evidence coverage (distinct chunks shown / candidate chunks): ${
+            t.evidenceCoverage === null
+              ? 'n/a'
+              : `mean ${pctOf(t.evidenceCoverage.mean)}, min ${pctOf(t.evidenceCoverage.min)}, max ${pctOf(t.evidenceCoverage.max)} over ${t.evidenceCoverage.pairs} pairs`
+          }`,
+        ]
+      : []),
+    `- Total cost: ${usd(t.totalCost)}`,
+    '',
+    '## Results',
+    '',
+    ...resultsTable(result),
     '',
     '## Pair matrix',
     '',

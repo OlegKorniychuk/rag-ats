@@ -1,3 +1,4 @@
+import { previewChunk } from './rag.js';
 import type { PairResult } from './result.js';
 
 export const REVIEW_LABELS = ['supports', 'weak', 'irrelevant'] as const;
@@ -14,6 +15,19 @@ export const REVIEW_COLUMNS = [
   'note',
 ] as const;
 
+/** `rag` mode reviews add the retrieved chunks, so a reviewer can see what the model saw. */
+export const REVIEW_COLUMNS_RAG = [
+  'row',
+  'pair',
+  'criterion',
+  'score',
+  'source',
+  'quote',
+  'retrieved',
+  'label',
+  'note',
+] as const;
+
 export interface ReviewRow {
   /** Stable id: `vacancyId/cvId/criterionId/qN`. */
   row: string;
@@ -23,6 +37,8 @@ export interface ReviewRow {
   score: number;
   source: string;
   quote: string;
+  /** `rag` mode only: previews of the chunks retrieved for the criterion. */
+  retrieved?: string;
   /** Empty until a reviewer fills it in. */
   label: string;
   note: string;
@@ -49,6 +65,12 @@ export function buildReviewRows(pairs: PairResult[]): ReviewRow[] {
           score: criterion.score,
           source: quote.source,
           quote: quote.text,
+          ...(criterion.retrieved !== undefined && {
+            retrieved:
+              criterion.retrieved.length === 0
+                ? 'none'
+                : criterion.retrieved.map(previewChunk).join('; '),
+          }),
           label: '',
           note: '',
         });
@@ -96,13 +118,15 @@ function tableLine(cells: string[]): string {
 }
 
 export function renderReviewStub(label: string, rows: ReviewRow[]): string {
+  const rag = rows.some((r) => r.retrieved !== undefined);
+  const columns: readonly string[] = rag ? REVIEW_COLUMNS_RAG : REVIEW_COLUMNS;
   return [
     `# Citation review: ${label}`,
     '',
     'Fill the `label` column of every row with one of: `supports` (the quote is evidence for that criterion at that score), `weak` (related but not enough on its own), `irrelevant` (filler, or about something else). Use `note` for anything worth discussing. Escape a literal pipe in a cell as `\\|`.',
     '',
-    `| ${REVIEW_COLUMNS.join(' | ')} |`,
-    `| ${REVIEW_COLUMNS.map(() => '---').join(' | ')} |`,
+    `| ${columns.join(' | ')} |`,
+    `| ${columns.map(() => '---').join(' | ')} |`,
     ...rows.map((r) =>
       tableLine([
         r.row,
@@ -111,6 +135,7 @@ export function renderReviewStub(label: string, rows: ReviewRow[]): string {
         String(r.score),
         r.source,
         r.quote,
+        ...(rag ? [r.retrieved ?? ''] : []),
         r.label,
         r.note,
       ]),
@@ -126,6 +151,7 @@ export function renderReviewStub(label: string, rows: ReviewRow[]): string {
 export function parseReview(markdown: string): ReviewRow[] {
   const rows: ReviewRow[] = [];
   let inTable = false;
+  let columns: readonly string[] = REVIEW_COLUMNS;
   for (const line of markdown.split(/\r?\n/)) {
     const trimmed = line.trim();
     if (!trimmed.startsWith('|')) {
@@ -135,30 +161,36 @@ export function parseReview(markdown: string): ReviewRow[] {
     const cells = splitCells(trimmed);
     if (!inTable) {
       if (cells[0]?.toLowerCase() !== 'row') continue;
-      if (cells.join('|').toLowerCase() !== REVIEW_COLUMNS.join('|')) {
+      const header = cells.join('|').toLowerCase();
+      const known = [REVIEW_COLUMNS, REVIEW_COLUMNS_RAG].find(
+        (c) => c.join('|') === header,
+      );
+      if (!known) {
         throw new ReviewError(
-          `Unexpected review table header, expected columns: ${REVIEW_COLUMNS.join(', ')}`,
+          `Unexpected review table header, expected columns: ${REVIEW_COLUMNS.join(', ')} (or, from a rag run, ${REVIEW_COLUMNS_RAG.join(', ')})`,
         );
       }
+      columns = known;
       inTable = true;
       continue;
     }
     if (cells.every((c) => /^:?-+:?$/.test(c))) continue; // separator
-    if (cells.length !== REVIEW_COLUMNS.length) {
+    if (cells.length !== columns.length) {
       throw new ReviewError(
-        `Malformed review row (expected ${REVIEW_COLUMNS.length} cells, got ${cells.length}): ${cells[0] ?? trimmed.slice(0, 60)}`,
+        `Malformed review row (expected ${columns.length} cells, got ${cells.length}): ${cells[0] ?? trimmed.slice(0, 60)}`,
       );
     }
-    const [row, pair, criterion, score, source, quote, label, note] = cells;
+    const at = (name: string): string => cells[columns.indexOf(name)] ?? '';
     rows.push({
-      row,
-      pair,
-      criterion,
-      score: Number(score),
-      source,
-      quote,
-      label: label.toLowerCase(),
-      note,
+      row: at('row'),
+      pair: at('pair'),
+      criterion: at('criterion'),
+      score: Number(at('score')),
+      source: at('source'),
+      quote: at('quote'),
+      ...(columns.includes('retrieved') && { retrieved: at('retrieved') }),
+      label: at('label').toLowerCase(),
+      note: at('note'),
     });
   }
   if (rows.length === 0) throw new ReviewError('No review rows found');
@@ -315,11 +347,12 @@ export function renderSample(
   n: number,
   seed: number,
 ): string {
+  const rag = rows.some((r) => r.retrieved !== undefined);
   return [
     `## Spot-check sample (${rows.length} of ${n} requested, seed ${seed})`,
     '',
-    '| row | criterion | score | source | quote | label | agree? |',
-    '| --- | --- | --- | --- | --- | --- | --- |',
+    `| row | criterion | score | source | quote | ${rag ? 'retrieved | ' : ''}label | agree? |`,
+    `| --- | --- | --- | --- | --- | ${rag ? '--- | ' : ''}--- | --- |`,
     ...rows.map((r) =>
       tableLine([
         r.row,
@@ -327,6 +360,7 @@ export function renderSample(
         String(r.score),
         r.source,
         r.quote,
+        ...(rag ? [r.retrieved ?? ''] : []),
         r.label,
         '',
       ]),

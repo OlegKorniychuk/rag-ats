@@ -44,7 +44,8 @@ export interface GroundedCheck {
 
 /**
  * Grounded: every criterion scored above 0 has at least one quote, and every
- * quote re-verifies (`verifyQuotes`) against the sources the scorer saw.
+ * quote re-verifies (`verifyQuotes`) against the sources the scorer saw (in
+ * RAG mode, `ragGroundingSources` of every chunk retrieved for the pair).
  */
 export function checkGrounded(
   criteria: CheckCriterion[],

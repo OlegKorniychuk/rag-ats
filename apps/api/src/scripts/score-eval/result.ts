@@ -1,8 +1,10 @@
+import type { ScoringMode } from '@rag-ats/shared';
 import type { LlmUsage } from '../../llm/llm-client.js';
 import type { VacancyCriterion } from '../../llm/criteria-extractor.js';
 import type { GithubEvalStatus } from '../parse-eval/result.js';
 import type { Pricing } from '../parse-eval/cost.js';
 import type { Band } from './vacancies.js';
+import type { EvidenceCoverage, RetrievedRecord } from './rag.js';
 import type {
   BandResult,
   CoverageResult,
@@ -22,6 +24,8 @@ export interface CriterionRecord {
   score: number;
   reasoning: string;
   quotes: QuoteRecord[];
+  /** `rag` mode only: the chunks this criterion was scored from, best first. */
+  retrieved?: RetrievedRecord[];
 }
 
 export interface PairResult {
@@ -44,6 +48,8 @@ export interface PairResult {
   /** Null for failed pairs: there is nothing to verify. */
   grounded: GroundedCheck | null;
   fillerSuspects: FillerSuspect[];
+  /** `rag` mode only: how much of the candidate's chunks the model was shown. */
+  evidenceCoverage?: EvidenceCoverage;
 }
 
 /** One criteria extraction (per vacancy per run). */
@@ -56,6 +62,10 @@ export interface ExtractionResult {
   costUsd: number;
   /** Null when the vacancy has no `mustCoverTerms`. */
   coverage: CoverageResult | null;
+  /** `rag` mode only: embedding the criteria texts (once per vacancy per run). */
+  embeddingTokens?: number;
+  embeddingCostUsd?: number;
+  embeddingError?: string | null;
 }
 
 export interface CvInfo {
@@ -66,6 +76,10 @@ export interface CvInfo {
   /** Null when extraction failed. */
   textLength: number | null;
   error: string | null;
+  /** `rag` mode only: the CV's chunks, embedded once per invocation. */
+  chunkCount?: number;
+  embeddingTokens?: number;
+  embeddingCostUsd?: number;
 }
 
 export interface VacancyInfo {
@@ -80,6 +94,13 @@ export interface EvalResult {
   date: string;
   runs: number;
   pricing: Pricing;
+  /** Absent in results from before step 9, which are `full_text`. */
+  mode?: ScoringMode;
+  /** `rag` mode only. */
+  k?: number;
+  embeddingModel?: string;
+  /** USD per 1M embedding tokens (`rag` mode only). */
+  embeddingPrice?: number;
   cvs: CvInfo[];
   vacancies: VacancyInfo[];
   extractions: ExtractionResult[];

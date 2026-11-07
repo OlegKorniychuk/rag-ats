@@ -7,10 +7,14 @@
  *   npm run score-eval -w apps/api -- --label baseline --runs 2 --write-review
  *   npm run score-eval -w apps/api -- --label t --only backend-java:*,data-ml:03-data-ml
  *   npm run score-eval -w apps/api -- --dry-run
+ *   npm run score-eval -w apps/api -- --label rag-1 --mode rag --k 3 --write-review
  *   npm run score-eval -w apps/api -- --summarise-review docs/eval/checkpoint-b/baseline.review.md --sample 20 --seed 7
  *
  * Real OpenAI calls are made unless --dry-run (or a review-only command) is
- * given. The API key is never printed. Relative paths resolve from the repo
+ * given. `--mode rag` scores each criterion from its k nearest CV/GitHub
+ * chunks (chunked and embedded in memory, no DB) instead of the whole CV; its
+ * embedding tokens are costed at --embedding-price (USD per 1M). The API key is
+ * never printed. Relative paths resolve from the repo
  * root.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -27,6 +31,8 @@ import {
 } from '../llm/criteria-extractor.js';
 import { ApplicationScorer } from '../llm/application-scorer.js';
 import { LlmClient } from '../llm/llm-client.js';
+import { ragGroundingSources } from '../llm/prompts/application-score-rag.prompt.js';
+import { chunkCandidate, type TextChunk } from '../rag/chunking.js';
 import {
   costUsd,
   DEFAULT_PRICING,
@@ -45,6 +51,20 @@ import {
 import { countRequirements } from './score-eval/dry-run.js';
 import { UsageMeter } from './score-eval/meter.js';
 import { OnlyError, parseOnly } from './score-eval/only.js';
+import {
+  buildEvalChunks,
+  DEFAULT_EMBEDDING_PRICE,
+  DEFAULT_RAG_K,
+  embeddingCostUsd,
+  estimateEmbedding,
+  evidenceCoverage,
+  ModeError,
+  parseMode,
+  retrieveForCriteria,
+  toEvidence,
+  type CriterionRetrieval,
+  type EvalChunk,
+} from './score-eval/rag.js';
 import { computeTotals, renderMarkdown } from './score-eval/report.js';
 import type {
   CvInfo,
@@ -65,6 +85,19 @@ import {
 import { loadVacancySet, type EvalVacancy } from './score-eval/vacancies.js';
 import { fromRoot, loadEnv, parseNumber, UsageError } from './shared/cli.js';
 import { fetchGithub } from './shared/github.js';
+
+interface CvData {
+  text: string;
+  github: GithubSnapshot | null;
+  /** `rag` mode: the CV's embedded chunks; null in full text. */
+  chunks: EvalChunk[] | null;
+}
+
+interface EmbeddedCv {
+  chunks: EvalChunk[];
+  tokens: number;
+  costUsd: number;
+}
 
 const errorText = (err: unknown): string =>
   err instanceof Error ? `${err.name}: ${err.message}` : String(err);
@@ -109,6 +142,9 @@ async function main(): Promise<void> {
       only: { type: 'string' },
       'input-price': { type: 'string' },
       'output-price': { type: 'string' },
+      mode: { type: 'string' },
+      k: { type: 'string' },
+      'embedding-price': { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
       'write-review': { type: 'boolean', default: false },
       'summarise-review': { type: 'string' },
@@ -138,6 +174,20 @@ async function main(): Promise<void> {
     }
     return reviewCommand(values['review-file'], false, sample, seed);
   }
+
+  let mode;
+  try {
+    mode = parseMode(values.mode);
+  } catch (err) {
+    if (err instanceof ModeError) throw new UsageError(err.message);
+    throw err;
+  }
+  const k = parseNumber('k', values.k, DEFAULT_RAG_K, true);
+  const embeddingPrice = parseNumber(
+    'embedding-price',
+    values['embedding-price'],
+    DEFAULT_EMBEDDING_PRICE,
+  );
 
   const label = values.label;
   if (!dryRun) {
@@ -206,10 +256,17 @@ async function main(): Promise<void> {
   // Only built for live runs, so a dry run can never reach OpenAI.
   let criteriaExtractor: CriteriaExtractor | null = null;
   let scorer: ApplicationScorer | null = null;
+  let llm: LlmClient | null = null;
   const meter = new UsageMeter();
   if (!dryRun) {
-    const llm = new LlmClient(env);
+    llm = new LlmClient(env);
     const original = llm.parseStructured.bind(llm);
+    const originalEmbed = llm.embed.bind(llm);
+    llm.embed = async (texts) => {
+      const result = await originalEmbed(texts);
+      meter.recordEmbedding(result.usage);
+      return result;
+    };
     llm.parseStructured = (async (params: Parameters<typeof original>[0]) => {
       meter.recordCall();
       const result = await original(params);
@@ -220,18 +277,20 @@ async function main(): Promise<void> {
     scorer = new ApplicationScorer(llm);
   }
 
+  const ragNote =
+    mode === 'rag'
+      ? `, mode rag (k ${k}, embeddings ${env.OPENAI_EMBEDDING_MODEL})`
+      : '';
   console.log(
     dryRun
-      ? `Dry run: ${cvs.length} CV(s), ${vacancies.length} vacancy(ies), no LLM calls`
-      : `Eval "${label}": ${pairCount} pair(s) x ${runs} run(s), model ${env.OPENAI_MODEL}`,
+      ? `Dry run: ${cvs.length} CV(s), ${vacancies.length} vacancy(ies)${ragNote}, no LLM calls`
+      : `Eval "${label}": ${pairCount} pair(s) x ${runs} run(s), model ${env.OPENAI_MODEL}${ragNote}`,
   );
 
   // CV text once per CV, GitHub snapshot once per CV, per invocation.
   const cvInfos: CvInfo[] = [];
-  const cvData = new Map<
-    string,
-    { text: string; github: GithubSnapshot | null }
-  >();
+  const cvData = new Map<string, CvData>();
+  const dryChunkTexts: string[][] = [];
   for (const cv of cvs) {
     const info: CvInfo = {
       id: cv.id,
@@ -249,10 +308,31 @@ async function main(): Promise<void> {
       info.textLength = text.length;
       const github = await fetchGithub(fetcher, cv.githubUrl);
       info.githubStatus = github.status;
-      cvData.set(cv.id, { text, github: github.snapshot });
+      let embedded: EmbeddedCv | null = null;
+      let chunkNote = '';
+      if (mode === 'rag') {
+        const textChunks = chunkCandidate(text, github.snapshot);
+        info.chunkCount = textChunks.length;
+        if (dryRun || !llm) {
+          dryChunkTexts.push(textChunks.map((c) => c.text));
+          chunkNote = `, ${textChunks.length} chunk(s)`;
+        } else {
+          embedded = await embedChunks(llm, meter, textChunks, embeddingPrice);
+          info.embeddingTokens = embedded.tokens;
+          info.embeddingCostUsd = embedded.costUsd;
+          console.log(
+            `${cv.id}: ${textChunks.length} chunk(s), ${embedded.tokens} embedding tokens`,
+          );
+        }
+      }
+      cvData.set(cv.id, {
+        text,
+        github: github.snapshot,
+        chunks: embedded?.chunks ?? null,
+      });
       if (dryRun) {
         console.log(
-          `${cv.id}: text ${text.length} chars, GitHub ${github.status}`,
+          `${cv.id}: text ${text.length} chars, GitHub ${github.status}${chunkNote}`,
         );
       }
     } catch (err) {
@@ -266,6 +346,17 @@ async function main(): Promise<void> {
       const selected = cvs.filter((cv) => selector.has(v.id, cv.id)).length;
       console.log(
         `${v.id}: ${countRequirements(v.requirements)} requirement bullet(s), ${selected} CV(s) selected, ${Object.keys(v.expect).length} expectation(s), ${v.mustCoverTerms?.length ?? 0} must-cover term(s)`,
+      );
+    }
+    if (mode === 'rag') {
+      const estimate = estimateEmbedding({
+        chunkTexts: dryChunkTexts,
+        requirementTexts: vacancies.map((v) => v.requirements),
+        runs,
+        pricePerMillion: embeddingPrice,
+      });
+      console.log(
+        `Embedding estimate (~4 chars/token): ${estimate.chunkTokens} tokens for the CV chunks + ${estimate.criteriaTokens} for the criteria over ${runs} run(s) = ${estimate.totalTokens} tokens, ~$${estimate.costUsd.toFixed(4)} at $${embeddingPrice} per 1M. Chat cost is not estimated.`,
       );
     }
     return;
@@ -284,6 +375,10 @@ async function main(): Promise<void> {
         pricing,
       );
       extractions.push(extraction);
+      const criteriaVectors =
+        mode === 'rag' && llm && extraction.error === null
+          ? await embedCriteria(llm, meter, extraction, embeddingPrice)
+          : null;
 
       for (const cv of cvs) {
         if (!selector.has(vacancy.id, cv.id)) continue;
@@ -296,6 +391,14 @@ async function main(): Promise<void> {
           run,
           pricing,
           criteria: extraction.error === null ? extraction.criteria : null,
+          rag:
+            mode === 'rag'
+              ? {
+                  k,
+                  vectors: criteriaVectors,
+                  error: extraction.embeddingError ?? null,
+                }
+              : null,
           data: data ?? null,
           cvError: cvInfos.find((i) => i.id === cv.id)?.error ?? null,
           extractionError: extraction.error,
@@ -304,12 +407,15 @@ async function main(): Promise<void> {
         const tokens = pair.usage
           ? `${pair.usage.inputTokens} in / ${pair.usage.outputTokens} out`
           : 'no usage';
+        const coverage = pair.evidenceCoverage
+          ? `, evidence ${pair.evidenceCoverage.shown}/${pair.evidenceCoverage.total} chunks`
+          : '';
         console.log(
           `${vacancy.id} x ${cv.id} run ${run}: ${
             pair.status === 'failed'
               ? `FAILED (${pair.error})`
               : `overall ${pair.overall} (${pair.band}), band ${pair.bandResult}, grounded ${pair.grounded?.ok ? 'yes' : 'NO'}`
-          }, ${pair.attempts} attempt(s), ${tokens}, $${pair.costUsd.toFixed(4)}`,
+          }, ${pair.attempts} attempt(s), ${tokens}${coverage}, $${pair.costUsd.toFixed(4)}`,
         );
       }
     }
@@ -321,6 +427,12 @@ async function main(): Promise<void> {
     date: new Date().toISOString(),
     runs,
     pricing,
+    mode,
+    ...(mode === 'rag' && {
+      k,
+      embeddingModel: env.OPENAI_EMBEDDING_MODEL,
+      embeddingPrice,
+    }),
     cvs: cvInfos,
     vacancies: vacancies.map((v) => ({
       id: v.id,
@@ -347,7 +459,7 @@ async function main(): Promise<void> {
 
   const t = computeTotals(evalResult);
   console.log(
-    `\nPairs ${t.pairs} (${t.failed} failed, ${t.retried} retried), grounded ${t.grounded}/${t.scored}, band ${t.bandMatches}/${t.bandExpected}, cost $${(t.extractionCost + t.scoringCost).toFixed(4)}.`,
+    `\nPairs ${t.pairs} (${t.failed} failed, ${t.retried} retried), grounded ${t.grounded}/${t.scored}, band ${t.bandMatches}/${t.bandExpected}, cost $${t.totalCost.toFixed(4)}${mode === 'rag' ? ` (embeddings ${t.embeddingTokens} tokens, $${t.embeddingCost.toFixed(4)})` : ''}.`,
   );
   console.log(PRICING_CAVEAT);
   for (const path of written) console.log(`Wrote ${path}`);
@@ -391,6 +503,63 @@ async function extractCriteria(
   return result;
 }
 
+/** Chunk embeddings for one CV (once per invocation), counted by the meter. */
+async function embedChunks(
+  llm: LlmClient,
+  meter: UsageMeter,
+  textChunks: TextChunk[],
+  pricePerMillion: number,
+): Promise<EmbeddedCv> {
+  meter.reset();
+  let vectors: number[][];
+  try {
+    vectors = (await llm.embed(textChunks.map((c) => c.text))).vectors;
+  } catch (err) {
+    throw new Error(`chunk embedding failed (${errorText(err)})`);
+  }
+  const tokens = meter.embeddingTokens;
+  return {
+    chunks: buildEvalChunks(textChunks, vectors),
+    tokens,
+    costUsd: embeddingCostUsd(tokens, pricePerMillion),
+  };
+}
+
+/**
+ * Embeds a vacancy's criteria texts (once per vacancy per run) in one call and
+ * records the tokens and cost on the extraction. Null, with `embeddingError`
+ * set, when the call fails.
+ */
+async function embedCriteria(
+  llm: LlmClient,
+  meter: UsageMeter,
+  extraction: ExtractionResult,
+  pricePerMillion: number,
+): Promise<number[][] | null> {
+  meter.reset();
+  try {
+    const { vectors } = await llm.embed(extraction.criteria.map((c) => c.text));
+    extraction.embeddingTokens = meter.embeddingTokens;
+    extraction.embeddingCostUsd = embeddingCostUsd(
+      meter.embeddingTokens,
+      pricePerMillion,
+    );
+    extraction.embeddingError = null;
+    console.log(
+      `${extraction.vacancyId} run ${extraction.run}: ${extraction.criteria.length} criteria embedded, ${meter.embeddingTokens} embedding tokens`,
+    );
+    return vectors;
+  } catch (err) {
+    extraction.embeddingTokens = 0;
+    extraction.embeddingCostUsd = 0;
+    extraction.embeddingError = errorText(err);
+    console.log(
+      `${extraction.vacancyId} run ${extraction.run}: criteria embedding FAILED (${extraction.embeddingError})`,
+    );
+    return null;
+  }
+}
+
 async function scorePair(params: {
   scorer: ApplicationScorer;
   meter: UsageMeter;
@@ -399,7 +568,9 @@ async function scorePair(params: {
   run: number;
   pricing: Pricing;
   criteria: VacancyCriterion[] | null;
-  data: { text: string; github: GithubSnapshot | null } | null;
+  /** `rag` mode: retrieval settings and the criteria vectors; null in full text. */
+  rag: { k: number; vectors: number[][] | null; error: string | null } | null;
+  data: CvData | null;
   cvError: string | null;
   extractionError: string | null;
 }): Promise<PairResult> {
@@ -438,11 +609,34 @@ async function scorePair(params: {
   }
 
   try {
-    const scored = await scorer.score({
-      criteria: params.criteria,
-      cvText: params.data.text,
-      github: params.data.github,
-    });
+    const { rag, data } = params;
+    let retrieval: CriterionRetrieval[] | null = null;
+    if (rag) {
+      if (rag.vectors === null || data.chunks === null) {
+        return failed(
+          `no embeddings (${rag.error ?? 'chunks or criteria not embedded'})`,
+        );
+      }
+      retrieval = retrieveForCriteria(
+        params.criteria,
+        rag.vectors,
+        data.chunks,
+        rag.k,
+      );
+    }
+    const scored = retrieval
+      ? await scorer.scoreRag({
+          criteria: params.criteria,
+          evidence: toEvidence(retrieval),
+        })
+      : await scorer.score({
+          criteria: params.criteria,
+          cvText: data.text,
+          github: data.github,
+        });
+    const retrievedById = new Map(
+      (retrieval ?? []).map((r) => [r.criterionId, r.chunks]),
+    );
     const criteria = scored.criteria.map((c) => ({
       id: c.criterionId,
       text: c.criterion,
@@ -450,6 +644,7 @@ async function scorePair(params: {
       score: c.score,
       reasoning: c.reasoning,
       quotes: c.quotes,
+      ...(retrieval && { retrieved: retrievedById.get(c.criterionId) ?? [] }),
     }));
     const usage = meter.usage;
     return {
@@ -464,11 +659,16 @@ async function scorePair(params: {
       costUsd: costUsd(usage, pricing),
       band: bandOf(scored.overall),
       bandResult: bandResult(scored.overall, expected),
-      grounded: checkGrounded(
-        criteria,
-        scorerSources(params.data.text, params.data.github),
-      ),
+      grounded: retrieval
+        ? checkGrounded(
+            criteria,
+            ragGroundingSources(retrieval.flatMap((r) => r.chunks)),
+          )
+        : checkGrounded(criteria, scorerSources(data.text, data.github)),
       fillerSuspects: findFillerSuspects(criteria),
+      ...(retrieval && {
+        evidenceCoverage: evidenceCoverage(retrieval, data.chunks!.length),
+      }),
     };
   } catch (err) {
     return failed(errorText(err));
