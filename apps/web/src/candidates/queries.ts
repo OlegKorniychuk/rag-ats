@@ -5,6 +5,7 @@ import {
   listCandidateApplications,
   listCandidates,
   reparseCandidate,
+  searchCandidates,
 } from '../api/candidates';
 import { vacancyKeys } from '../vacancies/queries';
 import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from '../pipeline/score';
@@ -14,6 +15,7 @@ export const candidateKeys = {
   all: ['candidates'] as const,
   detail: (id: string) => ['candidates', id] as const,
   applications: (id: string) => ['candidates', id, 'applications'] as const,
+  search: (query: string) => ['candidates', 'search', query] as const,
 };
 
 export function useCandidates() {
@@ -22,6 +24,17 @@ export function useCandidates() {
     queryFn: listCandidates,
     refetchInterval: (query) =>
       hasParseInFlight(query.state.data) ? PARSE_POLL_INTERVAL_MS : false,
+  });
+}
+
+// An unchanged query is not re-embedded: keep results fresh for a minute.
+export function useCandidateSearch(query: string) {
+  return useQuery({
+    queryKey: candidateKeys.search(query),
+    queryFn: () => searchCandidates(query),
+    enabled: query !== '',
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
   });
 }
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { CandidateResponse } from '@rag-ats/shared';
+import type { CandidateResponse, CandidateSearchResult } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { renderApp } from '../test/render';
 
@@ -42,6 +42,37 @@ function makeCandidate(
 const formattedDate = new Intl.DateTimeFormat(undefined, {
   dateStyle: 'medium',
 }).format(new Date('2024-01-15T00:00:00.000Z'));
+
+const searchLabel = 'Search candidates';
+
+function makeResult(
+  overrides: Partial<CandidateSearchResult> = {},
+): CandidateSearchResult {
+  return {
+    candidate: makeCandidate({}),
+    similarity: 0.874,
+    snippets: [
+      {
+        source: 'cv',
+        text: 'Ran Kafka clusters on Kubernetes',
+        similarity: 0.874,
+      },
+    ],
+    ...overrides,
+  };
+}
+
+function useSearch(
+  results: CandidateSearchResult[],
+  onBody?: (body: unknown) => void,
+) {
+  server.use(
+    http.post(`${baseUrl}/candidates/search`, async ({ request }) => {
+      onBody?.(await request.json());
+      return HttpResponse.json(results);
+    }),
+  );
+}
 
 describe('CandidatesPage', () => {
   it('renders candidate rows from the list', async () => {
@@ -85,69 +116,6 @@ describe('CandidatesPage', () => {
     expect(screen.getByText('+2')).toBeInTheDocument();
   });
 
-  it('renders a candidate with no skills and still filters', async () => {
-    server.use(
-      http.get(`${baseUrl}/candidates`, () =>
-        HttpResponse.json([makeCandidate({ skills: [] })]),
-      ),
-    );
-    renderApp({ route: '/candidates', session });
-
-    await screen.findByText('Ada Lovelace');
-    await userEvent.type(
-      screen.getByLabelText('Filter by name, email or skill'),
-      'ada',
-    );
-    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
-  });
-
-  it('narrows rows when typing in the filter and updates the URL', async () => {
-    server.use(
-      http.get(`${baseUrl}/candidates`, () =>
-        HttpResponse.json([
-          makeCandidate({ id: '1', name: 'Ada Lovelace' }),
-          makeCandidate({
-            id: '2',
-            name: 'Grace Hopper',
-            email: 'grace@example.com',
-          }),
-        ]),
-      ),
-    );
-    const { router } = renderApp({ route: '/candidates', session });
-
-    await screen.findByText('Ada Lovelace');
-    await userEvent.type(
-      screen.getByLabelText('Filter by name, email or skill'),
-      'grace',
-    );
-
-    await waitFor(() =>
-      expect(screen.queryByText('Ada Lovelace')).not.toBeInTheDocument(),
-    );
-    expect(screen.getByText('Grace Hopper')).toBeInTheDocument();
-    expect(router.state.location.search).toBe('?q=grace');
-  });
-
-  it('shows a no-match message when the filter matches nothing', async () => {
-    server.use(
-      http.get(`${baseUrl}/candidates`, () =>
-        HttpResponse.json([makeCandidate({})]),
-      ),
-    );
-    renderApp({ route: '/candidates', session });
-
-    await screen.findByText('Ada Lovelace');
-    await userEvent.type(
-      screen.getByLabelText('Filter by name, email or skill'),
-      'nonexistent',
-    );
-
-    expect(
-      await screen.findByText('No candidates match "nonexistent"'),
-    ).toBeInTheDocument();
-  });
-
   it('shows an empty state when there are no candidates', async () => {
     server.use(http.get(`${baseUrl}/candidates`, () => HttpResponse.json([])));
     renderApp({ route: '/candidates', session });
@@ -185,53 +153,6 @@ describe('CandidatesPage', () => {
     );
   });
 
-  it('pre-fills the filter and shows filtered rows from ?q=', async () => {
-    server.use(
-      http.get(`${baseUrl}/candidates`, () =>
-        HttpResponse.json([
-          makeCandidate({ id: '1', name: 'Ada Lovelace', skills: ['react'] }),
-          makeCandidate({
-            id: '2',
-            name: 'Grace Hopper',
-            email: 'grace@example.com',
-            skills: ['python'],
-          }),
-        ]),
-      ),
-    );
-    renderApp({ route: '/candidates?q=react', session });
-
-    expect(screen.getByLabelText('Filter by name, email or skill')).toHaveValue(
-      'react',
-    );
-    expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
-    expect(screen.queryByText('Grace Hopper')).not.toBeInTheDocument();
-  });
-
-  it('shows the candidate count', async () => {
-    server.use(
-      http.get(`${baseUrl}/candidates`, () =>
-        HttpResponse.json([
-          makeCandidate({ id: '1', name: 'Ada Lovelace' }),
-          makeCandidate({
-            id: '2',
-            name: 'Grace Hopper',
-            email: 'grace@example.com',
-          }),
-        ]),
-      ),
-    );
-    renderApp({ route: '/candidates', session });
-
-    expect(await screen.findByText('2 candidates')).toBeInTheDocument();
-
-    await userEvent.type(
-      screen.getByLabelText('Filter by name, email or skill'),
-      'grace',
-    );
-    expect(await screen.findByText('1 of 2')).toBeInTheDocument();
-  });
-
   it('shows a status chip for unparsed candidates only', async () => {
     server.use(
       http.get(`${baseUrl}/candidates`, () =>
@@ -247,5 +168,193 @@ describe('CandidatesPage', () => {
     expect(await screen.findByText('Pending')).toBeInTheDocument();
     expect(screen.getByText('Failed')).toBeInTheDocument();
     expect(screen.queryByText('Parsed')).not.toBeInTheDocument();
+  });
+
+  it('renders a candidate with no skills', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates`, () =>
+        HttpResponse.json([makeCandidate({ skills: [] })]),
+      ),
+    );
+    renderApp({ route: '/candidates', session });
+
+    expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
+  });
+
+  it('shows the candidate count', async () => {
+    server.use(
+      http.get(`${baseUrl}/candidates`, () =>
+        HttpResponse.json([
+          makeCandidate({ id: '1', name: 'Ada Lovelace' }),
+          makeCandidate({ id: '2', name: 'Grace Hopper' }),
+        ]),
+      ),
+    );
+    renderApp({ route: '/candidates', session });
+
+    expect(await screen.findByText('2 candidates')).toBeInTheDocument();
+  });
+
+  describe('semantic search', () => {
+    it('searches on Enter, updates ?q= and shows results', async () => {
+      server.use(
+        http.get(`${baseUrl}/candidates`, () =>
+          HttpResponse.json([makeCandidate({})]),
+        ),
+      );
+      let body: unknown;
+      useSearch([makeResult()], (value) => (body = value));
+      const { router } = renderApp({ route: '/candidates', session });
+
+      await screen.findByText('Ada Lovelace');
+      await userEvent.type(
+        screen.getByLabelText(searchLabel),
+        '  kafka engineer {Enter}',
+      );
+
+      const results = await screen.findByRole('list', {
+        name: 'Search results',
+      });
+      expect(
+        within(results).getByRole('link', { name: 'Ada Lovelace' }),
+      ).toBeInTheDocument();
+      expect(within(results).getByText('87% match')).toBeInTheDocument();
+      expect(
+        within(results).getByText('Ran Kafka clusters on Kubernetes'),
+      ).toBeInTheDocument();
+      expect(within(results).getByText('CV')).toBeInTheDocument();
+      expect(body).toEqual({ query: 'kafka engineer' });
+      expect(router.state.location.search).toBe('?q=kafka+engineer');
+      // the list is replaced by results
+      expect(screen.queryByRole('table')).not.toBeInTheDocument();
+    });
+
+    it('does not search while typing', async () => {
+      server.use(
+        http.get(`${baseUrl}/candidates`, () =>
+          HttpResponse.json([makeCandidate({})]),
+        ),
+      );
+      const { router } = renderApp({ route: '/candidates', session });
+
+      await screen.findByText('Ada Lovelace');
+      await userEvent.type(screen.getByLabelText(searchLabel), 'kafka');
+
+      // an unhandled POST /candidates/search would error the test
+      expect(router.state.location.search).toBe('');
+      expect(screen.getByRole('table')).toBeInTheDocument();
+    });
+
+    it('does not request a search without ?q=', async () => {
+      server.use(
+        http.get(`${baseUrl}/candidates`, () =>
+          HttpResponse.json([makeCandidate({})]),
+        ),
+      );
+      renderApp({ route: '/candidates', session });
+
+      expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
+      expect(screen.getByLabelText(searchLabel)).toHaveValue('');
+    });
+
+    it('pre-fills the input and runs the search from ?q=', async () => {
+      let body: unknown;
+      useSearch([makeResult()], (value) => (body = value));
+      renderApp({ route: '/candidates?q=kafka', session });
+
+      expect(screen.getByLabelText(searchLabel)).toHaveValue('kafka');
+      expect(await screen.findByText('87% match')).toBeInTheDocument();
+      expect(body).toEqual({ query: 'kafka' });
+    });
+
+    it('shows a no-results message', async () => {
+      useSearch([]);
+      renderApp({ route: '/candidates?q=cobol', session });
+
+      expect(
+        await screen.findByText('No candidates match "cobol"'),
+      ).toBeInTheDocument();
+    });
+
+    it('shows an error alert when search is unavailable', async () => {
+      server.use(
+        http.post(`${baseUrl}/candidates/search`, () =>
+          HttpResponse.json(
+            { statusCode: 503, message: 'Search is temporarily unavailable' },
+            { status: 503 },
+          ),
+        ),
+      );
+      renderApp({ route: '/candidates?q=kafka', session });
+
+      expect(
+        await screen.findByText(
+          /Could not load search results: Search is temporarily unavailable/,
+        ),
+      ).toBeInTheDocument();
+    });
+
+    it('returns to the list and clears ?q= on Escape', async () => {
+      server.use(
+        http.get(`${baseUrl}/candidates`, () =>
+          HttpResponse.json([makeCandidate({})]),
+        ),
+      );
+      useSearch([makeResult()]);
+      const { router } = renderApp({ route: '/candidates?q=kafka', session });
+
+      await screen.findByText('87% match');
+      await userEvent.type(screen.getByLabelText(searchLabel), '{Escape}');
+
+      expect(await screen.findByRole('table')).toBeInTheDocument();
+      expect(screen.getByLabelText(searchLabel)).toHaveValue('');
+      expect(router.state.location.search).toBe('');
+    });
+
+    it('returns to the list when Enter is pressed on an empty input', async () => {
+      server.use(
+        http.get(`${baseUrl}/candidates`, () =>
+          HttpResponse.json([makeCandidate({})]),
+        ),
+      );
+      useSearch([makeResult()]);
+      const { router } = renderApp({ route: '/candidates?q=kafka', session });
+
+      await screen.findByText('87% match');
+      const input = screen.getByLabelText(searchLabel);
+      await userEvent.clear(input);
+      expect(router.state.location.search).toBe('?q=kafka');
+      await userEvent.type(input, '   {Enter}');
+
+      expect(await screen.findByRole('table')).toBeInTheDocument();
+      expect(router.state.location.search).toBe('');
+    });
+
+    it('uses singular and plural result headers', async () => {
+      useSearch([makeResult()]);
+      const { unmount } = renderApp({ route: '/candidates?q=kafka', session });
+      expect(await screen.findByText(/^1 match for/)).toBeInTheDocument();
+      unmount();
+
+      useSearch([
+        makeResult(),
+        makeResult({ candidate: makeCandidate({ id: '2', name: 'Grace' }) }),
+      ]);
+      renderApp({ route: '/candidates?q=kafka', session });
+      expect(await screen.findByText(/^2 matches for/)).toBeInTheDocument();
+    });
+
+    it('links a result to the candidate page', async () => {
+      useSearch([makeResult({ candidate: makeCandidate({ id: '42' }) })]);
+      const { router } = renderApp({ route: '/candidates?q=kafka', session });
+
+      await userEvent.click(
+        await screen.findByRole('link', { name: 'Ada Lovelace' }),
+      );
+
+      await waitFor(() =>
+        expect(router.state.location.pathname).toBe('/candidates/42'),
+      );
+    });
   });
 });
