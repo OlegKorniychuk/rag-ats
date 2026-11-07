@@ -14,6 +14,12 @@ export type ScoreStatus = 'pending' | 'scoring' | 'scored' | 'failed';
 export type CriterionImportance = 'must' | 'nice';
 /** Outcome of the last GitHub fetch for a candidate. */
 export type GithubStatus = 'ok' | 'not_found' | 'unavailable';
+/**
+ * How GET /vacancies/:id/matches retrieves candidates: per extracted criterion
+ * (`criteria`, the default) or from the whole title + requirements text as one
+ * query (`whole_text`, a diagnostic mode for evaluation).
+ */
+export type MatchMode = 'criteria' | 'whole_text';
 
 /** Dates are serialized as ISO 8601 strings over JSON. */
 export type IsoDateString = string;
@@ -278,3 +284,41 @@ export interface CandidateSearchResult {
 
 /** POST /candidates/search -> 200 */
 export type SearchCandidatesResponse = CandidateSearchResult[];
+
+/** One vacancy criterion, as matched against a candidate's chunks. */
+export interface CriterionMatch {
+  criterionId: string;
+  criterion: string;
+  importance: CriterionImportance;
+  /** Best chunk similarity for this criterion; null when none of the candidate's chunks was retrieved for it. */
+  similarity: number | null;
+  /** similarity is at or above the match floor. */
+  matched: boolean;
+}
+
+/** A chunk of candidate text that matched a vacancy, verbatim from its source. */
+export interface MatchSnippet extends SearchSnippet {
+  /** The criterion this chunk was retrieved for; null in `whole_text` mode. */
+  criterionId: string | null;
+}
+
+export interface VacancyMatch {
+  candidate: CandidateResponse;
+  /** Ranking score, 0-1: weighted criterion coverage (`criteria`) or best chunk similarity (`whole_text`). */
+  score: number;
+  /** Every vacancy criterion in `criteria` mode (must first); empty in `whole_text` mode. */
+  criteria: CriterionMatch[];
+  /** Up to 3 snippets, best first, at most one per criterion. */
+  snippets: MatchSnippet[];
+}
+
+/**
+ * GET /vacancies/:id/matches?mode=criteria|whole_text (default criteria)
+ *
+ * Pool candidates ranked for the vacancy, best first. Candidates already on the
+ * vacancy's pipeline are excluded.
+ */
+export interface VacancyMatchesResponse {
+  mode: MatchMode;
+  matches: VacancyMatch[];
+}

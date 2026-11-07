@@ -264,4 +264,52 @@ describe('VacanciesRepository (Testcontainers integration)', () => {
       }
     });
   });
+
+  describe('findCriteria', () => {
+    it('returns the text, stored criteria and hash', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+      const criteria = [
+        { id: 'c1', text: 'Node.js', importance: 'must' as const },
+      ];
+      const hash = vacancyCriteriaHash(vacancy.title, vacancy.requirements);
+      await vacanciesRepository.saveCriteria(vacancy.id, criteria, hash);
+
+      expect(await vacanciesRepository.findCriteria(vacancy.id)).toEqual({
+        title: vacancy.title,
+        requirements: vacancy.requirements,
+        criteria,
+        criteriaHash: hash,
+      });
+    });
+
+    it('returns null criteria and hash before extraction', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+
+      expect(await vacanciesRepository.findCriteria(vacancy.id)).toEqual({
+        title: vacancy.title,
+        requirements: vacancy.requirements,
+        criteria: null,
+        criteriaHash: null,
+      });
+    });
+
+    it('keeps the old hash after the text changed, so callers can detect staleness', async () => {
+      const vacancy = await vacanciesRepository.create(newVacancy(recruiterId));
+      const hash = vacancyCriteriaHash(vacancy.title, vacancy.requirements);
+      await vacanciesRepository.saveCriteria(vacancy.id, [], hash);
+      await vacanciesRepository.update(vacancy.id, { requirements: 'Go' });
+
+      const found = await vacanciesRepository.findCriteria(vacancy.id);
+
+      expect(found?.criteriaHash).toBe(hash);
+      expect(found?.requirements).toBe('Go');
+      expect(vacancyCriteriaHash(found!.title, found!.requirements)).not.toBe(
+        hash,
+      );
+    });
+
+    it('returns null for an unknown vacancy', async () => {
+      expect(await vacanciesRepository.findCriteria(randomUUID())).toBeNull();
+    });
+  });
 });

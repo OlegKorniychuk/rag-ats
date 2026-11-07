@@ -1,11 +1,24 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
-import { applyWithCv } from './apply.util.js';
+import { applyWithCv, applyWithCvBytes } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
-import { openaiProfileHandler } from './msw/openai.handlers.js';
+import { waitForEmbedded } from './embed.util.js';
+import {
+  captureOpenaiEmbeddingRequests,
+  captureOpenaiRequests,
+  openaiCriteriaHandler,
+  openaiEmbeddingsErrorHandler,
+  openaiErrorHandler,
+  openaiProfileHandler,
+  type MockCriterion,
+} from './msw/openai.handlers.js';
 import { DEFAULT_MOCK_PROFILE, server } from './msw/server.js';
 import { waitForParseStatus } from './parse.util.js';
+import { textPdf } from './pdf.util.js';
 import { waitForScoreStatus } from './score.util.js';
+import { SEARCH_MIN_SIMILARITY } from '../src/candidates/search/search.constants.js';
+import { MATCH_FLOOR_TOKEN } from '../src/vacancies/matches/matches.constants.js';
+import { VACANCY_CRITERIA_SCHEMA_NAME } from '../src/llm/vacancy-criteria.schema.js';
 
 function uniqueEmail(): string {
   return `${randomUUID()}@example.com`;
@@ -15,7 +28,17 @@ describe('Vacancies (e2e)', () => {
   let testApp: TestApp;
 
   beforeAll(async () => {
-    testApp = await createTestApp();
+    // The fake embedding model scores keyword overlap, so a short criterion or
+    // query against a CV-sized chunk lands far below the production thresholds
+    // (0.3, tuned for real embeddings). Lower them; "no match" stays at ~0.
+    testApp = await createTestApp({
+      overrides: (builder) =>
+        builder
+          .overrideProvider(MATCH_FLOOR_TOKEN)
+          .useValue(0.05)
+          .overrideProvider(SEARCH_MIN_SIMILARITY)
+          .useValue(0.05),
+    });
   }, 60_000);
 
   afterAll(async () => {
@@ -618,6 +641,379 @@ describe('Vacancies (e2e)', () => {
         .post(`/vacancies/${randomUUID()}/applications`)
         .send({ candidateId: randomUUID() })
         .expect(401);
+    });
+  });
+  describe('GET /vacancies/:id/matches', () => {
+    const K8S_CV = [
+      'Alex Kube - Platform Engineer',
+      'Operated Kubernetes clusters on AWS EKS for five years.',
+      'Wrote Terraform modules for networking, IAM and clusters.',
+      'Helm charts, ArgoCD deployments, Prometheus and Grafana monitoring.',
+    ];
+    const REACT_CV = [
+      'Rita Reactor - Frontend Developer',
+      'Built React and TypeScript single page applications.',
+      'Unit tests with Jest and Testing Library, Storybook component library.',
+      'Accessibility reviews and design system maintenance.',
+    ];
+    const DATA_CV = [
+      'Dana Datum - Data Engineer',
+      'Python pandas and Spark pipelines orchestrated with Airflow.',
+      'Snowflake warehouse modelling with dbt.',
+    ];
+    // Airflow matches only the data candidate; Haskell matches nobody.
+    const DEVOPS_CRITERIA: MockCriterion[] = [
+      { text: 'Terraform', importance: 'must' },
+      { text: 'Airflow', importance: 'nice' },
+      { text: 'Kubernetes', importance: 'must' },
+      { text: 'Haskell', importance: 'nice' },
+    ];
+
+    interface MatchBody {
+      mode: string;
+      matches: {
+        candidate: { id: string };
+        score: number;
+        criteria: {
+          criterionId: string;
+          criterion: string;
+          importance: string;
+          similarity: number | null;
+          matched: boolean;
+        }[];
+        snippets: {
+          source: string;
+          text: string;
+          similarity: number;
+          criterionId: string | null;
+        }[];
+      }[];
+    }
+
+    let agent: Awaited<ReturnType<typeof authenticatedAgent>>;
+    let cookie: string[];
+    let devopsId: string;
+    let reactId: string;
+    let dataId: string;
+
+    async function applyPdf(
+      applyToken: string,
+      lines: string[],
+    ): Promise<string> {
+      const email = uniqueEmail();
+      await applyWithCvBytes(
+        testApp.app,
+        applyToken,
+        { name: 'Match Candidate', email },
+        textPdf(lines),
+      ).expect(201);
+      const list = await agent.get('/candidates').expect(200);
+      const id = (list.body as { id: string; email: string }[]).find(
+        (c) => c.email === email,
+      )!.id;
+      await waitForParseStatus(testApp.app, cookie, id, 'parsed');
+      await waitForEmbedded(testApp.app, id);
+      return id;
+    }
+
+    /** A fresh open vacancy of the same recruiter, with no stored criteria. */
+    async function newVacancy(): Promise<string> {
+      return createVacancy(agent, {
+        title: 'Platform Engineer',
+        requirements: 'Kubernetes Terraform production',
+      });
+    }
+
+    function matches(vacancyId: string, query = '') {
+      return agent.get(`/vacancies/${vacancyId}/matches${query}`);
+    }
+
+    /** Runs `fn` and returns the OpenAI requests it caused. */
+    async function captured(fn: () => Promise<unknown>) {
+      const criteria = captureOpenaiRequests(VACANCY_CRITERIA_SCHEMA_NAME);
+      const embeddings = captureOpenaiEmbeddingRequests();
+      server.events.on('request:start', criteria.listener);
+      server.events.on('request:start', embeddings.listener);
+      try {
+        await fn();
+      } finally {
+        server.events.removeListener('request:start', criteria.listener);
+        server.events.removeListener('request:start', embeddings.listener);
+      }
+      return { criteria: criteria.bodies, embeddings: embeddings.bodies };
+    }
+
+    beforeAll(async () => {
+      const session = await authenticatedSession();
+      agent = session.agent;
+      cookie = session.cookie;
+
+      const vacancyA = await createVacancyWithToken(agent);
+      devopsId = await applyPdf(vacancyA.applyToken, K8S_CV);
+      reactId = await applyPdf(vacancyA.applyToken, REACT_CV);
+      dataId = await applyPdf(vacancyA.applyToken, DATA_CV);
+
+      // Let A's own criteria extraction and scoring finish, so they cannot
+      // show up in the request captures of the tests below.
+      const applications = await agent
+        .get(`/vacancies/${vacancyA.id}/applications`)
+        .expect(200);
+      for (const application of applications.body as { id: string }[]) {
+        await waitForScoreStatus(
+          testApp.app,
+          cookie,
+          vacancyA.id,
+          application.id,
+          'scored',
+        );
+      }
+    }, 60_000);
+
+    it('ranks the matching candidate first, with criteria must-first, matched flags and a tagged snippet', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+
+      const res = await matches(vacancyId).expect(200);
+      const body = res.body as MatchBody;
+
+      expect(body.mode).toBe('criteria');
+      const ids = body.matches.map((m) => m.candidate.id);
+      expect(ids[0]).toBe(devopsId);
+      expect(ids).toContain(dataId);
+      expect(ids).not.toContain(reactId);
+
+      const [devops, data] = body.matches;
+      expect(devops.score).toBeGreaterThan(data.score);
+      expect(devops.score).toBeGreaterThan(0);
+      expect(devops.score).toBeLessThanOrEqual(1);
+      expect(Math.round(devops.score * 1000) / 1000).toBe(devops.score);
+
+      // every criterion, must first (in extraction order), then nice
+      expect(
+        devops.criteria.map((c) => [c.criterion, c.importance, c.matched]),
+      ).toEqual([
+        ['Terraform', 'must', true],
+        ['Kubernetes', 'must', true],
+        ['Airflow', 'nice', false],
+        ['Haskell', 'nice', false],
+      ]);
+      expect(devops.criteria.map((c) => c.criterionId)).toEqual([
+        'c1',
+        'c3',
+        'c2',
+        'c4',
+      ]);
+      for (const c of devops.criteria.filter((c) => c.matched)) {
+        expect(c.similarity).toBeGreaterThanOrEqual(0.05);
+      }
+      expect(data.criteria.filter((c) => c.matched)).toEqual([
+        expect.objectContaining({ criterion: 'Airflow', matched: true }),
+      ]);
+
+      expect(devops.snippets.length).toBeGreaterThanOrEqual(1);
+      expect(devops.snippets.length).toBeLessThanOrEqual(3);
+      const matchedIds = devops.criteria
+        .filter((c) => c.matched)
+        .map((c) => c.criterionId);
+      expect(devops.snippets[0]).toEqual({
+        source: 'cv',
+        text: expect.stringContaining('Kubernetes'),
+        similarity: expect.any(Number),
+        criterionId: expect.stringMatching(/^c[13]$/),
+      });
+      for (const snippet of devops.snippets) {
+        expect(matchedIds).toContain(snippet.criterionId);
+      }
+
+      // the candidate is the same full CandidateResponse GET /candidates/:id returns
+      const detail = await agent.get(`/candidates/${devopsId}`).expect(200);
+      expect(devops.candidate).toEqual(detail.body);
+    });
+
+    it('defaults to criteria mode and rejects an explicit unknown mode', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+
+      const explicit = await matches(vacancyId, '?mode=criteria').expect(200);
+      const implicit = await matches(vacancyId).expect(200);
+
+      expect(explicit.body).toEqual(implicit.body);
+      await matches(vacancyId, '?mode=fuzzy').expect(400);
+      await matches(vacancyId, '?mode=').expect(400);
+    });
+
+    it('excludes a candidate that is already on the vacancy, any stage', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+      const before = await matches(vacancyId).expect(200);
+      expect(
+        (before.body as MatchBody).matches.map((m) => m.candidate.id),
+      ).toContain(devopsId);
+
+      await agent
+        .post(`/vacancies/${vacancyId}/applications`)
+        .send({ candidateId: devopsId })
+        .expect(201);
+
+      const after = await matches(vacancyId).expect(200);
+      const ids = (after.body as MatchBody).matches.map((m) => m.candidate.id);
+      expect(ids).not.toContain(devopsId);
+      expect(ids[0]).toBe(dataId);
+    });
+
+    it('returns whole_text matches without criteria or criterion ids', async () => {
+      const vacancyId = await newVacancy();
+
+      const requests = await captured(async () => {
+        const res = await matches(vacancyId, '?mode=whole_text').expect(200);
+        const body = res.body as MatchBody;
+
+        expect(body.mode).toBe('whole_text');
+        expect(body.matches[0].candidate.id).toBe(devopsId);
+        expect(body.matches.map((m) => m.candidate.id)).not.toContain(reactId);
+        for (const match of body.matches) {
+          expect(match.criteria).toEqual([]);
+          expect(match.snippets.length).toBeGreaterThanOrEqual(1);
+          for (const snippet of match.snippets) {
+            expect(snippet.criterionId).toBeNull();
+          }
+        }
+        expect(body.matches[0].score).toBe(
+          body.matches[0].snippets[0].similarity,
+        );
+        expect(body.matches[0].snippets[0].text).toContain('Kubernetes');
+      });
+
+      // whole_text never needs criteria: one embeddings request, no extraction
+      expect(requests.criteria).toHaveLength(0);
+      expect(requests.embeddings).toHaveLength(1);
+      expect(requests.embeddings[0].input).toEqual([
+        'Platform Engineer\nKubernetes Terraform production',
+      ]);
+    });
+
+    it('extracts missing criteria once, stores them, and embeds all criteria in one request', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+
+      const first = await captured(() => matches(vacancyId).expect(200));
+      expect(first.criteria).toHaveLength(1);
+      expect(first.embeddings).toHaveLength(1);
+      expect(first.embeddings[0].input).toEqual([
+        'Terraform',
+        'Airflow',
+        'Kubernetes',
+        'Haskell',
+      ]);
+
+      const second = await captured(() => matches(vacancyId).expect(200));
+      expect(second.criteria).toHaveLength(0);
+      expect(second.embeddings).toHaveLength(1);
+    });
+
+    it('reuses the stored criteria for scoring a candidate added from the matches', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+      await matches(vacancyId).expect(200);
+
+      const requests = await captured(async () => {
+        const added = await agent
+          .post(`/vacancies/${vacancyId}/applications`)
+          .send({ candidateId: devopsId })
+          .expect(201);
+        await waitForScoreStatus(
+          testApp.app,
+          cookie,
+          vacancyId,
+          added.body.id as string,
+          'scored',
+        );
+        await matches(vacancyId).expect(200);
+      });
+
+      expect(requests.criteria).toHaveLength(0);
+    });
+
+    it('extracts again after the vacancy text changed', async () => {
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const vacancyId = await newVacancy();
+      await matches(vacancyId).expect(200);
+      await agent
+        .patch(`/vacancies/${vacancyId}`)
+        .send({ requirements: 'Kubernetes, Terraform and Helm' })
+        .expect(200);
+
+      const requests = await captured(() => matches(vacancyId).expect(200));
+
+      expect(requests.criteria).toHaveLength(1);
+    });
+
+    it('is not visible to another recruiter, and unknown ids are 404', async () => {
+      const vacancyId = await newVacancy();
+      const other = await authenticatedAgent();
+
+      const requests = await captured(async () => {
+        const res = await other
+          .get(`/vacancies/${vacancyId}/matches`)
+          .expect(404);
+        expect(res.body.message).toBe('Vacancy not found');
+        await agent.get(`/vacancies/${randomUUID()}/matches`).expect(404);
+      });
+
+      expect(requests.criteria).toHaveLength(0);
+      expect(requests.embeddings).toHaveLength(0);
+    });
+
+    it('rejects a malformed vacancy id', async () => {
+      await agent.get('/vacancies/not-a-uuid/matches').expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .get(`/vacancies/${randomUUID()}/matches`)
+        .expect(401);
+    });
+
+    it('answers 409 for a closed vacancy without calling OpenAI', async () => {
+      const vacancyId = await newVacancy();
+      await agent
+        .patch(`/vacancies/${vacancyId}`)
+        .send({ status: 'closed' })
+        .expect(200);
+
+      const requests = await captured(async () => {
+        const res = await matches(vacancyId).expect(409);
+        expect(res.body.message).toBe('Vacancy is closed');
+        await matches(vacancyId, '?mode=whole_text').expect(409);
+      });
+
+      expect(requests.criteria).toHaveLength(0);
+      expect(requests.embeddings).toHaveLength(0);
+    });
+
+    it('answers 503 when the embeddings service fails', async () => {
+      server.use(
+        openaiCriteriaHandler(DEVOPS_CRITERIA),
+        openaiEmbeddingsErrorHandler(500),
+      );
+      const vacancyId = await newVacancy();
+
+      const res = await matches(vacancyId).expect(503);
+      expect(res.body.message).toBe('Matching is temporarily unavailable');
+      await matches(vacancyId, '?mode=whole_text').expect(503);
+    });
+
+    it('answers 503 when the inline criteria extraction fails, and stores nothing', async () => {
+      server.use(openaiErrorHandler(500, VACANCY_CRITERIA_SCHEMA_NAME));
+      const vacancyId = await newVacancy();
+
+      const res = await matches(vacancyId).expect(503);
+      expect(res.body.message).toBe('Matching is temporarily unavailable');
+
+      // nothing was stored: the next call (OpenAI back) extracts again
+      server.use(openaiCriteriaHandler(DEVOPS_CRITERIA));
+      const requests = await captured(() => matches(vacancyId).expect(200));
+      expect(requests.criteria).toHaveLength(1);
     });
   });
 });

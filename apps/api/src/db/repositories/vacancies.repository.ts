@@ -37,6 +37,12 @@ export interface VacancyCriteriaState {
   criteriaHash: string | null;
 }
 
+/** The vacancy text with its stored criteria, as the matching read needs them. */
+export interface VacancyCriteria extends VacancyCriteriaState {
+  /** Null until the criteria were extracted. */
+  criteria: VacancyCriterion[] | null;
+}
+
 export const VACANCIES_REPOSITORY = Symbol('VACANCIES_REPOSITORY');
 
 export interface VacanciesRepository {
@@ -46,6 +52,11 @@ export interface VacanciesRepository {
   findByApplyToken(token: string): Promise<Vacancy | null>;
   update(id: string, data: Partial<NewVacancy>): Promise<Vacancy>;
   findCriteriaState(vacancyId: string): Promise<VacancyCriteriaState | null>;
+  /**
+   * Like `findCriteriaState`, plus the stored criteria themselves. They may be
+   * stale: compare `criteriaHash` with the hash of the current text.
+   */
+  findCriteria(vacancyId: string): Promise<VacancyCriteria | null>;
   /**
    * Stores extracted criteria, but only if the vacancy's CURRENT title and
    * requirements still hash to `criteriaHash` (they may have been edited while

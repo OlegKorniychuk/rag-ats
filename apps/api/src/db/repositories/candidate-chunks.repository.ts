@@ -13,6 +13,14 @@ export interface ChunkHit {
   similarity: number;
 }
 
+export interface FindNearestOptions {
+  /**
+   * Skip chunks of every candidate that has an application (at any stage) on
+   * this vacancy, so they never use up the `limit`.
+   */
+  excludeVacancyId?: string;
+}
+
 export const CANDIDATE_CHUNKS_REPOSITORY = Symbol(
   'CANDIDATE_CHUNKS_REPOSITORY',
 );
@@ -34,5 +42,9 @@ export interface CandidateChunksRepository {
    * The `limit` chunks nearest to `embedding` across all candidates, most
    * similar first. Exact scan (no ANN index): the pool is small.
    */
-  findNearest(embedding: number[], limit: number): Promise<ChunkHit[]>;
+  findNearest(
+    embedding: number[],
+    limit: number,
+    options?: FindNearestOptions,
+  ): Promise<ChunkHit[]>;
 }

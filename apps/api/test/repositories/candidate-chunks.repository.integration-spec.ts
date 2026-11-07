@@ -7,6 +7,10 @@ import { ClsModule } from 'nestjs-cls';
 import { DRIZZLE } from '../../src/db/db.tokens.js';
 import { RepositoriesModule } from '../../src/db/repositories.module.js';
 import {
+  APPLICATIONS_REPOSITORY,
+  type ApplicationsRepository,
+} from '../../src/db/repositories/applications.repository.js';
+import {
   CANDIDATE_CHUNKS_REPOSITORY,
   type CandidateChunksRepository,
   type NewCandidateChunk,
@@ -19,6 +23,14 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../../src/db/repositories/cv-documents.repository.js';
+import {
+  RECRUITERS_REPOSITORY,
+  type RecruitersRepository,
+} from '../../src/db/repositories/recruiters.repository.js';
+import {
+  VACANCIES_REPOSITORY,
+  type VacanciesRepository,
+} from '../../src/db/repositories/vacancies.repository.js';
 import { EMBEDDING_DIMENSIONS } from '../../src/llm/embedding.constants.js';
 import {
   createTestDatabase,
@@ -56,6 +68,9 @@ describe('CandidateChunksRepository (Testcontainers integration)', () => {
   let chunks: CandidateChunksRepository;
   let candidates: CandidatesRepository;
   let cvDocuments: CvDocumentsRepository;
+  let recruiters: RecruitersRepository;
+  let vacancies: VacanciesRepository;
+  let applications: ApplicationsRepository;
 
   beforeAll(async () => {
     testDb = await createTestDatabase();
@@ -89,6 +104,9 @@ describe('CandidateChunksRepository (Testcontainers integration)', () => {
     chunks = moduleRef.get(CANDIDATE_CHUNKS_REPOSITORY);
     candidates = moduleRef.get(CANDIDATES_REPOSITORY);
     cvDocuments = moduleRef.get(CV_DOCUMENTS_REPOSITORY);
+    recruiters = moduleRef.get(RECRUITERS_REPOSITORY);
+    vacancies = moduleRef.get(VACANCIES_REPOSITORY);
+    applications = moduleRef.get(APPLICATIONS_REPOSITORY);
   }, 120_000);
 
   afterAll(async () => {
@@ -355,6 +373,71 @@ describe('CandidateChunksRepository (Testcontainers integration)', () => {
       expect(limited.map((h) => h.text)).toEqual(['a1', 'a2']);
       expect(limited.every((h) => h.candidateId === a.candidateId)).toBe(true);
       expect(await chunks.findNearest(planar(20, 0), 0)).toEqual([]);
+    });
+
+    it('skips chunks of candidates who applied to the excluded vacancy only', async () => {
+      const recruiter = await recruiters.create({
+        email: `${randomUUID()}@example.com`,
+        passwordHash: 'hashed-password',
+      });
+      const newVacancy = () =>
+        vacancies.create({
+          recruiterId: recruiter.id,
+          title: 'Engineer',
+          requirements: 'Things',
+          applyToken: randomUUID(),
+        });
+      const vacancy = await newVacancy();
+      const otherVacancy = await newVacancy();
+      const applicant = await seed();
+      const otherApplicant = await seed();
+      const free = await seed();
+      await chunks.replaceForCandidate(
+        applicant.candidateId,
+        applicant.cvId,
+        [{ source: 'cv', text: 'applicant', embedding: planar(30, 0.1) }],
+        'm',
+      );
+      await chunks.replaceForCandidate(
+        otherApplicant.candidateId,
+        otherApplicant.cvId,
+        [{ source: 'cv', text: 'other applicant', embedding: planar(30, 0.2) }],
+        'm',
+      );
+      await chunks.replaceForCandidate(
+        free.candidateId,
+        free.cvId,
+        [{ source: 'cv', text: 'free', embedding: planar(30, 0.3) }],
+        'm',
+      );
+      await applications.create({
+        vacancyId: vacancy.id,
+        candidateId: applicant.candidateId,
+      });
+      await applications.create({
+        vacancyId: otherVacancy.id,
+        candidateId: otherApplicant.candidateId,
+      });
+
+      const query = planar(30, 0);
+      const excluded = await chunks.findNearest(query, 2, {
+        excludeVacancyId: vacancy.id,
+      });
+      const plain = await chunks.findNearest(query, 3);
+      const emptyOptions = await chunks.findNearest(query, 3, {});
+      const limited = await chunks.findNearest(query, 1, {
+        excludeVacancyId: vacancy.id,
+      });
+
+      expect(excluded.map((h) => h.text)).toEqual(['other applicant', 'free']);
+      // the exclusion happens before the limit: the freed slot goes to the next chunk
+      expect(limited.map((h) => h.text)).toEqual(['other applicant']);
+      expect(plain.map((h) => h.text)).toEqual([
+        'applicant',
+        'other applicant',
+        'free',
+      ]);
+      expect(emptyOptions).toEqual(plain);
     });
   });
 });

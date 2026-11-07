@@ -6,6 +6,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -15,6 +16,8 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiQuery,
+  ApiServiceUnavailableResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -25,14 +28,23 @@ import type { Vacancy } from '../db/repositories/vacancies.repository.js';
 import { ApplicationWithCandidateResponseDto } from '../applications/dto/application-with-candidate-response.dto.js';
 import { AddApplicationDto } from './dto/add-application.dto.js';
 import { CreateVacancyDto } from './dto/create-vacancy.dto.js';
+import { VacancyMatchesQueryDto } from './dto/vacancy-matches-query.dto.js';
+import { VacancyMatchesResponseDto } from './dto/vacancy-matches-response.dto.js';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto.js';
 import { VacancyResponseDto } from './dto/vacancy-response.dto.js';
+import {
+  VacancyMatchService,
+  type VacancyMatchesHits,
+} from './matches/vacancy-match.service.js';
 import { VacanciesService } from './vacancies.service.js';
 
 @ApiTags('vacancies')
 @Controller('vacancies')
 export class VacanciesController {
-  constructor(private readonly vacanciesService: VacanciesService) {}
+  constructor(
+    private readonly vacanciesService: VacanciesService,
+    private readonly matchService: VacancyMatchService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a vacancy owned by the current recruiter' })
@@ -96,6 +108,41 @@ export class VacanciesController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<ApplicationWithCandidate[]> {
     return this.vacanciesService.findApplications(user.id, id);
+  }
+
+  @Get(':id/matches')
+  @ApiOperation({
+    summary: 'Find pool candidates that fit a vacancy',
+    description:
+      "Ranks the shared candidate pool for an open vacancy of the current recruiter and returns up to 10 candidates, best first, each with the criteria they match and their best-matching snippets. Candidates already on the vacancy (any stage) are excluded. In `criteria` mode (default) the vacancy's criteria are extracted first if they are not current. Candidates whose CV has not been processed yet do not appear.",
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiQuery({
+    name: 'mode',
+    required: false,
+    enum: ['criteria', 'whole_text'],
+    description: 'Retrieval mode (default `criteria`)',
+  })
+  @ApiOkResponse({
+    description: 'Matching candidates, best first (empty when nothing matches)',
+    type: VacancyMatchesResponseDto,
+  })
+  @ApiBadRequestResponse({ description: 'Malformed uuid or unknown mode' })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiNotFoundResponse({
+    description: "Vacancy doesn't exist or belongs to another recruiter",
+  })
+  @ApiConflictResponse({ description: 'Vacancy is closed' })
+  @ApiServiceUnavailableResponse({
+    description:
+      'The embedding service or the criteria extraction is unavailable',
+  })
+  async findMatches(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() query: VacancyMatchesQueryDto,
+  ): Promise<VacancyMatchesHits> {
+    return this.matchService.findMatches(user.id, id, query.mode);
   }
 
   @Post(':id/applications')
