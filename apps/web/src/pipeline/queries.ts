@@ -3,6 +3,7 @@ import type {
   ApplicationWithCandidateResponse,
 } from '@rag-ats/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { addCandidateToVacancy, getVacancyMatches } from '../api/vacancies';
 import {
   listVacancyApplications,
   rescoreApplication,
@@ -13,6 +14,7 @@ import {
   PARSE_POLL_INTERVAL_MS,
 } from '../candidates/parseStatus';
 import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from './score';
+import { candidateKeys } from '../candidates/queries';
 import { vacancyKeys } from '../vacancies/queries';
 
 export function useVacancyApplications(vacancyId: string) {
@@ -66,5 +68,44 @@ export function useRescoreApplication(vacancyId: string) {
       queryClient.invalidateQueries({
         queryKey: vacancyKeys.applications(vacancyId),
       }),
+  });
+}
+
+// Matches cost an embeddings call (and maybe a criteria extraction): keep them
+// fresh for a minute and only fetch while the drawer is open.
+export function useVacancyMatches(
+  vacancyId: string,
+  { enabled }: { enabled: boolean },
+) {
+  return useQuery({
+    queryKey: vacancyKeys.matches(vacancyId),
+    queryFn: () => getVacancyMatches(vacancyId),
+    enabled,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
+  });
+}
+
+// `onAdded` runs on the mutation itself: the matches refetch removes the card
+// (and its component) before a mutate-level callback could fire.
+export function useAddMatch(vacancyId: string, onAdded?: () => void) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (candidateId: string) =>
+      addCandidateToVacancy(vacancyId, candidateId),
+    onSuccess: (_data, candidateId) => {
+      onAdded?.();
+      return Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: vacancyKeys.applications(vacancyId),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: vacancyKeys.matches(vacancyId),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: candidateKeys.applications(candidateId),
+        }),
+      ]);
+    },
   });
 }

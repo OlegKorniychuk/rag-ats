@@ -446,4 +446,130 @@ describe('PipelinePage', () => {
     expect(screen.queryByText(/Re-scoring/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Scores are outdated/)).not.toBeInTheDocument();
   });
+
+  describe('find matches', () => {
+    const matchesBody = (names: string[]) => ({
+      mode: 'criteria',
+      matches: names.map((name, index) => ({
+        candidate: makeCandidate({ id: `m${index}`, name }),
+        score: 0.6,
+        criteria: [
+          {
+            criterionId: 'k1',
+            criterion: 'Runs Kubernetes',
+            importance: 'must',
+            similarity: 0.6,
+            matched: true,
+          },
+        ],
+        snippets: [],
+      })),
+    });
+
+    it('shows the button for open vacancies only', async () => {
+      server.use(
+        http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+        http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+          HttpResponse.json([]),
+        ),
+      );
+      const { unmount } = renderApp({ route: '/vacancies/v1', session });
+      expect(
+        await screen.findByRole('button', { name: 'Find matches' }),
+      ).toBeInTheDocument();
+      unmount();
+
+      server.use(
+        http.get(`${baseUrl}/vacancies/v1`, () =>
+          HttpResponse.json({ ...vacancy, status: 'closed' }),
+        ),
+      );
+      renderApp({ route: '/vacancies/v1', session });
+      await screen.findByText('closed');
+      expect(
+        screen.queryByRole('button', { name: 'Find matches' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('requests matches only once the drawer is opened', async () => {
+      let matchCalls = 0;
+      server.use(
+        http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+        http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+          HttpResponse.json([]),
+        ),
+        http.get(`${baseUrl}/vacancies/v1/matches`, () => {
+          matchCalls += 1;
+          return HttpResponse.json(matchesBody(['Ada Lovelace']));
+        }),
+      );
+      renderApp({ route: '/vacancies/v1', session });
+
+      const button = await screen.findByRole('button', {
+        name: 'Find matches',
+      });
+      expect(matchCalls).toBe(0);
+
+      await userEvent.click(button);
+      expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
+      expect(matchCalls).toBe(1);
+    });
+
+    it('adds a match: snackbar, board refetch, card gone from the drawer', async () => {
+      let applications: ApplicationWithCandidateResponse[] = [];
+      let matches = matchesBody(['Ada Lovelace']);
+      let postBody: unknown;
+      server.use(
+        http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),
+        http.get(`${baseUrl}/vacancies/v1/applications`, () =>
+          HttpResponse.json(applications),
+        ),
+        http.get(`${baseUrl}/vacancies/v1/matches`, () =>
+          HttpResponse.json(matches),
+        ),
+        http.post(
+          `${baseUrl}/vacancies/v1/applications`,
+          async ({ request }) => {
+            postBody = await request.json();
+            const added = makeApplication({
+              id: 'a9',
+              source: 'added',
+              candidateId: 'm0',
+              candidate: makeCandidate({ id: 'm0', name: 'Ada Lovelace' }),
+            });
+            applications = [added];
+            matches = matchesBody([]);
+            return HttpResponse.json(added, { status: 201 });
+          },
+        ),
+      );
+      renderApp({ route: '/vacancies/v1', session });
+
+      await userEvent.click(
+        await screen.findByRole('button', { name: 'Find matches' }),
+      );
+      await userEvent.click(
+        await screen.findByRole('button', { name: 'Add Ada Lovelace' }),
+      );
+
+      expect(
+        await screen.findByText('Added Ada Lovelace — scoring started'),
+      ).toBeInTheDocument();
+      expect(postBody).toEqual({ candidateId: 'm0' });
+      // the modal drawer hides the board from the accessibility tree
+      const column = screen.getByRole('region', {
+        name: 'Applied',
+        hidden: true,
+      });
+      expect(
+        await within(column).findByText('Ada Lovelace'),
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByText('No pool candidates match this vacancy yet.'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Add Ada Lovelace' }),
+      ).not.toBeInTheDocument();
+    });
+  });
 });

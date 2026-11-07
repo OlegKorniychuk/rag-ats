@@ -3,6 +3,7 @@ import type {
   ApplicationWithCandidateResponse,
   CreateVacancyRequest,
   UpdateVacancyRequest,
+  VacancyMatchesResponse,
   VacancyResponse,
 } from '@rag-ats/shared';
 import { apiFetch } from './client';
@@ -29,3 +30,6 @@ export const addCandidateToVacancy = (vacancyId: string, candidateId: string) =>
       json: { candidateId } satisfies AddApplicationRequest,
     },
   );
+
+export const getVacancyMatches = (vacancyId: string) =>
+  apiFetch<VacancyMatchesResponse>(`/vacancies/${vacancyId}/matches`);

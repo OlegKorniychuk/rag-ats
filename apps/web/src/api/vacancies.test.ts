@@ -5,6 +5,7 @@ import {
   addCandidateToVacancy,
   createVacancy,
   getVacancy,
+  getVacancyMatches,
   listVacancies,
   updateVacancy,
 } from './vacancies';
@@ -79,5 +80,19 @@ describe('vacancies api', () => {
     const result = await addCandidateToVacancy('1', 'c1');
     expect(receivedBody).toEqual({ candidateId: 'c1' });
     expect(result).toEqual(created);
+  });
+
+  it('getVacancyMatches gets /vacancies/:id/matches without a mode', async () => {
+    const response = { mode: 'criteria', matches: [] };
+    let search = '';
+    server.use(
+      http.get(`${baseUrl}/vacancies/1/matches`, ({ request }) => {
+        search = new URL(request.url).search;
+        return HttpResponse.json(response);
+      }),
+    );
+    const result = await getVacancyMatches('1');
+    expect(search).toBe('');
+    expect(result).toEqual(response);
   });
 });

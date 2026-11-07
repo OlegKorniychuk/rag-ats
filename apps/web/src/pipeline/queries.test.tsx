@@ -1,10 +1,16 @@
 import type { ReactNode } from 'react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
+import { useCandidateApplications } from '../candidates/queries';
 import { server } from '../test/server';
-import { useUpdateApplicationStage, useVacancyApplications } from './queries';
+import {
+  useAddMatch,
+  useUpdateApplicationStage,
+  useVacancyApplications,
+  useVacancyMatches,
+} from './queries';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -177,5 +183,84 @@ describe('pipeline queries', () => {
 
     await waitFor(() => expect(getCalls).toBe(2));
     expect(result.current.list.data?.[0].stage).toBe('screened');
+  });
+
+  it('useVacancyMatches does not fetch while disabled', async () => {
+    let getCalls = 0;
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/matches`, () => {
+        getCalls += 1;
+        return HttpResponse.json({ mode: 'criteria', matches: [] });
+      }),
+    );
+
+    const { result, rerender } = renderHook(
+      ({ enabled }) => useVacancyMatches('v1', { enabled }),
+      { wrapper: createWrapper(), initialProps: { enabled: false } },
+    );
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(getCalls).toBe(0);
+    expect(result.current.fetchStatus).toBe('idle');
+
+    rerender({ enabled: true });
+    await waitFor(() =>
+      expect(result.current.data).toEqual({ mode: 'criteria', matches: [] }),
+    );
+    expect(getCalls).toBe(1);
+  });
+
+  it('useAddMatch posts the candidate and refetches matches, applications and candidate applications', async () => {
+    const calls = { matches: 0, applications: 0, candidateApplications: 0 };
+    let body: unknown;
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/matches`, () => {
+        calls.matches += 1;
+        return HttpResponse.json({ mode: 'criteria', matches: [] });
+      }),
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        calls.applications += 1;
+        return HttpResponse.json([]);
+      }),
+      http.get(`${baseUrl}/candidates/c1/applications`, () => {
+        calls.candidateApplications += 1;
+        return HttpResponse.json([]);
+      }),
+      http.post(`${baseUrl}/vacancies/v1/applications`, async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json(application, { status: 201 });
+      }),
+    );
+    const onAdded = vi.fn();
+
+    const { result } = renderHook(
+      () => ({
+        matches: useVacancyMatches('v1', { enabled: true }),
+        list: useVacancyApplications('v1'),
+        candidateApplications: useCandidateApplications('c1'),
+        add: useAddMatch('v1', onAdded),
+      }),
+      { wrapper: createWrapper() },
+    );
+    await waitFor(() =>
+      expect(calls).toEqual({
+        matches: 1,
+        applications: 1,
+        candidateApplications: 1,
+      }),
+    );
+
+    await act(async () => {
+      await result.current.add.mutateAsync('c1');
+    });
+
+    expect(body).toEqual({ candidateId: 'c1' });
+    expect(onAdded).toHaveBeenCalledTimes(1);
+    await waitFor(() =>
+      expect(calls).toEqual({
+        matches: 2,
+        applications: 2,
+        candidateApplications: 2,
+      }),
+    );
   });
 });
