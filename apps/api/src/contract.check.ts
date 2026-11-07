@@ -10,14 +10,18 @@ import type {
   CandidateApplicationResponse,
   CandidateResponse,
   CandidateSearchResult,
+  CriterionMatch,
   CvDocumentSummary as CvDocumentSummaryResponse,
   GithubStatus,
   GithubSummary as GithubSummaryResponse,
   ParseStatus,
   PublicVacancyResponse,
+  MatchSnippet,
   ScoreStatus,
   SearchCandidatesRequest,
   SearchSnippet,
+  VacancyMatch,
+  VacancyMatchesResponse,
   VacancyResponse,
   VacancyStatus,
 } from '@rag-ats/shared';
@@ -41,6 +45,12 @@ import type { CandidateSearchResultResponseDto } from './candidates/dto/candidat
 import type { SearchCandidatesRequestDto } from './candidates/dto/search-candidates-request.dto.js';
 import type { SearchSnippetResponseDto } from './candidates/dto/search-snippet-response.dto.js';
 import type { CandidateSearchHit } from './candidates/search/candidate-search.service.js';
+import type { CriterionMatchResponseDto } from './vacancies/dto/criterion-match-response.dto.js';
+import type { MatchSnippetResponseDto } from './vacancies/dto/match-snippet-response.dto.js';
+import type { VacancyMatchResponseDto } from './vacancies/dto/vacancy-match-response.dto.js';
+import type { VacancyMatchesResponseDto } from './vacancies/dto/vacancy-matches-response.dto.js';
+import type { VacancyMatchesQueryDto } from './vacancies/dto/vacancy-matches-query.dto.js';
+import type { VacancyMatchesHits } from './vacancies/matches/vacancy-match.service.js';
 import type { AddApplicationDto } from './vacancies/dto/add-application.dto.js';
 import type {
   applicationSourceEnum,
@@ -152,4 +162,28 @@ export type CheckCandidateSearchResultDto = Assert<
 >;
 export type CheckCandidateSearchHit = Assert<
   Equal<Simplify<Jsonify<CandidateSearchHit>>, Simplify<CandidateSearchResult>>
+>;
+export type CheckCriterionMatchDto = Assert<
+  Equal<Simplify<CriterionMatchResponseDto>, Simplify<CriterionMatch>>
+>;
+export type CheckMatchSnippetDto = Assert<
+  Equal<Simplify<MatchSnippetResponseDto>, Simplify<MatchSnippet>>
+>;
+export type CheckVacancyMatchDto = Assert<
+  Equal<Simplify<Jsonify<VacancyMatchResponseDto>>, Simplify<VacancyMatch>>
+>;
+export type CheckVacancyMatchesResponseDto = Assert<
+  Equal<
+    Simplify<Jsonify<VacancyMatchesResponseDto>>,
+    Simplify<VacancyMatchesResponse>
+  >
+>;
+export type CheckVacancyMatchesHits = Assert<
+  Equal<Simplify<Jsonify<VacancyMatchesHits>>, Simplify<VacancyMatchesResponse>>
+>;
+export type CheckVacancyMatchesQueryDto = Assert<
+  Equal<
+    NonNullable<VacancyMatchesQueryDto['mode']>,
+    VacancyMatchesResponse['mode']
+  >
 >;

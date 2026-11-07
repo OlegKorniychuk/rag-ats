@@ -14,6 +14,7 @@ export const vacancyKeys = {
   all: ['vacancies'] as const,
   detail: (id: string) => ['vacancies', id] as const,
   applications: (id: string) => ['vacancies', id, 'applications'] as const,
+  matches: (id: string) => ['vacancies', id, 'matches'] as const,
 };
 
 export function useVacancies() {

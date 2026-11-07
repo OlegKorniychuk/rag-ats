@@ -12,6 +12,7 @@ import {
 import type {
   NewVacancy,
   Vacancy,
+  VacancyCriteria,
   VacancyCriteriaState,
   VacanciesRepository,
 } from './vacancies.repository.js';
@@ -72,6 +73,19 @@ export class DrizzleVacanciesRepository implements VacanciesRepository {
     const row = await this.txHost.tx.query.vacancies.findFirst({
       where: { id: vacancyId },
       columns: { title: true, requirements: true, criteriaHash: true },
+    });
+    return row ?? null;
+  }
+
+  async findCriteria(vacancyId: string): Promise<VacancyCriteria | null> {
+    const row = await this.txHost.tx.query.vacancies.findFirst({
+      where: { id: vacancyId },
+      columns: {
+        title: true,
+        requirements: true,
+        criteria: true,
+        criteriaHash: true,
+      },
     });
     return row ?? null;
   }

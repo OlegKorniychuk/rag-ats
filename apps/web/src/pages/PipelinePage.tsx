@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router';
-import { Chip, Link, Snackbar, Stack, Typography } from '@mui/material';
+import { Button, Chip, Link, Snackbar, Stack, Typography } from '@mui/material';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { NotFoundState } from '../components/NotFoundState';
 import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { isNotFound } from '../lib/errors';
+import { MatchesDrawer } from '../pipeline/MatchesDrawer';
 import { PipelineBoard } from '../pipeline/PipelineBoard';
 import { RescoreBanner } from '../pipeline/RescoreBanner';
 import { ScoreDrawer } from '../pipeline/ScoreDrawer';
@@ -17,6 +19,7 @@ export function PipelinePage() {
   const applications = useVacancyApplications(id);
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [matchesOpen, setMatchesOpen] = useState(false);
 
   const backLink = (
     <Link component={RouterLink} to="/vacancies">
@@ -64,6 +67,16 @@ export function PipelinePage() {
           label={vacancy.data.status}
           color={isOpen ? 'success' : 'default'}
         />
+        {isOpen && (
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<PersonSearchIcon />}
+            onClick={() => setMatchesOpen(true)}
+          >
+            Find matches
+          </Button>
+        )}
       </Stack>
 
       {applications.isError && (
@@ -94,6 +107,17 @@ export function PipelinePage() {
         application={selectedApplication}
         onClose={() => setSelectedId(null)}
       />
+
+      {isOpen && (
+        <MatchesDrawer
+          vacancyId={id}
+          open={matchesOpen}
+          onClose={() => setMatchesOpen(false)}
+          onAdded={(name) =>
+            setSnackbarMessage(`Added ${name} — scoring started`)
+          }
+        />
+      )}
 
       <Snackbar
         open={snackbarMessage !== null}

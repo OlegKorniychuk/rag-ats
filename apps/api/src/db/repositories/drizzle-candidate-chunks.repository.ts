@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
-import { cosineDistance, eq, sql } from 'drizzle-orm';
+import { cosineDistance, eq, notInArray, sql } from 'drizzle-orm';
 import type { AppTransactionAdapter } from '../db.tokens.js';
-import { candidateChunks } from '../schema.js';
+import { applications, candidateChunks } from '../schema.js';
 import type {
   CandidateChunksRepository,
   ChunkHit,
+  FindNearestOptions,
   NewCandidateChunk,
 } from './candidate-chunks.repository.js';
 
@@ -41,7 +42,11 @@ export class DrizzleCandidateChunksRepository implements CandidateChunksReposito
     );
   }
 
-  async findNearest(embedding: number[], limit: number): Promise<ChunkHit[]> {
+  async findNearest(
+    embedding: number[],
+    limit: number,
+    options: FindNearestOptions = {},
+  ): Promise<ChunkHit[]> {
     const distance = cosineDistance(candidateChunks.embedding, embedding);
     const rows = await this.txHost.tx
       .select({
@@ -51,6 +56,17 @@ export class DrizzleCandidateChunksRepository implements CandidateChunksReposito
         similarity: sql<number>`1 - (${distance})`,
       })
       .from(candidateChunks)
+      .where(
+        options.excludeVacancyId
+          ? notInArray(
+              candidateChunks.candidateId,
+              this.txHost.tx
+                .select({ candidateId: applications.candidateId })
+                .from(applications)
+                .where(eq(applications.vacancyId, options.excludeVacancyId)),
+            )
+          : undefined,
+      )
       .orderBy(distance)
       .limit(limit);
     return rows.map((row) => ({
