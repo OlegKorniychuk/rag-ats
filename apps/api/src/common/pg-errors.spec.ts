@@ -14,7 +14,7 @@ describe('isUniqueViolation', () => {
   });
 
   it('matches a driver error wrapped as the cause (drizzle)', () => {
-    const wrapped = new Error('Failed query', {
+    const wrapped = Object.assign(new Error('Failed query'), {
       cause: pgError('23505', CONSTRAINT),
     });
 
@@ -37,7 +37,7 @@ describe('isUniqueViolation', () => {
   });
 
   it('rejects a wrapper whose cause is a different violation', () => {
-    const wrapped = new Error('Failed query', {
+    const wrapped = Object.assign(new Error('Failed query'), {
       cause: pgError('23505', 'candidates_email_unique'),
     });
 
