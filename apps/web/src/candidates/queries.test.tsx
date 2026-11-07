@@ -8,7 +8,11 @@ import type {
   CandidateApplicationResponse,
 } from '@rag-ats/shared';
 import { server } from '../test/server';
-import { candidateKeys, useCandidateApplications } from './queries';
+import {
+  candidateKeys,
+  useCandidateApplications,
+  useCandidateSearch,
+} from './queries';
 
 vi.mock('../pipeline/score', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../pipeline/score')>()),
@@ -54,6 +58,34 @@ describe('candidate queries', () => {
     expect(candidateKeys.applications('c1').slice(0, 2)).toEqual(
       candidateKeys.detail('c1'),
     );
+  });
+
+  it('nests the search key under the candidates key so invalidation hits it', () => {
+    expect(candidateKeys.search('kafka').slice(0, 1)).toEqual(
+      candidateKeys.all,
+    );
+  });
+
+  it('useCandidateSearch only fetches once there is a query', async () => {
+    let calls = 0;
+    server.use(
+      http.post(`${baseUrl}/candidates/search`, () => {
+        calls += 1;
+        return HttpResponse.json([]);
+      }),
+    );
+
+    const { result, rerender } = renderHook(
+      ({ query }) => useCandidateSearch(query),
+      { wrapper: createWrapper(), initialProps: { query: '' } },
+    );
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(calls).toBe(0);
+    expect(result.current.fetchStatus).toBe('idle');
+
+    rerender({ query: 'kafka' });
+    await waitFor(() => expect(result.current.data).toEqual([]));
+    expect(calls).toBe(1);
   });
 
   it('useCandidateApplications polls while a score is in flight and stops once settled', async () => {

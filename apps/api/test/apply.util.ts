@@ -37,3 +37,18 @@ export function applyWithCv(
   }
   return req.attach('cv', fixturePath(fixture), uploadName);
 }
+
+/** Like `applyWithCv`, with the CV given as bytes (e.g. from `textPdf`). */
+export function applyWithCvBytes(
+  app: INestApplication,
+  token: string,
+  fields: ApplyFields,
+  cv: Buffer,
+  filename = 'cv.pdf',
+): request.Test {
+  const req = request(app.getHttpServer()).post(`/apply/${token}`);
+  for (const [key, value] of Object.entries(fields)) {
+    if (value !== undefined) req.field(key, value);
+  }
+  return req.attach('cv', cv, { filename, contentType: 'application/pdf' });
+}

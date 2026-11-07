@@ -49,6 +49,11 @@ export class EnvConfig {
   @MinLength(1)
   public readonly OPENAI_MODEL: string = 'gpt-5.4-mini';
 
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  public readonly OPENAI_EMBEDDING_MODEL: string = 'text-embedding-3-small';
+
   // pg-boss requires >= 0.5.
   @IsOptional()
   @Type(() => Number)

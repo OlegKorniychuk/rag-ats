@@ -1,7 +1,6 @@
 import type {
   ApplicationWithCandidateResponse,
   CriterionScore,
-  ScoreQuote,
   ScoreResult,
 } from '@rag-ats/shared';
 import {
@@ -19,15 +18,11 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ApiError } from '../api/client';
+import { QuoteBlock } from '../components/QuoteBlock';
 import { errorMessage } from '../lib/errors';
 import { formatDate } from '../lib/format';
 import { useRescoreApplication } from './queries';
 import { isScoreInFlight, scoreBand } from './score';
-
-const SOURCE_LABELS = {
-  cv: 'CV',
-  github: 'GitHub',
-} satisfies Record<ScoreQuote['source'], string>;
 
 const IMPORTANCE_LABELS = {
   must: 'Must',
@@ -39,32 +34,6 @@ function sortCriteria(criteria: readonly CriterionScore[]): CriterionScore[] {
     if (a.importance !== b.importance) return a.importance === 'must' ? -1 : 1;
     return b.score - a.score;
   });
-}
-
-function QuoteBlock({ quote }: { quote: ScoreQuote }) {
-  return (
-    <Box
-      component="blockquote"
-      sx={{
-        m: 0,
-        pl: 1.5,
-        py: 0.5,
-        borderLeft: 3,
-        borderColor: 'divider',
-        bgcolor: 'action.hover',
-      }}
-    >
-      <Chip
-        size="small"
-        variant="outlined"
-        label={SOURCE_LABELS[quote.source]}
-        sx={{ mb: 0.5 }}
-      />
-      <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-        {quote.text}
-      </Typography>
-    </Box>
-  );
 }
 
 function CriterionItem({ criterion }: { criterion: CriterionScore }) {

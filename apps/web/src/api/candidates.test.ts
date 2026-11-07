@@ -5,6 +5,7 @@ import {
   getCandidate,
   listCandidateApplications,
   listCandidates,
+  searchCandidates,
 } from './candidates';
 
 const baseUrl = 'http://localhost:3000';
@@ -47,5 +48,25 @@ describe('candidates api', () => {
     );
     const result = await listCandidateApplications('a/b');
     expect(result).toEqual([]);
+  });
+
+  it('searchCandidates posts the query to /candidates/search', async () => {
+    let body: unknown;
+    const results = [
+      {
+        candidate,
+        similarity: 0.8,
+        snippets: [{ source: 'cv', text: 'Kafka', similarity: 0.8 }],
+      },
+    ];
+    server.use(
+      http.post(`${baseUrl}/candidates/search`, async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json(results);
+      }),
+    );
+    const result = await searchCandidates('kafka');
+    expect(body).toEqual({ query: 'kafka' });
+    expect(result).toEqual(results);
   });
 });

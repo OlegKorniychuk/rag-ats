@@ -16,3 +16,10 @@ export const SCORE_APPLICATION_QUEUE = 'score-application';
 export interface ScoreApplicationJob {
   applicationId: string;
 }
+
+export const EMBED_CANDIDATE_QUEUE = 'embed-candidate';
+
+export interface EmbedCandidateJob {
+  candidateId: string;
+  cvDocumentId: string;
+}

@@ -1,6 +1,7 @@
-import { defineRelations } from 'drizzle-orm';
+import { defineRelations, sql } from 'drizzle-orm';
 import type { ScoreResult, VacancyCriterion } from '@rag-ats/shared';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
+import { EMBEDDING_DIMENSIONS } from '../llm/embedding.constants.js';
 import {
   pgTable,
   uuid,
@@ -12,6 +13,8 @@ import {
   integer,
   bytea,
   index,
+  check,
+  vector,
   type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
 
@@ -87,6 +90,11 @@ export const candidates = pgTable('candidates', {
     (): AnyPgColumn => cvDocuments.id,
   ),
   parsedAt: timestamp('parsed_at'),
+  // the parsed CV the current candidate_chunks were built from (internal)
+  embeddedCvDocumentId: uuid('embedded_cv_document_id').references(
+    (): AnyPgColumn => cvDocuments.id,
+    { onDelete: 'set null' },
+  ),
   // internal: includes bio and README excerpts; reads map it to GithubSummary
   githubSnapshot: jsonb('github_snapshot').$type<GithubSnapshot>(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -125,6 +133,34 @@ export const cvDocuments = pgTable(
   (t) => [index('cv_documents_candidate_id_idx').on(t.candidateId)],
 );
 
+export const candidateChunks = pgTable(
+  'candidate_chunks',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    candidateId: uuid('candidate_id')
+      .notNull()
+      .references(() => candidates.id, { onDelete: 'cascade' }),
+    cvDocumentId: uuid('cv_document_id')
+      .notNull()
+      .references(() => cvDocuments.id, { onDelete: 'cascade' }),
+    source: text('source').notNull(),
+    chunkIndex: integer('chunk_index').notNull(),
+    text: text('text').notNull(),
+    embedding: vector('embedding', {
+      dimensions: EMBEDDING_DIMENSIONS,
+    }).notNull(),
+    model: text('model').notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (t) => [
+    index('candidate_chunks_candidate_id_idx').on(t.candidateId),
+    check(
+      'candidate_chunks_source_check',
+      sql`${t.source} in ('cv', 'github')`,
+    ),
+  ],
+);
+
 export const applicationScores = pgTable('application_scores', {
   applicationId: uuid('application_id')
     .primaryKey()
@@ -154,6 +190,7 @@ const schema = {
   candidates,
   applications,
   cvDocuments,
+  candidateChunks,
   applicationScores,
 };
 
@@ -192,10 +229,18 @@ export const dbRelations = defineRelations(schema, (r) => ({
   candidates: {
     applications: r.many.applications(),
     cvDocuments: r.many.cvDocuments(),
+    chunks: r.many.candidateChunks(),
   },
   cvDocuments: {
     candidate: r.one.candidates({
       from: r.cvDocuments.candidateId,
+      to: r.candidates.id,
+      optional: false,
+    }),
+  },
+  candidateChunks: {
+    candidate: r.one.candidates({
+      from: r.candidateChunks.candidateId,
       to: r.candidates.id,
       optional: false,
     }),

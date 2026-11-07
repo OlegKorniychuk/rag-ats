@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import {
   Chip,
   Link,
@@ -19,7 +19,7 @@ import { PageLoader } from '../components/PageLoader';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { formatDate } from '../lib/format';
 import { useCandidates } from '../candidates/queries';
-import { filterCandidates } from '../candidates/filter';
+import { CandidateSearchResults } from '../candidates/CandidateSearchResults';
 import { ParseStatusChip } from '../candidates/ParseStatusChip';
 
 const MAX_VISIBLE_SKILLS = 5;
@@ -27,25 +27,29 @@ const MAX_VISIBLE_SKILLS = 5;
 export function CandidatesPage() {
   const { data, isPending, isError, error } = useCandidates();
   const [searchParams, setSearchParams] = useSearchParams();
-  // local state drives the input: URL updates are async and would drop fast keystrokes
-  const [query, setQuery] = useState(() => searchParams.get('q') ?? '');
+  const query = searchParams.get('q') ?? '';
+  // the input edits a local draft; only Enter commits it to the URL (and so
+  // triggers a search, which costs an embedding call)
+  const [draft, setDraft] = useState(query);
+  const [syncedQuery, setSyncedQuery] = useState(query);
+  if (query !== syncedQuery) {
+    // ?q= changed by navigation (back/forward, link): mirror it in the input
+    setSyncedQuery(query);
+    setDraft(query);
+  }
 
-  const filtered = useMemo(
-    () => (data ? filterCandidates(data, query) : []),
-    [data, query],
-  );
+  const commitQuery = (value: string) => {
+    const trimmed = value.trim();
+    setSearchParams(trimmed ? { q: trimmed } : {}, { replace: true });
+  };
 
-  const handleQueryChange = (value: string) => {
-    setQuery(value);
-    setSearchParams(value ? { q: value } : {}, { replace: true });
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    commitQuery(draft);
   };
 
   const countText =
-    data && data.length > 0
-      ? query
-        ? `${filtered.length} of ${data.length}`
-        : `${data.length} candidates`
-      : undefined;
+    !query && data && data.length > 0 ? `${data.length} candidates` : undefined;
 
   return (
     <Stack spacing={3}>
@@ -59,42 +63,39 @@ export function CandidatesPage() {
         )}
       </Stack>
 
-      <TextField
-        label="Filter by name, email or skill"
-        type="search"
-        value={query}
-        onChange={(event) => handleQueryChange(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape') {
-            handleQueryChange('');
-          }
-        }}
-        sx={{ width: { xs: '100%', sm: 400 } }}
-        slotProps={{
-          input: {
-            startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
-          },
-        }}
-      />
+      <form role="search" onSubmit={handleSubmit}>
+        <TextField
+          label="Search candidates"
+          placeholder="e.g. backend engineer with Kafka and Kubernetes"
+          type="search"
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              setDraft('');
+              commitQuery('');
+            }
+          }}
+          sx={{ width: { xs: '100%', sm: 400 } }}
+          slotProps={{
+            input: {
+              startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
+            },
+          }}
+        />
+      </form>
 
-      {isPending && <PageLoader />}
+      {query && <CandidateSearchResults query={query} />}
 
-      {isError && <QueryErrorAlert error={error} what="candidates" />}
+      {!query && isPending && <PageLoader />}
 
-      {!isPending && !isError && data?.length === 0 && (
+      {!query && isError && <QueryErrorAlert error={error} what="candidates" />}
+
+      {!query && !isPending && !isError && data?.length === 0 && (
         <Typography>No candidates yet</Typography>
       )}
 
-      {!isPending &&
-        !isError &&
-        data &&
-        data.length > 0 &&
-        query &&
-        filtered.length === 0 && (
-          <Typography>No candidates match &quot;{query}&quot;</Typography>
-        )}
-
-      {!isPending && !isError && filtered.length > 0 && (
+      {!query && !isPending && !isError && data && data.length > 0 && (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -106,7 +107,7 @@ export function CandidatesPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filtered.map((candidate) => {
+              {data.map((candidate) => {
                 const visibleSkills = candidate.skills.slice(
                   0,
                   MAX_VISIBLE_SKILLS,

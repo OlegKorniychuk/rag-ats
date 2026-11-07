@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionHost } from '@nestjs-cls/transactional';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, isNotNull, sql } from 'drizzle-orm';
 import type { ParseStatus } from '@rag-ats/shared';
 import type { AppTransactionAdapter } from '../db.tokens.js';
 import { candidates } from '../schema.js';
@@ -12,6 +12,7 @@ import {
   publicCandidateColumnsWith,
 } from './candidates.repository.js';
 import type {
+  CandidateEmbedState,
   CandidateParseState,
   ParsedProfile,
   NewCandidate,
@@ -42,6 +43,16 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
       columns: publicCandidateColumnsWith,
       with: latestCvSummaryWith,
       orderBy: { createdAt: 'desc' },
+    });
+    return rows.map((row) => withGithub(withCv(row)));
+  }
+
+  async findByIds(ids: string[]): Promise<Candidate[]> {
+    if (ids.length === 0) return [];
+    const rows = await this.txHost.tx.query.candidates.findMany({
+      where: { id: { in: ids } },
+      columns: publicCandidateColumnsWith,
+      with: latestCvSummaryWith,
     });
     return rows.map((row) => withGithub(withCv(row)));
   }
@@ -173,6 +184,48 @@ export class DrizzleCandidatesRepository implements CandidatesRepository {
     return rows.flatMap((row) =>
       row.cvDocuments[0]
         ? [{ candidateId: row.id, cvDocumentId: row.cvDocuments[0].id }]
+        : [],
+    );
+  }
+
+  async findEmbedState(id: string): Promise<CandidateEmbedState | null> {
+    const row = await this.txHost.tx.query.candidates.findFirst({
+      where: { id },
+      columns: {
+        parseStatus: true,
+        parsedCvDocumentId: true,
+        embeddedCvDocumentId: true,
+      },
+    });
+    return row ?? null;
+  }
+
+  async markEmbedded(id: string, cvDocumentId: string): Promise<void> {
+    await this.txHost.tx
+      .update(candidates)
+      .set({ embeddedCvDocumentId: cvDocumentId })
+      .where(eq(candidates.id, id));
+  }
+
+  async findEmbedBacklog(): Promise<
+    Array<{ candidateId: string; cvDocumentId: string }>
+  > {
+    const rows = await this.txHost.tx
+      .select({
+        candidateId: candidates.id,
+        cvDocumentId: candidates.parsedCvDocumentId,
+      })
+      .from(candidates)
+      .where(
+        and(
+          eq(candidates.parseStatus, 'parsed'),
+          isNotNull(candidates.parsedCvDocumentId),
+          sql`${candidates.embeddedCvDocumentId} IS DISTINCT FROM ${candidates.parsedCvDocumentId}`,
+        ),
+      );
+    return rows.flatMap((row) =>
+      row.cvDocumentId
+        ? [{ candidateId: row.candidateId, cvDocumentId: row.cvDocumentId }]
         : [],
     );
   }

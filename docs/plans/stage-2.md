@@ -168,7 +168,7 @@ Full flow works: apply → parse → embed → score, plus search and matches, a
 ## Open questions (resolve in subplans)
 
 - Step 4: when a candidate submits a newer CV, should their _other_ applications' scores be marked stale and rescored? The proposed default is yes, rescoring against the latest CV.
-- Step 7: chunking strategy (per CV section vs. fixed-size token windows) and k values.
+- ~~Step 7: chunking strategy (per CV section vs. fixed-size token windows) and k values.~~ Resolved in `stage-2-step-7.md`: CV text packed on line boundaries into ~1000-char windows with one-line overlap, one chunk per GitHub repo plus a profile chunk; search takes the 50 nearest chunks, returns up to 20 candidates × 3 snippets above a 0.3 similarity floor.
 - Step 10: how ground-truth labels are produced (LLM-generated with manual spot-check vs. fully self-labeled).
 
 ## Execution

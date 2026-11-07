@@ -308,6 +308,25 @@ describe('buildGithubBlock', () => {
     expect(block.endsWith('</github>')).toBe(true);
   });
 
+  it('renders the exact block layout the scorer and the chunker rely on', () => {
+    expect(buildGithubBlock(snapshot())).toBe(
+      [
+        '<github>',
+        'Profile: https://github.com/janedoe',
+        '',
+        'Bio: Backend engineer. TypeScript and Go.',
+        '',
+        'Repositories (most starred first):',
+        '',
+        '## alpha (language: TypeScript, stars: 50)',
+        'Description: A NestJS API',
+        'Topics: nestjs, api',
+        'README: Alpha is a REST service built with NestJS.',
+        '</github>',
+      ].join('\n'),
+    );
+  });
+
   it('renders a profile with no repositories', () => {
     expect(buildGithubBlock(snapshot({ repos: [] }))).toContain(
       'No public repositories.',

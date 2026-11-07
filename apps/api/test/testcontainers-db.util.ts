@@ -19,7 +19,9 @@ export interface TestDatabase {
 }
 
 export async function createTestDatabase(): Promise<TestDatabase> {
-  const container = await new PostgreSqlContainer('postgres:17').start();
+  const container = await new PostgreSqlContainer(
+    'pgvector/pgvector:pg17-trixie',
+  ).start();
   const pool = new Pool({ connectionString: container.getConnectionUri() });
   const db = drizzle({ client: pool, relations: dbRelations });
 

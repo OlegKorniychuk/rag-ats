@@ -1,6 +1,8 @@
 import type {
   CandidateApplicationResponse,
   CandidateResponse,
+  SearchCandidatesRequest,
+  SearchCandidatesResponse,
 } from '@rag-ats/shared';
 import { apiFetch } from './client';
 
@@ -19,3 +21,9 @@ export const listCandidateApplications = (id: string) =>
   apiFetch<CandidateApplicationResponse[]>(
     `/candidates/${encodeURIComponent(id)}/applications`,
   );
+
+export const searchCandidates = (query: string) =>
+  apiFetch<SearchCandidatesResponse>('/candidates/search', {
+    method: 'POST',
+    json: { query } satisfies SearchCandidatesRequest,
+  });

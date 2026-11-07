@@ -11,11 +11,13 @@ import type { CvDocumentSummary } from './cv-documents.repository.js';
 const {
   parsedCvDocumentId,
   parsedAt,
+  embeddedCvDocumentId,
   githubSnapshot,
   ...publicCandidateColumnMap
 } = getTableColumns(candidates);
 void parsedCvDocumentId;
 void parsedAt;
+void embeddedCvDocumentId;
 void githubSnapshot;
 
 /** Column selection for `insert/update ... returning()` in the public shape. */
@@ -29,11 +31,12 @@ export const publicCandidateColumns = publicCandidateColumnMap;
 export const publicCandidateColumnsWith = {
   parsedCvDocumentId: false,
   parsedAt: false,
+  embeddedCvDocumentId: false,
 } as const;
 
 export type CandidateRow = Omit<
   typeof candidates.$inferSelect,
-  'parsedCvDocumentId' | 'parsedAt' | 'githubSnapshot'
+  'parsedCvDocumentId' | 'parsedAt' | 'embeddedCvDocumentId' | 'githubSnapshot'
 >;
 export type NewCandidate = typeof candidates.$inferInsert;
 /**
@@ -57,6 +60,15 @@ export interface CandidateParseState {
   githubUrl: string | null;
 }
 
+/** What the embed worker needs to decide whether a job is still relevant. */
+export interface CandidateEmbedState {
+  parseStatus: ParseStatus;
+  /** The CV the current profile (and GitHub snapshot) was parsed from. */
+  parsedCvDocumentId: string | null;
+  /** The parsed CV the current chunks were embedded from, if any. */
+  embeddedCvDocumentId: string | null;
+}
+
 export interface ParsedProfile {
   skills: string[];
   experience: string;
@@ -71,6 +83,8 @@ export interface CandidatesRepository {
   create(data: NewCandidate): Promise<CandidateRow>;
   findAll(): Promise<Candidate[]>;
   findById(id: string): Promise<Candidate | null>;
+  /** Candidates with these ids; order is not guaranteed, unknown ids are skipped. */
+  findByIds(ids: string[]): Promise<Candidate[]>;
   findByEmail(email: string): Promise<Candidate | null>;
   update(id: string, data: Partial<NewCandidate>): Promise<CandidateRow>;
   /** Sets the status and `parseError` (null unless `error` is given). */
@@ -101,6 +115,17 @@ export interface CandidatesRepository {
   findGithubSnapshot(id: string): Promise<GithubSnapshot | null>;
   /** Candidates still `pending`/`parsing`, with their latest CV id. */
   findParseBacklog(): Promise<
+    Array<{ candidateId: string; cvDocumentId: string }>
+  >;
+  /** Null when the candidate doesn't exist. */
+  findEmbedState(id: string): Promise<CandidateEmbedState | null>;
+  /** Records that the chunks now belong to `cvDocumentId`. */
+  markEmbedded(id: string, cvDocumentId: string): Promise<void>;
+  /**
+   * Parsed candidates whose chunks are missing or belong to another CV
+   * (`embedded_cv_document_id IS DISTINCT FROM parsed_cv_document_id`).
+   */
+  findEmbedBacklog(): Promise<
     Array<{ candidateId: string; cvDocumentId: string }>
   >;
 }

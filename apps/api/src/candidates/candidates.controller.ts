@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Header,
+  Body,
   HttpCode,
   Param,
   ParseUUIDPipe,
@@ -17,6 +18,7 @@ import {
   ApiOperation,
   ApiProduces,
   ApiParam,
+  ApiServiceUnavailableResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -26,13 +28,22 @@ import type { CandidateApplication } from '../db/repositories/applications.repos
 import type { Candidate } from '../db/repositories/candidates.repository.js';
 import { CandidateApplicationResponseDto } from './dto/candidate-application-response.dto.js';
 import { CandidateResponseDto } from './dto/candidate-response.dto.js';
+import { CandidateSearchResultResponseDto } from './dto/candidate-search-result-response.dto.js';
+import { SearchCandidatesRequestDto } from './dto/search-candidates-request.dto.js';
 import { buildContentDisposition } from './cv-response-headers.js';
 import { CandidatesService } from './candidates.service.js';
+import {
+  CandidateSearchService,
+  type CandidateSearchHit,
+} from './search/candidate-search.service.js';
 
 @ApiTags('candidates')
 @Controller('candidates')
 export class CandidatesController {
-  constructor(private readonly candidatesService: CandidatesService) {}
+  constructor(
+    private readonly candidatesService: CandidatesService,
+    private readonly searchService: CandidateSearchService,
+  ) {}
 
   @Get()
   @ApiOperation({
@@ -47,6 +58,30 @@ export class CandidatesController {
   @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
   async findAll(): Promise<Candidate[]> {
     return this.candidatesService.findAll();
+  }
+
+  @Post('search')
+  @HttpCode(200)
+  @ApiOperation({
+    summary: 'Semantic search over the shared candidate pool',
+    description:
+      "Visible to any recruiter. Matches the query against chunks of candidates' CVs and GitHub profiles and returns up to 20 candidates, best first, each with its best-matching snippets. Candidates whose CV has not been processed yet do not appear.",
+  })
+  @ApiOkResponse({
+    description: 'Matching candidates, best first (empty when nothing matches)',
+    type: [CandidateSearchResultResponseDto],
+  })
+  @ApiBadRequestResponse({
+    description: 'Missing, non-string, blank or over-500-character query',
+  })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid session' })
+  @ApiServiceUnavailableResponse({
+    description: 'The embedding service is unavailable',
+  })
+  async search(
+    @Body() body: SearchCandidatesRequestDto,
+  ): Promise<CandidateSearchHit[]> {
+    return this.searchService.search(body.query);
   }
 
   @Get(':id')

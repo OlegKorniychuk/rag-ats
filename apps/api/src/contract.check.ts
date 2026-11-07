@@ -9,12 +9,15 @@ import type {
   AuthUserResponse,
   CandidateApplicationResponse,
   CandidateResponse,
+  CandidateSearchResult,
   CvDocumentSummary as CvDocumentSummaryResponse,
   GithubStatus,
   GithubSummary as GithubSummaryResponse,
   ParseStatus,
   PublicVacancyResponse,
   ScoreStatus,
+  SearchCandidatesRequest,
+  SearchSnippet,
   VacancyResponse,
   VacancyStatus,
 } from '@rag-ats/shared';
@@ -34,6 +37,10 @@ import type {
   toApplicationScore,
 } from './db/repositories/score.mapper.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
+import type { CandidateSearchResultResponseDto } from './candidates/dto/candidate-search-result-response.dto.js';
+import type { SearchCandidatesRequestDto } from './candidates/dto/search-candidates-request.dto.js';
+import type { SearchSnippetResponseDto } from './candidates/dto/search-snippet-response.dto.js';
+import type { CandidateSearchHit } from './candidates/search/candidate-search.service.js';
 import type { AddApplicationDto } from './vacancies/dto/add-application.dto.js';
 import type {
   applicationSourceEnum,
@@ -130,4 +137,19 @@ export type CheckCandidateApplication = Assert<
 >;
 export type CheckAddApplicationDto = Assert<
   Equal<Simplify<AddApplicationDto>, Simplify<AddApplicationRequest>>
+>;
+export type CheckSearchCandidatesRequestDto = Assert<
+  Equal<Simplify<SearchCandidatesRequestDto>, Simplify<SearchCandidatesRequest>>
+>;
+export type CheckSearchSnippetDto = Assert<
+  Equal<Simplify<SearchSnippetResponseDto>, Simplify<SearchSnippet>>
+>;
+export type CheckCandidateSearchResultDto = Assert<
+  Equal<
+    Simplify<Jsonify<CandidateSearchResultResponseDto>>,
+    Simplify<CandidateSearchResult>
+  >
+>;
+export type CheckCandidateSearchHit = Assert<
+  Equal<Simplify<Jsonify<CandidateSearchHit>>, Simplify<CandidateSearchResult>>
 >;
