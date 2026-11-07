@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material';
 import type {
   ApplicationScore,
   ApplicationWithCandidateResponse,
+  CriterionScore,
   ScoreResult,
 } from '@rag-ats/shared';
 import { server } from '../test/server';
@@ -26,6 +27,7 @@ const result: ScoreResult = {
       score: 90,
       reasoning: 'Uses Docker daily.',
       quotes: [],
+      retrieved: null,
     },
     {
       criterionId: 'c-must-low',
@@ -34,6 +36,7 @@ const result: ScoreResult = {
       score: 40,
       reasoning: 'Only three years shown.',
       quotes: [{ source: 'cv', text: 'TypeScript since 2021 <b>bold</b>' }],
+      retrieved: null,
     },
     {
       criterionId: 'c-must-high',
@@ -45,6 +48,7 @@ const result: ScoreResult = {
         { source: 'cv', text: 'Designed PostgreSQL schemas' },
         { source: 'github', text: 'repo: pg-tools' },
       ],
+      retrieved: null,
     },
   ],
   cvDocumentId: 'cv1',
@@ -131,7 +135,14 @@ describe('ScoreDrawer', () => {
       screen.getByText('Strong backend profile with minor gaps.'),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`Scored ${formattedDate} · gpt-test`),
+      screen.getByText(`Scored ${formattedDate} · gpt-test · Full text`),
+    ).toBeInTheDocument();
+  });
+
+  it('labels the footer with the RAG mode', () => {
+    renderDrawer(makeScore({ result: { ...result, mode: 'rag' } }));
+    expect(
+      screen.getByText(`Scored ${formattedDate} · gpt-test · RAG`),
     ).toBeInTheDocument();
   });
 
@@ -261,5 +272,111 @@ describe('ScoreDrawer', () => {
     expect(
       await screen.findByText('Could not reach the server'),
     ).toBeInTheDocument();
+  });
+
+  describe('retrieved evidence', () => {
+    const ragResult: ScoreResult = {
+      ...result,
+      mode: 'rag',
+      criteria: result.criteria.map((criterion) =>
+        criterion.criterionId === 'c-must-high'
+          ? {
+              ...criterion,
+              retrieved: [
+                {
+                  source: 'cv',
+                  text: 'PostgreSQL schema design',
+                  similarity: 0.874,
+                },
+                {
+                  source: 'github',
+                  text: 'repo: pg-tools readme',
+                  similarity: 0.5,
+                },
+              ],
+            }
+          : { ...criterion, retrieved: [] },
+      ),
+    };
+
+    it('shows a collapsed toggle only for criteria with retrieved chunks', () => {
+      renderDrawer(makeScore({ result: ragResult }));
+      const toggles = screen.getAllByRole('button', {
+        name: /Evidence retrieved/,
+      });
+      expect(toggles).toHaveLength(1);
+      expect(toggles[0]).toHaveTextContent('Evidence retrieved (2)');
+      expect(toggles[0]).toHaveAttribute('aria-expanded', 'false');
+      expect(screen.getByText('PostgreSQL schema design')).not.toBeVisible();
+    });
+
+    it('expands and collapses the retrieved chunks with similarity chips', async () => {
+      renderDrawer(makeScore({ result: ragResult }));
+      const toggle = screen.getByRole('button', { name: /Evidence retrieved/ });
+
+      await userEvent.click(toggle);
+
+      expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      expect(toggle).toHaveAttribute(
+        'aria-controls',
+        screen.getByText('PostgreSQL schema design').closest('[id]')?.id,
+      );
+      expect(screen.getByText('PostgreSQL schema design')).toBeVisible();
+      expect(screen.getByText('repo: pg-tools readme')).toBeVisible();
+      expect(screen.getByText('87% similar')).toBeVisible();
+      expect(screen.getByText('50% similar')).toBeVisible();
+      expect(
+        screen.getByText('Chunks this criterion was scored from'),
+      ).toBeVisible();
+
+      await userEvent.click(toggle);
+
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      expect(screen.getByText('PostgreSQL schema design')).not.toBeVisible();
+    });
+
+    it('keeps expanded state per criterion', async () => {
+      const both: ScoreResult = {
+        ...ragResult,
+        criteria: ragResult.criteria.map((criterion) => ({
+          ...criterion,
+          retrieved: [
+            {
+              source: 'cv',
+              text: `chunk for ${criterion.criterionId}`,
+              similarity: 0.7,
+            },
+          ],
+        })),
+      };
+      renderDrawer(makeScore({ result: both }));
+      const toggles = screen.getAllByRole('button', {
+        name: /Evidence retrieved/,
+      });
+      await userEvent.click(toggles[0]);
+      expect(toggles[0]).toHaveAttribute('aria-expanded', 'true');
+      expect(toggles[1]).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('renders no toggle for full-text results or old results without retrieved', () => {
+      const legacy = {
+        ...result,
+        criteria: result.criteria.map((criterion) => {
+          const rest: Partial<CriterionScore> = { ...criterion };
+          delete rest.retrieved;
+          return rest;
+        }),
+      } as unknown as ScoreResult;
+      const { unmount } = renderDrawer(makeScore({}));
+      expect(
+        screen.queryByRole('button', { name: /Evidence retrieved/ }),
+      ).toBeNull();
+      unmount();
+      renderDrawer(makeScore({ result: legacy }));
+      expect(screen.getByText('PostgreSQL experience')).toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: /Evidence retrieved/ }),
+      ).toBeNull();
+    });
   });
 });
