@@ -1,11 +1,13 @@
 import { Global, Module } from '@nestjs/common';
 import { DrizzleApplicationsRepository } from './repositories/drizzle-applications.repository.js';
+import { DrizzleCandidateChunksRepository } from './repositories/drizzle-candidate-chunks.repository.js';
 import { DrizzleCandidatesRepository } from './repositories/drizzle-candidates.repository.js';
 import { DrizzleCvDocumentsRepository } from './repositories/drizzle-cv-documents.repository.js';
 import { DrizzleScoresRepository } from './repositories/drizzle-scores.repository.js';
 import { DrizzleRecruitersRepository } from './repositories/drizzle-recruiters.repository.js';
 import { DrizzleVacanciesRepository } from './repositories/drizzle-vacancies.repository.js';
 import { APPLICATIONS_REPOSITORY } from './repositories/applications.repository.js';
+import { CANDIDATE_CHUNKS_REPOSITORY } from './repositories/candidate-chunks.repository.js';
 import { CANDIDATES_REPOSITORY } from './repositories/candidates.repository.js';
 import { CV_DOCUMENTS_REPOSITORY } from './repositories/cv-documents.repository.js';
 import { RECRUITERS_REPOSITORY } from './repositories/recruiters.repository.js';
@@ -27,6 +29,10 @@ import { VACANCIES_REPOSITORY } from './repositories/vacancies.repository.js';
       useClass: DrizzleCvDocumentsRepository,
     },
     { provide: SCORES_REPOSITORY, useClass: DrizzleScoresRepository },
+    {
+      provide: CANDIDATE_CHUNKS_REPOSITORY,
+      useClass: DrizzleCandidateChunksRepository,
+    },
   ],
   exports: [
     RECRUITERS_REPOSITORY,
@@ -35,6 +41,7 @@ import { VACANCIES_REPOSITORY } from './repositories/vacancies.repository.js';
     APPLICATIONS_REPOSITORY,
     CV_DOCUMENTS_REPOSITORY,
     SCORES_REPOSITORY,
+    CANDIDATE_CHUNKS_REPOSITORY,
   ],
 })
 export class RepositoriesModule {}

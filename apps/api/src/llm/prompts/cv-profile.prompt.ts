@@ -50,7 +50,11 @@ function oneLine(text: string): string {
   return neutralise(text.replace(/\s+/g, ' ').trim());
 }
 
-function repoSection(repo: GithubRepoSnapshot): string {
+/**
+ * One repository as the scorer sees it in the `<github>` block. Also the text
+ * of a repo chunk in semantic search, so quotes match across both.
+ */
+export function renderGithubRepo(repo: GithubRepoSnapshot): string {
   const meta = [
     repo.language ? `language: ${oneLine(repo.language)}` : null,
     `stars: ${repo.stars}`,
@@ -70,6 +74,18 @@ function repoSection(repo: GithubRepoSnapshot): string {
   return lines.join('\n');
 }
 
+/** The "Profile:" and "Bio:" sections, in block order (escaped like the rest). */
+export function renderGithubProfile(snapshot: GithubSnapshot): string[] {
+  const sections = [`Profile: ${oneLine(snapshot.profileUrl)}`];
+  if (snapshot.bio) sections.push(`Bio: ${oneLine(snapshot.bio)}`);
+  return sections;
+}
+
+/** A language name escaped the same way as in the block. */
+export function renderGithubLanguage(name: string): string {
+  return oneLine(name);
+}
+
 /**
  * Renders a successful snapshot as plain text inside `<github>…</github>`.
  * Sections are added whole, in order (bio, then repos by rank), until the
@@ -79,13 +95,12 @@ function repoSection(repo: GithubRepoSnapshot): string {
  */
 export function buildGithubBlock(snapshot: GithubSnapshot): string {
   const sections: string[] = [];
-  sections.push(`Profile: ${oneLine(snapshot.profileUrl)}`);
-  if (snapshot.bio) sections.push(`Bio: ${oneLine(snapshot.bio)}`);
+  sections.push(...renderGithubProfile(snapshot));
   if (snapshot.repos.length === 0) {
     sections.push('No public repositories.');
   } else {
     sections.push('Repositories (most starred first):');
-    sections.push(...snapshot.repos.map(repoSection));
+    sections.push(...snapshot.repos.map(renderGithubRepo));
   }
 
   let remaining = GITHUB_BLOCK_MAX_CHARS - OPEN_TAG.length - CLOSE_TAG.length;

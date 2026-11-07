@@ -55,6 +55,11 @@ export interface AddApplicationRequest {
   candidateId: string;
 }
 
+/** POST /candidates/search body: natural-language query over the shared pool. 1-500 chars after trim. */
+export interface SearchCandidatesRequest {
+  query: string;
+}
+
 /**
  * POST /apply/:token body: the text fields of a `multipart/form-data` request.
  * The PDF CV goes in the `cv` file part.
@@ -255,3 +260,21 @@ export interface CandidateApplicationResponse {
   createdAt: IsoDateString;
   score: ApplicationScore;
 }
+
+/** A chunk of candidate text that matched a search, verbatim from its source. */
+export interface SearchSnippet {
+  source: 'cv' | 'github';
+  text: string;
+  similarity: number;
+}
+
+export interface CandidateSearchResult {
+  candidate: CandidateResponse;
+  /** Best chunk's cosine similarity, 0-1. Results are sorted by it, descending. */
+  similarity: number;
+  /** Up to 3 best-matching chunks, best first. */
+  snippets: SearchSnippet[];
+}
+
+/** POST /candidates/search -> 200 */
+export type SearchCandidatesResponse = CandidateSearchResult[];

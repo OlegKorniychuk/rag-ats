@@ -2,9 +2,11 @@ import { http, HttpResponse } from 'msw';
 import { APPLICATION_SCORE_SCHEMA_NAME } from '../../src/llm/application-score.schema.js';
 import { CV_PROFILE_SCHEMA_NAME } from '../../src/llm/cv-profile.schema.js';
 import { VACANCY_CRITERIA_SCHEMA_NAME } from '../../src/llm/vacancy-criteria.schema.js';
+import { EMBEDDING_DIMENSIONS } from '../../src/llm/embedding.constants.js';
 import { normaliseForMatch } from '../../src/scoring/verify-quotes.js';
 
 export const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
+export const OPENAI_EMBEDDINGS_URL = 'https://api.openai.com/v1/embeddings';
 
 export interface MockProfile {
   skills: string[];
@@ -302,18 +304,22 @@ export function openaiErrorHandler(
 
 /** Last-resort handler: an OpenAI call no test mocked fails loudly with a 500. */
 export function openaiUnmatchedHandler() {
-  return openaiSchemaHandler(null, (body) =>
-    HttpResponse.json(
+  return http.post('https://api.openai.com/v1/*', async ({ request }) => {
+    const what =
+      request.url === OPENAI_EMBEDDINGS_URL
+        ? 'embeddings'
+        : `schema "${schemaNameOf((await request.clone().json()) as OpenaiRequestBody) ?? 'unknown'}"`;
+    return HttpResponse.json(
       {
         error: {
-          message: `No MSW handler for OpenAI schema "${schemaNameOf(body) ?? 'unknown'}"`,
+          message: `No MSW handler for OpenAI ${what}`,
           type: 'server_error',
           code: null,
         },
       },
       { status: 500 },
-    ),
-  );
+    );
+  });
 }
 
 /**
@@ -334,4 +340,93 @@ export function captureOpenaiRequests(schemaName?: string) {
       }
     },
   };
+}
+
+/** Like `captureOpenaiRequests`, for POST /v1/embeddings requests. */
+export function captureOpenaiEmbeddingRequests() {
+  const bodies: OpenaiRequestBody[] = [];
+  return {
+    bodies,
+    listener: async ({ request }: { request: Request }) => {
+      if (request.method === 'POST' && request.url === OPENAI_EMBEDDINGS_URL) {
+        bodies.push((await request.clone().json()) as OpenaiRequestBody);
+      }
+    },
+  };
+}
+
+// ---------- Embeddings ----------
+
+const EMBEDDING_MODEL = 'text-embedding-3-small';
+
+function fnv1a(token: string): number {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < token.length; i++) {
+    hash ^= token.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193) >>> 0;
+  }
+  return hash;
+}
+
+/**
+ * Deterministic fake embedding: a hashed bag of lowercase words, L2-normalised.
+ * Cosine similarity then tracks keyword overlap, so tests can assert relevance.
+ */
+export function fakeEmbedding(text: string): number[] {
+  const vector = new Array<number>(EMBEDDING_DIMENSIONS).fill(0);
+  const tokens = text
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length > 0);
+  if (tokens.length === 0) {
+    vector[0] = 1;
+    return vector;
+  }
+  for (const token of tokens) vector[fnv1a(token) % EMBEDDING_DIMENSIONS] += 1;
+  const norm = Math.sqrt(vector.reduce((sum, x) => sum + x * x, 0));
+  return vector.map((x) => x / norm);
+}
+
+function float32Base64(vector: number[]): string {
+  return Buffer.from(new Float32Array(vector).buffer).toString('base64');
+}
+
+/** Successful POST /v1/embeddings: `fakeEmbedding` of every input, in order. */
+export function openaiEmbeddingsHandler(options: HandlerOptions = {}) {
+  return http.post(OPENAI_EMBEDDINGS_URL, async ({ request }) => {
+    const body = (await request.clone().json()) as OpenaiRequestBody;
+    await options.before?.();
+    const inputs: string[] = Array.isArray(body.input)
+      ? body.input
+      : [body.input];
+    // The SDK asks for base64 unless the caller picked an encoding.
+    const base64 = body.encoding_format === 'base64';
+    const tokens = inputs.reduce(
+      (sum, text) => sum + text.split(/\s+/).filter(Boolean).length,
+      0,
+    );
+    return HttpResponse.json({
+      object: 'list',
+      data: inputs.map((text, index) => {
+        const embedding = fakeEmbedding(text);
+        return {
+          object: 'embedding',
+          index,
+          embedding: base64 ? float32Base64(embedding) : embedding,
+        };
+      }),
+      model: options.model ?? EMBEDDING_MODEL,
+      usage: { prompt_tokens: tokens, total_tokens: tokens },
+    });
+  });
+}
+
+/** HTTP error for every POST /v1/embeddings request. */
+export function openaiEmbeddingsErrorHandler(status = 500) {
+  return http.post(OPENAI_EMBEDDINGS_URL, () =>
+    HttpResponse.json(
+      { error: { message: 'boom', type: 'server_error', code: null } },
+      { status },
+    ),
+  );
 }

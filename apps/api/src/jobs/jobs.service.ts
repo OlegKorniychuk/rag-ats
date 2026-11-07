@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PgBoss } from 'pg-boss';
 import {
+  EMBED_CANDIDATE_QUEUE,
   EXTRACT_VACANCY_CRITERIA_QUEUE,
   PARSE_CANDIDATE_QUEUE,
   SCORE_APPLICATION_QUEUE,
+  type EmbedCandidateJob,
   type ExtractVacancyCriteriaJob,
   type ParseCandidateJob,
   type ScoreApplicationJob,
@@ -51,5 +53,17 @@ export class JobsService {
     for (const applicationId of applicationIds) {
       await this.enqueueScore(applicationId);
     }
+  }
+
+  /**
+   * At most one QUEUED embed job per candidate (`short` policy); one that is
+   * already running does not block the next, so a re-parse landing mid-embed
+   * still queues its own job (the running one drops its stale result).
+   */
+  async enqueueEmbed(candidateId: string, cvDocumentId: string): Promise<void> {
+    const payload: EmbedCandidateJob = { candidateId, cvDocumentId };
+    await this.boss.send(EMBED_CANDIDATE_QUEUE, payload, {
+      singletonKey: candidateId,
+    });
   }
 }

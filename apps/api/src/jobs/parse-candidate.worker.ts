@@ -78,14 +78,17 @@ export class ParseCandidateWorker {
         ? await this.githubFetcher.fetch(username)
         : null;
       const profile = await this.parser.parse(text, snapshot);
-      const applicationIds = await this.saveIfLatest(
+      const { saved, applicationIds } = await this.saveIfLatest(
         candidateId,
         cvDocumentId,
         profile,
         snapshot,
       );
-      // After the commit, so the scoring workers see the parsed profile.
+      // After the commit, so the downstream workers see the parsed profile.
+      // Scores first: they are what recruiters wait on; embedding is a
+      // background index.
       await this.enqueueScores(candidateId, applicationIds);
+      if (saved) await this.enqueueEmbed(candidateId, cvDocumentId);
     } catch (error) {
       await this.recordFailure(candidateId, cvDocumentId, error);
     }
@@ -94,7 +97,8 @@ export class ParseCandidateWorker {
   /**
    * Saves the profile and, in the same transaction, resets all of the
    * candidate's scores to `pending` (their results stay, now stale). Returns
-   * the application ids to score once the transaction has committed.
+   * whether the profile was saved (false: dropped as stale) and the
+   * application ids to score once the transaction has committed.
    */
   @Transactional()
   private async saveIfLatest(
@@ -102,13 +106,13 @@ export class ParseCandidateWorker {
     cvDocumentId: string,
     profile: ParsedProfile,
     snapshot: GithubSnapshot | null,
-  ): Promise<string[]> {
+  ): Promise<{ saved: boolean; applicationIds: string[] }> {
     const current = await this.candidates.findParseState(candidateId);
     if (current?.latestCvDocumentId !== cvDocumentId) {
       this.logger.log(
         `Dropping parse result for candidate ${candidateId}: CV ${cvDocumentId} is no longer the latest`,
       );
-      return [];
+      return { saved: false, applicationIds: [] };
     }
     await this.candidates.saveParsedProfile(
       candidateId,
@@ -116,7 +120,9 @@ export class ParseCandidateWorker {
       profile,
       snapshot,
     );
-    return this.scores.resetPendingForCandidate(candidateId);
+    const applicationIds =
+      await this.scores.resetPendingForCandidate(candidateId);
+    return { saved: true, applicationIds };
   }
 
   /**
@@ -132,6 +138,22 @@ export class ParseCandidateWorker {
     } catch (error) {
       this.logger.error(
         `Failed to enqueue scoring for candidate ${candidateId}: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+    }
+  }
+
+  /** Same reasoning: the startup sweep re-enqueues unembedded candidates. */
+  private async enqueueEmbed(
+    candidateId: string,
+    cvDocumentId: string,
+  ): Promise<void> {
+    try {
+      await this.jobs.enqueueEmbed(candidateId, cvDocumentId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to enqueue embedding for candidate ${candidateId}: ${
           error instanceof Error ? error.message : 'unknown error'
         }`,
       );

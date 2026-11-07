@@ -3,6 +3,7 @@ import { HttpNetworkFrame } from 'msw/experimental';
 import { githubCatchAllNotFoundHandler } from './github.handlers.js';
 import {
   openaiCriteriaHandler,
+  openaiEmbeddingsHandler,
   openaiProfileHandler,
   openaiScoreHandler,
   openaiUnmatchedHandler,
@@ -29,12 +30,14 @@ export const DEFAULT_MOCK_CRITERIA: MockCriterion[] = [
  * GitHub answers 404 by default, so parses stay CV-only and deterministic.
  * OpenAI calls are dispatched by schema name: the default score answer quotes
  * the first 40 characters of the `<cv>` sent for every criterion id in
- * `<criteria>` (always valid); any other schema name fails with a 500.
+ * `<criteria>` (always valid); any other schema name fails with a 500. Embeddings answer with the
+ * deterministic `fakeEmbedding` of every input.
  */
 export const server = setupServer(
   openaiProfileHandler(DEFAULT_MOCK_PROFILE),
   openaiCriteriaHandler(DEFAULT_MOCK_CRITERIA),
   openaiScoreHandler((body) => scoreFromRequest(body)),
+  openaiEmbeddingsHandler(),
   openaiUnmatchedHandler(),
   githubCatchAllNotFoundHandler(),
 );

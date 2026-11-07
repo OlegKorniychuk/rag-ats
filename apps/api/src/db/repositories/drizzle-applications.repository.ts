@@ -124,7 +124,7 @@ export class DrizzleApplicationsRepository implements ApplicationsRepository {
         // parsedCvDocumentId is read only to derive `score.stale`; it is
         // stripped from the candidate below
         candidate: {
-          columns: { parsedAt: false },
+          columns: { parsedAt: false, embeddedCvDocumentId: false },
           with: latestCvSummaryWith,
         },
         vacancy: { columns: { title: true, requirements: true } },

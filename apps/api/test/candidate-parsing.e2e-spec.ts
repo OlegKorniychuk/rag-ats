@@ -16,6 +16,7 @@ import {
   type MockProfile,
 } from './msw/openai.handlers.js';
 import { DEFAULT_MOCK_PROFILE, server } from './msw/server.js';
+import { waitForEmbedded } from './embed.util.js';
 import { waitForParseStatus } from './parse.util.js';
 
 const SECOND_PROFILE: MockProfile = {
@@ -131,6 +132,33 @@ describe('CV parsing (e2e)', () => {
       ...DEFAULT_MOCK_PROFILE,
       parseStatus: 'parsed',
     });
+  });
+
+  it('embeds a parsed candidate: CV and GitHub chunks exist and the embedded CV is recorded', async () => {
+    server.use(...githubHandlers());
+    const { applyToken } = await createVacancy();
+    const candidateId = await apply(
+      applyToken,
+      uniqueEmail(),
+      undefined,
+      `https://github.com/${GITHUB_USERNAME}`,
+    );
+    await waitForParseStatus(testApp.app, cookie, candidateId, 'parsed');
+
+    const embeddedCvId = await waitForEmbedded(testApp.app, candidateId);
+
+    const { rows } = await testApp.testDb.pool.query<{
+      source: string;
+      cv_document_id: string;
+      model: string;
+    }>(
+      'SELECT source, cv_document_id, model FROM candidate_chunks WHERE candidate_id = $1 ORDER BY chunk_index',
+      [candidateId],
+    );
+    expect(rows.map((r) => r.source)).toContain('cv');
+    expect(rows.map((r) => r.source)).toContain('github');
+    expect(rows.every((r) => r.cv_document_id === embeddedCvId)).toBe(true);
+    expect(rows.every((r) => r.model === 'text-embedding-3-small')).toBe(true);
   });
 
   it('enriches the parse with GitHub data and exposes only the public summary', async () => {

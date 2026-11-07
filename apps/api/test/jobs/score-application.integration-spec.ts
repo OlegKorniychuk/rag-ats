@@ -45,6 +45,7 @@ import {
   criterionIdsFromRequest,
   fabricatedScoreResponse,
   openaiCriteriaHandler,
+  openaiEmbeddingsHandler,
   openaiErrorHandler,
   openaiProfileHandler,
   openaiScoreHandler,
@@ -83,7 +84,8 @@ const GROUNDING_FAILURE = 'Could not ground the score in the CV';
 
 // OpenAI is the only HTTP dependency (GitHub is never called: seeded
 // candidates have no GitHub URL). Any unmocked request fails the test.
-const server = setupServer();
+// Embeddings always succeed: a parsed candidate gets an embed job.
+const server = setupServer(openaiEmbeddingsHandler());
 const scoreCapture = captureOpenaiRequests('application_score');
 const criteriaCapture = captureOpenaiRequests('vacancy_criteria');
 const profileCapture = captureOpenaiRequests('cv_profile');
@@ -147,6 +149,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       DATABASE_URL: 'postgres://unused',
       OPENAI_API_KEY: 'sk-test-dummy',
       OPENAI_MODEL: 'test-model',
+      OPENAI_EMBEDDING_MODEL: 'test-embedding-model',
       JOBS_POLL_INTERVAL_SECONDS: 0.5,
     } as EnvConfig;
 

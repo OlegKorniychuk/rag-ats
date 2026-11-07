@@ -1,5 +1,5 @@
 import type { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
+import { Test, type TestingModuleBuilder } from '@nestjs/testing';
 import { configureApp } from '../src/app.setup.js';
 import { AppModule } from '../src/app.module.js';
 import { DRIZZLE } from '../src/db/db.tokens.js';
@@ -24,6 +24,8 @@ export interface TestApp {
 // runs before any test file's imports.
 export interface CreateTestAppOptions {
   beforeInit?: (app: INestApplication) => void;
+  /** Adds provider overrides before the module is compiled. */
+  overrides?: (builder: TestingModuleBuilder) => TestingModuleBuilder;
 }
 
 export async function createTestApp(
@@ -31,12 +33,12 @@ export async function createTestApp(
 ): Promise<TestApp> {
   const testDb = await createTestDatabase();
 
-  const moduleRef = await Test.createTestingModule({
+  const builder = Test.createTestingModule({
     imports: [AppModule],
   })
     .overrideProvider(DRIZZLE)
-    .useValue(testDb.db)
-    .compile();
+    .useValue(testDb.db);
+  const moduleRef = await (options.overrides?.(builder) ?? builder).compile();
 
   const app = moduleRef.createNestApplication();
   configureApp(app);

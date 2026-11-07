@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { jest } from '@jest/globals';
 import { Global, Module } from '@nestjs/common';
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapter-drizzle-orm';
@@ -28,6 +29,7 @@ import {
 } from '../msw/github.handlers.js';
 import {
   captureOpenaiRequests,
+  openaiEmbeddingsHandler,
   openaiErrorHandler,
   openaiProfileHandler,
   openaiRefusalHandler,
@@ -48,7 +50,11 @@ const PROFILE: MockProfile = {
 
 // OpenAI and GitHub are the only HTTP dependencies, both mocked; any other
 // request fails the test. GitHub answers 404 unless a test installs handlers.
-const server = setupServer(githubCatchAllNotFoundHandler());
+// Embeddings always succeed: a parsed candidate gets an embed job.
+const server = setupServer(
+  githubCatchAllNotFoundHandler(),
+  openaiEmbeddingsHandler(),
+);
 const capture = captureOpenaiRequests();
 const githubCapture = captureGithubRequests();
 
@@ -88,6 +94,7 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
       DATABASE_URL: 'postgres://unused',
       OPENAI_API_KEY: 'sk-test-dummy',
       OPENAI_MODEL: 'test-model',
+      OPENAI_EMBEDDING_MODEL: 'test-embedding-model',
       JOBS_POLL_INTERVAL_SECONDS: 0.5,
     } as EnvConfig;
 
@@ -207,6 +214,54 @@ describe('CV parse jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect(capture.bodies).toHaveLength(1);
       const state = await candidates.findParseState(candidateId);
       expect(state?.parsedCvDocumentId).toBe(cvIds[0]);
+    });
+
+    it('enqueues an embed job once the profile is saved', async () => {
+      server.use(openaiProfileHandler(PROFILE));
+      const { candidateId, cvIds } = await seedCandidate();
+
+      await moduleRef!.get(JobsService).enqueueParse(candidateId, cvIds[0]);
+      await waitForStatus(candidateId, 'parsed');
+
+      const embedded = await waitFor(
+        () => candidates.findEmbedState(candidateId),
+        (state) => state?.embeddedCvDocumentId === cvIds[0],
+      );
+      expect(embedded?.parsedCvDocumentId).toBe(cvIds[0]);
+      const count = await testDb.pool.query<{ n: string }>(
+        'SELECT count(*) AS n FROM candidate_chunks WHERE candidate_id = $1',
+        [candidateId],
+      );
+      expect(Number(count.rows[0].n)).toBeGreaterThan(0);
+    });
+
+    it('does not enqueue an embed job for a dropped (stale) parse result', async () => {
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      let started!: () => void;
+      const requestStarted = new Promise<void>(
+        (resolve) => (started = resolve),
+      );
+      server.use(
+        openaiProfileHandler(PROFILE, {
+          before: async () => {
+            started();
+            await gate;
+          },
+        }),
+      );
+      const { candidateId, cvIds } = await seedCandidate(['old cv text']);
+      const enqueueEmbed = jest.spyOn(JobsService.prototype, 'enqueueEmbed');
+      const worker = moduleRef!.get(ParseCandidateWorker);
+
+      const running = worker.handle({ candidateId, cvDocumentId: cvIds[0] });
+      await requestStarted;
+      await addCv(candidateId, 'new cv text', 5);
+      release();
+      await running;
+
+      expect(enqueueEmbed).not.toHaveBeenCalledWith(candidateId, cvIds[0]);
+      enqueueEmbed.mockRestore();
     });
 
     it('runs outside a request: handle() provides its own CLS context', async () => {

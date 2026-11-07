@@ -1,7 +1,16 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
-import { applyWithCv, fixtureBytes } from './apply.util.js';
+import { applyWithCv, applyWithCvBytes, fixtureBytes } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
+import { waitForEmbedded } from './embed.util.js';
+import {
+  captureOpenaiEmbeddingRequests,
+  openaiEmbeddingsErrorHandler,
+} from './msw/openai.handlers.js';
+import { server } from './msw/server.js';
+import { waitForParseStatus } from './parse.util.js';
+import { textPdf } from './pdf.util.js';
+import { SEARCH_MIN_SIMILARITY } from '../src/candidates/search/search.constants.js';
 
 function uniqueEmail(): string {
   return `${randomUUID()}@example.com`;
@@ -11,7 +20,13 @@ describe('Candidates (e2e)', () => {
   let testApp: TestApp;
 
   beforeAll(async () => {
-    testApp = await createTestApp();
+    // The fake embedding model scores keyword overlap, so a short query
+    // against a CV-sized chunk lands far below the production threshold
+    // (0.3, tuned for real embeddings). Lower it; "no match" stays at ~0.
+    testApp = await createTestApp({
+      overrides: (builder) =>
+        builder.overrideProvider(SEARCH_MIN_SIMILARITY).useValue(0.05),
+    });
   }, 60_000);
 
   afterAll(async () => {
@@ -385,6 +400,223 @@ describe('Candidates (e2e)', () => {
       await request(testApp.app.getHttpServer())
         .get(`/candidates/${randomUUID()}/applications`)
         .expect(401);
+    });
+  });
+
+  describe('POST /candidates/search', () => {
+    const K8S_CV = [
+      'Alex Kube - Platform Engineer',
+      'Operated Kubernetes clusters on AWS EKS for five years.',
+      'Wrote Terraform modules for networking, IAM and clusters.',
+      'Helm charts, ArgoCD deployments, Prometheus and Grafana monitoring.',
+    ];
+    const REACT_CV = [
+      'Rita Reactor - Frontend Developer',
+      'Built React and TypeScript single page applications.',
+      'Unit tests with Jest and Testing Library, Storybook component library.',
+      'Accessibility reviews and design system maintenance.',
+    ];
+    const DATA_CV = [
+      'Dana Datum - Data Engineer',
+      'Python pandas and Spark pipelines orchestrated with Airflow.',
+      'Snowflake warehouse modelling with dbt.',
+    ];
+
+    let agent: Awaited<ReturnType<typeof authenticatedAgent>>;
+    let cookie: string[];
+    let vacancy: { id: string; applyToken: string };
+    let k8sId: string;
+    let reactId: string;
+    let dataId: string;
+
+    async function applyPdf(
+      applyToken: string,
+      email: string,
+      lines: string[],
+    ): Promise<string> {
+      await applyWithCvBytes(
+        testApp.app,
+        applyToken,
+        { name: 'Search Candidate', email },
+        textPdf(lines),
+      ).expect(201);
+      const id = await findCandidateId(agent, email);
+      await waitForParseStatus(testApp.app, cookie, id, 'parsed');
+      await waitForEmbedded(testApp.app, id);
+      return id;
+    }
+
+    function search(query: unknown) {
+      return agent.post('/candidates/search').send({ query });
+    }
+
+    interface SearchBody {
+      candidate: { id: string };
+      similarity: number;
+      snippets: { source: string; text: string; similarity: number }[];
+    }
+
+    beforeAll(async () => {
+      const email = uniqueEmail();
+      const password = 'password123';
+      agent = request.agent(testApp.app.getHttpServer());
+      await agent.post('/auth/register').send({ email, password }).expect(201);
+      const login = await agent
+        .post('/auth/login')
+        .send({ email, password })
+        .expect(201);
+      cookie = login.headers['set-cookie'] as unknown as string[];
+
+      vacancy = await createVacancyWithToken(agent);
+      k8sId = await applyPdf(vacancy.applyToken, uniqueEmail(), K8S_CV);
+      reactId = await applyPdf(vacancy.applyToken, uniqueEmail(), REACT_CV);
+      dataId = await applyPdf(vacancy.applyToken, uniqueEmail(), DATA_CV);
+    }, 60_000);
+
+    it('ranks the matching candidate first, with a matching snippet and the full candidate', async () => {
+      const res = await search('kubernetes terraform').expect(200);
+      const body = res.body as SearchBody[];
+
+      expect(body[0].candidate.id).toBe(k8sId);
+      for (const other of body.slice(1)) {
+        expect(body[0].similarity).toBeGreaterThanOrEqual(other.similarity);
+      }
+      expect(body.map((r) => r.candidate.id)).not.toContain(reactId);
+      expect(body.map((r) => r.candidate.id)).not.toContain(dataId);
+
+      expect(body[0].similarity).toBeGreaterThan(0);
+      expect(body[0].similarity).toBeLessThanOrEqual(1);
+      expect(body[0].snippets.length).toBeGreaterThanOrEqual(1);
+      expect(body[0].snippets.length).toBeLessThanOrEqual(3);
+      expect(body[0].snippets[0]).toEqual({
+        source: 'cv',
+        text: expect.stringContaining('Kubernetes'),
+        similarity: body[0].similarity,
+      });
+      // rounded to 3 decimals
+      expect(Math.round(body[0].similarity * 1000) / 1000).toBe(
+        body[0].similarity,
+      );
+
+      // the candidate is the same full CandidateResponse GET /candidates/:id returns
+      const detail = await agent.get(`/candidates/${k8sId}`).expect(200);
+      expect(body[0].candidate).toEqual(detail.body);
+    });
+
+    it('finds a different candidate for a different query', async () => {
+      const res = await search('react typescript jest').expect(200);
+
+      expect((res.body as SearchBody[])[0].candidate.id).toBe(reactId);
+    });
+
+    it('is visible to any recruiter (shared pool)', async () => {
+      const other = await authenticatedAgent();
+
+      const res = await other
+        .post('/candidates/search')
+        .send({ query: 'airflow snowflake dbt' })
+        .expect(200);
+
+      expect((res.body as SearchBody[])[0].candidate.id).toBe(dataId);
+    });
+
+    it('returns an empty list when nothing matches', async () => {
+      const res = await search('zzzz qqqq').expect(200);
+
+      expect(res.body).toEqual([]);
+    });
+
+    it('embeds the trimmed query with exactly one embeddings request', async () => {
+      const capture = captureOpenaiEmbeddingRequests();
+      server.events.on('request:start', capture.listener);
+      try {
+        await search('  kubernetes terraform \n').expect(200);
+      } finally {
+        server.events.removeListener('request:start', capture.listener);
+      }
+
+      expect(capture.bodies).toHaveLength(1);
+      expect(capture.bodies[0].input).toEqual(['kubernetes terraform']);
+    });
+
+    it.each([
+      ['a missing query', undefined],
+      ['an empty query', ''],
+      ['a whitespace-only query', '   \t\n '],
+      ['a query over 500 characters', 'a'.repeat(501)],
+      ['a numeric query', 42],
+      ['an array query', ['kubernetes']],
+    ])('rejects %s', async (_label, query) => {
+      const capture = captureOpenaiEmbeddingRequests();
+      server.events.on('request:start', capture.listener);
+      try {
+        await search(query).expect(400);
+      } finally {
+        server.events.removeListener('request:start', capture.listener);
+      }
+      expect(capture.bodies).toHaveLength(0);
+    });
+
+    it('accepts a query of exactly 500 characters', async () => {
+      await search('a'.repeat(500)).expect(200);
+    });
+
+    it('rejects unknown body fields', async () => {
+      await agent
+        .post('/candidates/search')
+        .send({ query: 'kubernetes', limit: 5 })
+        .expect(400);
+    });
+
+    it('rejects a request with no session cookie', async () => {
+      await request(testApp.app.getHttpServer())
+        .post('/candidates/search')
+        .send({ query: 'kubernetes' })
+        .expect(401);
+    });
+
+    it('returns 503 when the embeddings service fails', async () => {
+      server.use(openaiEmbeddingsErrorHandler(500));
+
+      const res = await search('kubernetes terraform').expect(503);
+
+      expect(res.body.message).toBe('Search is temporarily unavailable');
+    });
+
+    it("replaces a candidate's chunks when a newer CV is embedded", async () => {
+      const email = uniqueEmail();
+      const id = await applyPdf(vacancy.applyToken, email, [
+        'Old Timer',
+        'Fortran and COBOL mainframe batch programming.',
+      ]);
+      const before = await search('fortran cobol mainframe').expect(200);
+      const beforeHit = (before.body as SearchBody[]).find(
+        (r) => r.candidate.id === id,
+      );
+      expect(beforeHit?.snippets[0].text).toContain('COBOL');
+
+      // re-apply with the same email and a different CV, on another vacancy
+      const second = await createVacancyWithToken(agent);
+      await applyWithCvBytes(
+        testApp.app,
+        second.applyToken,
+        { name: 'Search Candidate', email },
+        textPdf(['Old Timer', 'Haskell and OCaml functional programming.']),
+      ).expect(201);
+      const latest = await agent.get(`/candidates/${id}`).expect(200);
+      const newCvId = (latest.body as { cv: { id: string } }).cv.id;
+      await waitForParseStatus(testApp.app, cookie, id, 'parsed');
+      await waitForEmbedded(testApp.app, id, { cvDocumentId: newCvId });
+
+      const old = await search('fortran cobol mainframe').expect(200);
+      expect(
+        (old.body as SearchBody[]).map((r) => r.candidate.id),
+      ).not.toContain(id);
+      const fresh = await search('haskell ocaml functional').expect(200);
+      const freshHit = (fresh.body as SearchBody[]).find(
+        (r) => r.candidate.id === id,
+      );
+      expect(freshHit?.snippets[0].text).toContain('Haskell');
     });
   });
 });

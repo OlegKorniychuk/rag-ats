@@ -196,6 +196,32 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
     expect(found).toBeNull();
   });
 
+  it('findByIds returns the requested candidates in the public shape', async () => {
+    const a = await seedCandidate();
+    const b = await seedCandidate();
+    await seedCandidate();
+
+    const found = await candidatesRepository.findByIds([a.id, b.id]);
+
+    expect(found.map((c) => c.id).sort()).toEqual([a.id, b.id].sort());
+    const fromAll = (await candidatesRepository.findAll()).find(
+      (c) => c.id === a.id,
+    );
+    expect(found.find((c) => c.id === a.id)).toEqual(fromAll);
+    expect(found[0].cv.filename).toBe('cv.pdf');
+    expect(found[0]).not.toHaveProperty('embeddedCvDocumentId');
+    expect(found[0]).not.toHaveProperty('parsedCvDocumentId');
+  });
+
+  it('findByIds skips unknown ids and returns [] for no ids', async () => {
+    const a = await seedCandidate();
+
+    const found = await candidatesRepository.findByIds([a.id, randomUUID()]);
+
+    expect(found.map((c) => c.id)).toEqual([a.id]);
+    expect(await candidatesRepository.findByIds([])).toEqual([]);
+  });
+
   it('findByEmail returns the row for a known email', async () => {
     const created = await seedCandidate();
 
@@ -550,6 +576,82 @@ describe('CandidatesRepository (Testcontainers integration)', () => {
       expect(Object.keys(updated).sort()).toEqual(
         expectedKeys.filter((k) => k !== 'cv' && k !== 'github'),
       );
+    });
+  });
+
+  describe('embed state', () => {
+    async function parsedCandidate() {
+      const created = await seedCandidate();
+      const cvId = (await candidatesRepository.findById(created.id))!.cv.id;
+      await candidatesRepository.saveParsedProfile(
+        created.id,
+        cvId,
+        { skills: [], experience: '', projects: [], summary: '' },
+        null,
+      );
+      return { id: created.id, cvId };
+    }
+
+    it('reports the parse and embed state, null for an unknown candidate', async () => {
+      const { id, cvId } = await parsedCandidate();
+
+      expect(await candidatesRepository.findEmbedState(id)).toEqual({
+        parseStatus: 'parsed',
+        parsedCvDocumentId: cvId,
+        embeddedCvDocumentId: null,
+      });
+      expect(
+        await candidatesRepository.findEmbedState(randomUUID()),
+      ).toBeNull();
+    });
+
+    it('markEmbedded records the CV and keeps it out of the public shape', async () => {
+      const { id, cvId } = await parsedCandidate();
+
+      await candidatesRepository.markEmbedded(id, cvId);
+
+      expect(
+        (await candidatesRepository.findEmbedState(id))?.embeddedCvDocumentId,
+      ).toBe(cvId);
+      expect(
+        JSON.stringify(await candidatesRepository.findById(id)),
+      ).not.toContain('embeddedCvDocumentId');
+    });
+
+    it('lists parsed candidates that are not embedded from their parsed CV', async () => {
+      const unembedded = await parsedCandidate();
+      const embedded = await parsedCandidate();
+      await candidatesRepository.markEmbedded(embedded.id, embedded.cvId);
+      const outdated = await parsedCandidate();
+      await candidatesRepository.markEmbedded(outdated.id, outdated.cvId);
+      const newCv = await cvDocumentsRepository.create({
+        candidateId: outdated.id,
+        filename: 'cv2.pdf',
+        sizeBytes: 3,
+        content: Buffer.from('pdf'),
+        text: 'newer cv',
+      });
+      await candidatesRepository.saveParsedProfile(
+        outdated.id,
+        newCv.id,
+        { skills: [], experience: '', projects: [], summary: '' },
+        null,
+      );
+      const pending = await seedCandidate();
+
+      const backlog = await candidatesRepository.findEmbedBacklog();
+
+      expect(backlog).toContainEqual({
+        candidateId: unembedded.id,
+        cvDocumentId: unembedded.cvId,
+      });
+      expect(backlog).toContainEqual({
+        candidateId: outdated.id,
+        cvDocumentId: newCv.id,
+      });
+      const ids = backlog.map((b) => b.candidateId);
+      expect(ids).not.toContain(embedded.id);
+      expect(ids).not.toContain(pending.id);
     });
   });
 });
