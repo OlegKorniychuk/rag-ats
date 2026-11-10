@@ -214,7 +214,14 @@ function ScoreDrawerContent({
       )}
 
       {score.status === 'failed' && (
-        <Alert severity="error">{score.error || 'Scoring failed'}</Alert>
+        <Alert severity="error">
+          {score.error || 'Scoring failed'}
+          {score.result && (
+            <Typography variant="body2" sx={{ mt: 0.5 }}>
+              Showing the previous score.
+            </Typography>
+          )}
+        </Alert>
       )}
 
       {score.status === 'scored' && score.stale && (

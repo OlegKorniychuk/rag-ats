@@ -33,6 +33,7 @@ function CardBody({ application, onOpenScore }: ApplicationCardProps) {
         </Stack>
         <ScoreBadge
           score={application.score}
+          parseStatus={application.candidate.parseStatus}
           onClick={() => onOpenScore(application.id)}
         />
       </Stack>

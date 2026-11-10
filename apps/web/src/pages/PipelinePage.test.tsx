@@ -345,7 +345,7 @@ describe('PipelinePage', () => {
     expect(router.state.location.pathname).toBe('/vacancies/v1');
   });
 
-  it('polls while a score is pending and stops once it is scored', async () => {
+  it('polls while a score is pending and drops to the idle interval once it is scored', async () => {
     let calls = 0;
     server.use(
       http.get(`${baseUrl}/vacancies/v1`, () => HttpResponse.json(vacancy)),

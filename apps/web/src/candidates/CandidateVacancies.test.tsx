@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router';
 import type {
   ApplicationScore,
   CandidateApplicationResponse,
+  ParseStatus,
 } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { CandidateVacancies } from './CandidateVacancies';
@@ -38,7 +39,7 @@ function makeApplication(
   };
 }
 
-function renderSection() {
+function renderSection(parseStatus: ParseStatus = 'parsed') {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
@@ -49,7 +50,12 @@ function renderSection() {
       </QueryClientProvider>
     );
   }
-  return render(<CandidateVacancies candidateId="c1" />, { wrapper: Wrapper });
+  return render(
+    <CandidateVacancies candidateId="c1" parseStatus={parseStatus} />,
+    {
+      wrapper: Wrapper,
+    },
+  );
 }
 
 function respondWith(applications: CandidateApplicationResponse[]) {
@@ -124,6 +130,19 @@ describe('CandidateVacancies', () => {
     expect(
       await screen.findByRole('img', { name: 'Fit score: Waiting for CV' }),
     ).toHaveTextContent('Waiting for CV');
+  });
+
+  it('shows a static chip when the score waits on a failed parse', async () => {
+    respondWith([
+      makeApplication({ score: { ...pendingScore, waitingForParse: true } }),
+    ]);
+    renderSection('failed');
+
+    const badge = await screen.findByRole('img', {
+      name: 'Fit score: waiting for CV (parse failed)',
+    });
+    expect(badge).toHaveTextContent('Waiting for CV (parse failed)');
+    expect(badge.querySelector('[role="progressbar"]')).toBeNull();
   });
 
   it('marks closed vacancies and added applications', async () => {
