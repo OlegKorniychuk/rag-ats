@@ -1,0 +1,1 @@
+ALTER TABLE "application_scores" ADD COLUMN "failure_details" jsonb;

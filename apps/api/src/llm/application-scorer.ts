@@ -38,10 +38,27 @@ export class LlmScoreError extends Error {
 
 /** The model's answer could not be tied to verbatim CV/GitHub text, even after a retry. */
 export class LlmGroundingError extends LlmScoreError {
-  constructor(message = 'Could not ground the score in the CV') {
+  /**
+   * The last attempt's verification problems (capped, see `capProblems`).
+   * They quote CV text: for the database row only, never for logs or the API.
+   */
+  constructor(
+    readonly problems: readonly string[] = [],
+    message = 'Could not ground the score in the CV',
+  ) {
     super(message);
     this.name = 'LlmGroundingError';
   }
+}
+
+export const MAX_GROUNDING_PROBLEMS = 20;
+export const MAX_GROUNDING_PROBLEM_CHARS = 500;
+
+/** Bounds what is stored about a grounding failure. */
+export function capProblems(problems: readonly string[]): string[] {
+  return problems
+    .slice(0, MAX_GROUNDING_PROBLEMS)
+    .map((problem) => problem.slice(0, MAX_GROUNDING_PROBLEM_CHARS));
 }
 
 export interface ScoringCriterion {
@@ -158,7 +175,7 @@ export class ApplicationScorer {
       const check = verifyQuotes(normalised, sources, expectedIds);
       if (!check.valid) {
         this.logger.warn(
-          `Score attempt ${attempt} failed quote verification: problems=${check.problems.length}`,
+          `Score attempt ${attempt} failed quote verification: problems=${check.problems.length} (details stored on the score row when the score fails)`,
         );
         feedback = check.problems;
         continue;
@@ -189,7 +206,8 @@ export class ApplicationScorer {
       };
     }
 
-    throw new LlmGroundingError();
+    // `feedback` holds the last attempt's problems here.
+    throw new LlmGroundingError(capProblems(feedback ?? []));
   }
 
   private async callModel(

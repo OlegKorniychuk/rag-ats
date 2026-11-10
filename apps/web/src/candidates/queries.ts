@@ -1,3 +1,4 @@
+import type { CandidateResponse } from '@rag-ats/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addCandidateToVacancy } from '../api/vacancies';
 import {
@@ -50,13 +51,25 @@ export function useCandidate(id: string) {
 }
 
 // Scores of a candidate that is still parsing are already pending, so polling
-// on score progress alone also covers the parse.
+// on score progress alone also covers the parse. The rows don't carry the
+// candidate, so its parse status comes from the cached detail query (the
+// candidate page always loads it): a score waiting on a failed parse can't
+// progress, so it doesn't keep the polling going.
 export function useCandidateApplications(id: string) {
+  const queryClient = useQueryClient();
   return useQuery({
     queryKey: candidateKeys.applications(id),
     queryFn: () => listCandidateApplications(id),
-    refetchInterval: (query) =>
-      hasScoreInFlight(query.state.data) ? SCORE_POLL_INTERVAL_MS : false,
+    refetchInterval: (query) => {
+      const parseStatus = queryClient.getQueryData<CandidateResponse>(
+        candidateKeys.detail(id),
+      )?.parseStatus;
+      const rows = query.state.data?.map(({ score }) => ({
+        score,
+        candidate: { parseStatus: parseStatus ?? 'parsed' },
+      }));
+      return hasScoreInFlight(rows) ? SCORE_POLL_INTERVAL_MS : false;
+    },
   });
 }
 

@@ -193,7 +193,7 @@ export function CandidatePage() {
         </Typography>
       </Stack>
 
-      <CandidateVacancies candidateId={id} />
+      <CandidateVacancies candidateId={id} parseStatus={parseStatus} />
 
       <GithubSection github={github} />
 

@@ -12,6 +12,12 @@ import {
   useVacancyMatches,
 } from './queries';
 
+vi.mock('./score', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('./score')>()),
+  SCORE_POLL_INTERVAL_MS: 50,
+  BOARD_IDLE_POLL_INTERVAL_MS: 1000,
+}));
+
 const baseUrl = 'http://localhost:3000';
 
 const candidate = {
@@ -24,6 +30,7 @@ const candidate = {
   experience: '',
   projects: [],
   summary: '',
+  parseStatus: 'parsed',
   createdAt: '2024-01-01T00:00:00.000Z',
 };
 
@@ -35,14 +42,17 @@ const application = {
   source: 'applied',
   createdAt: '2024-01-01T00:00:00.000Z',
   candidate,
+  // settled, so only the (slower) idle poll interval below refetches it
   score: {
-    status: 'pending',
+    status: 'scored',
     error: null,
     waitingForParse: false,
     stale: false,
     result: null,
   },
 };
+
+const pendingScore = { ...application.score, status: 'pending' };
 
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -68,6 +78,87 @@ describe('pipeline queries', () => {
     });
 
     await waitFor(() => expect(result.current.data).toEqual([application]));
+  });
+
+  it('useVacancyApplications keeps polling while a score is pending', async () => {
+    let calls = 0;
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        calls += 1;
+        return HttpResponse.json([{ ...application, score: pendingScore }]);
+      }),
+    );
+
+    renderHook(() => useVacancyApplications('v1'), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(calls).toBeGreaterThanOrEqual(3));
+  });
+
+  it('useVacancyApplications keeps refetching a settled board at the idle interval', async () => {
+    const times: number[] = [];
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        times.push(Date.now());
+        return HttpResponse.json([application]);
+      }),
+    );
+
+    renderHook(() => useVacancyApplications('v1'), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(times.length).toBeGreaterThanOrEqual(3), {
+      timeout: 5000,
+    });
+    // idle (1000 ms), not the 50 ms score interval and not off
+    expect(times[1] - times[0]).toBeGreaterThanOrEqual(800);
+    expect(times[2] - times[1]).toBeGreaterThanOrEqual(800);
+  });
+
+  it('useVacancyApplications uses the fast interval, not the idle one, while a score is pending', async () => {
+    const times: number[] = [];
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        times.push(Date.now());
+        return HttpResponse.json([{ ...application, score: pendingScore }]);
+      }),
+    );
+
+    renderHook(() => useVacancyApplications('v1'), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(times.length).toBeGreaterThanOrEqual(4));
+    // four fetches fit well inside a single idle interval
+    expect(times[3] - times[0]).toBeLessThan(1000);
+  });
+
+  it('useVacancyApplications falls back to the idle interval for a score waiting on a failed parse', async () => {
+    const times: number[] = [];
+    server.use(
+      http.get(`${baseUrl}/vacancies/v1/applications`, () => {
+        times.push(Date.now());
+        return HttpResponse.json([
+          {
+            ...application,
+            candidate: { ...candidate, parseStatus: 'failed' },
+            score: { ...pendingScore, waitingForParse: true },
+          },
+        ]);
+      }),
+    );
+
+    renderHook(() => useVacancyApplications('v1'), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(times.length).toBeGreaterThanOrEqual(2), {
+      timeout: 5000,
+    });
+    // refetches (not off) but slowly (not the 50 ms in-flight interval)
+    expect(times[1] - times[0]).toBeGreaterThanOrEqual(800);
   });
 
   it('applies the new stage optimistically before the response resolves', async () => {

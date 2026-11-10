@@ -9,7 +9,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import type { CandidateApplicationResponse } from '@rag-ats/shared';
+import type {
+  CandidateApplicationResponse,
+  ParseStatus,
+} from '@rag-ats/shared';
 import { QueryErrorAlert } from '../components/QueryErrorAlert';
 import { stageLabel } from '../pipeline/board';
 import { ScoreBadge } from '../pipeline/ScoreBadge';
@@ -20,8 +23,10 @@ const HEADING_ID = 'candidate-vacancies-heading';
 
 function VacancyRow({
   application,
+  parseStatus,
 }: {
   application: CandidateApplicationResponse;
+  parseStatus: ParseStatus;
 }) {
   return (
     <ListItem
@@ -44,12 +49,18 @@ function VacancyRow({
         <Chip label={stageLabel(application.stage)} size="small" />
         {application.source === 'added' && <AddedFromPoolIcon />}
       </Stack>
-      <ScoreBadge score={application.score} />
+      <ScoreBadge score={application.score} parseStatus={parseStatus} />
     </ListItem>
   );
 }
 
-export function CandidateVacancies({ candidateId }: { candidateId: string }) {
+export function CandidateVacancies({
+  candidateId,
+  parseStatus,
+}: {
+  candidateId: string;
+  parseStatus: ParseStatus;
+}) {
   const applications = useCandidateApplications(candidateId);
 
   return (
@@ -68,7 +79,11 @@ export function CandidateVacancies({ candidateId }: { candidateId: string }) {
       ) : (
         <List dense disablePadding>
           {applications.data.map((application) => (
-            <VacancyRow key={application.id} application={application} />
+            <VacancyRow
+              key={application.id}
+              application={application}
+              parseStatus={parseStatus}
+            />
           ))}
         </List>
       )}
