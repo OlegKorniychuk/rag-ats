@@ -21,6 +21,7 @@ import {
 } from '../db/repositories/scores.repository.js';
 import {
   ApplicationScorer,
+  LlmGroundingError,
   LlmScoreError,
   type ApplicationScoreResult,
   type ScoringCriterion,
@@ -253,7 +254,9 @@ export class ScoreApplicationWorker {
     try {
       const message =
         error instanceof LlmScoreError ? error.message : GENERIC_SCORE_ERROR;
-      await this.scores.markFailed(applicationId, message);
+      const details =
+        error instanceof LlmGroundingError ? error.problems : null;
+      await this.scores.markFailed(applicationId, message, details);
     } catch (recordError) {
       this.logger.error(
         `Could not record scoring failure for application ${applicationId}: ${

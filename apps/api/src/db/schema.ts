@@ -170,6 +170,9 @@ export const applicationScores = pgTable('application_scores', {
     .references(() => applications.id, { onDelete: 'cascade' }),
   status: scoreStatusEnum('status').notNull().default('pending'),
   error: text('error'),
+  // internal diagnosis of a failure (e.g. the rejected quotes of a grounding
+  // failure); never mapped into the API. Kept until a new outcome replaces it.
+  failureDetails: jsonb('failure_details').$type<string[]>(),
   // the last good score; kept while a rescore is pending
   result: jsonb('result').$type<ScoreResult>(),
   // what `result` was computed from, to derive staleness

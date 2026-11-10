@@ -547,7 +547,39 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect(scoreCapture.bodies).toHaveLength(2);
     });
 
-    it('records a generic message on an OpenAI error', async () => {
+    it('stores the grounding problems on the failed row, keeps them through a reset, and clears them on a good score', async () => {
+      server.use(
+        openaiScoreHandler((body) =>
+          fabricatedScoreResponse(criterionIdsFromRequest(body)),
+        ),
+      );
+      const { applicationId } = await seedApplication();
+
+      await enqueueScore(applicationId);
+      const failed = await waitForScore(applicationId, 'failed');
+
+      const details = (await rawScore(applicationId)).failure_details;
+      expect(Array.isArray(details)).toBe(true);
+      expect(details.length).toBeGreaterThan(0);
+      expect(details.join('\n')).toContain('not a verbatim excerpt');
+      // Never part of the API shape.
+      expect(failed).not.toHaveProperty('failureDetails');
+      expect(JSON.stringify(failed)).not.toContain('Imaginary Corp');
+
+      // A reset to pending keeps the last failure's details for diagnosis.
+      await scores.resetToPending(applicationId);
+      expect((await rawScore(applicationId)).failure_details).toEqual(details);
+
+      server.use(openaiScoreHandler((body) => scoreFromRequest(body)));
+      await enqueueScore(applicationId);
+      await waitForScore(applicationId, 'scored');
+
+      const row = await rawScore(applicationId);
+      expect(row.failure_details).toBeNull();
+      expect(row.error).toBeNull();
+    });
+
+    it('records a generic message on an OpenAI error, without failure details', async () => {
       server.use(openaiErrorHandler(500, 'application_score'));
       const { applicationId } = await seedApplication();
 
@@ -555,6 +587,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       const score = await waitForScore(applicationId, 'failed');
 
       expect(score.error).toBe('Could not score the application');
+      expect((await rawScore(applicationId)).failure_details).toBeNull();
     });
 
     it('fails the vacancy’s pending scores when criteria extraction fails', async () => {
