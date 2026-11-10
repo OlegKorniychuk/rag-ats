@@ -128,6 +128,9 @@ export const cvDocuments = pgTable(
     sizeBytes: integer('size_bytes').notNull(),
     content: bytea('content').notNull(),
     text: text('text').notNull(),
+    // hex SHA-256 of `content`; nullable only so the migration can backfill
+    // existing rows, the app always writes it
+    contentSha256: text('content_sha256'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (t) => [index('cv_documents_candidate_id_idx').on(t.candidateId)],

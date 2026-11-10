@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import {
   BadRequestException,
   ConflictException,
@@ -57,7 +58,11 @@ export type PublicVacancy = Pick<Vacancy, 'title' | 'requirements' | 'status'>;
 
 interface SavedApplication {
   candidateId: string;
-  cvDocumentId: string;
+  /**
+   * The CV stored by this application, which still has to be parsed; null when
+   * a repeat applicant's identical CV was reused and nothing needs parsing.
+   */
+  cvDocumentId: string | null;
   applicationId: string;
 }
 
@@ -140,21 +145,25 @@ export class ApplyService {
     // Enqueue only after the transaction committed, so the worker can see the
     // CV. The application is already saved, so an enqueue failure must not fail
     // the request: the candidate stays `pending` and the startup sweep
-    // re-enqueues it (a recruiter can also trigger a reparse).
-    try {
-      await this.jobs.enqueueParse(candidateId, cvDocumentId);
-    } catch (error) {
-      this.logger.error(
-        `Failed to enqueue CV parsing for candidate ${candidateId}: ${
-          error instanceof Error ? error.message : 'unknown error'
-        }`,
-      );
+    // re-enqueues it (a recruiter can also trigger a reparse). A reused CV
+    // (cvDocumentId null) needs no parse.
+    if (cvDocumentId !== null) {
+      try {
+        await this.jobs.enqueueParse(candidateId, cvDocumentId);
+      } catch (error) {
+        this.logger.error(
+          `Failed to enqueue CV parsing for candidate ${candidateId}: ${
+            error instanceof Error ? error.message : 'unknown error'
+          }`,
+        );
+      }
     }
-    // The candidate is `pending` again here, so the score job normally returns
-    // at once and the parse completion (which resets and enqueues all of the
-    // candidate's scores) does the real work; this keeps the job queued even
-    // if that is ever skipped. Same failure handling as above: the `pending`
-    // score is recovered by the startup sweep.
+    // When a parse was enqueued the candidate is `pending` again, so the score
+    // job normally returns at once and the parse completion (which resets and
+    // enqueues all of the candidate's scores) does the real work; this keeps
+    // the job queued even if that is ever skipped. When the CV was reused the
+    // candidate is already parsed and this job does the scoring. Same failure
+    // handling as above: the `pending` score is recovered by the startup sweep.
     try {
       await this.jobs.enqueueScore(applicationId);
     } catch (error) {
@@ -183,6 +192,7 @@ export class ApplyService {
       throw new ConflictException('Vacancy is closed');
     }
 
+    const contentSha256 = createHash('sha256').update(cv.content).digest('hex');
     const existing = await this.candidatesRepository.findByEmail(dto.email);
 
     // check for a duplicate application before touching the candidate, so a
@@ -217,13 +227,25 @@ export class ApplyService {
           summary: '',
         });
 
-    const cvDocument = await this.cvDocumentsRepository.create({
-      candidateId: candidate.id,
-      filename: cv.filename,
-      sizeBytes: cv.content.length,
-      content: cv.content,
-      text: cv.text,
-    });
+    // A repeat applicant re-sending the identical CV with an unchanged GitHub
+    // URL has nothing new to parse: keep the parsed profile and its CV, and
+    // skip the paid LLM call (the new application is scored from it as is).
+    const reuseCv =
+      existing !== null &&
+      existing.parseStatus === 'parsed' &&
+      (dto.githubUrl === undefined || dto.githubUrl === existing.githubUrl) &&
+      (await this.hasSameLatestCv(existing.id, contentSha256));
+
+    const cvDocument = reuseCv
+      ? null
+      : await this.cvDocumentsRepository.create({
+          candidateId: candidate.id,
+          filename: cv.filename,
+          sizeBytes: cv.content.length,
+          content: cv.content,
+          contentSha256,
+          text: cv.text,
+        });
 
     const application = await this.applicationsRepository.create({
       vacancyId: vacancy.id,
@@ -234,12 +256,25 @@ export class ApplyService {
 
     // Repeat applicants keep their old profile visible while the new CV is
     // re-parsed; new candidates are already pending.
-    await this.candidatesRepository.setParseStatus(candidate.id, 'pending');
+    if (cvDocument) {
+      await this.candidatesRepository.setParseStatus(candidate.id, 'pending');
+    }
 
     return {
       candidateId: candidate.id,
-      cvDocumentId: cvDocument.id,
+      cvDocumentId: cvDocument?.id ?? null,
       applicationId: application.id,
     };
+  }
+
+  private async hasSameLatestCv(
+    candidateId: string,
+    contentSha256: string,
+  ): Promise<boolean> {
+    const latest =
+      await this.cvDocumentsRepository.findLatestIdentityByCandidate(
+        candidateId,
+      );
+    return latest?.contentSha256 === contentSha256;
   }
 }
