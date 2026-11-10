@@ -20,6 +20,11 @@ export type GithubStatus = 'ok' | 'not_found' | 'unavailable';
  * query (`whole_text`, a diagnostic mode for evaluation).
  */
 export type MatchMode = 'criteria' | 'whole_text';
+/**
+ * How an application was scored: the whole CV and GitHub text in one prompt
+ * (`full_text`), or per criterion from only the chunks retrieved for it (`rag`).
+ */
+export type ScoringMode = 'full_text' | 'rag';
 
 /** Dates are serialized as ISO 8601 strings over JSON. */
 export type IsoDateString = string;
@@ -200,6 +205,14 @@ export interface ScoreQuote {
   text: string;
 }
 
+/** A chunk retrieved for a criterion in `rag` mode, verbatim. */
+export interface RetrievedChunk {
+  source: 'cv' | 'github';
+  text: string;
+  /** Cosine similarity to the criterion text. */
+  similarity: number;
+}
+
 /** The score of one vacancy criterion, with its evidence. */
 export interface CriterionScore {
   criterionId: string;
@@ -209,6 +222,8 @@ export interface CriterionScore {
   score: number;
   reasoning: string;
   quotes: ScoreQuote[];
+  /** `rag` mode: the chunks this criterion was scored from, best first; null in `full_text` mode. */
+  retrieved: RetrievedChunk[] | null;
 }
 
 /** A completed, grounded score of an application. */
@@ -220,7 +235,7 @@ export interface ScoreResult {
   /** The CV the score was computed from. */
   cvDocumentId: string;
   model: string;
-  mode: 'full_text';
+  mode: ScoringMode;
   scoredAt: IsoDateString;
 }
 

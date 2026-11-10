@@ -11,6 +11,7 @@ export class UsageMeter {
   private outputTokens = 0;
   private totalTokens = 0;
   private model: string | null = null;
+  private embeddingInput = 0;
   private hasUsage = false;
 
   reset(): void {
@@ -19,6 +20,7 @@ export class UsageMeter {
     this.outputTokens = 0;
     this.totalTokens = 0;
     this.model = null;
+    this.embeddingInput = 0;
     this.hasUsage = false;
   }
 
@@ -33,6 +35,16 @@ export class UsageMeter {
     this.outputTokens += usage.outputTokens;
     this.totalTokens += usage.totalTokens;
     this.model = usage.model;
+  }
+
+  /** Embedding calls are counted apart from chat usage (`usage`, `attempts`). */
+  recordEmbedding(usage: LlmUsage | null): void {
+    if (!usage) return;
+    this.embeddingInput += usage.inputTokens;
+  }
+
+  get embeddingTokens(): number {
+    return this.embeddingInput;
   }
 
   get attempts(): number {

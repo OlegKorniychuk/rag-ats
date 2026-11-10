@@ -33,9 +33,13 @@ function oneLine(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
 }
 
-export function criteriaBlock(criteria: PromptCriterion[]): string {
+/** `suffix` (RAG mode) appends per-criterion text to a line. */
+export function criteriaBlock(
+  criteria: PromptCriterion[],
+  suffix?: (criterion: PromptCriterion) => string,
+): string {
   const lines = criteria.map(
-    (c) => `${c.id} [${c.importance}] ${oneLine(c.text)}`,
+    (c) => `${c.id} [${c.importance}] ${oneLine(c.text)}${suffix?.(c) ?? ''}`,
   );
   return `<criteria>\n${lines.join('\n')}\n</criteria>`;
 }

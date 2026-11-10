@@ -19,6 +19,8 @@ export interface FindNearestOptions {
    * this vacancy, so they never use up the `limit`.
    */
   excludeVacancyId?: string;
+  /** Only this candidate's chunks (combinable with `excludeVacancyId`). */
+  candidateId?: string;
 }
 
 export const CANDIDATE_CHUNKS_REPOSITORY = Symbol(

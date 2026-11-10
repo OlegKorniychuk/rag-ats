@@ -73,6 +73,8 @@ export interface ScoresRepository {
     criteriaHash: string,
   ): Promise<string[]>;
   findPendingByVacancy(vacancyId: string): Promise<string[]>;
+  /** Application ids of the candidate's scores in status `pending`. */
+  findPendingByCandidate(candidateId: string): Promise<string[]>;
   /** `pending`/`scoring` scores whose candidate is `parsed`. */
   findBacklog(): Promise<string[]>;
 }

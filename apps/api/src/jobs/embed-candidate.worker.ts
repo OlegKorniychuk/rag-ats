@@ -14,9 +14,14 @@ import {
   CV_DOCUMENTS_REPOSITORY,
   type CvDocumentsRepository,
 } from '../db/repositories/cv-documents.repository.js';
+import {
+  SCORES_REPOSITORY,
+  type ScoresRepository,
+} from '../db/repositories/scores.repository.js';
 import { LlmClient } from '../llm/llm-client.js';
 import { chunkCandidate } from '../rag/chunking.js';
 import type { EmbedCandidateJob } from './jobs.constants.js';
+import { JobsService } from './jobs.service.js';
 
 @Injectable()
 export class EmbedCandidateWorker {
@@ -29,7 +34,10 @@ export class EmbedCandidateWorker {
     private readonly cvDocuments: CvDocumentsRepository,
     @Inject(CANDIDATE_CHUNKS_REPOSITORY)
     private readonly chunks: CandidateChunksRepository,
+    @Inject(SCORES_REPOSITORY)
+    private readonly scores: ScoresRepository,
     private readonly llm: LlmClient,
+    private readonly jobs: JobsService,
     private readonly cls: ClsService,
   ) {}
 
@@ -73,7 +81,13 @@ export class EmbedCandidateWorker {
         ...chunk,
         embedding: vectors[index],
       }));
-      await this.saveIfCurrent(candidateId, cvDocumentId, embedded);
+      const saved = await this.saveIfCurrent(
+        candidateId,
+        cvDocumentId,
+        embedded,
+      );
+      // After the commit, so a score job never sees the old chunks.
+      if (saved) await this.enqueuePendingScores(candidateId);
     } catch (error) {
       // Never log the CV text or the key.
       this.logger.error(
@@ -96,13 +110,13 @@ export class EmbedCandidateWorker {
     candidateId: string,
     cvDocumentId: string,
     embedded: NewCandidateChunk[],
-  ): Promise<void> {
+  ): Promise<boolean> {
     const current = await this.candidates.findEmbedState(candidateId);
     if (current?.parsedCvDocumentId !== cvDocumentId) {
       this.logger.log(
         `Dropping embeddings for candidate ${candidateId}: CV ${cvDocumentId} is no longer the parsed one`,
       );
-      return;
+      return false;
     }
     await this.chunks.replaceForCandidate(
       candidateId,
@@ -111,5 +125,26 @@ export class EmbedCandidateWorker {
       this.llm.embeddingModel,
     );
     await this.candidates.markEmbedded(candidateId, cvDocumentId);
+    return true;
+  }
+
+  /**
+   * `rag` scoring waits (stays `pending`) for the chunks, so the score jobs of
+   * this candidate are queued now. Harmless in `full_text` mode: a score that
+   * is already queued or done makes the job a no-op. A failed enqueue is only
+   * logged: the embedding is done, and the startup sweep re-queues pending
+   * scores.
+   */
+  private async enqueuePendingScores(candidateId: string): Promise<void> {
+    try {
+      const pending = await this.scores.findPendingByCandidate(candidateId);
+      await this.jobs.enqueueScores(pending);
+    } catch (error) {
+      this.logger.error(
+        `Failed to enqueue pending scores of candidate ${candidateId}: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+    }
   }
 }

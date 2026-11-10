@@ -1,7 +1,10 @@
+import { useId, useState } from 'react';
 import type {
   ApplicationWithCandidateResponse,
   CriterionScore,
+  RetrievedChunk,
   ScoreResult,
+  ScoringMode,
 } from '@rag-ats/shared';
 import {
   Alert,
@@ -17,6 +20,8 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ApiError } from '../api/client';
 import { QuoteBlock } from '../components/QuoteBlock';
 import { errorMessage } from '../lib/errors';
@@ -29,11 +34,56 @@ const IMPORTANCE_LABELS = {
   nice: 'Nice to have',
 } satisfies Record<CriterionScore['importance'], string>;
 
+const MODE_LABELS = {
+  full_text: 'Full text',
+  rag: 'RAG',
+} satisfies Record<ScoringMode, string>;
+
 function sortCriteria(criteria: readonly CriterionScore[]): CriterionScore[] {
   return [...criteria].sort((a, b) => {
     if (a.importance !== b.importance) return a.importance === 'must' ? -1 : 1;
     return b.score - a.score;
   });
+}
+
+function EvidencePanel({ chunks }: { chunks: readonly RetrievedChunk[] }) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+
+  return (
+    <Box>
+      <Button
+        size="small"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((value) => !value)}
+        startIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      >
+        Evidence retrieved ({chunks.length})
+      </Button>
+      <Stack
+        id={panelId}
+        spacing={1}
+        hidden={!open}
+        sx={{ mt: 1, display: open ? 'flex' : 'none' }}
+      >
+        <Typography variant="caption" color="text.secondary">
+          Chunks this criterion was scored from
+        </Typography>
+        {chunks.map((chunk, index) => (
+          <Stack key={index} spacing={0.5} sx={{ alignItems: 'flex-start' }}>
+            <Chip
+              size="small"
+              color="info"
+              variant="outlined"
+              label={`${Math.round(chunk.similarity * 100)}% similar`}
+            />
+            <QuoteBlock quote={chunk} clamp />
+          </Stack>
+        ))}
+      </Stack>
+    </Box>
+  );
 }
 
 function CriterionItem({ criterion }: { criterion: CriterionScore }) {
@@ -66,6 +116,9 @@ function CriterionItem({ criterion }: { criterion: CriterionScore }) {
       {criterion.quotes.map((quote, index) => (
         <QuoteBlock key={index} quote={quote} />
       ))}
+      {criterion.retrieved && criterion.retrieved.length > 0 && (
+        <EvidencePanel chunks={criterion.retrieved} />
+      )}
     </Stack>
   );
 }
@@ -105,7 +158,7 @@ function ResultSection({ result }: { result: ScoreResult }) {
         ))}
       </Stack>
       <Typography variant="caption" color="text.secondary">
-        Scored {formatDate(result.scoredAt)} · {result.model}
+        {`Scored ${formatDate(result.scoredAt)} · ${result.model} · ${MODE_LABELS[result.mode]}`}
       </Typography>
     </Stack>
   );

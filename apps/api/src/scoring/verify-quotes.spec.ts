@@ -1,4 +1,8 @@
-import { normaliseForMatch, verifyQuotes } from './verify-quotes.js';
+import {
+  joinChunks,
+  normaliseForMatch,
+  verifyQuotes,
+} from './verify-quotes.js';
 
 const CV =
   'Senior engineer.\nBuilt REST APIs with NestJS\tand PostgreSQL.\n\nSkills: TypeScript';
@@ -218,5 +222,32 @@ describe('verifyQuotes', () => {
     );
     expect(result.valid).toBe(false);
     expect(result.problems).toEqual(['The response contains no quotes']);
+  });
+});
+
+describe('verifyQuotes with joined chunk sources', () => {
+  const CHUNK_A = 'Built REST APIs with NestJS and PostgreSQL.';
+  const CHUNK_B = 'Skills: TypeScript';
+  const joined = { cv: joinChunks([CHUNK_A, CHUNK_B]), github: null };
+
+  it('keeps chunks apart after normalisation', () => {
+    expect(normaliseForMatch(joinChunks(['a', 'b']))).toBe('a ¶ b');
+  });
+
+  it('rejects a quote spanning two chunks', () => {
+    const result = verifyQuotes(
+      response([
+        { quotes: [{ source: 'cv', text: 'PostgreSQL. Skills: TypeScript' }] },
+      ]),
+      joined,
+      ids,
+    );
+    expect(result.valid).toBe(false);
+    expect(result.problems[0]).toContain('is not a verbatim excerpt of <cv>');
+  });
+
+  it('accepts a quote inside one chunk of several', () => {
+    const result = verifyQuotes(response(), joined, ids);
+    expect(result.valid).toBe(true);
   });
 });

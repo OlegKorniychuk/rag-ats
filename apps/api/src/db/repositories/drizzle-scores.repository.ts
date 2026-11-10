@@ -180,6 +180,23 @@ export class DrizzleScoresRepository implements ScoresRepository {
     return rows.map((row) => row.applicationId);
   }
 
+  async findPendingByCandidate(candidateId: string): Promise<string[]> {
+    const rows = await this.txHost.tx
+      .select({ applicationId: applicationScores.applicationId })
+      .from(applicationScores)
+      .innerJoin(
+        applications,
+        eq(applications.id, applicationScores.applicationId),
+      )
+      .where(
+        and(
+          eq(applications.candidateId, candidateId),
+          eq(applicationScores.status, 'pending'),
+        ),
+      );
+    return rows.map((row) => row.applicationId);
+  }
+
   async findPendingByVacancy(vacancyId: string): Promise<string[]> {
     const rows = await this.txHost.tx
       .select({ applicationId: applicationScores.applicationId })

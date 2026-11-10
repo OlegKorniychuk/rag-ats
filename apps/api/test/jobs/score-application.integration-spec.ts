@@ -3,7 +3,11 @@ import { Global, Module } from '@nestjs/common';
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapter-drizzle-orm';
 import { Test, type TestingModule } from '@nestjs/testing';
-import type { ApplicationScore, VacancyCriterion } from '@rag-ats/shared';
+import type {
+  ApplicationScore,
+  ScoringMode,
+  VacancyCriterion,
+} from '@rag-ats/shared';
 import { setupServer } from 'msw/node';
 import { ClsModule } from 'nestjs-cls';
 import { EnvConfig } from '../../src/config/env.config.js';
@@ -13,6 +17,10 @@ import {
   APPLICATIONS_REPOSITORY,
   type ApplicationsRepository,
 } from '../../src/db/repositories/applications.repository.js';
+import {
+  CANDIDATE_CHUNKS_REPOSITORY,
+  type CandidateChunksRepository,
+} from '../../src/db/repositories/candidate-chunks.repository.js';
 import {
   CANDIDATES_REPOSITORY,
   type CandidatesRepository,
@@ -34,17 +42,23 @@ import {
   type VacanciesRepository,
 } from '../../src/db/repositories/vacancies.repository.js';
 import type { GithubSnapshot } from '../../src/github/github-snapshot.js';
+import { EmbedCandidateWorker } from '../../src/jobs/embed-candidate.worker.js';
 import { JobsModule } from '../../src/jobs/jobs.module.js';
 import { JobsService } from '../../src/jobs/jobs.service.js';
 import { ScoreApplicationWorker } from '../../src/jobs/score-application.worker.js';
 import { normaliseText } from '../../src/llm/cv-profile-parser.js';
+import { chunkCandidate } from '../../src/rag/chunking.js';
 import { normaliseForMatch } from '../../src/scoring/verify-quotes.js';
 import { vacancyCriteriaHash } from '../../src/scoring/criteria-hash.js';
 import {
+  captureOpenaiEmbeddingRequests,
   captureOpenaiRequests,
   criterionIdsFromRequest,
   fabricatedScoreResponse,
+  fakeEmbedding,
+  messageContent,
   openaiCriteriaHandler,
+  openaiEmbeddingsErrorHandler,
   openaiEmbeddingsHandler,
   openaiErrorHandler,
   openaiProfileHandler,
@@ -89,6 +103,24 @@ const server = setupServer(openaiEmbeddingsHandler());
 const scoreCapture = captureOpenaiRequests('application_score');
 const criteriaCapture = captureOpenaiRequests('vacancy_criteria');
 const profileCapture = captureOpenaiRequests('cv_profile');
+const embeddingCapture = captureOpenaiEmbeddingRequests();
+
+// A CV of five one-topic lines (~700-900 characters each), so it becomes five
+// chunks and a criterion's three nearest are a real selection.
+const topicLine = (topic: string) => `${topic}. `.repeat(30).trim();
+const RAG_TOPICS = [
+  'TypeScript backend services',
+  'REST API endpoint design',
+  'Docker container images',
+  'Piano lessons teaching',
+  'Hiking and travel photography',
+];
+const RAG_CV_TEXT = RAG_TOPICS.map(topicLine).join('\n');
+// Another candidate who is all about Docker: it must never leak into the
+// retrieval of the candidate being scored.
+const OTHER_CV_TEXT = Array.from({ length: 3 }, (_, i) =>
+  topicLine(`Docker Docker Docker Compose swarm ${i}`),
+).join('\n');
 
 async function waitFor<T>(
   read: () => Promise<T>,
@@ -135,7 +167,9 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
   let candidates: CandidatesRepository;
   let cvDocuments: CvDocumentsRepository;
   let vacancies: VacanciesRepository;
+  let chunks: CandidateChunksRepository;
   let recruiterId: string;
+  let scoringMode: ScoringMode = 'full_text';
 
   function testModules() {
     @Global()
@@ -150,6 +184,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       OPENAI_API_KEY: 'sk-test-dummy',
       OPENAI_MODEL: 'test-model',
       OPENAI_EMBEDDING_MODEL: 'test-embedding-model',
+      SCORING_MODE: scoringMode,
       JOBS_POLL_INTERVAL_SECONDS: 0.5,
     } as EnvConfig;
 
@@ -174,8 +209,9 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
     return { TestDbModule, TestConfigModule, cls };
   }
 
-  /** Boots the job runtime (workers + sweep). */
-  async function boot() {
+  /** Boots the job runtime (workers + sweep) with the given scoring mode. */
+  async function boot(mode: ScoringMode = 'full_text') {
+    scoringMode = mode;
     const { TestDbModule, TestConfigModule, cls } = testModules();
     moduleRef = await Test.createTestingModule({
       imports: [
@@ -315,6 +351,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
     candidates = seedRef.get(CANDIDATES_REPOSITORY);
     cvDocuments = seedRef.get(CV_DOCUMENTS_REPOSITORY);
     vacancies = seedRef.get(VACANCIES_REPOSITORY);
+    chunks = seedRef.get(CANDIDATE_CHUNKS_REPOSITORY);
     const recruiters: RecruitersRepository = seedRef.get(RECRUITERS_REPOSITORY);
     recruiterId = (
       await recruiters.create({
@@ -327,6 +364,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
     server.events.on('request:start', scoreCapture.listener);
     server.events.on('request:start', criteriaCapture.listener);
     server.events.on('request:start', profileCapture.listener);
+    server.events.on('request:start', embeddingCapture.listener);
   }, 120_000);
 
   afterEach(() => {
@@ -334,6 +372,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
     scoreCapture.bodies.length = 0;
     criteriaCapture.bodies.length = 0;
     profileCapture.bodies.length = 0;
+    embeddingCapture.bodies.length = 0;
   });
 
   afterAll(async () => {
@@ -368,6 +407,7 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect(result.overall).toBe(80);
       expect(result.cvDocumentId).toBe(cvId);
       expect(result.mode).toBe('full_text');
+      expect(result.criteria.every((c) => c.retrieved === null)).toBe(true);
       expect(result.criteria.map((c) => c.criterionId)).toEqual([
         'c1',
         'c2',
@@ -398,6 +438,8 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect(row.scored_at).not.toBeNull();
       expect(result.model).toBe('gpt-5.4-mini');
       expect(scoreCapture.bodies).toHaveLength(1);
+      // Full text never touches the embeddings endpoint to score.
+      expect(embeddingCapture.bodies).toHaveLength(0);
     });
 
     it('runs outside a request: handle() provides its own CLS context', async () => {
@@ -679,6 +721,175 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect(criteriaCapture.bodies).toHaveLength(1);
       expect(scoreCapture.bodies).toHaveLength(2);
       expect((await readScore(applicationId)).stale).toBe(false);
+    });
+  });
+
+  describe('worker in rag mode', () => {
+    const criteriaTexts = STORED_CRITERIA.map((c) => c.text);
+    // Background embed jobs of other candidates also hit the endpoint: look
+    // only at the requests embedding the criteria.
+    const criteriaEmbeddings = () =>
+      embeddingCapture.bodies.filter(
+        (body) => JSON.stringify(body.input) === JSON.stringify(criteriaTexts),
+      );
+
+    beforeAll(async () => {
+      await neutraliseLeftovers();
+      await boot('rag');
+    }, 60_000);
+    afterAll(async () => {
+      await shutdown();
+      scoringMode = 'full_text';
+    });
+
+    /** Builds the candidate's chunks directly (no embed job, so no score trigger). */
+    async function embedNow(candidateId: string, cvId: string, text: string) {
+      const textChunks = chunkCandidate(text, null);
+      await chunks.replaceForCandidate(
+        candidateId,
+        cvId,
+        textChunks.map((c) => ({ ...c, embedding: fakeEmbedding(c.text) })),
+        'test-embedding-model',
+      );
+      await candidates.markEmbedded(candidateId, cvId);
+    }
+
+    const scoreNow = (applicationId: string) =>
+      moduleRef!.get(ScoreApplicationWorker).handle({ applicationId });
+
+    /** Score requests are valid answers quoting each criterion's own chunk. */
+    const useRagScoring = () =>
+      server.use(openaiScoreHandler((body) => scoreFromRequest(body)));
+
+    it('waits, pending and without any LLM call, until the candidate is embedded, then scores', async () => {
+      useRagScoring();
+      const { applicationId, candidateId, cvId } = await seedApplication({
+        cvText: RAG_CV_TEXT,
+      });
+
+      await scoreNow(applicationId);
+
+      expect(await readScore(applicationId)).toMatchObject({
+        status: 'pending',
+        error: null,
+      });
+      expect(scoreCapture.bodies).toHaveLength(0);
+      expect(criteriaEmbeddings()).toHaveLength(0);
+
+      // The embed job re-queues the waiting score.
+      await moduleRef!
+        .get(EmbedCandidateWorker)
+        .handle({ candidateId, cvDocumentId: cvId });
+      const score = await waitForScore(applicationId, 'scored');
+
+      expect(score.result?.mode).toBe('rag');
+      expect(scoreCapture.bodies).toHaveLength(1);
+    });
+
+    it('keeps waiting while the chunks belong to an older CV', async () => {
+      useRagScoring();
+      const { applicationId, candidateId, cvId } = await seedApplication({
+        cvText: RAG_CV_TEXT,
+      });
+      await embedNow(candidateId, cvId, RAG_CV_TEXT);
+      const newCvId = await addCv(candidateId, 'A newer CV text', 5);
+      await candidates.saveParsedProfile(candidateId, newCvId, PROFILE, null);
+
+      await scoreNow(applicationId);
+
+      expect((await readScore(applicationId)).status).toBe('pending');
+      expect(scoreCapture.bodies).toHaveLength(0);
+    });
+
+    it("scores each criterion from the candidate's own nearest chunks only", async () => {
+      useRagScoring();
+      const { applicationId, candidateId, cvId } = await seedApplication({
+        cvText: RAG_CV_TEXT,
+      });
+      await embedNow(candidateId, cvId, RAG_CV_TEXT);
+      const other = await seedCandidate({ text: OTHER_CV_TEXT });
+      await embedNow(other.candidateId, other.cvId, OTHER_CV_TEXT);
+      embeddingCapture.bodies.length = 0;
+
+      await scoreNow(applicationId);
+      const score = await readScore(applicationId);
+
+      expect(score).toMatchObject({ status: 'scored', stale: false });
+      const result = score.result!;
+      expect(result.mode).toBe('rag');
+      const row = await rawScore(applicationId);
+      expect(row).toMatchObject({ status: 'scored', mode: 'rag' });
+
+      // The criteria are embedded in one request.
+      expect(criteriaEmbeddings()).toHaveLength(1);
+
+      const own = chunkCandidate(RAG_CV_TEXT, null).map((c) => c.text);
+      expect(own).toHaveLength(5);
+      const expectedTop = ['TypeScript', 'REST', 'Docker'];
+      const allRetrieved = result.criteria.flatMap((c) => c.retrieved!);
+      for (const [index, criterion] of result.criteria.entries()) {
+        const retrieved = criterion.retrieved!;
+        expect(retrieved.length).toBeGreaterThan(0);
+        expect(retrieved.length).toBeLessThanOrEqual(3);
+        for (const chunk of retrieved) {
+          expect(chunk.source).toBe('cv');
+          expect(own).toContain(chunk.text);
+          expect(Math.round(chunk.similarity * 1000) / 1000).toBe(
+            chunk.similarity,
+          );
+        }
+        const similarities = retrieved.map((c) => c.similarity);
+        expect(similarities).toEqual([...similarities].sort((a, b) => b - a));
+        expect(retrieved[0].text).toContain(expectedTop[index]);
+
+        // Quotes come from the chunks retrieved for the application.
+        expect(criterion.quotes.length).toBeGreaterThan(0);
+        for (const quote of criterion.quotes) {
+          expect(
+            allRetrieved.some((c) =>
+              normaliseForMatch(c.text).includes(normaliseForMatch(quote.text)),
+            ),
+          ).toBe(true);
+        }
+      }
+
+      // The model saw evidence, not the CV.
+      expect(scoreCapture.bodies).toHaveLength(1);
+      const user = messageContent(scoreCapture.bodies[0], 'user');
+      expect(user).toContain('<evidence>');
+      expect(user).not.toContain('<cv>');
+      expect(user).not.toContain('Docker Docker Docker');
+    });
+
+    it('fails with the generic message when embedding the criteria fails', async () => {
+      server.use(openaiEmbeddingsErrorHandler(500));
+      const { applicationId, candidateId, cvId } = await seedApplication({
+        cvText: RAG_CV_TEXT,
+      });
+      await embedNow(candidateId, cvId, RAG_CV_TEXT);
+
+      await scoreNow(applicationId);
+      const score = await readScore(applicationId);
+
+      expect(score.status).toBe('failed');
+      expect(score.error).toBe('Could not score the application');
+      expect(score.result).toBeNull();
+      expect(scoreCapture.bodies).toHaveLength(0);
+    });
+
+    it('rescoring uses the mode of the moment: rag again, with fresh evidence', async () => {
+      useRagScoring();
+      const { applicationId, candidateId, cvId } = await seedApplication({
+        cvText: RAG_CV_TEXT,
+      });
+      await embedNow(candidateId, cvId, RAG_CV_TEXT);
+      await scoreNow(applicationId);
+      await scores.resetToPending(applicationId);
+
+      await scoreNow(applicationId);
+
+      expect((await readScore(applicationId)).result?.mode).toBe('rag');
+      expect(scoreCapture.bodies).toHaveLength(2);
     });
   });
 
