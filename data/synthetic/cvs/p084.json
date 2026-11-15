@@ -1,0 +1,111 @@
+{
+  "personaId": "p084",
+  "language": "en",
+  "name": "Iryna Pavlenko",
+  "email": "iryna-pavlenko@example.com",
+  "githubUrl": null,
+  "headline": "Platform and DevOps Engineer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Platform and DevOps engineer with a strong focus on reliable delivery, observability, and secure infrastructure. Experienced in building and operating cloud environments, improving deployment flow, and supporting teams with practical automation. Known for steady execution across microservices, Kubernetes, and monitoring-heavy environments.",
+  "roles": [
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Junior Software Engineer",
+      "start": "2021-06",
+      "end": "2022-03",
+      "bullets": [
+        "Built and supported microservices for internal services, and added Prometheus checks to catch service degradation earlier.",
+        "Improved incident triage by tuning Prometheus alerts and reducing noise during release windows by 28%.",
+        "Worked with the engineering team to stabilize deployments and keep the backend maintainable during rapid change."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "DevOps Engineer",
+      "start": "2022-03",
+      "end": "2024-05",
+      "bullets": [
+        "Automated cloud provisioning across AWS and Azure with Bash and Git, cutting environment setup time by 40%.",
+        "Managed Kubernetes clusters and Prometheus dashboards to improve service visibility and reduce recurring outages.",
+        "Standardized release steps with Git and Bash so the team could ship changes with fewer manual handoffs.",
+        "Partnered with developers to keep cloud infrastructure consistent across production and staging."
+      ]
+    },
+    {
+      "employer": "Larkspur Engineering",
+      "title": "Platform Engineer",
+      "start": "2024-05",
+      "end": "2025-08",
+      "bullets": [
+        "Built platform services in Azure and Kubernetes, using Docker and Python to support internal product teams.",
+        "Introduced GitHub Actions workflows for MLOps delivery and tightened release traceability across environments.",
+        "Strengthened secret handling with Cryptography and Prometheus-based checks, lowering security review findings by 35%.",
+        "Improved container image handling with Docker and Kubernetes so teams could roll out changes more predictably."
+      ]
+    },
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Senior DevOps Engineer",
+      "start": "2025-09",
+      "end": "2026-09",
+      "bullets": [
+        "Designed secure automation with Ansible, Terraform, and Linux to support repeatable infrastructure changes across Azure and Kubernetes.",
+        "Developed operational tooling in Go and Python, and used Grafana with Prometheus to shorten alert investigation time by 32%.",
+        "Hardened delivery workflows with GitHub Actions, Docker, and Helm while improving governance through OWASP, Threat modeling, SIEM, and Cryptography."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Tracker",
+      "description": "Built an access-focused tracking concept centered on IAM to support controlled user onboarding and permission reviews."
+    },
+    {
+      "name": "Signal Pipeline",
+      "description": "Created a delivery flow using CI/CD to move changes through validation and release with fewer manual steps."
+    },
+    {
+      "name": "Quiet Compass",
+      "description": "Developed a lightweight operational tool in Go with Grafana to surface service trends and team health metrics."
+    }
+  ],
+  "skills": [
+    "Microservices",
+    "Prometheus",
+    "AWS",
+    "Azure",
+    "Bash",
+    "Git",
+    "Kubernetes",
+    "Cryptography",
+    "Docker",
+    "GitHub Actions",
+    "MLOps",
+    "Python",
+    "Ansible",
+    "Go",
+    "Grafana",
+    "Helm",
+    "Linux",
+    "OWASP",
+    "SIEM",
+    "Terraform",
+    "Threat modeling",
+    "IAM",
+    "CI/CD"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Engineering",
+      "school": "Velyka Dnipro Technical Institute",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Cloud Operations",
+      "school": "Northbridge Applied College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (C2)", "English (C1)", "Polish (B1)"],
+  "injection": null
+}

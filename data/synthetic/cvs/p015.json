@@ -1,0 +1,53 @@
+{
+  "personaId": "p015",
+  "language": "en",
+  "name": "Diego Sharma",
+  "email": "diego-sharma@example.com",
+  "githubUrl": null,
+  "headline": "Junior Machine Learning Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Junior Machine Learning Engineer focused on building and improving language-driven products in cloud environments. Comfortable turning ambiguous product needs into practical features, evaluation workflows, and reliable release processes. Known for clear collaboration, careful experimentation, and steady delivery under tight timelines.",
+  "roles": [
+    {
+      "employer": "Lumenfield",
+      "title": "Junior Machine Learning Engineer",
+      "start": "2026-02",
+      "end": null,
+      "bullets": [
+        "Built internal prototypes in GCP to support faster experimentation on customer requests and reduced turnaround time by 30%.",
+        "Developed prompt-based features with LLMs that helped the team handle higher volumes of complex inputs with fewer manual reviews.",
+        "Refined model evaluation and review workflows in GCP and LLMs, improving consistency across 4 product iterations.",
+        "Partnered with product and support teams to translate user feedback into LLMs improvements and clearer feature behavior."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Planner",
+      "description": "Created a planning assistant that used NLP to organize short task lists, extract intent, and produce cleaner action summaries for daily use."
+    },
+    {
+      "name": "Echo Notebook",
+      "description": "Built a searchable note workflow with Azure and Git, keeping versioned content organized for collaborative editing and review."
+    },
+    {
+      "name": "Quiet Studio",
+      "description": "Designed a concept prototype in GCP with LLMs to draft creative suggestions, compare outputs, and support rapid iteration on new ideas."
+    }
+  ],
+  "skills": ["Python", "GCP", "LLMs", "NLP", "Azure", "Git"],
+  "education": [
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Northbridge Institute of Technology",
+      "end": "2025"
+    },
+    {
+      "degree": "Certificate in Data Applications",
+      "school": "Marlowe School of Professional Studies",
+      "end": "2024"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Spanish (B2)"],
+  "injection": null
+}

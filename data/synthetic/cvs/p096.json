@@ -1,0 +1,65 @@
+{
+  "personaId": "p096",
+  "language": "en",
+  "name": "Oksana Savchenko",
+  "email": "oksana-savchenko@example.com",
+  "githubUrl": null,
+  "headline": "Junior Full-Stack Developer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Junior full-stack developer focused on building responsive user experiences and dependable backend features. Comfortable working across the application stack, collaborating with product teams, and improving delivery quality through practical implementation work. Known for clear communication, steady ownership, and a careful approach to shipped features.",
+  "roles": [
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Junior Full-Stack Developer",
+      "start": "2026-02",
+      "end": null,
+      "bullets": [
+        "Built customer-facing screens in Angular and connected them to backend endpoints in Express, improving task completion speed by 18%.",
+        "Implemented form validation and reusable UI states in Angular while shaping request handling in Express for more consistent user flows.",
+        "Refined feature behavior across the frontend and backend, reducing support follow-ups by 22% through clearer error messages and cleaner data handling.",
+        "Worked with designers and product stakeholders to deliver new screens in Angular and backend updates in Express on a predictable release cadence."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Amber Market",
+      "description": "Created a marketplace interface in Vue with reusable components and polished page interactions for browsing and filtering items."
+    },
+    {
+      "name": "Cobalt Pipeline",
+      "description": "Automated build steps with GitHub Actions and stored processing data in PostgreSQL to keep the pipeline reliable and easy to review."
+    },
+    {
+      "name": "Cobalt Market",
+      "description": "Built cloud-hosted marketplace services on AWS with attention to deployment stability and scalable user traffic."
+    },
+    {
+      "name": "Paper Pipeline",
+      "description": "Developed a document workflow interface in Angular with clear navigation and fast updates for day-to-day processing tasks."
+    }
+  ],
+  "skills": [
+    "Java",
+    "Angular",
+    "Express",
+    "Vue",
+    "GitHub Actions",
+    "PostgreSQL",
+    "AWS"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Rivne Institute of Applied Technology",
+      "end": "2025"
+    },
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Dnipro School of Digital Studies",
+      "end": "2023"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (native)", "English (C1)"],
+  "injection": null
+}

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lukas Moreau - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Lukas Moreau</h1><div class="headline">Senior Mobile Developer</div></div>
+  <div class="contact"><div>lukas-moreau@example.com</div>
+<div>Lyon, France</div></div>
+</header>
+<h2>Summary</h2>
+<p>Mobile engineer with a track record of building and improving cross-platform products from early prototypes to release-ready applications. Experienced in shipping reliable mobile features, tightening quality checks, and collaborating with product and design partners to keep delivery predictable. Comfortable working across app layers, test suites, and release processes in fast-moving teams.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Mobile Developer</span><span class="dates">Jan 2025 – Apr 2026</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Led mobile delivery using Kotlin, React Native and iOS, coordinating releases through CI/CD and Git.</li>
+    <li>Built release checks with Jest and JUnit, catching integration issues earlier and reducing escaped defects by 25%.</li>
+    <li>Improved app startup and update paths in Kotlin and React Native, cutting perceived wait time by 1.2 seconds.</li>
+    <li>Mentored 4 engineers on code reviews, branching habits and delivery discipline across CI/CD and Git.</li>
+    <li>Partnered with product teams to sequence mobile work, keeping the iOS roadmap aligned with production needs.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Mobile Developer</span><span class="dates">Dec 2023 – Nov 2024</span></div>
+  <div class="sub">Copperline Labs</div>
+  <ul>
+    <li>Shipped new app screens in Flutter and TypeScript, and maintained parallel support for Android and iOS releases.</li>
+    <li>Refactored shared mobile flows in React Native and Flutter, improving feature reuse across the product.</li>
+    <li>Partnered with engineers and designers to tune onboarding and account setup, lifting completion rates by 18%.</li>
+    <li>Resolved platform-specific defects across Android, iOS and TypeScript, shortening support turnaround during peak launches.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Mobile Engineer</span><span class="dates">Jan 2021 – Dec 2023</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Delivered customer-facing modules in Dart and React Native, supporting a mobile app used by 15,000 users.</li>
+    <li>Implemented shared native integrations in Java and React Native, keeping feature work aligned across platforms.</li>
+    <li>Expanded Jest coverage around state changes and error cases, which cut regression issues by 30%.</li>
+    <li>Collaborated on mobile releases and code reviews, improving delivery consistency across the team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Mar 2020 – Dec 2020</span></div>
+  <div class="sub">Yarrow Analytics</div>
+  <ul>
+    <li>Built early mobile features in Dart and verified core flows with Jest, helping the team stabilize the first release.</li>
+    <li>Worked with Dart to refine screens and app behavior, reducing rework from late-stage changes by 20%.</li>
+    <li>Wrote Jest checks for input handling and navigation paths, improving confidence before handoff.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Pocket Gateway</span></div>
+  <p>Built Pocket Gateway around GraphQL and REST APIs to unify mobile data access and simplify request handling across app flows.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Dart</li>
+  <li>Jest</li>
+  <li>Java</li>
+  <li>React Native</li>
+  <li>Android</li>
+  <li>Flutter</li>
+  <li>iOS</li>
+  <li>TypeScript</li>
+  <li>CI/CD</li>
+  <li>Git</li>
+  <li>Kotlin</li>
+  <li>JUnit</li>
+  <li>GraphQL</li>
+  <li>REST APIs</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Engineering</span><span class="dates">2019</span></div>
+  <div class="sub">Maison d’Informatique de Valenne</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Bachelor of Applied Computing</span><span class="dates">2020</span></div>
+  <div class="sub">Northbridge Institute of Technology</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>French (Native)</li>
+</ul>
+  </body>
+</html>

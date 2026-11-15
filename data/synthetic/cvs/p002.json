@@ -1,0 +1,86 @@
+{
+  "personaId": "p002",
+  "language": "en",
+  "name": "Elena Larsen",
+  "email": "elena-larsen@example.com",
+  "githubUrl": null,
+  "headline": "Platform Engineer",
+  "location": "Linden, Norway",
+  "summary": "Platform engineer with a track record of improving reliability, automation, and operational visibility across internal platforms. Experienced in building practical infrastructure workflows, supporting production systems, and collaborating closely with product and support teams. Comfortable working across cloud environments, scripting, and observability to keep services stable and predictable.",
+  "roles": [
+    {
+      "employer": "Larkspur Engineering",
+      "title": "Junior Software Engineer",
+      "start": "2022-04",
+      "end": "2023-01",
+      "bullets": [
+        "Automated routine maintenance tasks with Bash, reducing manual operator effort by 35% and making scheduled work more consistent.",
+        "Built Prometheus alerts and dashboard checks for core services, which shortened the average time to notice incidents by 40%.",
+        "Supported release readiness by packaging small operational scripts and documenting recovery steps for the team.",
+        "Tracked recurring platform issues and coordinated fixes with engineers, improving on-call handoffs across 2 support rotations."
+      ]
+    },
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Platform Engineer",
+      "start": "2023-02",
+      "end": "2024-04",
+      "bullets": [
+        "Provisioned Azure environments and tuned Kubernetes workloads so new services could launch with fewer handoffs.",
+        "Wrote Python utilities for deployment validation and environment cleanup, cutting repetitive operator work by 28%.",
+        "Improved cluster visibility with Prometheus-based checks and helped the team respond faster to capacity issues.",
+        "Partnered with product teams to stabilize the platform for 4 internal services during growth periods."
+      ]
+    },
+    {
+      "employer": "Kestrel Data",
+      "title": "Platform Engineer",
+      "start": "2024-04",
+      "end": null,
+      "bullets": [
+        "Designed Ansible and Terraform workflows for AWS infrastructure, standardizing how teams created and updated environments.",
+        "Managed Kubernetes clusters on Linux and used Go utilities to automate platform tasks, reducing setup time by 45%.",
+        "Strengthened IAM controls and Helm release practices so access changes and service rollouts were safer and easier to audit.",
+        "Expanded Prometheus monitoring across critical systems and cut alert noise by 30% through better thresholds and routing.",
+        "Coached 3 engineers on day-to-day platform operations and improved incident response runbooks for the team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Paper Studio",
+      "description": "Built a Grafana workspace for Paper Studio to present service health, usage trends, and incident timelines in one place."
+    }
+  ],
+  "skills": [
+    "Bash",
+    "Prometheus",
+    "Azure",
+    "Kubernetes",
+    "Python",
+    "Ansible",
+    "AWS",
+    "Go",
+    "Helm",
+    "IAM",
+    "Linux",
+    "Terraform",
+    "Docker",
+    "GitHub Actions",
+    "Grafana"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Computing Practice",
+      "school": "North Vale Technical Institute",
+      "end": "2021"
+    },
+    {
+      "degree": "Certificate in Applied Information Services",
+      "school": "Rivermere College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Norwegian (B2)"],
+  "injection": null
+}

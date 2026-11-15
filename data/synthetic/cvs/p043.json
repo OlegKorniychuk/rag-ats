@@ -1,0 +1,77 @@
+{
+  "personaId": "p043",
+  "language": "en",
+  "name": "Freya Petrov",
+  "email": "freya-petrov@example.com",
+  "githubUrl": null,
+  "headline": "Platform Engineer",
+  "location": "Ostrava, Czech Republic",
+  "summary": "Freya Petrov is a platform engineer focused on reliable infrastructure, access management, and delivery workflows. She has helped teams standardize operational runbooks, improve release consistency, and reduce manual toil across internal platforms. Her background combines hands-on platform operations with pragmatic automation and cross-team support.",
+  "roles": [
+    {
+      "employer": "Ostrava Labs",
+      "title": "Junior DevOps Engineer",
+      "start": "2020-02",
+      "end": "2023-05",
+      "bullets": [
+        "Automated routine server tasks with Bash, cutting manual maintenance time by 35% and keeping the backend serviceable during busy release windows.",
+        "Tightened access controls in IAM for 12 internal systems, reducing permission review turnaround from days to hours.",
+        "Supported early MLOps workflows by packaging repeatable setup steps and documenting operational checks for the data team.",
+        "Handled incident follow-up and maintenance coordination across 4 production services, improving handoff clarity for on-call work."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Platform Engineer",
+      "start": "2023-07",
+      "end": "2025-03",
+      "bullets": [
+        "Built delivery workflows with CI/CD and GitHub Actions, shortening release lead time by 28% for the platform team.",
+        "Managed access policies in IAM across Kubernetes and Linux hosts, helping standardize onboarding for 60 engineers and contractors.",
+        "Improved cluster reliability in Kubernetes by refining rollout steps and aligning them with Linux host operations.",
+        "Created clearer deployment controls and status reporting in GitHub Actions, which reduced failed handoffs by 22%."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Senior Platform Engineer",
+      "start": "2025-05",
+      "end": "2026-06",
+      "bullets": [
+        "Designed repeatable infrastructure changes with Terraform and Ansible, reducing environment setup effort by 40% for new services.",
+        "Shipped automation services in Go and Python that coordinated access updates in IAM and kept platform tasks consistent across teams.",
+        "Strengthened Kubernetes operations on Linux by tuning deployment procedures and verifying node readiness before major changes.",
+        "Expanded GitHub Actions workflows to cover build, approval, and release steps, improving delivery speed for 3 product groups.",
+        "Partnered with service owners to simplify operational handoffs and keep infrastructure standards aligned across the platform."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Bash",
+    "IAM",
+    "MLOps",
+    "CI/CD",
+    "GitHub Actions",
+    "Kubernetes",
+    "Linux",
+    "Ansible",
+    "Go",
+    "Python",
+    "Terraform"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Computer Systems Operations",
+      "school": "North Vale Technical School",
+      "end": "2019"
+    },
+    {
+      "degree": "Associate Certificate in Infrastructure Support",
+      "school": "Brimford Institute of Technology",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Czech (B2)", "Polish (B1)"],
+  "injection": null
+}

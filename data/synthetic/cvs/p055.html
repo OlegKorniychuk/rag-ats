@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hugo Larsen - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Hugo Larsen</h1><div class="headline">Analytics and Data Engineer</div></div>
+  <div class="contact"><div>hugo-larsen@example.com</div>
+<div>Copenhagen, Denmark</div></div>
+</header>
+<h2>Summary</h2>
+<p>Data engineer and analytics engineer with a track record of building dependable data pipelines, improving warehouse structures, and turning raw data into usable reporting layers. Comfortable working across ETL, orchestration, and data modeling to support faster decisions and cleaner handoffs between teams.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Analytics Engineer</span><span class="dates">May 2024 – Present</span></div>
+  <div class="sub">Ostrava Labs</div>
+  <ul>
+    <li>Designed Data modeling layers for analytics datasets in BigQuery using SQL and Python, improving metric consistency across 8 dashboards.</li>
+    <li>Automated Airflow workflows with Bash and Python to coordinate daily loads and refreshes without manual intervention.</li>
+    <li>Reviewed and versioned pipeline changes with Git and Scala, helping the team ship 30% faster releases to production datasets.</li>
+    <li>Partnered with stakeholders to refine SQL logic and warehouse structures so reporting cycles finished 2 hours earlier.</li>
+    <li>Monitored job runs and resolved data issues across Airflow and BigQuery, maintaining stable delivery for business users.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Data Engineer</span><span class="dates">Nov 2021 – Apr 2024</span></div>
+  <div class="sub">Quillstone Systems</div>
+  <ul>
+    <li>Built ETL pipelines in Python and SQL to move operational data into PostgreSQL, reducing manual processing by 70%.</li>
+    <li>Implemented transformation logic in Scala and SQL so recurring datasets were standardized for reporting and analysis.</li>
+    <li>Improved data quality checks across the ETL flow, cutting load failures from 12 per month to 3.</li>
+    <li>Collaborated with product and operations teams to clarify source data definitions and keep the backend feed consistent.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Quiet Tracker</span></div>
+  <p>Built an ETL pipeline to collect, clean, and reshape event data for a lightweight tracking product.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>ETL</li>
+  <li>PostgreSQL</li>
+  <li>Python</li>
+  <li>Scala</li>
+  <li>SQL</li>
+  <li>Airflow</li>
+  <li>Bash</li>
+  <li>BigQuery</li>
+  <li>Data modeling</li>
+  <li>Git</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2021</span></div>
+  <div class="sub">Northshore Institute of Applied Studies</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Data Engineering</span><span class="dates">2019</span></div>
+  <div class="sub">Harbor City Technical College</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Danish (B2)</li>
+</ul>
+  </body>
+</html>

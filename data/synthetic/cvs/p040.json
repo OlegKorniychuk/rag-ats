@@ -1,0 +1,80 @@
+{
+  "personaId": "p040",
+  "language": "en",
+  "name": "Tomasz Lindqvist",
+  "email": "tomasz-lindqvist@example.com",
+  "githubUrl": "https://github.com/synth-tomasz-lindqvist",
+  "headline": "Backend Engineer",
+  "location": "Ostrava, Czech Republic",
+  "summary": "Versatile software engineer with experience across frontend, full-stack, and backend delivery in product-focused teams. Comfortable turning business needs into reliable features, improving internal workflows, and supporting production systems. Known for practical problem solving, clear communication, and steady delivery across changing priorities.",
+  "roles": [
+    {
+      "employer": "Ostrava Labs",
+      "title": "Junior Frontend Developer",
+      "start": "2023-06",
+      "end": "2024-03",
+      "bullets": [
+        "Built and maintained interface features for internal tools, using Git and SQL to keep work coordinated and data-driven.",
+        "Updated existing screens and fixed defects, then verified changes against stored records in SQL before release.",
+        "Collaborated with designers and analysts to refine user flows and keep tracked work organized in Git.",
+        "Helped reduce rework by documenting recurring issues and sharing clearer handoff notes with the team."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Full-Stack Engineer",
+      "start": "2024-05",
+      "end": "2025-04",
+      "bullets": [
+        "Delivered customer-facing features in JavaScript and Vue, connecting them to services backed by MongoDB and SQL.",
+        "Refined the application data handling so key user journeys stayed consistent across modules and reports.",
+        "Worked with product and support partners to translate requests into manageable frontend and backend changes.",
+        "Improved release readiness by reviewing edge cases and validating data updates across MongoDB and SQL."
+      ]
+    },
+    {
+      "employer": "Ostrava Labs",
+      "title": "Backend Engineer",
+      "start": "2025-06",
+      "end": null,
+      "bullets": [
+        "Built backend services in Express on AWS, using PostgreSQL to store operational data for internal and customer workflows.",
+        "Set up GitHub Actions checks and Docker-based delivery steps to make deployments more repeatable for the team.",
+        "Strengthened service safety by applying OWASP guidance, then added Playwright coverage for critical flows.",
+        "Partnered on System design discussions to simplify dependencies and keep response times stable under load.",
+        "Supported incident follow-up by tracing data issues in PostgreSQL and restoring service behavior quickly."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Angular",
+    "Git",
+    "SQL",
+    "JavaScript",
+    "MongoDB",
+    "Vue",
+    "AWS",
+    "Docker",
+    "Express",
+    "GitHub Actions",
+    "OWASP",
+    "Playwright",
+    "PostgreSQL",
+    "System design"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Information Systems",
+      "school": "Northbridge School of Technology",
+      "end": "2023"
+    },
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Vistara Institute of Digital Studies",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Polish (B2)", "Swedish (B1)"],
+  "injection": null
+}

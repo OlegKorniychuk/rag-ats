@@ -1,0 +1,96 @@
+{
+  "personaId": "p026",
+  "language": "en",
+  "name": "Hugo Hartmann",
+  "email": "hugo-hartmann@example.com",
+  "githubUrl": null,
+  "headline": "Backend Engineer",
+  "location": "Munich, Germany",
+  "summary": "Backend engineer with a track record of building reliable services, improving internal workflows, and supporting product delivery across growing engineering teams. Experienced in service design, database-backed features, and collaborative delivery in fast-moving environments. Comfortable working across backend components, integration points, and operational improvements.",
+  "roles": [
+    {
+      "employer": "Lumenfield",
+      "title": "Junior Backend Engineer",
+      "start": "2020-03",
+      "end": "2022-08",
+      "bullets": [
+        "Built backend features in JavaScript and NestJS, shaping SQL queries for core account workflows.",
+        "Refined SQL-backed data handling and reduced support escalations by 28% through cleaner validation and error handling.",
+        "Worked with product and QA partners to deliver smaller releases and keep the backend stable during onboarding peaks."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Backend Developer",
+      "start": "2022-08",
+      "end": "2024-09",
+      "bullets": [
+        "Delivered services in Go and Java with Node.js, using OAuth to secure customer-facing endpoints.",
+        "Improved system design for shared backend flows and cut average request handling time by 34% across two services.",
+        "Collaborated in Agile planning sessions to prioritize defects, split work across the team, and keep delivery predictable.",
+        "Modernized Spring Boot components and reduced manual investigation time by 22% through clearer service boundaries and logging."
+      ]
+    },
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Senior Backend Engineer",
+      "start": "2024-10",
+      "end": null,
+      "bullets": [
+        "Built distributed backend features in Docker and TypeScript with NestJS and Node.js, connecting them to PostgreSQL and Redis.",
+        "Developed event-driven flows with Kafka, RabbitMQ and Microservices, improving order processing throughput by 41%.",
+        "Maintained Java and Spring Boot services with Hibernate and SQL, keeping data access consistent across the platform.",
+        "Expanded automated checks with JUnit for Express services and Java modules, reducing regressions in release cycles by 30%.",
+        "Optimized cache usage and database queries across PostgreSQL and Redis, lowering median response time by 25%."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Orbit Compass",
+      "description": "Built Orbit Compass around REST APIs and Jest to validate routing, payload handling, and integration behavior."
+    },
+    {
+      "name": "Meadow Atlas",
+      "description": "Created Meadow Atlas in Java and TypeScript, using JUnit to verify calculations and data transformation rules."
+    }
+  ],
+  "skills": [
+    "JavaScript",
+    "NestJS",
+    "SQL",
+    "Agile",
+    "Go",
+    "Java",
+    "Node.js",
+    "OAuth",
+    "Spring Boot",
+    "System design",
+    "Docker",
+    "Express",
+    "Hibernate",
+    "JUnit",
+    "Kafka",
+    "Microservices",
+    "PostgreSQL",
+    "RabbitMQ",
+    "Redis",
+    "TypeScript",
+    "Jest",
+    "REST APIs"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Engineering",
+      "school": "Rosenpark Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Certificate in Information Systems",
+      "school": "Northbridge School of Computing",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

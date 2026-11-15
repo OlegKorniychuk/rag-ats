@@ -1,0 +1,74 @@
+{
+  "personaId": "p087",
+  "language": "en",
+  "name": "Arjun Silva",
+  "email": "arjun-silva@example.com",
+  "githubUrl": null,
+  "headline": "Analytics and Data Engineer",
+  "location": "Lisbon, Portugal",
+  "summary": "Analytics and data engineer who builds dependable data systems, improves reporting quality, and turns messy inputs into trusted metrics. Comfortable working across Python, SQL, Scala and R in analytical environments, and shaping platform work around strong system design and maintainability. Known for practical delivery, clear communication, and steady operational improvements.",
+  "roles": [
+    {
+      "employer": "Quillstone Systems",
+      "title": "Analytics Engineer",
+      "start": "2023-11",
+      "end": "2025-05",
+      "bullets": [
+        "Built analytical models and reporting workflows in Python and SQL, improving daily metric freshness by 30%.",
+        "Developed reusable transformations in Scala and R to standardize customer segmentation and reduce manual cleanup.",
+        "Partnered on system design for shared data layers, cutting duplicated logic across the team by 40%.",
+        "Produced validation checks and stakeholder-ready datasets that improved trust in monthly reporting."
+      ]
+    },
+    {
+      "employer": "Northgrove Networks",
+      "title": "Data Engineer",
+      "start": "2025-05",
+      "end": null,
+      "bullets": [
+        "Built ingestion and transformation jobs with Python, pandas and dbt to support finance and operations reporting.",
+        "Managed warehouse loading in BigQuery and Snowflake, reducing failed refreshes by 25%.",
+        "Automated deployment and configuration tasks with Docker, Terraform and Git, helping the team ship changes faster.",
+        "Created shell-based maintenance scripts in Bash and used SQL to monitor data quality across critical tables.",
+        "Improved pipeline reliability by documenting recovery steps and coordinating handoffs across 3 internal teams."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Signal Inbox",
+      "description": "Built a message triage prototype using Kafka and GitHub Actions to move events through a lightweight processing flow and keep validation steps consistent."
+    }
+  ],
+  "skills": [
+    "Python",
+    "R",
+    "Scala",
+    "SQL",
+    "System design",
+    "Bash",
+    "BigQuery",
+    "dbt",
+    "Docker",
+    "Git",
+    "pandas",
+    "Snowflake",
+    "Terraform",
+    "GitHub Actions",
+    "Kafka"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Mariner Point Institute",
+      "end": "2021"
+    },
+    {
+      "degree": "MSc in Data Analytics",
+      "school": "Cedar Vale School of Applied Science",
+      "end": "2023"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Portuguese (B2)", "Spanish (B1)"],
+  "injection": null
+}

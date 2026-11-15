@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-roman-bondarenko",
+    "html_url": "https://github.com/synth-roman-bondarenko",
+    "bio": "Senior backend developer focused on reliable services and clean delivery."
+  },
+  "repos": [
+    {
+      "name": "order-flow-core",
+      "html_url": "https://github.com/synth-roman-bondarenko/order-flow-core",
+      "description": "A service foundation for processing orders with clear boundaries and predictable behavior.",
+      "language": "Java",
+      "stargazers_count": 47,
+      "topics": ["java", "spring-boot", "microservices", "hibernate", "mysql"],
+      "pushed_at": "2026-09-12T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "shipment-event-hub",
+      "html_url": "https://github.com/synth-roman-bondarenko/shipment-event-hub",
+      "description": "A message-driven service for moving shipment updates between internal services.",
+      "language": "Java",
+      "stargazers_count": 44,
+      "topics": ["java", "spring-boot", "kafka", "rabbitmq", "microservices"],
+      "pushed_at": "2026-07-05T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "inventory-cache-service",
+      "html_url": "https://github.com/synth-roman-bondarenko/inventory-cache-service",
+      "description": "A fast cache-oriented service for keeping inventory reads responsive under load.",
+      "language": "C#",
+      "stargazers_count": 39,
+      "topics": ["csharp", "redis", "docker", "kubernetes"],
+      "pushed_at": "2026-06-02T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "order-flow-core": "# Order Flow Core\n\nOrder Flow Core is a service project for handling order intake, status updates, and simple business rules in one place. It is built for teams that want a compact base for service work and steady delivery.\n\n## Features\n- Clear order lifecycle handling\n- Data persistence with Hibernate\n- Database support for MySQL\n- Small service boundaries for easier change\n- Ready for CI/CD in a shared delivery flow\n\n## Getting Started\nUse Java and Spring Boot to run the service. Configure MySQL, then start the application and send sample order data to verify the main flow.",
+    "shipment-event-hub": "# Shipment Event Hub\n\nShipment Event Hub receives shipment events, normalizes them, and forwards them to other services that need the latest state. It is meant for distributed backends that depend on timely updates.\n\n## Features\n- Event intake and forwarding\n- Support for Kafka and RabbitMQ\n- Simple routing rules for service communication\n- Built for microservices-based delivery\n- Small operational footprint\n\n## Getting Started\nUse Java and Spring Boot, then configure the message broker settings and start the service. Publish a test shipment event to confirm the end-to-end flow.",
+    "inventory-cache-service": "# Inventory Cache Service\n\nInventory Cache Service keeps frequently used inventory data close to the service layer so reads stay responsive during busy periods. It is a compact project for teams that prefer a simple cache-first approach.\n\n## Features\n- Cache-backed inventory lookups\n- Redis support for short-lived data\n- Container-friendly setup with Docker\n- Easy deployment into Kubernetes\n- Small surface area for maintenance\n\n## Getting Started\nPrepare Redis, then build and run the service with Docker. After that, deploy it into Kubernetes and check that inventory reads are served from the cache path."
+  }
+}

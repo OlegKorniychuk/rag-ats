@@ -1,0 +1,103 @@
+{
+  "personaId": "p045",
+  "language": "en",
+  "name": "Elena Dubois",
+  "email": "elena-dubois@example.com",
+  "githubUrl": null,
+  "headline": "Full-Stack Engineer",
+  "location": "Dubrovnik, Croatia",
+  "summary": "Full-stack engineer with a background in backend development and product delivery across customer-facing platforms. Experienced in building reliable services, improving data flows, and collaborating with cross-functional teams to ship and maintain business-critical features. Comfortable working across application layers, system design, and release processes.",
+  "roles": [
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Junior Backend Developer",
+      "start": "2021-07",
+      "end": "2022-08",
+      "bullets": [
+        "Built customer-facing interface features in React, improving response times for internal content editors by 22%.",
+        "Queried and cleaned operational data with SQL to support reporting and reduce manual follow-up work by 30%.",
+        "Partnered with designers and support staff to refine backend workflows and make routine updates easier to complete.",
+        "Resolved defects across the application and kept release work on schedule for the team."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "Backend Engineer",
+      "start": "2022-10",
+      "end": "2023-11",
+      "bullets": [
+        "Developed service endpoints on AWS and connected them to MongoDB-backed records for a new client portal.",
+        "Improved data retrieval patterns in MongoDB, cutting average lookup time by 18%.",
+        "Supported cloud deployments on AWS and tightened error handling across backend services.",
+        "Worked with product stakeholders to clarify service behavior and deliver changes without disrupting existing users."
+      ]
+    },
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Full-Stack Engineer",
+      "start": "2024-01",
+      "end": "2026-02",
+      "bullets": [
+        "Designed and delivered application features in Angular, Vue and TypeScript while aligning the backend contract with REST APIs.",
+        "Implemented server-side services in Node.js with PostgreSQL and MySQL, supporting consistent data handling across the product.",
+        "Established release checks with GitHub Actions and collaborated on System design decisions that improved service stability.",
+        "Refined user flows and internal dashboards, helping reduce support tickets by 24%."
+      ]
+    },
+    {
+      "employer": "Ostrava Labs",
+      "title": "Full-Stack Engineer",
+      "start": "2026-02",
+      "end": null,
+      "bullets": [
+        "Lead Agile delivery for a cross-functional team building features in Vue, Redux and TypeScript.",
+        "Created backend services in Node.js and Express, then connected them to PostgreSQL data stores and RabbitMQ message flows.",
+        "Shaped REST APIs and System design choices for a growing platform, improving feature rollout speed by 20%.",
+        "Automated release checks with GitHub Actions and coordinated deployment work across Azure environments.",
+        "Partnered with engineers and product leads to keep priorities clear and maintain steady delivery across multiple workstreams."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Maple Router",
+      "description": "Built Maple Router in Java with Redis to cache routing state and speed up repeated requests for a scheduling tool."
+    }
+  ],
+  "skills": [
+    "React",
+    "SQL",
+    "AWS",
+    "MongoDB",
+    "Angular",
+    "GitHub Actions",
+    "MySQL",
+    "Node.js",
+    "PostgreSQL",
+    "REST APIs",
+    "System design",
+    "TypeScript",
+    "Vue",
+    "Agile",
+    "Azure",
+    "Express",
+    "RabbitMQ",
+    "Redux",
+    "Java",
+    "Redis"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Information Systems",
+      "school": "Northbridge Institute of Applied Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Cedar Vale School of Digital Practice",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (C1)"],
+  "injection": null
+}

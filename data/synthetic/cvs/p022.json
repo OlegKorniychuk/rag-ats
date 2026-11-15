@@ -1,0 +1,79 @@
+{
+  "personaId": "p022",
+  "language": "en",
+  "name": "Diego Mensah",
+  "email": "diego-mensah@example.com",
+  "githubUrl": "https://github.com/synth-diego-mensah",
+  "headline": "Full-Stack Developer",
+  "location": "Accra, Ghana",
+  "summary": "Full-stack developer with experience building business applications and internal tools across product teams. Comfortable delivering features in Agile environments, integrating REST APIs, and improving backend services and user interfaces. Known for collaborating closely with product and operations teams to ship reliable releases and refine customer workflows.",
+  "roles": [
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Full-Stack Developer",
+      "start": "2019-03",
+      "end": "2023-11",
+      "bullets": [
+        "Built core product features in Java and Spring Boot, connecting the frontend to REST APIs and reducing manual support requests by 24%.",
+        "Worked in Agile teams to deliver planned releases, refine priorities, and keep development aligned with changing business needs.",
+        "Improved service reliability by simplifying backend flows and tightening validation across the application stack.",
+        "Partnered with designers and analysts to translate requirements into maintainable features and clearer user journeys."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "Senior Full-Stack Developer",
+      "start": "2024-01",
+      "end": "2025-12",
+      "bullets": [
+        "Led delivery of customer-facing features in Java, Spring Boot and React, helping the team ship 18% more work per release cycle.",
+        "Designed and maintained Microservices that exchanged data through RabbitMQ, improving responsiveness during peak usage.",
+        "Built and reviewed UI changes in TypeScript and Vue, while keeping backend behavior consistent with PostgreSQL-backed records.",
+        "Strengthened release confidence with CI/CD workflows in GitHub Actions and automated checks using Jest and JUnit.",
+        "Collaborated across product and engineering to coordinate dependencies, reduce rework, and support a 7-person delivery team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Prism Tracker",
+      "description": "Built Prism Tracker around MySQL to store scheduling data, track status updates, and keep records organized for operational reporting."
+    },
+    {
+      "name": "Pocket Scheduler",
+      "description": "Created Pocket Scheduler with Cypress to validate key user journeys, catch regressions early, and support smooth release cycles."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Java",
+    "REST APIs",
+    "Spring Boot",
+    "CI/CD",
+    "GitHub Actions",
+    "Jest",
+    "JUnit",
+    "Microservices",
+    "PostgreSQL",
+    "RabbitMQ",
+    "React",
+    "TypeScript",
+    "Vue",
+    "MySQL",
+    "Cypress"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Kintara Institute of Technology",
+      "end": "2018"
+    },
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Mavora Polytechnic",
+      "end": "2016"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B1)"],
+  "injection": null
+}

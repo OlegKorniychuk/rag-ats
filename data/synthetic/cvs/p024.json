@@ -1,0 +1,57 @@
+{
+  "personaId": "p024",
+  "language": "en",
+  "name": "Jonas Petrov",
+  "email": "jonas-petrov@example.com",
+  "githubUrl": "https://github.com/synth-jonas-petrov",
+  "headline": "Analytics Engineer",
+  "location": "Tallinn, Estonia",
+  "summary": "Analytics Engineer focused on building reliable data pipelines and decision-ready reporting. Comfortable working across Agile teams to shape system design, streamline ETL flows, and turn raw data into trusted metrics. Known for pragmatic automation, clear documentation, and close collaboration with product and operations stakeholders.",
+  "roles": [
+    {
+      "employer": "Mossgate Software",
+      "title": "Analytics Engineer",
+      "start": "2025-07",
+      "end": null,
+      "bullets": [
+        "Built ETL pipelines in Azure with SQL and pandas to consolidate operational feeds into governed reporting tables.",
+        "Automated data preparation tasks with Bash, reducing manual work by 35% and improving refresh reliability.",
+        "Partnered on system design decisions for the analytics layer, aligning SQL models with downstream reporting needs.",
+        "Improved quality checks across Azure workflows and ETL runs, cutting broken loads by 28% through clearer validation steps.",
+        "Worked in Agile delivery cycles with the backend and product teams to ship metric changes faster and keep dashboards consistent."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Signal Garden",
+      "description": "Designed a signal-processing prototype using BigQuery and Spark to combine large event sets and compare aggregation approaches for faster analysis."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Azure",
+    "Bash",
+    "ETL",
+    "pandas",
+    "SQL",
+    "System design",
+    "BigQuery",
+    "Spark",
+    "dbt"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Northshore Institute of Technology",
+      "end": "2024"
+    },
+    {
+      "degree": "Diploma in Applied Data Analysis",
+      "school": "Riverview School of Business and Data",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Russian (C2)"],
+  "injection": null
+}

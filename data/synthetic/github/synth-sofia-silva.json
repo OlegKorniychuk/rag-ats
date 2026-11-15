@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-sofia-silva",
+    "html_url": "https://github.com/synth-sofia-silva",
+    "bio": "Full-stack developer who builds practical tools for teams and everyday workflows."
+  },
+  "repos": [
+    {
+      "name": "task-flow-board",
+      "html_url": "https://github.com/synth-sofia-silva/task-flow-board",
+      "description": "A planning board for tracking work items, priorities, and progress in one place.",
+      "language": "TypeScript",
+      "stargazers_count": 75,
+      "topics": [
+        "typescript",
+        "vue",
+        "state-management",
+        "productivity",
+        "team-work"
+      ],
+      "pushed_at": "2026-09-06T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "query-notebook",
+      "html_url": "https://github.com/synth-sofia-silva/query-notebook",
+      "description": "A note-taking tool for saving and running structured data queries.",
+      "language": "SQL",
+      "stargazers_count": 64,
+      "topics": ["sql", "reporting", "data-notes", "postgresql", "analytics"],
+      "pushed_at": "2026-05-24T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "component-lab",
+      "html_url": "https://github.com/synth-sofia-silva/component-lab",
+      "description": "A sandbox for building interface pieces and checking behavior in isolation.",
+      "language": "JavaScript",
+      "stargazers_count": 53,
+      "topics": ["javascript", "vue", "component-library", "jest", "cypress"],
+      "pushed_at": "2026-03-15T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "task-flow-board": "# Task Flow Board\n\nTask Flow Board is a small planning app for organizing work items, priorities, and status in a clear workspace. It is built with TypeScript and Vue, with a focus on simple screens and fast updates.\n\n## Features\n- Create, edit, and reorder work items\n- Filter by status, owner, and priority\n- Keep local changes in sync with the interface\n- Review a compact summary of active work\n\n## Getting started\n1. Install dependencies.\n2. Start the local app.\n3. Open the workspace in your browser and add a few items.\n\nThe project uses TypeScript and Vue throughout, so it is easy to follow and extend.",
+    "query-notebook": "# Query Notebook\n\nQuery Notebook is a simple workspace for storing query snippets, comparing results, and keeping useful notes together. It helps you collect repeatable queries for reporting and review without losing context.\n\n## Features\n- Save named query snippets\n- Group notes by project or topic\n- Track expected output beside each query\n- Reuse templates for common reporting tasks\n\n## Getting started\n1. Load the script into your database.\n2. Create a few sample tables and insert test rows.\n3. Run the included query samples and adapt them to your own data.\n\nUse the script as a starter for PostgreSQL-based reporting notes and small data checks.",
+    "component-lab": "# Component Lab\n\nComponent Lab is a sandbox for experimenting with reusable interface pieces and checking how they behave in different states. It is useful for trying out ideas before moving them into a larger app.\n\n## Features\n- Build small interface pieces in isolation\n- Compare states such as empty, loading, and filled\n- Review interaction behavior with lightweight checks\n- Organize examples by category\n\n## Getting started\n1. Install dependencies.\n2. Start the local preview.\n3. Open the sample workspace and add or adjust examples.\n\nThe project is centered on Vue for the interface and TypeScript for shared structure, with simple scripts to keep the setup easy to run."
+  }
+}

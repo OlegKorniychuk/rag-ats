@@ -1,0 +1,94 @@
+{
+  "personaId": "p011",
+  "language": "en",
+  "name": "Sofia Novak",
+  "email": "sofia-novak@example.com",
+  "githubUrl": "https://github.com/synth-sofia-novak",
+  "headline": "Backend Engineer",
+  "location": "Vienna, Austria",
+  "summary": "Backend engineer with a track record of building reliable services, integrating APIs, and improving data flows across growing product teams. Experienced in REST APIs, Microservices, system design, and database-focused delivery, with a practical approach to shipping maintainable backend features and operational improvements.",
+  "roles": [
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Junior Backend Developer",
+      "start": "2021-04",
+      "end": "2023-02",
+      "bullets": [
+        "Built backend endpoints in NestJS for REST APIs, cutting integration turnaround by 30% for internal product teams.",
+        "Designed SQL queries and PostgreSQL tables to support cleaner reporting and fewer data inconsistencies.",
+        "Improved request handling and validation across the service layer, reducing support escalations by 18%."
+      ]
+    },
+    {
+      "employer": "Nimbus Garden",
+      "title": "API Engineer",
+      "start": "2023-03",
+      "end": "2024-08",
+      "bullets": [
+        "Connected event flows with Kafka and Microservices to move customer updates between services with lower manual handoffs.",
+        "Implemented OAuth-protected API access and tuned PostgreSQL queries to keep response times stable during peak usage.",
+        "Worked with product and operations teams to refine service contracts, supporting 2 major releases without disrupting clients."
+      ]
+    },
+    {
+      "employer": "Opaline Works",
+      "title": "Backend Developer",
+      "start": "2024-10",
+      "end": "2025-08",
+      "bullets": [
+        "Delivered backend features in NestJS and SQL under Agile, helping the team close 14 planned stories in a release cycle.",
+        "Maintained MySQL data structures and OAuth flows for secure account actions and cleaner record handling.",
+        "Reviewed service behavior and improved error handling across the backend, which reduced repeat incidents by 22%."
+      ]
+    },
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Backend Engineer",
+      "start": "2025-09",
+      "end": "2026-05",
+      "bullets": [
+        "Shaped service boundaries through system design and Microservices planning, aligning the backend with new product goals.",
+        "Built containerized services with Docker and NestJS, using JavaScript and Express to speed up feature delivery across 3 services.",
+        "Optimized MySQL access patterns and supporting SQL logic to improve throughput and keep deployments predictable."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Studio",
+      "description": "Created a lightweight messaging workflow for Pocket Studio using RabbitMQ and Redis to coordinate background tasks and speed up state updates."
+    }
+  ],
+  "skills": [
+    "Node.js",
+    "NestJS",
+    "PostgreSQL",
+    "REST APIs",
+    "SQL",
+    "Kafka",
+    "Microservices",
+    "OAuth",
+    "Docker",
+    "MySQL",
+    "Express",
+    "JavaScript",
+    "System design",
+    "RabbitMQ",
+    "Redis",
+    "Agile"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northbridge Institute of Applied Computing",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Information Systems",
+      "school": "Linden Technical School",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B1)", "Polish (B2)"],
+  "injection": null
+}

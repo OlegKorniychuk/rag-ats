@@ -1,0 +1,73 @@
+{
+  "personaId": "p006",
+  "language": "en",
+  "name": "Elena Alvarez",
+  "email": "elena-alvarez@example.com",
+  "githubUrl": "https://github.com/synth-elena-alvarez",
+  "headline": "Senior QA Automation Engineer",
+  "location": "Madrid, Spain",
+  "summary": "QA automation specialist with experience improving test coverage, release confidence, and defect detection across web and API workflows. Known for building reliable automated checks, coordinating with product teams, and tightening regression cycles through practical quality processes. Comfortable working across browser-based features, backend services, and performance-focused validation.",
+  "roles": [
+    {
+      "employer": "Hexagon Meadow",
+      "title": "QA Automation Engineer",
+      "start": "2021-01",
+      "end": "2024-02",
+      "bullets": [
+        "Built C# automation for core regression paths, reducing manual test effort by 35% and improving repeatability across weekly releases.",
+        "Expanded JUnit coverage for browser journeys in React, helping the team catch UI defects earlier in the cycle.",
+        "Reviewed test results with developers and triaged failures, cutting turnaround time on urgent fixes by 28%."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Senior QA Automation Engineer",
+      "start": "2024-04",
+      "end": null,
+      "bullets": [
+        "Designed test automation workflows with Python and JavaScript, then wired them into GitHub Actions for faster release validation.",
+        "Built API checks with Postman against REST APIs and extended Test automation coverage for critical service flows.",
+        "Ran Performance testing on React scenarios and surfaced bottlenecks that improved peak-load response by 22%.",
+        "Maintained a shared quality suite across teams, combining manual investigation with automated checks to support weekly delivery."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Orbit Tracker",
+      "description": "Created automated test coverage in pytest for routing and status calculations, focusing on fast feedback for edge cases and data-driven scenarios."
+    },
+    {
+      "name": "Cobalt Atlas",
+      "description": "Wrote behavior-focused test scenarios in Cucumber to validate user journeys, acceptance rules, and regression coverage for the product team."
+    }
+  ],
+  "skills": [
+    "C#",
+    "JUnit",
+    "React",
+    "GitHub Actions",
+    "JavaScript",
+    "Performance testing",
+    "Postman",
+    "Python",
+    "REST APIs",
+    "Test automation",
+    "pytest",
+    "Cucumber"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Quality Engineering",
+      "school": "Northgate Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Lakeshore College of Applied Studies",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Spanish (C2)"],
+  "injection": null
+}

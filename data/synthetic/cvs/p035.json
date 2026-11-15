@@ -1,0 +1,68 @@
+{
+  "personaId": "p035",
+  "language": "en",
+  "name": "Ananya Fischer",
+  "email": "ananya-fischer@example.com",
+  "githubUrl": "https://github.com/synth-ananya-fischer",
+  "headline": "Software Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Software engineer and security engineer with experience building reliable backend systems and hardening internal platforms. Known for shipping practical improvements in C, Rust and Python, and for strengthening access controls and operational runbooks across growing teams.",
+  "roles": [
+    {
+      "employer": "Birchway Systems",
+      "title": "Software Engineer",
+      "start": "2020-08",
+      "end": "2022-01",
+      "bullets": [
+        "Built low-level components in C and Rust to improve data processing reliability, and used Git to keep releases traceable across the team.",
+        "Refactored performance-sensitive modules in Rust, cutting service latency by 18% in one workflow while preserving compatibility with existing C code.",
+        "Reviewed merges and branch history in Git to reduce integration issues and keep the codebase stable during weekly release cycles."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "Senior Security Engineer",
+      "start": "2022-02",
+      "end": null,
+      "bullets": [
+        "Led security work in an Agile team, delivering Python scripts and Bash tooling that reduced manual access-review effort by 40%.",
+        "Hardened Linux servers and Azure-hosted environments by tightening configuration, logging and account controls for internal services.",
+        "Implemented OAuth-based sign-in flows and cryptography checks for sensitive workflows, improving protection for 3 customer-facing systems.",
+        "Automated incident-response tasks with Python and Bash, helping the team cut response time by 25% during on-call rotations."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Gateway",
+      "description": "Designed Tidal Gateway delivery flow with CI/CD to speed up releases and keep validation consistent across environments."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Azure",
+    "Bash",
+    "C",
+    "CI/CD",
+    "Cryptography",
+    "Git",
+    "Linux",
+    "OAuth",
+    "Python",
+    "Rust"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Computer Engineering",
+      "school": "Northgate Technical Institute",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Applied Information Security",
+      "school": "Linden Academy of Technology",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

@@ -1,0 +1,94 @@
+{
+  "personaId": "p070",
+  "language": "en",
+  "name": "Hugo Kaya",
+  "email": "hugo-kaya@example.com",
+  "githubUrl": "https://github.com/synth-hugo-kaya",
+  "headline": "Full-Stack Engineer",
+  "location": "Kaya, England",
+  "summary": "Versatile software engineer with experience building internal and customer-facing products across backend and full-stack environments. Comfortable working with Agile teams, improving data flow, and shipping reliable interfaces and services. Known for translating product needs into practical implementations and steady delivery.",
+  "roles": [
+    {
+      "employer": "Larkspur Engineering",
+      "title": "Junior Backend Developer",
+      "start": "2021-10",
+      "end": "2023-05",
+      "bullets": [
+        "Built backend features in Next.js and MongoDB, turning intake workflows into faster daily operations for the team.",
+        "Collaborated in Agile planning and delivery cycles, pairing HTML/CSS updates with backend changes to keep releases aligned.",
+        "Improved record handling across MongoDB collections and reduced manual follow-up by 32% through clearer data validation.",
+        "Shipped interface refinements in HTML/CSS and Next.js that helped support staff complete common tasks with fewer errors."
+      ]
+    },
+    {
+      "employer": "Ravenmoor Tech",
+      "title": "Full-Stack Developer",
+      "start": "2023-07",
+      "end": "2024-03",
+      "bullets": [
+        "Developed customer-facing screens in Angular and HTML/CSS, connecting them to PostgreSQL-backed data flows.",
+        "Refined application state management with Redux, which cut repeat refresh issues by 28% during busy usage periods.",
+        "Worked with product and design partners to translate requirements into Angular features that supported a smoother release cadence.",
+        "Tuned PostgreSQL queries and frontend interactions to reduce page lag and improve the experience for 3 key workflows."
+      ]
+    },
+    {
+      "employer": "Vantage Reed",
+      "title": "Backend Developer",
+      "start": "2024-05",
+      "end": "2025-05",
+      "bullets": [
+        "Delivered backend services in Angular and PostgreSQL, supporting operational tools used by multiple internal teams.",
+        "Introduced RabbitMQ-based asynchronous handling that lowered queue buildup by 41% during peak processing windows.",
+        "Adjusted data models and service logic to improve reporting accuracy and reduce rework for analysts.",
+        "Partnered with stakeholders to prioritize fixes and keep backend changes moving through a predictable release process."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Full-Stack Engineer",
+      "start": "2025-07",
+      "end": null,
+      "bullets": [
+        "Built product features with Express, TypeScript and Vue, covering both customer screens and the backend that supported them.",
+        "Designed data flows across GraphQL, PostgreSQL and MySQL, improving response consistency for 5 high-use endpoints.",
+        "Implemented background messaging with RabbitMQ and kept source control practices disciplined with Git across the team.",
+        "Created SQL-based reporting views and service logic that shortened routine data checks by 24%.",
+        "Worked across the stack to simplify integration points and support a stable release rhythm for the platform."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Agile",
+    "HTML/CSS",
+    "MongoDB",
+    "Next.js",
+    "Angular",
+    "PostgreSQL",
+    "Redux",
+    "RabbitMQ",
+    "Express",
+    "Git",
+    "GraphQL",
+    "MySQL",
+    "SQL",
+    "TypeScript",
+    "Vue",
+    "Node.js"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northmere Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Wrenfield College",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Turkish (B2)"],
+  "injection": null
+}

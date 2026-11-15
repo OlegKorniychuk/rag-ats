@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tomasz Holm - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>tomasz-holm@example.com</li>
+  <li>Krakow, Poland</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Agile</li>
+  <li>MySQL</li>
+  <li>Express</li>
+  <li>OAuth</li>
+  <li>TypeScript</li>
+  <li>Docker</li>
+  <li>Go</li>
+  <li>JavaScript</li>
+  <li>Microservices</li>
+  <li>NestJS</li>
+  <li>Redis</li>
+  <li>MongoDB</li>
+  <li>RabbitMQ</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Polish (C2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computing</span><span class="dates">2021</span></div>
+  <div class="sub">Northmere School of Digital Systems</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Practice</span><span class="dates">2019</span></div>
+  <div class="sub">Valebridge Technical Institute</div>
+</div>
+</aside>
+<main class="main">
+<h1>Tomasz Holm</h1>
+<div class="headline">Backend Engineer</div>
+<h2>Summary</h2>
+<p>Backend engineer with experience building reliable services, improving data handling, and supporting product teams from early implementation through production refinement. Comfortable working across backend delivery, integrations, and service architecture in fast-moving environments. Known for practical ownership, clear communication, and steady improvements to stability and throughput.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>API Engineer</span><span class="dates">Jul 2024 – Dec 2025</span></div>
+  <div class="sub">Lumenfield</div>
+  <ul>
+    <li>Designed microservices in Go and TypeScript, coordinating service boundaries and shared contracts for a growing platform.</li>
+    <li>Built containerized components with Docker and NestJS, then tuned MySQL and Redis usage to reduce latency by 31%.</li>
+    <li>Implemented JavaScript-based integrations for API workflows and improved the reliability of data exchange between services.</li>
+    <li>Supported rollout planning and production fixes across multiple services, keeping delivery predictable during rapid growth.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Engineer</span><span class="dates">Mar 2023 – Jul 2024</span></div>
+  <div class="sub">Velvet Circuit</div>
+  <ul>
+    <li>Developed service endpoints with Express and TypeScript, supporting account and workflow features for internal users.</li>
+    <li>Implemented secure sign-in flows with OAuth and tightened access control across the backend.</li>
+    <li>Refactored core services to reduce error cases by 22% and make the codebase easier to extend.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Backend Developer</span><span class="dates">Feb 2022 – Jan 2023</span></div>
+  <div class="sub">Umber &amp; Oak</div>
+  <ul>
+    <li>Built backend features in Agile teams and kept the MySQL data model aligned with changing product needs.</li>
+    <li>Improved record handling and reduced repeated database lookups, which cut response times by 18%.</li>
+    <li>Worked with product and QA peers to deliver releases on schedule and resolve defects before launch.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Cobalt Router</span></div>
+  <p>Created an event-routing prototype that used RabbitMQ to move messages between backend components with clear processing rules.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Quiet Notebook</span></div>
+  <p>Built a lightweight collaboration prototype with Docker, OAuth and TypeScript, focusing on secure sign-in and isolated local runs.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

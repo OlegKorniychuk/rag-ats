@@ -1,0 +1,62 @@
+{
+  "personaId": "p010",
+  "language": "en",
+  "name": "Bohdan Pavlenko",
+  "email": "bohdan-pavlenko@example.com",
+  "githubUrl": null,
+  "headline": "Application Security Engineer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Application security engineer with a focus on hardening internal tools and reviewing code paths for risk. Known for practical remediation work, careful access control reviews, and clear collaboration with product and engineering teams.",
+  "roles": [
+    {
+      "employer": "Willowmere Software",
+      "title": "Junior Application Security Engineer",
+      "start": "2025-12",
+      "end": null,
+      "bullets": [
+        "Reviewed application changes in Git and used Rust to investigate risky code paths before release, reducing security issues found late in the cycle by 32%.",
+        "Performed Penetration testing across internal services and documented findings with clear reproduction steps for the engineering team.",
+        "Tightened IAM configurations for privileged accounts and removed unnecessary access for 18 user groups.",
+        "Created repeatable review checklists for source changes and access requests, helping the team close 24 findings faster."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Lantern Library",
+      "description": "Built Lantern Library with Azure and OAuth to support controlled document access and secure sign-in flows."
+    },
+    {
+      "name": "Paper Atlas",
+      "description": "Developed Paper Atlas with Git, IAM and Rust to track controlled content changes and enforce role-based approvals."
+    },
+    {
+      "name": "Atlas Library",
+      "description": "Implemented Atlas Library in Rust as a compact internal service for organizing records and validating updates."
+    }
+  ],
+  "skills": [
+    "Linux",
+    "OWASP",
+    "Git",
+    "IAM",
+    "Penetration testing",
+    "Rust",
+    "Azure",
+    "OAuth"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Security",
+      "school": "Northbridge Technical College",
+      "end": "2025"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Merehaven Institute of Technology",
+      "end": "2023"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Ukrainian (Native)"],
+  "injection": null
+}

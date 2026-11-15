@@ -1,0 +1,62 @@
+{
+  "user": {
+    "login": "synth-greta-varga",
+    "html_url": "https://github.com/synth-greta-varga",
+    "bio": "Builds polished user experiences with strong attention to accessibility and reliability."
+  },
+  "repos": [
+    {
+      "name": "viewflow-console",
+      "html_url": "https://github.com/synth-greta-varga/viewflow-console",
+      "description": "A single-page dashboard for monitoring and managing internal workflows.",
+      "language": "TypeScript",
+      "stargazers_count": 44,
+      "topics": [
+        "angular",
+        "typescript",
+        "web-accessibility",
+        "graphql",
+        "redux"
+      ],
+      "pushed_at": "2026-09-05T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "form-lens",
+      "html_url": "https://github.com/synth-greta-varga/form-lens",
+      "description": "A focused form toolkit for building consistent input experiences.",
+      "language": "TypeScript",
+      "stargazers_count": 38,
+      "topics": [
+        "angular",
+        "typescript",
+        "html-css",
+        "jest",
+        "web-accessibility"
+      ],
+      "pushed_at": "2026-07-27T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-slate",
+      "html_url": "https://github.com/synth-greta-varga/signal-slate",
+      "description": "A compact notes workspace for drafting ideas and reviewing saved snippets.",
+      "language": "JavaScript",
+      "stargazers_count": 35,
+      "topics": ["vue", "javascript", "jest", "rest-apis", "agile"],
+      "pushed_at": "2026-07-16T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "viewflow-console": "# ViewFlow Console\n\nViewFlow Console is a single-page dashboard for monitoring and managing internal workflows. It helps teams inspect records, review status changes, and move through common tasks with a clear and accessible layout.\n\n## Features\n- Organized panels for status, details, and actions\n- Keyboard-friendly interaction patterns\n- Data loading with structured queries and request handling\n- Shared state for filters, selections, and notifications\n- Responsive layout for wide and narrow screens\n\n## Getting Started\nInstall the project, then start it in a local browser session. The app is written in Angular and TypeScript, and the code is organized around reusable view parts, data services, and state updates.",
+    "form-lens": "# Form Lens\n\nForm Lens is a small toolkit for building consistent input experiences across internal pages. It provides reusable form pieces that make validation messages, field states, and help text easy to manage.\n\n## Features\n- Reusable input groups and error summaries\n- Clear labels, hints, and focus states\n- Lightweight validation rules for common cases\n- Utilities for checking rendering and interaction behavior\n- Layout helpers for dense and spacious forms\n\n## Getting Started\nUse Angular and TypeScript to assemble the form pieces into your page. Run the project locally, then open the demo screen to try the sample fields and validation flow.",
+    "signal-slate": "# Signal Slate\n\nSignal Slate is a compact notes workspace for drafting ideas and reviewing saved snippets. It is designed for quick editing, lightweight navigation, and a calm reading flow.\n\n## Features\n- Create, edit, and reorder short notes\n- Simple filters for recent, starred, and archived items\n- Structured data updates through request-based services\n- Unit checks for key interactions and state changes\n- Clean reading view with subtle spacing and hierarchy\n\n## Getting Started\nOpen the project in a local browser session and follow the sample workflow. The code uses Vue and JavaScript, with reusable components and request helpers that keep the app easy to extend."
+  }
+}

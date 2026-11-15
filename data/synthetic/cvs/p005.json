@@ -1,0 +1,78 @@
+{
+  "personaId": "p005",
+  "language": "en",
+  "name": "Jonas Hartmann",
+  "email": "jonas-hartmann@example.com",
+  "githubUrl": "https://github.com/synth-jonas-hartmann",
+  "headline": "Mobile Engineer",
+  "location": "Hamburg, Germany",
+  "summary": "Mobile and software engineer focused on building responsive app experiences and dependable backend integrations. Experienced in product delivery across small teams, with a practical approach to quality, release discipline, and cross-functional collaboration. Comfortable working across mobile interfaces, APIs, and data-driven features.",
+  "roles": [
+    {
+      "employer": "Mossgate Software",
+      "title": "Junior Mobile Developer",
+      "start": "2023-05",
+      "end": "2024-01",
+      "bullets": [
+        "Built mobile screens in Java and Jetpack Compose, improving feature delivery for the app team.",
+        "Wrote JUnit checks for core interaction flows and reduced regressions during releases.",
+        "Refined shared UI behavior with Jetpack Compose and Java, supporting smoother handoff between design and implementation."
+      ]
+    },
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Software Engineer",
+      "start": "2024-02",
+      "end": "2025-11",
+      "bullets": [
+        "Delivered product updates in Agile with Java, Jetpack Compose and Vue across mobile and web-facing views.",
+        "Integrated REST APIs with PostgreSQL-backed features and improved data handling for 3 customer workflows.",
+        "Automated release steps with Docker and GitHub Actions, shortening deployment preparation by 40%.",
+        "Created stateful UI flows with Redux and Jest, helping the team catch issues earlier in development."
+      ]
+    },
+    {
+      "employer": "Harbor & Pike Software",
+      "title": "Mobile Engineer",
+      "start": "2025-12",
+      "end": "2026-09",
+      "bullets": [
+        "Led Agile delivery of mobile and backend features using Java, Node.js and REST APIs for a 6-person squad.",
+        "Maintained app reliability with Docker, Git and GitHub Actions, keeping release work consistent across branches.",
+        "Extended Jetpack Compose and Vue interfaces while coordinating with PostgreSQL-driven services and shared product requirements.",
+        "Strengthened quality checks with JUnit and Jest, reducing defect fixes after handoff by 28%."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Java",
+    "Jetpack Compose",
+    "JUnit",
+    "Agile",
+    "Docker",
+    "GitHub Actions",
+    "Jest",
+    "PostgreSQL",
+    "Redux",
+    "REST APIs",
+    "Vue",
+    "Git",
+    "Node.js",
+    "SwiftUI"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Development",
+      "school": "Northvale Technical Institute",
+      "end": "2023"
+    },
+    {
+      "degree": "Associate Degree in Digital Product Engineering",
+      "school": "Briarwood College of Technology",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (C2)"],
+  "injection": null
+}

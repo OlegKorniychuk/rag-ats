@@ -1,0 +1,69 @@
+{
+  "personaId": "p060",
+  "language": "en",
+  "name": "Zainab Lindqvist",
+  "email": "zainab-lindqvist@example.com",
+  "githubUrl": "https://github.com/synth-zainab-lindqvist",
+  "headline": "Backend Engineer",
+  "location": "Helsinki, Finland",
+  "summary": "Backend and full-stack engineer with experience building business applications across product and platform teams. Known for delivering reliable services, tightening delivery workflows, and improving interface quality in close collaboration with design and operations. Comfortable working across cloud infrastructure, deployment pipelines, and customer-facing features.",
+  "roles": [
+    {
+      "employer": "Umber & Oak",
+      "title": "Backend Engineer",
+      "start": "2023-05",
+      "end": "2025-10",
+      "bullets": [
+        "Built Java services and GraphQL endpoints for internal workflows, and shipped features in Vue that improved response times for support teams by 18%.",
+        "Packaged releases with Docker and Azure, helping reduce environment-related incidents by 30% across the delivery path.",
+        "Strengthened CI/CD checks and OWASP-focused reviews, closing high-risk issues before release on 12 successive deployments.",
+        "Partnered with product and operations to simplify backend handoffs and keep the team aligned on new customer requests."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Full-Stack Developer",
+      "start": "2025-12",
+      "end": null,
+      "bullets": [
+        "Delivered Java and Redux features for the customer portal, using HTML/CSS to refine layouts and cut task completion time by 15%.",
+        "Automated delivery with GitHub Actions, CI/CD and Docker, reducing manual release work from hours to minutes.",
+        "Maintained Azure-hosted services and kept deployment runbooks current for a team of 9 engineers.",
+        "Coordinated with designers and analysts to turn feedback into small, frequent improvements without interrupting the release flow."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Router",
+      "description": "Created a routing prototype with GitHub Actions and Vue to validate interface behavior and speed up handoff between teams."
+    }
+  ],
+  "skills": [
+    "TypeScript",
+    "Azure",
+    "CI/CD",
+    "Docker",
+    "GraphQL",
+    "Java",
+    "OWASP",
+    "Vue",
+    "GitHub Actions",
+    "HTML/CSS",
+    "Redux"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northbridge Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Fjord City College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Finnish (B2)", "Swedish (B1)"],
+  "injection": null
+}

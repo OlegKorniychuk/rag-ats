@@ -1,0 +1,102 @@
+{
+  "personaId": "p065",
+  "language": "en",
+  "name": "Zainab Reyes",
+  "email": "zainab-reyes@example.com",
+  "githubUrl": null,
+  "headline": "Data Engineer",
+  "location": "Lisbon, Portugal",
+  "summary": "Data engineer and analytics specialist with a track record of building reliable data pipelines, modeling operational data, and supporting decision-making with clear metrics. Experienced across batch and streaming workflows, with hands-on work in Python, SQL, and data platforms that support both reporting and advanced analytics. Comfortable partnering with product and operations teams to improve data quality, latency, and delivery consistency.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Junior Data Engineer",
+      "start": "2021-04",
+      "end": "2023-05",
+      "bullets": [
+        "Built Bash and SQL scripts to automate daily ingestion jobs and keep tabular data ready for reporting, reducing manual handling by 40%.",
+        "Designed PostgreSQL data modeling patterns for operational datasets and improved query performance for recurring analyses by 28%.",
+        "Developed Python transforms that validated source files, standardized records, and prepared features for PyTorch experiments.",
+        "Maintained a clean handoff between upstream feeds and the warehouse by documenting load rules and resolving data issues within the backend process."
+      ]
+    },
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Analytics Engineer",
+      "start": "2023-07",
+      "end": "2024-04",
+      "bullets": [
+        "Orchestrated Python and Airflow workflows to move production metrics through the analytics layer, cutting refresh time by 35%.",
+        "Integrated Kafka event streams into SQL tables for near-real-time reporting and improved traceability across 12 core events.",
+        "Built PyTorch-assisted checks to flag unusual sensor patterns before they reached dashboards, lowering false alerts by 22%.",
+        "Partnered with operations teams to improve data definitions and ensure consistent metric logic across weekly releases."
+      ]
+    },
+    {
+      "employer": "Cinder Peak",
+      "title": "Analytics Engineer",
+      "start": "2024-04",
+      "end": "2025-06",
+      "bullets": [
+        "Designed a more resilient analytics layer with dbt and SQL, aligning business rules to a shared model and reducing rework by 30%.",
+        "Built Python and Spark pipelines that processed large-scale usage data and supported Computer vision feature preparation.",
+        "Applied R and PyTorch to explore model outputs, compare experiment results, and surface quality gaps in image-based workflows.",
+        "Led system design discussions for the data platform, balancing scalability, observability, and dependable delivery for 3 product teams."
+      ]
+    },
+    {
+      "employer": "Emberlight Tech",
+      "title": "Senior Data Engineer",
+      "start": "2025-08",
+      "end": null,
+      "bullets": [
+        "Built end-to-end ETL flows in Python, SQL, BigQuery and Snowflake to unify reporting across finance and operations, improving daily freshness by 50%.",
+        "Packaged containerized jobs with Docker and Git so pipeline changes could be reviewed, promoted, and rolled back with less operational risk.",
+        "Expanded Spark processing for Computer vision datasets and reduced file handling time by 33% on large batch runs.",
+        "Used R, PyTorch and Python to validate model outputs, compare business segments, and support forecast review meetings.",
+        "Implemented schema controls and recovery steps across the warehouse environment to keep critical tables stable during high-volume loads."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Granite Ledger",
+      "description": "Built Granite Ledger as a finance analytics project using scikit-learn to score transaction risk and compare model performance across labeled samples."
+    }
+  ],
+  "skills": [
+    "Bash",
+    "Data modeling",
+    "PostgreSQL",
+    "Python",
+    "PyTorch",
+    "SQL",
+    "Airflow",
+    "Kafka",
+    "Computer vision",
+    "dbt",
+    "R",
+    "Spark",
+    "System design",
+    "BigQuery",
+    "Docker",
+    "ETL",
+    "Git",
+    "Snowflake",
+    "scikit-learn"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Data Systems",
+      "school": "North Vale Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Bachelor of Applied Mathematics",
+      "school": "Marlowe School of Sciences",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Spanish (B2)"],
+  "injection": null
+}

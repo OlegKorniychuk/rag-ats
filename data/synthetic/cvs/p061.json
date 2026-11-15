@@ -1,0 +1,81 @@
+{
+  "personaId": "p061",
+  "language": "en",
+  "name": "Samuel Dubois",
+  "email": "samuel-dubois@example.com",
+  "githubUrl": "https://github.com/synth-samuel-dubois",
+  "headline": "Senior DevOps Engineer",
+  "location": "Paris, France",
+  "summary": "Platform and DevOps engineer with a track record of improving delivery pipelines, identity controls, and cloud operations across growing technical teams. Comfortable building reliable services in Python, supporting MLOps workflows, and strengthening infrastructure delivery with modern automation practices. Known for turning operational needs into clear, measurable improvements for engineering and product teams.",
+  "roles": [
+    {
+      "employer": "Quillstone Systems",
+      "title": "Junior Software Engineer",
+      "start": "2020-04",
+      "end": "2022-03",
+      "bullets": [
+        "Built internal automation in Python and used GitHub Actions to reduce manual release steps, cutting handoffs by 40%.",
+        "Created small maintenance tools in Python to standardize checks and reporting for the engineering team.",
+        "Improved code review throughput by organizing branch updates and release notes, supporting a team of 6 developers."
+      ]
+    },
+    {
+      "employer": "Northgrove Networks",
+      "title": "Platform Engineer",
+      "start": "2022-03",
+      "end": "2024-12",
+      "bullets": [
+        "Helped redesign IAM access flows for internal platforms and tightened approval steps for 3 critical systems.",
+        "Supported MLOps delivery by packaging Python jobs for repeatable training and deployment runs.",
+        "Monitored platform health and resolved recurring access and deployment issues, reducing incident volume by 28%.",
+        "Worked with product and operations teams to document controls, improve handovers, and keep services aligned with release targets."
+      ]
+    },
+    {
+      "employer": "Quartzfield",
+      "title": "Senior DevOps Engineer",
+      "start": "2025-02",
+      "end": null,
+      "bullets": [
+        "Led Agile delivery for cloud infrastructure work and coordinated sprint goals across a 9-person team.",
+        "Built CI/CD pipelines with AWS, Docker and GCP to speed up service releases and improve environment consistency.",
+        "Automated deployment checks in Go and Python, lowering failed releases by 35%.",
+        "Standardized container build steps with Docker and simplified rollout procedures for shared services.",
+        "Partnered with engineering leads to improve incident response, release planning and operational visibility across the platform."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Pipeline",
+      "description": "Designed Atlas Pipeline as a Linux-based processing environment for scheduled jobs and operational controls."
+    }
+  ],
+  "skills": [
+    "GitHub Actions",
+    "Python",
+    "IAM",
+    "MLOps",
+    "Agile",
+    "AWS",
+    "CI/CD",
+    "Docker",
+    "GCP",
+    "Go",
+    "Linux"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Computer Engineering",
+      "school": "Cedar Vale Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Bachelor of Applied Informatics",
+      "school": "Lyonshire School of Digital Systems",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["French (Native)", "English (C1)"],
+  "injection": null
+}

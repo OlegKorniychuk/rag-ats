@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-sofia-brandt",
+    "html_url": "https://github.com/synth-sofia-brandt",
+    "bio": "Analytics engineer who turns messy data into reliable reporting and shared insight."
+  },
+  "repos": [
+    {
+      "name": "warehouse-metrics-lab",
+      "html_url": "https://github.com/synth-sofia-brandt/warehouse-metrics-lab",
+      "description": "A small reporting project that models warehouse metrics and keeps daily summaries consistent.",
+      "language": "SQL",
+      "stargazers_count": 42,
+      "topics": ["sql", "python", "dbt", "bigquery", "analytics"],
+      "pushed_at": "2026-09-11T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "pipeline-watchtower",
+      "html_url": "https://github.com/synth-sofia-brandt/pipeline-watchtower",
+      "description": "A monitoring project that checks scheduled data flows and flags missing or late runs.",
+      "language": "Python",
+      "stargazers_count": 36,
+      "topics": ["python", "airflow", "sql", "workflow", "monitoring"],
+      "pushed_at": "2026-08-30T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "forecast-notebook",
+      "html_url": "https://github.com/synth-sofia-brandt/forecast-notebook",
+      "description": "A compact forecasting study that compares trend shapes and stores the chosen result for reporting.",
+      "language": "R",
+      "stargazers_count": 31,
+      "topics": ["r", "sql", "forecasting", "reporting", "pandas"],
+      "pushed_at": "2026-06-08T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "warehouse-metrics-lab": "# Warehouse Metrics Lab\n\nWarehouse Metrics Lab is a compact project for shaping operational facts into clear reporting tables. It focuses on daily volume, timing, and status summaries that can be reused across teams.\n\n## What it does\n- Organizes raw records into stable reporting layers\n- Produces daily summaries for core warehouse measures\n- Keeps metric logic in one place for easier review\n- Uses Python for helper checks and SQL for the main transforms\n\n## Getting started\n- Prepare source tables in BigQuery\n- Run the SQL scripts in order\n- Use Python to review basic counts and sample output\n- Refresh the final reporting tables when new data arrives",
+    "pipeline-watchtower": "# Pipeline Watchtower\n\nPipeline Watchtower is a lightweight project for watching scheduled data movement and surfacing problems early. It is designed for teams that want a simple view of freshness, retries, and stalled runs.\n\n## What it does\n- Checks whether expected runs completed on time\n- Summarizes failures and missing records\n- Stores a small history for trend review\n- Uses Python for checks and SQL for status tables\n\n## Getting started\n- Load the status tables in SQL\n- Run the Python check script on a schedule\n- Review the summary output each day\n- Update thresholds as the data volume changes",
+    "forecast-notebook": "# Forecast Notebook\n\nForecast Notebook is a short research project for comparing simple trend views and selecting a practical forecast for reporting. It is meant to support planning discussions without adding extra complexity.\n\n## What it does\n- Compares recent history across a few measures\n- Builds a simple forecast for the next period\n- Writes the chosen result into SQL tables\n- Uses R for analysis and Python for light data checks\n\n## Getting started\n- Place the input data in SQL tables\n- Run the R analysis script\n- Review the forecast summary output\n- Refresh the reporting tables when the inputs change"
+  }
+}

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Aisha Eriksen - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Aisha Eriksen</h1>
+<div class="headline">Platform Engineer</div>
+<div class="contact">aisha-eriksen@example.com &middot; Copenhagen, Denmark</div>
+<h2>Summary</h2>
+<p>Platform and reliability engineer with a strong track record of improving service stability, delivery speed and operational clarity across distributed systems. Experienced in designing dependable back-end platforms, reducing incident impact and working closely with product and engineering teams to support growth. Comfortable balancing automation, observability and system design with practical delivery.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Jul 2024 – Present</span></div>
+  <div class="sub">Corvid Analytics</div>
+  <ul>
+    <li>Built platform automation with Ansible and Docker on GCP, accelerating environment setup from days to under 2 hours.</li>
+    <li>Standardized delivery for Kotlin, C# and Scala services running on Kubernetes and Spring Boot, improving release consistency across 14 teams.</li>
+    <li>Designed data and service workflows with Kafka and MySQL, supporting higher-throughput processing while keeping operational overhead low.</li>
+    <li>Refined cluster operations and access patterns for shared infrastructure, reducing manual intervention by 40% and improving incident response.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Site Reliability Engineer</span><span class="dates">Jan 2022 – Jul 2024</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Stabilized the service platform by improving system design for a Scala and Spring Boot backend on GCP, cutting repeated incident patterns by 28%.</li>
+    <li>Built a reliable event flow with RabbitMQ and Git-based release coordination, reducing failed handoffs between teams by 35%.</li>
+    <li>Tightened operational checks for production changes and documented recovery steps for the on-call team, lowering mean time to restore service by 22%.</li>
+    <li>Partnered with engineers to tune deployment readiness and service boundaries, keeping critical services within uptime targets during peak load.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Atlas Atlas</span></div>
+  <p>Built Atlas Atlas around Hibernate to support structured persistence for a data-heavy internal workflow and keep model changes predictable.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Quiet Garden</span></div>
+  <p>Created Quiet Garden in Go as a lightweight utility service for background processing and simple operational tasks.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>GCP</li>
+  <li>Git</li>
+  <li>RabbitMQ</li>
+  <li>Scala</li>
+  <li>Spring Boot</li>
+  <li>System design</li>
+  <li>Ansible</li>
+  <li>C#</li>
+  <li>Docker</li>
+  <li>Kafka</li>
+  <li>Kotlin</li>
+  <li>Kubernetes</li>
+  <li>MySQL</li>
+  <li>Hibernate</li>
+  <li>Go</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Software Engineering</span><span class="dates">2021</span></div>
+  <div class="sub">Northshore Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Distributed Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Linden Technical College</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Danish (B2)</li>
+  <li>Norwegian (B1)</li>
+</ul>
+  </body>
+</html>

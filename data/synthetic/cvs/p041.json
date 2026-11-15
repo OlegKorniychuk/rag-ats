@@ -1,0 +1,68 @@
+{
+  "personaId": "p041",
+  "language": "en",
+  "name": "Mei Holm",
+  "email": "mei-holm@example.com",
+  "githubUrl": null,
+  "headline": "Data Scientist",
+  "location": "Helsinki, Finland",
+  "summary": "Data scientist and data engineer with a track record of building dependable data platforms and analytical workflows. Experienced in turning messy operational data into usable models, improving delivery processes, and supporting product decisions with clear metrics. Comfortable working across engineering and analytics teams to ship practical solutions.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Data Engineer",
+      "start": "2021-02",
+      "end": "2023-02",
+      "bullets": [
+        "Built batch processing services in Python and C++ on GCP, improving daily data freshness by 35%.",
+        "Developed TensorFlow-based scoring components that filtered low-quality records before they reached downstream teams.",
+        "Packaged shared data transformations in Python and C++ to reduce manual rework and stabilize pipeline outputs.",
+        "Supported production workloads on GCP by monitoring failures, fixing data gaps, and keeping service interruptions under 2 hours per month."
+      ]
+    },
+    {
+      "employer": "Yarrow Analytics",
+      "title": "Senior Data Scientist",
+      "start": "2023-04",
+      "end": null,
+      "bullets": [
+        "Led Agile delivery of forecasting work in Python and dbt, coordinating priorities with analysts and engineers across two product squads.",
+        "Designed Snowflake datasets and Data modeling standards that improved consistency across 18 reporting tables.",
+        "Built recurring analytics workflows with GCP and AWS, cutting refresh time by 28% and simplifying handoffs for stakeholders.",
+        "Created Python validation checks around dbt models so the team could catch data issues earlier and reduce rework.",
+        "Shaped a reusable modeling layer for Snowflake that supported faster experiment turnaround and better metric alignment."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Quiet Router",
+      "description": "Quiet Router used C++, Data modeling and TensorFlow to rank incoming events and route them into the right analytical paths. The project focused on keeping scoring stable while improving the quality of the underlying model inputs."
+    }
+  ],
+  "skills": [
+    "C++",
+    "GCP",
+    "Python",
+    "TensorFlow",
+    "Agile",
+    "AWS",
+    "Data modeling",
+    "dbt",
+    "Snowflake"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Applied Mathematics",
+      "school": "Northmere Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "MSc in Information Systems",
+      "school": "Lindenbridge School of Data Studies",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Finnish (B2)"],
+  "injection": null
+}

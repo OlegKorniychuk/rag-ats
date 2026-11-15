@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bohdan Pavlenko - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Bohdan Pavlenko</h1><div class="headline">Application Security Engineer</div></div>
+  <div class="contact"><div>bohdan-pavlenko@example.com</div>
+<div>Kyiv, Ukraine</div></div>
+</header>
+<h2>Summary</h2>
+<p>Application security engineer with a focus on hardening internal tools and reviewing code paths for risk. Known for practical remediation work, careful access control reviews, and clear collaboration with product and engineering teams.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Junior Application Security Engineer</span><span class="dates">Dec 2025 – Present</span></div>
+  <div class="sub">Willowmere Software</div>
+  <ul>
+    <li>Reviewed application changes in Git and used Rust to investigate risky code paths before release, reducing security issues found late in the cycle by 32%.</li>
+    <li>Performed Penetration testing across internal services and documented findings with clear reproduction steps for the engineering team.</li>
+    <li>Tightened IAM configurations for privileged accounts and removed unnecessary access for 18 user groups.</li>
+    <li>Created repeatable review checklists for source changes and access requests, helping the team close 24 findings faster.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Lantern Library</span></div>
+  <p>Built Lantern Library with Azure and OAuth to support controlled document access and secure sign-in flows.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Paper Atlas</span></div>
+  <p>Developed Paper Atlas with Git, IAM and Rust to track controlled content changes and enforce role-based approvals.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Atlas Library</span></div>
+  <p>Implemented Atlas Library in Rust as a compact internal service for organizing records and validating updates.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Linux</li>
+  <li>OWASP</li>
+  <li>Git</li>
+  <li>IAM</li>
+  <li>Penetration testing</li>
+  <li>Rust</li>
+  <li>Azure</li>
+  <li>OAuth</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Security</span><span class="dates">2025</span></div>
+  <div class="sub">Northbridge Technical College</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Applied Computing</span><span class="dates">2023</span></div>
+  <div class="sub">Merehaven Institute of Technology</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Ukrainian (Native)</li>
+</ul>
+  </body>
+</html>

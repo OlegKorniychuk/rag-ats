@@ -1,0 +1,110 @@
+{
+  "personaId": "p017",
+  "language": "en",
+  "name": "Olha Shevchuk",
+  "email": "olha-shevchuk@example.com",
+  "githubUrl": null,
+  "headline": "Senior Backend Engineer",
+  "location": "Warsaw, Poland",
+  "summary": "Backend engineer with experience across cloud services, event-driven systems, and service-oriented platforms. Built and supported production backends with a focus on reliability, delivery speed, and clean integrations. Comfortable working across the stack of infrastructure, APIs, data stores, and operational tooling in fast-moving teams.",
+  "roles": [
+    {
+      "employer": "Nimbus Garden",
+      "title": "Junior Software Developer",
+      "start": "2020-05",
+      "end": "2021-11",
+      "bullets": [
+        "Built backend features in Azure with PostgreSQL, improving data handling for customer workflows and reducing manual rework by 18%.",
+        "Added event processing with Kafka and Redis to keep services responsive during traffic spikes.",
+        "Supported database changes and routine fixes in PostgreSQL while helping the team stabilize releases.",
+        "Worked closely with product and support teams to resolve defects and keep the service dependable."
+      ]
+    },
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Backend Developer",
+      "start": "2022-01",
+      "end": "2022-12",
+      "bullets": [
+        "Developed Java services that exposed REST APIs for partner integrations and internal tools.",
+        "Implemented event-driven communication with Kafka and secure access flows using OAuth for external clients.",
+        "Reviewed backend changes and improved service behavior under load, cutting repeated incident follow-up by 22%.",
+        "Coordinated with stakeholders to clarify requirements and deliver small updates on schedule."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Backend Developer",
+      "start": "2023-01",
+      "end": "2024-07",
+      "bullets": [
+        "Built backend components in Java and Kotlin under Agile delivery routines, supporting a growing set of customer-facing services.",
+        "Designed SQL queries and service logic on AWS to improve response times for key workflows by 31%.",
+        "Integrated Kafka pipelines into Spring Boot services to handle asynchronous processing and reduce blocking requests.",
+        "Worked with Kubernetes to keep deployments consistent across environments and supported the team in planning releases."
+      ]
+    },
+    {
+      "employer": "Velvet Circuit",
+      "title": "Senior Backend Engineer",
+      "start": "2024-07",
+      "end": "2026-09",
+      "bullets": [
+        "Led backend delivery in Go and Java across Microservices on AWS, shaping service boundaries through System design for a platform serving 2 million monthly requests.",
+        "Standardized CI/CD workflows with GitHub Actions, Docker and Git to shorten release cycles by 40% and improve rollback consistency.",
+        "Operated Kubernetes and Helm deployments on Linux, using Grafana to monitor service health and catch issues before customers noticed them.",
+        "Built reliable messaging flows with RabbitMQ and Kafka, and extended Spring Boot services backed by MySQL and SQL for new product capabilities.",
+        "Wrote JUnit coverage for critical paths and improved incident response by documenting runbooks and ownership across the team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cobalt Studio",
+      "description": "Created deployment scripts with Ansible to provision environments more consistently and reduce setup errors for the team."
+    }
+  ],
+  "skills": [
+    "Azure",
+    "Kafka",
+    "PostgreSQL",
+    "Redis",
+    "Java",
+    "OAuth",
+    "REST APIs",
+    "Agile",
+    "AWS",
+    "Kotlin",
+    "Kubernetes",
+    "Spring Boot",
+    "SQL",
+    "CI/CD",
+    "Docker",
+    "Git",
+    "GitHub Actions",
+    "Go",
+    "Grafana",
+    "Helm",
+    "JUnit",
+    "Linux",
+    "Microservices",
+    "MySQL",
+    "RabbitMQ",
+    "System design",
+    "Ansible"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Applied Computing",
+      "school": "Northbridge School of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Software Systems",
+      "school": "Riverside Institute of Digital Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (Native)", "English (C1)", "Polish (B2)"],
+  "injection": null
+}

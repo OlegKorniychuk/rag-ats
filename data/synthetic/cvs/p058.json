@@ -1,0 +1,98 @@
+{
+  "personaId": "p058",
+  "language": "en",
+  "name": "Hannah Tanaka",
+  "email": "hannah-tanaka@example.com",
+  "githubUrl": null,
+  "headline": "Full-Stack Engineer",
+  "location": "Tokyo, Japan",
+  "summary": "Full-stack engineer who builds reliable web products across the stack and partners closely with product and operations teams. Experienced delivering customer-facing features, improving backend services, and shaping technical decisions for growing teams. Comfortable working across cloud infrastructure, data stores, and modern interfaces.",
+  "roles": [
+    {
+      "employer": "Redwren Software",
+      "title": "Junior Software Engineer",
+      "start": "2022-06",
+      "end": "2023-02",
+      "bullets": [
+        "Built responsive pages for the main product with HTML/CSS and JavaScript, and connected them to the frontend in Next.js.",
+        "Shipped cloud-hosted feature updates on AWS that reduced release defects by 20%.",
+        "Refined page interactions and layout behavior to improve task completion for 3 key user flows.",
+        "Collaborated with designers and engineers to keep the interface consistent while adding new screens in Next.js."
+      ]
+    },
+    {
+      "employer": "Yarrow Analytics",
+      "title": "Full-Stack Engineer",
+      "start": "2023-04",
+      "end": "2024-09",
+      "bullets": [
+        "Delivered new backend endpoints in Node.js on AWS to support customer reporting tools used by 12 internal users.",
+        "Improved request handling and service reliability by simplifying the backend logic in Node.js.",
+        "Worked with product stakeholders to translate feature requests into practical application changes.",
+        "Supported ongoing releases by reviewing defects, testing fixes, and coordinating rollouts on AWS."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Full-Stack Engineer",
+      "start": "2024-09",
+      "end": "2025-09",
+      "bullets": [
+        "Designed service boundaries and shared data structures for customer workflows using GraphQL and PostgreSQL.",
+        "Built a searchable records experience in Vue backed by MongoDB, cutting lookup time by 35%.",
+        "Coordinated the backend and frontend implementation to keep the product stable during rapid changes.",
+        "Reviewed schema changes and application behavior to preserve consistency across the platform."
+      ]
+    },
+    {
+      "employer": "Corvid Analytics",
+      "title": "Full-Stack Developer",
+      "start": "2025-11",
+      "end": null,
+      "bullets": [
+        "Architected new product services in Go and TypeScript across AWS and GCP, supporting a team of 8 engineers.",
+        "Built customer-facing dashboards in Vue and connected them to MySQL-backed workflows for daily operations.",
+        "Expanded end-to-end checks with Playwright, reducing escaped defects by 28%.",
+        "Shaped system design decisions for a growing platform and helped the team keep releases predictable.",
+        "Implemented automation around recurring business flows so support teams could complete tasks faster."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Signal Scheduler",
+      "description": "Built a scheduling tool in Next.js and TypeScript with MongoDB to coordinate reminders and task timing for internal users."
+    }
+  ],
+  "skills": [
+    "AWS",
+    "HTML/CSS",
+    "JavaScript",
+    "Next.js",
+    "Node.js",
+    "GraphQL",
+    "MongoDB",
+    "PostgreSQL",
+    "System design",
+    "Vue",
+    "GCP",
+    "Go",
+    "MySQL",
+    "Playwright",
+    "TypeScript"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Kiyosato Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Diploma in Software Practice",
+      "school": "Minato College of Applied Computing",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Japanese (B2)"],
+  "injection": null
+}

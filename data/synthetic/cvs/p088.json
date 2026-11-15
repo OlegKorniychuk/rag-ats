@@ -1,0 +1,71 @@
+{
+  "personaId": "p088",
+  "language": "en",
+  "name": "Nadia Ivanova",
+  "email": "nadia-ivanova@example.com",
+  "githubUrl": null,
+  "headline": "UI Engineer",
+  "location": "Moscow, Russia",
+  "summary": "UI Engineer focused on building reliable interfaces and improving product quality through careful testing and iterative delivery. Experienced in creating user-facing features, refining component behavior, and collaborating closely with cross-functional teams. Comfortable working across multiple front-end codebases and keeping interfaces predictable and accessible.",
+  "roles": [
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "UI Engineer",
+      "start": "2022-10",
+      "end": "2025-04",
+      "bullets": [
+        "Built interactive user screens in JavaScript, improving page responsiveness and reducing interface defects by 18%.",
+        "Expanded automated checks with Jest to cover critical component behavior and catch regressions earlier.",
+        "Refined reusable UI flows and state handling across the product, helping the team ship updates with fewer release issues."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "UI Engineer",
+      "start": "2025-06",
+      "end": null,
+      "bullets": [
+        "Delivered new interface features in React and Vue under Agile planning, supporting two parallel product streams.",
+        "Strengthened end-to-end coverage with Cypress and Jest, lowering escaped UI issues by 24%.",
+        "Shaped data-driven screens with GraphQL and React, making complex workflows easier for users to complete.",
+        "Improved Web accessibility across key journeys and reviewed interface details with the team to keep interactions consistent."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Amber Library",
+      "description": "Built test coverage for a shared interface in Playwright, focusing on stable navigation and predictable user flows."
+    },
+    {
+      "name": "Cobalt Tracker",
+      "description": "Delivered an internal tracking interface in Vue under Agile delivery, helping teams follow updates and status changes more easily."
+    }
+  ],
+  "skills": [
+    "HTML/CSS",
+    "JavaScript",
+    "Jest",
+    "Agile",
+    "Cypress",
+    "GraphQL",
+    "React",
+    "Vue",
+    "Web accessibility",
+    "Playwright"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Digital Interface Design",
+      "school": "Northbridge School of Applied Arts",
+      "end": "2021"
+    },
+    {
+      "degree": "Certificate in Interactive Media",
+      "school": "Linden Vale Institute",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Russian (native)"],
+  "injection": null
+}

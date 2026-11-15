@@ -1,0 +1,69 @@
+{
+  "personaId": "p025",
+  "language": "en",
+  "name": "Greta Eriksen",
+  "email": "greta-eriksen@example.com",
+  "githubUrl": null,
+  "headline": "Analytics and Data Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Analytics and data engineer with experience building dependable data platforms, improving pipeline reliability, and supporting production operations across analytics and delivery teams. Comfortable working in Agile environments and translating business needs into clean, well-governed datasets for downstream use.",
+  "roles": [
+    {
+      "employer": "Cinder Peak",
+      "title": "Analytics Engineer",
+      "start": "2022-12",
+      "end": "2025-11",
+      "bullets": [
+        "Built reporting pipelines in Spark and SQL that consolidated operational data into trusted models used by analysts and product teams.",
+        "Automated environment setup with Ansible, Docker and Helm, cutting manual deployment steps by 40%.",
+        "Supported model delivery workflows with MLOps and SQL checks, reducing recurring data issues in production by 30%.",
+        "Partnered in Agile planning to prioritize platform improvements and keep delivery aligned with changing business needs."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Data Engineer",
+      "start": "2025-11",
+      "end": "2026-08",
+      "bullets": [
+        "Designed batch processing jobs in Spark and SQL to refresh core datasets for daily reporting.",
+        "Streamlined release procedures with Bash, Docker and Helm, shortening environment preparation time by 25%.",
+        "Maintained Linux-based servers and scripted operational tasks to improve stability during peak processing windows.",
+        "Worked in Agile ceremonies to coordinate fixes, document changes and keep the data platform dependable for internal users."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Prism Inbox",
+      "description": "Created deployment support scripts for Prism Inbox using Ansible, Bash and Docker to package the service consistently across environments."
+    }
+  ],
+  "skills": [
+    "CI/CD",
+    "Terraform",
+    "Agile",
+    "Ansible",
+    "Docker",
+    "Helm",
+    "MLOps",
+    "Spark",
+    "SQL",
+    "Bash",
+    "Linux"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Northgate School of Computing",
+      "end": "2022"
+    },
+    {
+      "degree": "Diploma in Data Analytics",
+      "school": "Riverstone Technical Institute",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B1)"],
+  "injection": null
+}

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mateo MacLeod - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>mateo-macleod@example.com</li>
+  <li>Marlowe, United Kingdom</li>
+  <li>github.com/synth-mateo-macleod</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Express</li>
+  <li>GraphQL</li>
+  <li>OWASP</li>
+  <li>Vue</li>
+  <li>SQL</li>
+  <li>Redux</li>
+  <li>Agile</li>
+  <li>Docker</li>
+  <li>MongoDB</li>
+  <li>Next.js</li>
+  <li>PostgreSQL</li>
+  <li>REST APIs</li>
+  <li>RabbitMQ</li>
+  <li>React</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>French (B1)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Development</span><span class="dates">2020</span></div>
+  <div class="sub">Northmere Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Applied Computing</span><span class="dates">2019</span></div>
+  <div class="sub">Redfern School of Digital Studies</div>
+</div>
+</aside>
+<main class="main">
+<h1>Mateo MacLeod</h1>
+<div class="headline">Full-Stack Developer</div>
+<h2>Summary</h2>
+<p>Versatile engineer with experience building customer-facing products and internal platforms across frontend, backend, and full-stack roles. Comfortable working on API integrations, data-driven features, and production support in fast-moving product teams. Known for shipping practical improvements that reduce defects, improve usability, and keep delivery moving.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Oct 2024 – Present</span></div>
+  <div class="sub">Saltmarsh Digital</div>
+  <ul>
+    <li>Built and maintained services with Agile practices, Docker and REST APIs to support daily releases.</li>
+    <li>Delivered data-backed features across Next.js, PostgreSQL and MongoDB, improving dashboard response times by 31%.</li>
+    <li>Expanded GraphQL integrations for internal tools, reducing manual support work by 18% for the operations team.</li>
+    <li>Coordinated backend changes with frontend delivery so new product updates shipped with fewer release blockers.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Full-Stack Developer</span><span class="dates">Oct 2023 – Aug 2024</span></div>
+  <div class="sub">Driftwood Apps</div>
+  <ul>
+    <li>Delivered feature flows in GraphQL and Redux, giving the product team a more predictable state model for releases.</li>
+    <li>Refactored shared client logic to simplify error handling and cut repeat bugs by 22%.</li>
+    <li>Partnered with designers and QA to tighten edge-case coverage across checkout and account updates.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Engineer</span><span class="dates">Jul 2022 – Sep 2023</span></div>
+  <div class="sub">Stonebridge Interactive</div>
+  <ul>
+    <li>Developed API endpoints in Express and GraphQL for order and profile features used by 12 internal teams.</li>
+    <li>Designed SQL queries and schema changes that improved reporting speed by 35% on routine lookups.</li>
+    <li>Applied OWASP checks during delivery, reducing avoidable security review comments and rework.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Frontend Engineer</span><span class="dates">Nov 2021 – Jul 2022</span></div>
+  <div class="sub">Umber &amp; Oak</div>
+  <ul>
+    <li>Built interactive user flows with Vue and GraphQL, cutting front-end defect reports by 28%.</li>
+    <li>Connected the browser layer to backend services through Express, improving data refresh times for 3 high-traffic screens.</li>
+    <li>Reviewed forms and content handling against OWASP guidance, helping reduce security issues before release.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Cobalt Pipeline</span></div>
+  <p>Built a messaging workflow with RabbitMQ and React to move jobs between service stages and show live processing status in the interface.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

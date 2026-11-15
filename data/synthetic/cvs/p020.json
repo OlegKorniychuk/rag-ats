@@ -1,0 +1,93 @@
+{
+  "personaId": "p020",
+  "language": "en",
+  "name": "Mateo MacLeod",
+  "email": "mateo-macleod@example.com",
+  "githubUrl": "https://github.com/synth-mateo-macleod",
+  "headline": "Full-Stack Developer",
+  "location": "Marlowe, United Kingdom",
+  "summary": "Versatile engineer with experience building customer-facing products and internal platforms across frontend, backend, and full-stack roles. Comfortable working on API integrations, data-driven features, and production support in fast-moving product teams. Known for shipping practical improvements that reduce defects, improve usability, and keep delivery moving.",
+  "roles": [
+    {
+      "employer": "Umber & Oak",
+      "title": "Junior Frontend Engineer",
+      "start": "2021-11",
+      "end": "2022-07",
+      "bullets": [
+        "Built interactive user flows with Vue and GraphQL, cutting front-end defect reports by 28%.",
+        "Connected the browser layer to backend services through Express, improving data refresh times for 3 high-traffic screens.",
+        "Reviewed forms and content handling against OWASP guidance, helping reduce security issues before release."
+      ]
+    },
+    {
+      "employer": "Stonebridge Interactive",
+      "title": "Backend Engineer",
+      "start": "2022-07",
+      "end": "2023-09",
+      "bullets": [
+        "Developed API endpoints in Express and GraphQL for order and profile features used by 12 internal teams.",
+        "Designed SQL queries and schema changes that improved reporting speed by 35% on routine lookups.",
+        "Applied OWASP checks during delivery, reducing avoidable security review comments and rework."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Full-Stack Developer",
+      "start": "2023-10",
+      "end": "2024-08",
+      "bullets": [
+        "Delivered feature flows in GraphQL and Redux, giving the product team a more predictable state model for releases.",
+        "Refactored shared client logic to simplify error handling and cut repeat bugs by 22%.",
+        "Partnered with designers and QA to tighten edge-case coverage across checkout and account updates."
+      ]
+    },
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Backend Developer",
+      "start": "2024-10",
+      "end": null,
+      "bullets": [
+        "Built and maintained services with Agile practices, Docker and REST APIs to support daily releases.",
+        "Delivered data-backed features across Next.js, PostgreSQL and MongoDB, improving dashboard response times by 31%.",
+        "Expanded GraphQL integrations for internal tools, reducing manual support work by 18% for the operations team.",
+        "Coordinated backend changes with frontend delivery so new product updates shipped with fewer release blockers."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cobalt Pipeline",
+      "description": "Built a messaging workflow with RabbitMQ and React to move jobs between service stages and show live processing status in the interface."
+    }
+  ],
+  "skills": [
+    "Express",
+    "GraphQL",
+    "OWASP",
+    "Vue",
+    "SQL",
+    "Redux",
+    "Agile",
+    "Docker",
+    "MongoDB",
+    "Next.js",
+    "PostgreSQL",
+    "REST APIs",
+    "RabbitMQ",
+    "React"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northmere Technical Institute",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Redfern School of Digital Studies",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B1)"],
+  "injection": null
+}

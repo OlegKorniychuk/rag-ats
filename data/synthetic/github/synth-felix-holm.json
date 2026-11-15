@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-felix-holm",
+    "html_url": "https://github.com/synth-felix-holm",
+    "bio": "Data scientist building practical tools for messy data and model-heavy workflows."
+  },
+  "repos": [
+    {
+      "name": "vision-annotation-qa",
+      "html_url": "https://github.com/synth-felix-holm/vision-annotation-qa",
+      "description": "A Python toolkit for checking image labels and scoring annotation quality.",
+      "language": "Python",
+      "stargazers_count": 69,
+      "topics": [
+        "python",
+        "pytorch",
+        "computer-vision",
+        "data-quality",
+        "active-learning"
+      ],
+      "pushed_at": "2026-09-07T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "text-triage-notebook",
+      "html_url": "https://github.com/synth-felix-holm/text-triage-notebook",
+      "description": "A Python project for sorting short text into useful groups and surfacing edge cases.",
+      "language": "Python",
+      "stargazers_count": 58,
+      "topics": ["python", "pytorch", "nlp", "text-classification", "pandas"],
+      "pushed_at": "2026-06-04T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "feature-score-lab",
+      "html_url": "https://github.com/synth-felix-holm/feature-score-lab",
+      "description": "A small Python lab for comparing feature sets and tracking experiment results.",
+      "language": "Python",
+      "stargazers_count": 49,
+      "topics": ["python", "mlflow", "mlops", "pandas", "feature-engineering"],
+      "pushed_at": "2026-04-03T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "vision-annotation-qa": "# Vision Annotation QA\n\nVision Annotation QA helps review image labels, spot inconsistent annotations, and produce simple quality scores for small review batches. It is designed for hands-on model work where feedback loops matter more than a polished interface.\n\n## Features\n- Load image folders and label tables for quick inspection\n- Compute agreement checks across repeated labels\n- Rank uncertain samples for manual review\n- Export compact summary reports for later analysis\n\n## Getting started\n1. Prepare an image folder and a label table with matching identifiers.\n2. Open the Python entry point and configure the input paths.\n3. Run the review step, then inspect the summary output.\n\nThe project uses Python and PyTorch for scoring and feature handling, with a simple workflow that stays easy to adapt.",
+    "text-triage-notebook": "# Text Triage Notebook\n\nText Triage Notebook helps organize short text into practical categories, highlight uncertain cases, and prepare compact review sets. It is aimed at small teams that need a repeatable way to clean up noisy text collections.\n\n## Features\n- Read tabular text data and basic labels\n- Build lightweight text features for quick experiments\n- Flag low-confidence items for manual review\n- Summarize category counts and common patterns\n\n## Getting started\n1. Place your text table in a local folder.\n2. Open the Python notebook entry point and set the column names.\n3. Run the scoring step and inspect the saved summary files.\n\nPython and PyTorch are used for the core scoring path, while the notebook keeps the workflow simple for fast iteration.",
+    "feature-score-lab": "# Feature Score Lab\n\nFeature Score Lab compares feature sets, records experiment results, and keeps a short history of model runs. It is built for personal research work where quick comparisons are more useful than a large framework.\n\n## Features\n- Load prepared tables and split them into training and validation sets\n- Score several feature variants with the same evaluation step\n- Save run notes and metric summaries in one place\n- Review older runs to spot patterns in performance\n\n## Getting started\n1. Prepare a table with the target column and feature columns.\n2. Update the Python configuration with your input paths.\n3. Run the experiment step and review the stored metrics.\n\nPython is the main language, with PyTorch available for scoring and MLflow for keeping experiment notes organized."
+  }
+}

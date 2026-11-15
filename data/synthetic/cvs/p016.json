@@ -1,0 +1,79 @@
+{
+  "personaId": "p016",
+  "language": "en",
+  "name": "Marta Fischer",
+  "email": "marta-fischer@example.com",
+  "githubUrl": null,
+  "headline": "Machine Learning Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Machine learning engineer with experience building production systems for language and vision use cases. Known for turning research ideas into reliable services, improving model quality, and working closely with product and engineering teams. Comfortable across backend integration, experimentation, and deployment in cloud environments.",
+  "roles": [
+    {
+      "employer": "Larkspur Engineering",
+      "title": "ML Engineer",
+      "start": "2022-01",
+      "end": "2024-11",
+      "bullets": [
+        "Built NLP pipelines in Python and PyTorch to classify and route incoming content, improving triage accuracy by 18%.",
+        "Developed model training and inference services in TensorFlow and R, integrating them with Node.js and TypeScript application layers.",
+        "Deployed workloads on AWS and tuned data preparation scripts to reduce processing time by 27%.",
+        "Partnered with engineers to validate outputs, document edge cases, and keep Python experiments aligned with production behavior."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "Machine Learning Engineer",
+      "start": "2024-11",
+      "end": null,
+      "bullets": [
+        "Designed computer vision services in C++ and Python on AWS and GCP, supporting real-time analysis for operational workflows.",
+        "Implemented service contracts with GraphQL and NestJS, and connected them to Node.js components backed by MySQL and Redis.",
+        "Improved model-serving reliability by adding Git-based review checks and automated validation with Jest for TypeScript changes.",
+        "Built ranking and detection features with TensorFlow and scikit-learn, and used Kafka to move event data across the platform.",
+        "Optimized inference paths and caching strategies, cutting median response time by 34% across high-volume jobs."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Lantern Garden",
+      "description": "Created a data exploration project in pandas to clean, reshape, and summarize mixed datasets for model analysis."
+    }
+  ],
+  "skills": [
+    "AWS",
+    "NLP",
+    "Node.js",
+    "Python",
+    "PyTorch",
+    "R",
+    "TensorFlow",
+    "TypeScript",
+    "Computer vision",
+    "C++",
+    "GCP",
+    "Git",
+    "GraphQL",
+    "Jest",
+    "Kafka",
+    "MySQL",
+    "NestJS",
+    "Redis",
+    "scikit-learn",
+    "pandas"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computational Science",
+      "school": "Northbridge Institute of Applied Studies",
+      "end": "2021"
+    },
+    {
+      "degree": "MSc in Intelligent Systems",
+      "school": "Valecrest School of Technology",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

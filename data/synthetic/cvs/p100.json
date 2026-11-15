@@ -1,0 +1,61 @@
+{
+  "personaId": "p100",
+  "language": "en",
+  "name": "Sofia Nair",
+  "email": "sofia-nair@example.com",
+  "githubUrl": null,
+  "headline": "Junior Platform Engineer",
+  "location": "Aarhus, Denmark",
+  "summary": "Junior platform engineer focused on keeping internal systems reliable, secure, and easy to operate. Comfortable working across container setup, access control, monitoring, and automation. Known for clear handoffs, steady follow-through, and practical improvements to day-to-day operations.",
+  "roles": [
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Junior Platform Engineer",
+      "start": "2025-11",
+      "end": null,
+      "bullets": [
+        "Automated setup tasks with Bash and Docker, reducing new environment preparation time by 40% for the support team.",
+        "Maintained access policies in IAM and reviewed account requests, cutting manual approval delays by 25%.",
+        "Built monitoring views in Grafana to surface service health trends and helped the team resolve issues before they spread.",
+        "Packaged repeatable platform tasks into simple runbooks, improving on-call response consistency across 3 shifts."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Inbox",
+      "description": "Set up automated checks with GitHub Actions and Prometheus to track delivery status and alert the team when message processing drifted."
+    },
+    {
+      "name": "Lantern Dashboard",
+      "description": "Shaped the access flow in IAM so reviewers could grant and revoke permissions with fewer manual steps."
+    },
+    {
+      "name": "Quiet Pipeline",
+      "description": "Created operational views in Grafana to highlight queue buildup, retry spikes, and other early warning signs."
+    }
+  ],
+  "skills": [
+    "Bash",
+    "Docker",
+    "Grafana",
+    "IAM",
+    "Linux",
+    "GitHub Actions",
+    "Prometheus"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Computer Operations",
+      "school": "Northbridge Technical Institute",
+      "end": "2024"
+    },
+    {
+      "degree": "Certificate in Systems Support",
+      "school": "Myren College of Applied Science",
+      "end": "2023"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Hindi (C2)"],
+  "injection": null
+}

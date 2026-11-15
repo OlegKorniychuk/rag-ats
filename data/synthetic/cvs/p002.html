@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Elena Larsen - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>elena-larsen@example.com</li>
+  <li>Linden, Norway</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Bash</li>
+  <li>Prometheus</li>
+  <li>Azure</li>
+  <li>Kubernetes</li>
+  <li>Python</li>
+  <li>Ansible</li>
+  <li>AWS</li>
+  <li>Go</li>
+  <li>Helm</li>
+  <li>IAM</li>
+  <li>Linux</li>
+  <li>Terraform</li>
+  <li>Docker</li>
+  <li>GitHub Actions</li>
+  <li>Grafana</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Norwegian (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Computing Practice</span><span class="dates">2021</span></div>
+  <div class="sub">North Vale Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Applied Information Services</span><span class="dates">2020</span></div>
+  <div class="sub">Rivermere College</div>
+</div>
+</aside>
+<main class="main">
+<h1>Elena Larsen</h1>
+<div class="headline">Platform Engineer</div>
+<h2>Summary</h2>
+<p>Platform engineer with a track record of improving reliability, automation, and operational visibility across internal platforms. Experienced in building practical infrastructure workflows, supporting production systems, and collaborating closely with product and support teams. Comfortable working across cloud environments, scripting, and observability to keep services stable and predictable.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Apr 2024 – Present</span></div>
+  <div class="sub">Kestrel Data</div>
+  <ul>
+    <li>Designed Ansible and Terraform workflows for AWS infrastructure, standardizing how teams created and updated environments.</li>
+    <li>Managed Kubernetes clusters on Linux and used Go utilities to automate platform tasks, reducing setup time by 45%.</li>
+    <li>Strengthened IAM controls and Helm release practices so access changes and service rollouts were safer and easier to audit.</li>
+    <li>Expanded Prometheus monitoring across critical systems and cut alert noise by 30% through better thresholds and routing.</li>
+    <li>Coached 3 engineers on day-to-day platform operations and improved incident response runbooks for the team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Feb 2023 – Apr 2024</span></div>
+  <div class="sub">Saltmarsh Digital</div>
+  <ul>
+    <li>Provisioned Azure environments and tuned Kubernetes workloads so new services could launch with fewer handoffs.</li>
+    <li>Wrote Python utilities for deployment validation and environment cleanup, cutting repetitive operator work by 28%.</li>
+    <li>Improved cluster visibility with Prometheus-based checks and helped the team respond faster to capacity issues.</li>
+    <li>Partnered with product teams to stabilize the platform for 4 internal services during growth periods.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Apr 2022 – Jan 2023</span></div>
+  <div class="sub">Larkspur Engineering</div>
+  <ul>
+    <li>Automated routine maintenance tasks with Bash, reducing manual operator effort by 35% and making scheduled work more consistent.</li>
+    <li>Built Prometheus alerts and dashboard checks for core services, which shortened the average time to notice incidents by 40%.</li>
+    <li>Supported release readiness by packaging small operational scripts and documenting recovery steps for the team.</li>
+    <li>Tracked recurring platform issues and coordinated fixes with engineers, improving on-call handoffs across 2 support rotations.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Paper Studio</span></div>
+  <p>Built a Grafana workspace for Paper Studio to present service health, usage trends, and incident timelines in one place.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

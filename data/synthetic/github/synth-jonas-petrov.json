@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-jonas-petrov",
+    "html_url": "https://github.com/synth-jonas-petrov",
+    "bio": "Analytics engineer focused on turning messy data into reliable reporting."
+  },
+  "repos": [
+    {
+      "name": "warehouse-metric-garden",
+      "html_url": "https://github.com/synth-jonas-petrov/warehouse-metric-garden",
+      "description": "A compact set of warehouse checks and reporting models for keeping core numbers consistent.",
+      "language": "SQL",
+      "stargazers_count": 70,
+      "topics": ["sql", "analytics", "bigquery", "dbt", "etl"],
+      "pushed_at": "2026-09-19T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "load-balancer-notes",
+      "html_url": "https://github.com/synth-jonas-petrov/load-balancer-notes",
+      "description": "A set of Bash utilities for moving staged files into a warehouse load area and tracking simple run logs.",
+      "language": "Bash",
+      "stargazers_count": 64,
+      "topics": ["bash", "etl", "automation", "sql", "azure"],
+      "pushed_at": "2026-08-13T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "query-storyboard",
+      "html_url": "https://github.com/synth-jonas-petrov/query-storyboard",
+      "description": "A small collection of SQL patterns for exploring warehouse tables and preparing reusable analysis views.",
+      "language": "SQL",
+      "stargazers_count": 54,
+      "topics": ["sql", "bigquery", "pandas", "spark", "system-design"],
+      "pushed_at": "2026-06-28T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "warehouse-metric-garden": "# Warehouse Metric Garden\n\nThis project keeps important reporting numbers in one place and makes them easier to trust. It is built for small teams that want clear warehouse rules, repeatable transforms, and simple review notes.\n\n## Features\n- Standard metric definitions for shared reporting\n- Layered transformations with clear input and output tables\n- Basic freshness and completeness checks\n- Notes for handoffs and changes across an Agile workflow\n\n## Getting started\n1. Load the source tables into BigQuery.\n2. Run the SQL models in order.\n3. Review the output tables and update the metric notes when business rules change.\n\nThe project is intentionally small so it can be adapted to different warehouses without extra overhead.",
+    "load-balancer-notes": "# Load Balancer Notes\n\nThis repo contains a small Bash toolkit for moving files through a repeatable load process. It is meant for teams that need a practical path from raw drops to trusted warehouse tables.\n\n## Features\n- File sorting and naming checks\n- Run log creation for each load step\n- Simple retry handling for interrupted jobs\n- Environment settings for Azure-based storage locations\n\n## Getting started\n1. Set the load path and log path in the script settings.\n2. Place staged files in the input folder.\n3. Run the main Bash script and review the log output.\n\nThe scripts are lightweight and meant to stay readable for shared team use.",
+    "query-storyboard": "# Query Storyboard\n\nThis project offers a compact set of SQL patterns for exploring large warehouse tables and shaping them for reporting. It is useful when a team wants clearer query structure and a shared way to discuss data shape before building final outputs.\n\n## Features\n- Reusable query blocks for common analysis tasks\n- Summary tables for quick review\n- Consistent naming for intermediate steps\n- Guidance for shaping data before downstream use\n\n## Getting started\n1. Point the queries at your BigQuery source tables.\n2. Run the SQL files in the recommended order.\n3. Check the summary tables and adjust the filters for your own use case.\n\nThe repository is designed to stay simple, readable, and easy to extend."
+  }
+}

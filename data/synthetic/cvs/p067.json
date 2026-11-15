@@ -1,0 +1,69 @@
+{
+  "personaId": "p067",
+  "language": "en",
+  "name": "Rohan Hartmann",
+  "email": "rohan-hartmann@example.com",
+  "githubUrl": null,
+  "headline": "Mobile Developer",
+  "location": "Berlin, Germany",
+  "summary": "Mobile developer with a track record of building polished consumer apps and improving release quality across small product teams. Experienced in shipping features in Flutter, Java, Kotlin, React Native and Swift, and in collaborating on mobile delivery in Agile environments. Known for turning product requirements into reliable app updates and cleaner user experiences.",
+  "roles": [
+    {
+      "employer": "Birchway Systems",
+      "title": "Mobile Developer",
+      "start": "2023-04",
+      "end": "2024-03",
+      "bullets": [
+        "Built customer-facing app features in Flutter and Java, reducing reported defects by 18% through clearer state handling and tighter reviews.",
+        "Implemented shared mobile flows with Kotlin and React Native, improving handoff speed between teams by 25%.",
+        "Updated native screens in Swift and refined navigation details so release cycles stayed predictable across 3 product launches."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Mobile Engineer",
+      "start": "2024-05",
+      "end": "2026-01",
+      "bullets": [
+        "Led delivery of mobile enhancements in Agile using Dart and Flutter, shipping 12 planned updates on schedule with the product team.",
+        "Refactored core flows in Kotlin and Swift to improve startup behavior and cut support tickets by 30%.",
+        "Designed reusable components in SwiftUI and Flutter for a new app surface, which shortened implementation time for the team by 20%.",
+        "Partnered with designers and QA to tighten acceptance criteria and keep app behavior consistent across releases."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Ledger",
+      "description": "Built Atlas Ledger as a reporting project with GraphQL to streamline data requests and keep the app responsive for finance reviews."
+    }
+  ],
+  "skills": [
+    "Git",
+    "Jetpack Compose",
+    "REST APIs",
+    "Flutter",
+    "Java",
+    "Kotlin",
+    "React Native",
+    "Swift",
+    "Agile",
+    "Dart",
+    "SwiftUI",
+    "GraphQL"
+  ],
+  "education": [
+    {
+      "degree": "B.Sc. in Digital Media Engineering",
+      "school": "Northgate Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Diploma in Software Product Design",
+      "school": "Marlow School of Applied Computing",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

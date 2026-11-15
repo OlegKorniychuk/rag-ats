@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-zainab-lindqvist",
+    "html_url": "https://github.com/synth-zainab-lindqvist",
+    "bio": "Full-stack developer who likes building polished products and dependable delivery paths."
+  },
+  "repos": [
+    {
+      "name": "signal-board",
+      "html_url": "https://github.com/synth-zainab-lindqvist/signal-board",
+      "description": "A React workspace for tracking live team updates and prioritizing what needs attention.",
+      "language": "TypeScript",
+      "stargazers_count": 102,
+      "topics": ["react", "typescript", "redux", "html-css", "dashboard"],
+      "pushed_at": "2026-09-08T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "safe-route-hub",
+      "html_url": "https://github.com/synth-zainab-lindqvist/safe-route-hub",
+      "description": "A Java service that checks request shapes and blocks common security mistakes before they spread.",
+      "language": "Java",
+      "stargazers_count": 94,
+      "topics": ["java", "owasp", "security", "validation", "backend"],
+      "pushed_at": "2026-05-15T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "flowline-studio",
+      "html_url": "https://github.com/synth-zainab-lindqvist/flowline-studio",
+      "description": "A Vue planning surface for shaping release notes, deployment steps, and team checklists.",
+      "language": "TypeScript",
+      "stargazers_count": 83,
+      "topics": ["vue", "docker", "azure", "github-actions", "cicd"],
+      "pushed_at": "2026-04-05T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-board": "# Signal Board\n\nSignal Board is a React workspace for keeping a shared view of active work, priority items, and quick status changes. It is designed for a small team that wants one place to review progress without a lot of setup.\n\n## Features\n- Clean React interface for browsing and updating work items\n- Shared state flow with Redux for predictable changes\n- Responsive layout with HTML/CSS for clear reading on different screens\n- Lightweight screens for summaries, detail notes, and simple filtering\n\n## Getting started\n1. Open the project in a local TypeScript workspace.\n2. Install the project dependencies.\n3. Start the app and adjust the sample data to match your team.\n\nThe project keeps the setup simple so you can explore the screens, change labels, and adapt the layout without extra tooling.",
+    "safe-route-hub": "# Safe Route Hub\n\nSafe Route Hub is a Java service for reviewing incoming data, applying safety checks, and returning clear results. It focuses on defensive rules that help small teams spot risky input early.\n\n## Features\n- Input checks inspired by OWASP guidance\n- Rule-based validation for common request patterns\n- Clear status messages for success and rejection cases\n- Compact code structure that is easy to extend\n\n## Getting started\n1. Open the Java project in your preferred environment.\n2. Review the sample rules and adjust them for your own data.\n3. Run the service and send test requests to confirm the responses.\n\nThe project is intentionally small so you can focus on the safety checks and the flow of data through each rule.",
+    "flowline-studio": "# Flowline Studio\n\nFlowline Studio is a Vue planning surface for organizing release notes, deployment steps, and small team checklists. It helps keep repeated work visible so a team can prepare changes with less friction.\n\n## Features\n- Vue interface for planning and reviewing release tasks\n- Docker-based local setup for a repeatable workspace\n- Azure friendly notes for environment handoff and coordination\n- CI/CD focused checklist flow for dependable delivery\n- GitHub Actions configuration examples for automated checks\n\n## Getting started\n1. Open the TypeScript project and review the sample content.\n2. Build the local container and start the app.\n3. Adjust the notes, then update the CI/CD steps for your own process.\n\nThe project is meant to be easy to adapt, with simple screens and a clear path from planning to delivery."
+  }
+}

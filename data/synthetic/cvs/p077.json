@@ -1,0 +1,68 @@
+{
+  "personaId": "p077",
+  "language": "en",
+  "name": "Viktor Kowalczyk",
+  "email": "viktor-kowalczyk@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer",
+  "location": "Krakow, Poland",
+  "summary": "Software Engineer building data-driven products and internal tools for image and language workflows. Experienced in shipping reliable services across cloud environments, improving quality through practical automation, and turning messy data into usable features. Comfortable working close to product and operations to deliver measurable improvements.",
+  "roles": [
+    {
+      "employer": "Cinder Peak",
+      "title": "Software Engineer",
+      "start": "2024-08",
+      "end": "2025-07",
+      "bullets": [
+        "Built Python and SQL pipelines to prepare product data for Computer vision features, reducing manual cleanup by 38%.",
+        "Deployed and monitored backend services on AWS and GCP, improving release stability for the team.",
+        "Partnered with analysts to refine SQL queries and validate model inputs, cutting reporting discrepancies by 21%.",
+        "Improved image-processing workflows in Python so reviews completed faster across the product pipeline."
+      ]
+    },
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Software Engineer",
+      "start": "2025-08",
+      "end": null,
+      "bullets": [
+        "Built C++, Python and SQL services for Computer vision and NLP workflows, supporting faster content review across the platform.",
+        "Scaled cloud jobs on AWS and GCP to process large batches of text and image records, lowering turnaround time by 27%.",
+        "Integrated Python-based validation steps with the database layer to improve data quality and reduce rework for the team.",
+        "Optimized C++ components for latency-sensitive requests, which improved response times for 2 key user flows.",
+        "Collaborated with product and operations teams to keep the backend reliable while new language features were rolled out."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Orbit Notebook",
+      "description": "Created Orbit Notebook as a compact experimentation environment using Docker and scikit-learn, making it easier to package models and compare results consistently."
+    }
+  ],
+  "skills": [
+    "AWS",
+    "Computer vision",
+    "GCP",
+    "Python",
+    "SQL",
+    "C++",
+    "NLP",
+    "Docker",
+    "scikit-learn"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Engineering",
+      "school": "Northbridge Institute of Technology",
+      "end": "2024"
+    },
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Vellor Technical School",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Polish (C2)"],
+  "injection": null
+}

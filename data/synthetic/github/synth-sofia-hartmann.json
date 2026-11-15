@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-sofia-hartmann",
+    "html_url": "https://github.com/synth-sofia-hartmann",
+    "bio": "Software engineer who builds practical backend systems and thoughtful data tools."
+  },
+  "repos": [
+    {
+      "name": "service-orchestrator",
+      "html_url": "https://github.com/synth-sofia-hartmann/service-orchestrator",
+      "description": "A small service layer for coordinating requests across internal modules with clear boundaries and shared rules.",
+      "language": "TypeScript",
+      "stargazers_count": 59,
+      "topics": [
+        "node-js",
+        "microservices",
+        "rest-apis",
+        "system-design",
+        "agile"
+      ],
+      "pushed_at": "2026-09-07T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "query-ledger",
+      "html_url": "https://github.com/synth-sofia-hartmann/query-ledger",
+      "description": "A query workspace for tracking records, summaries, and results with a clean SQL structure.",
+      "language": "SQL",
+      "stargazers_count": 56,
+      "topics": ["sql", "node-js", "reporting", "records", "querying"],
+      "pushed_at": "2026-08-08T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "access-token-hub",
+      "html_url": "https://github.com/synth-sofia-hartmann/access-token-hub",
+      "description": "A token management helper for login flows and secure session handling.",
+      "language": "TypeScript",
+      "stargazers_count": 45,
+      "topics": ["node-js", "oauth", "authentication", "security", "rest-apis"],
+      "pushed_at": "2026-07-23T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "service-orchestrator": "# Service Orchestrator\n\nService Orchestrator is a compact backend project for routing requests, combining results, and keeping business rules in one place. It is designed as a simple foundation for teams that want predictable behavior and easy change management.\n\n## Features\n- Request flow organized around small modules\n- Shared rule handling for consistent results\n- Clear separation between input, processing, and output\n- Lightweight structure that supports growth over time\n\n## Getting started\nInstall Node.js, then run the project with TypeScript. Configure the sample settings in the source files and start with the provided entry point. The code is intentionally small so you can inspect the request flow and adapt it to your own service needs.",
+    "query-ledger": "# Query Ledger\n\nQuery Ledger is a small SQL project for storing records, shaping summaries, and reviewing results from a single place. It is useful when a project needs a simple, readable way to organize information and answer common questions.\n\n## Features\n- Tables for records and summaries\n- Queries for filtering and grouping results\n- Simple structure for reviewing changes over time\n- Easy to extend with new fields and views\n\n## Getting started\nCreate the tables in your SQL environment, then load the sample data from the project files. Use Node.js if you want to drive the queries from a small service layer. Review the example statements, then adapt them to your own workflow.",
+    "access-token-hub": "# Access Token Hub\n\nAccess Token Hub is a compact project for managing token-based login flows and keeping session handling consistent across a service. It focuses on the basic steps needed for secure sign-in, renewal, and validation.\n\n## Features\n- Token creation and verification helpers\n- Session state handling for authenticated users\n- Simple request guards for protected routes\n- Clear flow for renewal and expiration checks\n\n## Getting started\nInstall Node.js and run the TypeScript entry point. Set the sample credentials in the project files, then try the included flow for issuing and checking tokens. The project is intentionally small so you can adapt it to your own login process."
+  }
+}

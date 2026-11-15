@@ -1,0 +1,106 @@
+{
+  "personaId": "p013",
+  "language": "en",
+  "name": "Diego Moreau",
+  "email": "diego-moreau@example.com",
+  "githubUrl": null,
+  "headline": "Senior Software Engineer in Test",
+  "location": "Paris, France",
+  "summary": "Quality-focused engineer with a background in software development and test automation across web products and release pipelines. Known for improving coverage, stabilizing builds, and partnering closely with product and engineering teams to ship reliable features. Comfortable working across UI, API, and performance testing in fast-moving environments.",
+  "roles": [
+    {
+      "employer": "Nimbus Garden",
+      "title": "Junior Software Developer",
+      "start": "2019-01",
+      "end": "2020-09",
+      "bullets": [
+        "Built reusable test cases with JUnit to verify core product flows and reduce regressions in the frontend.",
+        "Implemented end-to-end checks with Playwright and React, cutting repeated manual verification by 35%.",
+        "Partnered with developers to tighten release confidence by adding clearer acceptance coverage around new screens."
+      ]
+    },
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Software Engineer in Test",
+      "start": "2020-10",
+      "end": "2022-01",
+      "bullets": [
+        "Strengthened release validation by integrating Playwright into the CI/CD pipeline for the main delivery branch.",
+        "Created API checks with Postman to catch contract issues earlier and support a 28% drop in escaped defects.",
+        "Worked with engineers to improve automated checks and keep deployment feedback fast during frequent releases."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "QA Automation Engineer",
+      "start": "2022-03",
+      "end": "2022-11",
+      "bullets": [
+        "Developed browser automation in Selenium and JavaScript for the Angular interface, covering the highest-risk user journeys.",
+        "Expanded unit and integration coverage with JUnit and TypeScript, improving stability across 140 automated checks.",
+        "Reviewed failures with the team and tuned test data to make investigations faster and more repeatable."
+      ]
+    },
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Senior Software Engineer in Test",
+      "start": "2023-01",
+      "end": "2025-12",
+      "bullets": [
+        "Led Agile quality planning for the Angular and Next.js product line, aligning test scope with sprint goals and release risk.",
+        "Designed automation in Java, Python and pytest, while extending coverage with Jest and JavaScript for critical workflows.",
+        "Built CI/CD quality gates with GitHub Actions and Test automation, shortening feedback time by 42% across the main pipeline.",
+        "Drove Web accessibility checks and Performance testing for HTML/CSS and REST APIs, improving usability and response behavior before release.",
+        "Improved Selenium and TypeScript coverage for the user interface, mentoring teammates on maintainable test patterns and review standards."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Gateway",
+      "description": "Created versioned release notes and traceable change history for Pocket Gateway using Git, helping teams track updates across shared workstreams."
+    },
+    {
+      "name": "Paper Dashboard",
+      "description": "Shaped the user-facing layout and interaction flow for Paper Dashboard with React, focusing on clarity and a consistent experience."
+    }
+  ],
+  "skills": [
+    "JUnit",
+    "Playwright",
+    "React",
+    "CI/CD",
+    "Postman",
+    "Angular",
+    "JavaScript",
+    "Selenium",
+    "TypeScript",
+    "Agile",
+    "GitHub Actions",
+    "HTML/CSS",
+    "Java",
+    "Jest",
+    "Next.js",
+    "Performance testing",
+    "pytest",
+    "Python",
+    "REST APIs",
+    "Test automation",
+    "Web accessibility",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "École Nouvelle des Arts Numériques",
+      "end": "2018"
+    },
+    {
+      "degree": "Higher Diploma in Software Quality",
+      "school": "Institut Valmont Technique",
+      "end": "2017"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "French (C2)"],
+  "injection": null
+}

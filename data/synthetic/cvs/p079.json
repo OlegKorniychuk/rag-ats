@@ -1,0 +1,77 @@
+{
+  "personaId": "p079",
+  "language": "en",
+  "name": "Omar Alvarez",
+  "email": "omar-alvarez@example.com",
+  "githubUrl": null,
+  "headline": "Data Scientist",
+  "location": "Valencia, Spain",
+  "summary": "Data scientist and software developer with a track record of turning messy operational data into reliable reporting and predictive features. Experienced in building practical pipelines, improving data quality, and partnering with stakeholders to deliver measurable results. Comfortable moving between scripting, analysis, and production-minded model work.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Junior Software Developer",
+      "start": "2020-07",
+      "end": "2021-11",
+      "bullets": [
+        "Built small internal tools in Python and Bash to automate file handling and cut manual checks by 35%.",
+        "Analyzed usage patterns with R and Python, helping the team prioritize fixes for the most common issues.",
+        "Supported batch processing jobs in Scala and Bash, reducing routine processing time by 20%."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "Data Scientist",
+      "start": "2022-01",
+      "end": "2023-01",
+      "bullets": [
+        "Delivered weekly forecasting work in Python and TensorFlow under Agile planning, improving forecast accuracy by 14%.",
+        "Shaped dataset structure and feature flow for a BigQuery workspace, making it easier for analysts to reuse trusted inputs.",
+        "Partnered on system design discussions to simplify a scoring service and keep turnaround time under 2 hours."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Data Scientist",
+      "start": "2023-03",
+      "end": "2025-08",
+      "bullets": [
+        "Built data cleanup jobs in Python, pandas and Bash to standardize noisy feeds and raise downstream match rates by 18%.",
+        "Developed NLP experiments in TensorFlow and Scala, using dbt and GCP to keep transformation steps consistent across releases.",
+        "Monitored model inputs and output drift with Python and pandas, then tuned retraining logic to support 3 product teams.",
+        "Automated recurring analysis tasks in Bash and Python, freeing about 10 hours per week for deeper investigation.",
+        "Coordinated feature preparation and review work across Python, Scala and GCP, improving handoff speed for the analytics group by 25%."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Bash",
+    "Python",
+    "R",
+    "Scala",
+    "Agile",
+    "BigQuery",
+    "System design",
+    "TensorFlow",
+    "dbt",
+    "GCP",
+    "NLP",
+    "pandas",
+    "Snowflake"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Applied Mathematics",
+      "school": "Northbridge Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Computational Analytics",
+      "school": "Lindenview College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Spanish (C1)"],
+  "injection": null
+}

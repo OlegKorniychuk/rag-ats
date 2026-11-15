@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-diego-mensah",
+    "html_url": "https://github.com/synth-diego-mensah",
+    "bio": "Builds practical software that helps teams ship reliable products."
+  },
+  "repos": [
+    {
+      "name": "order-flow-studio",
+      "html_url": "https://github.com/synth-diego-mensah/order-flow-studio",
+      "description": "A compact order management suite with a clear split between service boundaries and shared workflows.",
+      "language": "Java",
+      "stargazers_count": 62,
+      "topics": [
+        "microservices",
+        "spring-boot",
+        "rest-apis",
+        "mysql",
+        "rabbitmq"
+      ],
+      "pushed_at": "2026-09-11T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "sprint-board",
+      "html_url": "https://github.com/synth-diego-mensah/sprint-board",
+      "description": "A lightweight planning board for small teams that want to track work and review progress in one place.",
+      "language": "TypeScript",
+      "stargazers_count": 53,
+      "topics": ["react", "agile", "cicd", "jest", "github-actions"],
+      "pushed_at": "2026-06-12T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "quality-lane",
+      "html_url": "https://github.com/synth-diego-mensah/quality-lane",
+      "description": "A testing and release helper that keeps browser checks and build steps easy to repeat.",
+      "language": "TypeScript",
+      "stargazers_count": 44,
+      "topics": ["cypress", "jest", "cicd", "github-actions", "vue"],
+      "pushed_at": "2026-03-15T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "order-flow-studio": "# Order Flow Studio\n\nOrder Flow Studio is a small order management project for teams that want a clean example of service-based work without extra noise. It shows how separate parts can share events, keep data consistent, and expose simple endpoints for daily tasks.\n\n## Features\n- Order creation, updates, and status tracking\n- Service boundaries that keep responsibilities clear\n- Event-based handoff between parts of the system\n- Data storage for core records and history\n- Simple request paths for common operations\n\n## Getting started\nOpen the project in your editor and review the service folders first. Run the Java services, start the supporting data store, and follow the included notes for message flow. Use the provided sample requests to explore the main paths from end to end.",
+    "sprint-board": "# Sprint Board\n\nSprint Board is a planning tool for tracking work items, ownership, and progress across a busy team. It is intentionally small, making it easy to understand the main flows and adapt the interface to new routines.\n\n## Features\n- Backlog and sprint views\n- Simple status changes for work items\n- Team-friendly filters and summaries\n- Repeatable checks for core interactions\n- A release flow that fits a steady delivery routine\n\n## Getting started\nOpen the project, install the needed packages, and start the app in your local environment. Run the included checks before making changes, then follow the setup notes to connect the sample data and review the main screens.",
+    "quality-lane": "# Quality Lane\n\nQuality Lane is a small helper project for teams that want a repeatable way to verify features before release. It focuses on clear checks, simple setup steps, and a short path from local changes to a reviewed build.\n\n## Features\n- Browser checks for key user paths\n- Unit checks for focused logic\n- Clear release steps for routine delivery\n- Simple reporting for pass and fail states\n- Notes that help a team keep the process consistent\n\n## Getting started\nOpen the project and review the check list in order. Install the needed packages, run the test commands, and follow the release notes to complete a sample build. The project is designed so the main flow is easy to trace from setup to verification."
+  }
+}

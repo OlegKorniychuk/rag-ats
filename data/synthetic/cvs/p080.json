@@ -1,0 +1,85 @@
+{
+  "personaId": "p080",
+  "language": "en",
+  "name": "Tomasz Holm",
+  "email": "tomasz-holm@example.com",
+  "githubUrl": null,
+  "headline": "Backend Engineer",
+  "location": "Krakow, Poland",
+  "summary": "Backend engineer with experience building reliable services, improving data handling, and supporting product teams from early implementation through production refinement. Comfortable working across backend delivery, integrations, and service architecture in fast-moving environments. Known for practical ownership, clear communication, and steady improvements to stability and throughput.",
+  "roles": [
+    {
+      "employer": "Umber & Oak",
+      "title": "Junior Backend Developer",
+      "start": "2022-02",
+      "end": "2023-01",
+      "bullets": [
+        "Built backend features in Agile teams and kept the MySQL data model aligned with changing product needs.",
+        "Improved record handling and reduced repeated database lookups, which cut response times by 18%.",
+        "Worked with product and QA peers to deliver releases on schedule and resolve defects before launch."
+      ]
+    },
+    {
+      "employer": "Velvet Circuit",
+      "title": "Backend Engineer",
+      "start": "2023-03",
+      "end": "2024-07",
+      "bullets": [
+        "Developed service endpoints with Express and TypeScript, supporting account and workflow features for internal users.",
+        "Implemented secure sign-in flows with OAuth and tightened access control across the backend.",
+        "Refactored core services to reduce error cases by 22% and make the codebase easier to extend."
+      ]
+    },
+    {
+      "employer": "Lumenfield",
+      "title": "API Engineer",
+      "start": "2024-07",
+      "end": "2025-12",
+      "bullets": [
+        "Designed microservices in Go and TypeScript, coordinating service boundaries and shared contracts for a growing platform.",
+        "Built containerized components with Docker and NestJS, then tuned MySQL and Redis usage to reduce latency by 31%.",
+        "Implemented JavaScript-based integrations for API workflows and improved the reliability of data exchange between services.",
+        "Supported rollout planning and production fixes across multiple services, keeping delivery predictable during rapid growth."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cobalt Router",
+      "description": "Created an event-routing prototype that used RabbitMQ to move messages between backend components with clear processing rules."
+    },
+    {
+      "name": "Quiet Notebook",
+      "description": "Built a lightweight collaboration prototype with Docker, OAuth and TypeScript, focusing on secure sign-in and isolated local runs."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "MySQL",
+    "Express",
+    "OAuth",
+    "TypeScript",
+    "Docker",
+    "Go",
+    "JavaScript",
+    "Microservices",
+    "NestJS",
+    "Redis",
+    "MongoDB",
+    "RabbitMQ"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computing",
+      "school": "Northmere School of Digital Systems",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Software Practice",
+      "school": "Valebridge Technical Institute",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Polish (C2)"],
+  "injection": null
+}

@@ -1,0 +1,77 @@
+{
+  "personaId": "p097",
+  "language": "en",
+  "name": "Aisha Eriksen",
+  "email": "aisha-eriksen@example.com",
+  "githubUrl": null,
+  "headline": "Platform Engineer",
+  "location": "Copenhagen, Denmark",
+  "summary": "Platform and reliability engineer with a strong track record of improving service stability, delivery speed and operational clarity across distributed systems. Experienced in designing dependable back-end platforms, reducing incident impact and working closely with product and engineering teams to support growth. Comfortable balancing automation, observability and system design with practical delivery.",
+  "roles": [
+    {
+      "employer": "Birchway Systems",
+      "title": "Site Reliability Engineer",
+      "start": "2022-01",
+      "end": "2024-07",
+      "bullets": [
+        "Stabilized the service platform by improving system design for a Scala and Spring Boot backend on GCP, cutting repeated incident patterns by 28%.",
+        "Built a reliable event flow with RabbitMQ and Git-based release coordination, reducing failed handoffs between teams by 35%.",
+        "Tightened operational checks for production changes and documented recovery steps for the on-call team, lowering mean time to restore service by 22%.",
+        "Partnered with engineers to tune deployment readiness and service boundaries, keeping critical services within uptime targets during peak load."
+      ]
+    },
+    {
+      "employer": "Corvid Analytics",
+      "title": "Platform Engineer",
+      "start": "2024-07",
+      "end": null,
+      "bullets": [
+        "Built platform automation with Ansible and Docker on GCP, accelerating environment setup from days to under 2 hours.",
+        "Standardized delivery for Kotlin, C# and Scala services running on Kubernetes and Spring Boot, improving release consistency across 14 teams.",
+        "Designed data and service workflows with Kafka and MySQL, supporting higher-throughput processing while keeping operational overhead low.",
+        "Refined cluster operations and access patterns for shared infrastructure, reducing manual intervention by 40% and improving incident response."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Atlas",
+      "description": "Built Atlas Atlas around Hibernate to support structured persistence for a data-heavy internal workflow and keep model changes predictable."
+    },
+    {
+      "name": "Quiet Garden",
+      "description": "Created Quiet Garden in Go as a lightweight utility service for background processing and simple operational tasks."
+    }
+  ],
+  "skills": [
+    "GCP",
+    "Git",
+    "RabbitMQ",
+    "Scala",
+    "Spring Boot",
+    "System design",
+    "Ansible",
+    "C#",
+    "Docker",
+    "Kafka",
+    "Kotlin",
+    "Kubernetes",
+    "MySQL",
+    "Hibernate",
+    "Go"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Software Engineering",
+      "school": "Northshore Institute of Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Distributed Systems",
+      "school": "Linden Technical College",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Danish (B2)", "Norwegian (B1)"],
+  "injection": null
+}

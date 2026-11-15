@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-nadia-haddad",
+    "html_url": "https://github.com/synth-nadia-haddad",
+    "bio": "Builds reliable backend systems with a focus on clarity and delivery."
+  },
+  "repos": [
+    {
+      "name": "event-stream-hub",
+      "html_url": "https://github.com/synth-nadia-haddad/event-stream-hub",
+      "description": "A service for routing and tracking event messages across several internal flows.",
+      "language": "Java",
+      "stargazers_count": 82,
+      "topics": ["java", "kafka", "rabbitmq", "microservices", "rest-apis"],
+      "pushed_at": "2026-09-18T00:00:00.000Z",
+      "created_at": "2025-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "order-guard",
+      "html_url": "https://github.com/synth-nadia-haddad/order-guard",
+      "description": "A compact order review service with login checks and stored state.",
+      "language": "Java",
+      "stargazers_count": 71,
+      "topics": ["java", "oauth", "hibernate", "redis", "microservices"],
+      "pushed_at": "2026-09-07T00:00:00.000Z",
+      "created_at": "2023-06-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "release-notes-smith",
+      "html_url": "https://github.com/synth-nadia-haddad/release-notes-smith",
+      "description": "A small assistant that shapes release notes from raw updates and team input.",
+      "language": "Scala",
+      "stargazers_count": 67,
+      "topics": ["scala", "agile", "github-actions", "docker"],
+      "pushed_at": "2026-06-02T00:00:00.000Z",
+      "created_at": "2021-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "event-stream-hub": "# Event Stream Hub\n\nEvent Stream Hub is a small service that accepts event messages, tags them with a simple status, and moves them between internal flows. It is designed for teams that want a clear place to manage event intake without extra noise.\n\n## Features\n- Accepts event messages through REST APIs\n- Routes messages through Kafka and RabbitMQ\n- Keeps lightweight state for recent events\n- Fits a Microservices setup\n\n## Getting started\nUse Java with Docker to build and run the service in a local environment. Then point a client at the REST APIs and send a few sample events to see the routing behavior.",
+    "order-guard": "# Order Guard\n\nOrder Guard is a compact service that reviews incoming orders, applies access checks, and stores the current status for quick lookup. It is meant for internal tools where simple rules and fast responses matter.\n\n## Features\n- Checks user access with OAuth\n- Persists records with Hibernate\n- Uses Redis for fast status reads\n- Exposes REST APIs for order review\n\n## Getting started\nSet up the project with Java and Docker. Start the service, then call the REST APIs with a small sample request to verify the access flow and stored state.",
+    "release-notes-smith": "# Release Notes Smith\n\nRelease Notes Smith turns short update snippets into clean release notes for internal teams. It helps keep weekly delivery summaries consistent and easy to read.\n\n## Features\n- Collects notes from team updates\n- Groups items by theme and priority\n- Supports Agile planning habits\n- Runs with GitHub Actions for repeatable checks\n\n## Getting started\nUse Scala and Docker to prepare the project locally. After that, run the note generator with a few sample updates and review the formatted output."
+  }
+}

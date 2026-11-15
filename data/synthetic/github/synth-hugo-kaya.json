@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-hugo-kaya",
+    "html_url": "https://github.com/synth-hugo-kaya",
+    "bio": "Builds practical products and keeps teams moving with clear plans."
+  },
+  "repos": [
+    {
+      "name": "team-flow-board",
+      "html_url": "https://github.com/synth-hugo-kaya/team-flow-board",
+      "description": "A planning workspace for small teams with simple task views and progress tracking.",
+      "language": "TypeScript",
+      "stargazers_count": 72,
+      "topics": ["planning", "teamwork", "workflow", "angular", "redux"],
+      "pushed_at": "2026-09-29T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "data-pulse-console",
+      "html_url": "https://github.com/synth-hugo-kaya/data-pulse-console",
+      "description": "An internal reporting console that summarizes records from several tables and highlights changes over time.",
+      "language": "SQL",
+      "stargazers_count": 69,
+      "topics": ["reporting", "analytics", "postgresql", "mysql", "sql"],
+      "pushed_at": "2026-06-06T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "message-route-lab",
+      "html_url": "https://github.com/synth-hugo-kaya/message-route-lab",
+      "description": "A lightweight message routing sandbox for experimenting with job handoff and queue behavior.",
+      "language": "TypeScript",
+      "stargazers_count": 59,
+      "topics": ["messaging", "queues", "nodejs", "express", "graphql"],
+      "pushed_at": "2026-02-27T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "team-flow-board": "# Team Flow Board\n\nTeam Flow Board is a compact workspace for organizing team work and keeping priorities visible. It focuses on clear status updates, fast editing, and shared views that help a group stay aligned without extra overhead.\n\n## Features\n- Create and sort tasks by stage\n- Track progress with a simple board view\n- Filter items by owner or priority\n- Keep a running view of active work\n\n## Getting Started\nUse TypeScript and Angular to run the app in a local project. The interface pairs well with Redux for shared state and HTML/CSS for layout. Update the sample data, start the app, and adjust the task flow to fit your team.",
+    "data-pulse-console": "# Data Pulse Console\n\nData Pulse Console is a reporting workspace for reviewing records from multiple tables and turning them into clear summaries. It is aimed at small internal use cases where quick comparisons and simple queries matter more than heavy tooling.\n\n## Features\n- Summarize counts across related tables\n- Compare recent and older records\n- Group results by category and date\n- Export clean result sets for review\n\n## Getting Started\nLoad the schema into PostgreSQL or MySQL, then run the SQL files against your sample tables. The project works best when you keep the data model small and the queries easy to read. Adjust the table names and metrics to match your own records.",
+    "message-route-lab": "# Message Route Lab\n\nMessage Route Lab is a small sandbox for routing messages between parts of an application and observing how work moves through a queue. It is useful for testing handoff rules, retry ideas, and basic event flow in a controlled setup.\n\n## Features\n- Create sample messages and route them by rule\n- Simulate delayed handling and retries\n- Inspect queue state and message status\n- Define simple request shapes for shared use\n\n## Getting Started\nUse TypeScript with Node.js to run the project, then connect it to Express for local request handling and GraphQL for reading status data. Set up a RabbitMQ instance for queue behavior and keep the sample routes simple while you explore different message paths."
+  }
+}

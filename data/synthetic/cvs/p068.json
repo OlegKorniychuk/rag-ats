@@ -1,0 +1,84 @@
+{
+  "personaId": "p068",
+  "language": "en",
+  "name": "Felix Dubois",
+  "email": "felix-dubois@example.com",
+  "githubUrl": "https://github.com/synth-felix-dubois",
+  "headline": "Platform Engineer",
+  "location": "Paris, France",
+  "summary": "Platform engineer with a track record of improving internal platforms, access controls, and operational reliability across robotics and digital products. Experienced in building practical automation, supporting production services, and partnering with engineering teams to streamline delivery. Known for clear incident follow-up, careful change management, and steady improvements to developer workflows.",
+  "roles": [
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Junior Software Developer",
+      "start": "2021-05",
+      "end": "2023-01",
+      "bullets": [
+        "Maintained Git workflows for the development team and helped reduce merge issues by 30% through clearer branch habits and review checks.",
+        "Managed IAM access requests and role updates for 4 product teams, improving onboarding speed and tightening account control.",
+        "Supported developers with release preparation and source control hygiene, resolving day-to-day repository problems before they delayed delivery."
+      ]
+    },
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Platform Engineer",
+      "start": "2023-01",
+      "end": "2024-04",
+      "bullets": [
+        "Built and supported cloud services across AWS and Azure, improving platform availability and cutting manual intervention by 25%.",
+        "Created Grafana dashboards for Linux hosts and shared service health views that helped the team spot incidents earlier.",
+        "Administered IAM policies and Linux server access for 60 users, strengthening control over privileged operations.",
+        "Improved incident triage by refining alerts and operational runbooks for the platform team."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Senior Platform Engineer",
+      "start": "2024-06",
+      "end": null,
+      "bullets": [
+        "Automated server configuration with Ansible on AWS and Linux, reducing setup time for new environments by 40%.",
+        "Packaged backend services with Docker and Bash so releases were more repeatable across the platform fleet.",
+        "Maintained Git and GitHub Actions workflows to validate changes faster and support a smaller, more reliable release process.",
+        "Standardized operational tasks and access handling, helping the team support 99.9% service uptime across critical systems."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Granite Market",
+      "description": "Designed Granite Market monitoring around Prometheus to track service health, surface slowdowns, and give operators a clearer view of production behavior."
+    },
+    {
+      "name": "Orbit Pipeline",
+      "description": "Built Orbit Pipeline automation with Azure, GitHub Actions, and Linux to move files between environments and keep recurring release steps consistent."
+    }
+  ],
+  "skills": [
+    "Git",
+    "IAM",
+    "AWS",
+    "Azure",
+    "Grafana",
+    "Linux",
+    "Ansible",
+    "Bash",
+    "Docker",
+    "GitHub Actions",
+    "Prometheus"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Systems",
+      "school": "Lycée Montclair Technique",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Software Operations",
+      "school": "Institut Saint-Vincent des Arts Numériques",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["French (native)", "English (C1)"],
+  "injection": null
+}

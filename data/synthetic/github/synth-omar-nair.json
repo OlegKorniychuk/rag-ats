@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-omar-nair",
+    "html_url": "https://github.com/synth-omar-nair",
+    "bio": "Platform engineer who builds practical tooling for reliable delivery and observability."
+  },
+  "repos": [
+    {
+      "name": "cluster-release-notes",
+      "html_url": "https://github.com/synth-omar-nair/cluster-release-notes",
+      "description": "Generates release notes and rollout summaries from cluster events and change logs.",
+      "language": "Python",
+      "stargazers_count": 95,
+      "topics": [
+        "kubernetes",
+        "ci-cd",
+        "release-notes",
+        "deployment",
+        "observability"
+      ],
+      "pushed_at": "2026-09-04T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "promql-slo-notebook",
+      "html_url": "https://github.com/synth-omar-nair/promql-slo-notebook",
+      "description": "Explores service health trends and turns metric snapshots into simple scorecard notes.",
+      "language": "Rust",
+      "stargazers_count": 84,
+      "topics": ["prometheus", "grafana", "slo", "metrics", "kubernetes"],
+      "pushed_at": "2026-06-28T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "container-workflow-scripts",
+      "html_url": "https://github.com/synth-omar-nair/container-workflow-scripts",
+      "description": "Bash helpers for image builds, environment checks, and routine delivery tasks.",
+      "language": "Bash",
+      "stargazers_count": 73,
+      "topics": ["docker", "bash", "workflow", "delivery", "git"],
+      "pushed_at": "2026-03-24T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "cluster-release-notes": "# Cluster Release Notes\n\nCluster Release Notes turns deployment events and change logs into a concise summary for team review. It helps operators understand what changed, what reached the cluster, and what still needs attention.\n\n## Features\n- Collects release inputs from text files and event records\n- Groups changes by service and environment\n- Produces a short rollout summary for each run\n- Keeps the output easy to read for on-call review\n\n## Getting Started\nInstall Python, then run the script from a folder containing your input files. The tool reads local text data and writes a markdown summary to standard output. Adjust the file names and labels to match your cluster workflow.",
+    "promql-slo-notebook": "# PromQL SLO Notebook\n\nPromQL SLO Notebook is a small command-line helper for inspecting metric snapshots and drafting service health notes. It supports repeatable checks for availability, latency, and error patterns across a cluster.\n\n## Features\n- Loads sample metric snapshots from text files\n- Computes simple health scores from query results\n- Formats notes for weekly review\n- Keeps calculations transparent and easy to audit\n\n## Getting Started\nInstall Rust, then build and run the program from the project directory. Provide one or more local input files with metric data and a target name for the scorecard output. The tool prints a plain-text summary that you can copy into your review notes.",
+    "container-workflow-scripts": "# Container Workflow Scripts\n\nContainer Workflow Scripts provides a set of small shell helpers for routine delivery work. It keeps repetitive tasks in one place so a platform engineer can run the same checks the same way each time.\n\n## Features\n- Wraps common file checks and environment setup steps\n- Organizes image build and cleanup commands\n- Prints clear status messages for each action\n- Supports local use from a simple folder structure\n\n## Getting Started\nUse Bash to run the scripts from the project directory. Review the included command examples, adjust the folder names, and point the helpers at your local files before running a delivery task. No extra setup is needed beyond a standard shell environment."
+  }
+}

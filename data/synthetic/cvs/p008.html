@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Samuel Novak - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>samuel-novak@example.com</li>
+  <li>Prague, Czech Republic</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Test automation</li>
+  <li>TypeScript</li>
+  <li>Cypress</li>
+  <li>Git</li>
+  <li>Java</li>
+  <li>JavaScript</li>
+  <li>Selenium</li>
+  <li>Agile</li>
+  <li>C#</li>
+  <li>Playwright</li>
+  <li>Performance testing</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Czech (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Quality</span><span class="dates">2021</span></div>
+  <div class="sub">Northbridge Institute of Applied Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Vistara College of Computing</div>
+</div>
+</aside>
+<main class="main">
+<h1>Samuel Novak</h1>
+<div class="headline">Senior QA Automation Engineer</div>
+<h2>Summary</h2>
+<p>QA automation specialist with a track record of building reliable test coverage, stabilizing release pipelines, and improving defect detection across fast-moving product teams. Experienced in designing maintainable test suites, working closely with engineers and product partners, and raising confidence in releases through practical automation. Comfortable supporting both legacy and newer web flows in collaborative delivery environments.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior QA Automation Engineer</span><span class="dates">Jun 2025 – Present</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Led automation strategy in an Agile delivery team, combining C#, Java and JavaScript to cover core customer journeys.</li>
+    <li>Designed Selenium checks for critical releases and added performance testing for the busiest flows, improving confidence during peak launch windows.</li>
+    <li>Mentored two QA engineers on maintainable test structure and review practices, while keeping shared suites readable in C# and Java.</li>
+    <li>Extended coverage for service handoffs with JavaScript-based validations and Selenium scenarios, reducing post-release incidents by 31%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>QA Automation Engineer</span><span class="dates">Oct 2023 – Apr 2025</span></div>
+  <div class="sub">Corvid Analytics</div>
+  <ul>
+    <li>Partnered in an Agile squad to expand automated coverage with Playwright and C#, adding stable checks for the reporting workflow.</li>
+    <li>Kept Selenium suites healthy across sprint work by refactoring brittle selectors and tightening review habits with the team.</li>
+    <li>Reviewed defect trends and release risks with Agile rituals, using C# test fixtures to validate 20 priority scenarios before deployment.</li>
+    <li>Coordinated test execution across the browser layer with Playwright and Selenium, shortening verification time by 22%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior QA Automation Engineer</span><span class="dates">Aug 2021 – Oct 2023</span></div>
+  <div class="sub">Copperline Labs</div>
+  <ul>
+    <li>Built end-to-end regression coverage for the web portal using Cypress and JavaScript, reducing escaped defects by 28% over two release cycles.</li>
+    <li>Maintained shared test utilities in Java and Git so the team could review changes faster and keep tests aligned with product updates.</li>
+    <li>Created targeted UI checks with Selenium and Java for critical customer journeys, helping the team verify 15 high-risk flows before release.</li>
+    <li>Improved flaky test handling and triage routines by pairing Cypress scenarios with JavaScript helpers, which cut repeated reruns by 35%.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

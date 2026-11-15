@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mei Lindqvist - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Mei Lindqvist</h1><div class="headline">Site Reliability Engineer</div></div>
+  <div class="contact"><div>mei-lindqvist@example.com</div>
+<div>Stockholm, Sweden</div></div>
+</header>
+<h2>Summary</h2>
+<p>SRE and software engineer focused on reliable cloud platforms, deployment automation, and operational improvement. Experience spans Python development, infrastructure as code, and service ownership across multi-team environments. Known for building practical systems that improve delivery speed, stability, and incident response.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Site Reliability Engineer</span><span class="dates">Jun 2024 – Present</span></div>
+  <div class="sub">Juniper Relay</div>
+  <ul>
+    <li>Own cloud operations across Azure and Kubernetes, improving service availability and lowering recovery time during incidents by 40%.</li>
+    <li>Build and maintain delivery automation with Git, GitHub Actions, Terraform and Helm for faster and safer releases.</li>
+    <li>Develop platform utilities in Go and Bash to support day-to-day operations, environment management, and developer self-service.</li>
+    <li>Coordinate MLOps workflows with application teams so model rollouts stay repeatable and traceable across environments.</li>
+    <li>Package workloads with Docker and tune deployment standards to keep clusters efficient as usage grows.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Site Reliability Engineer</span><span class="dates">Feb 2022 – Apr 2024</span></div>
+  <div class="sub">Ironleaf Systems</div>
+  <ul>
+    <li>Helped run production services on AWS and Azure, resolving incidents faster and improving platform uptime by 18%.</li>
+    <li>Refactored service components into Microservices and strengthened runtime behavior for teams shipping on Agile cadences.</li>
+    <li>Used Kubernetes and Rust to stabilize service deployments and reduce memory-related failures by 22%.</li>
+    <li>Partnered with product and operations groups to improve on-call workflows, incident follow-up, and release quality.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Developer</span><span class="dates">Jul 2020 – Feb 2022</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Built internal tools in Python and GCP to streamline environment setup and reduce manual work for the engineering team by 35%.</li>
+    <li>Automated infrastructure provisioning with Terraform and GitHub Actions, cutting release preparation time from hours to minutes.</li>
+    <li>Improved deployment consistency by standardizing cloud configurations and adding automated checks across the delivery pipeline.</li>
+    <li>Supported application maintenance and small feature work while keeping code changes reviewable and easy to trace.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Echo Inbox</span></div>
+  <p>Created an internal workflow project using Ansible to standardize environment setup and configuration across shared services.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Rapid Compass</span></div>
+  <p>Designed a delivery initiative around CI/CD to shorten approval loops and make releases more predictable for the team.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>GCP</li>
+  <li>GitHub Actions</li>
+  <li>Python</li>
+  <li>Terraform</li>
+  <li>Agile</li>
+  <li>AWS</li>
+  <li>Azure</li>
+  <li>Kubernetes</li>
+  <li>Microservices</li>
+  <li>Rust</li>
+  <li>Bash</li>
+  <li>Docker</li>
+  <li>Git</li>
+  <li>Go</li>
+  <li>Helm</li>
+  <li>MLOps</li>
+  <li>Ansible</li>
+  <li>CI/CD</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computing Practice</span><span class="dates">2020</span></div>
+  <div class="sub">North Harbor Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Operations</span><span class="dates">2018</span></div>
+  <div class="sub">Mellanvik Technical College</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Swedish (C1)</li>
+</ul>
+  </body>
+</html>

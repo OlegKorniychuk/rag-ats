@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hannah Ivanova - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hannah Ivanova</h1>
+<div class="headline">Senior Data Engineer</div>
+<div class="contact">hannah-ivanova@example.com &middot; Tallinn, Estonia</div>
+<h2>Summary</h2>
+<p>Data engineer with a strong track record of building reliable analytics pipelines, improving data quality, and supporting decision-making across fast-moving teams. Comfortable partnering with stakeholders on system design, modeling, and operational improvements from ingestion through reporting. Known for delivering practical solutions with clear ownership and a steady focus on maintainability.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Data Engineer</span><span class="dates">Jan 2026 – Present</span></div>
+  <div class="sub">Dovetail Robotics</div>
+  <ul>
+    <li>Led system design for an enterprise data platform using AWS, Azure and BigQuery, aligning storage choices with team ownership and growth plans.</li>
+    <li>Developed ETL jobs with dbt, Python and Spark to prepare trusted datasets for finance and operations.</li>
+    <li>Automated deployment scripts with Bash and Git so releases were more repeatable and coordination across teams improved.</li>
+    <li>Strengthened SQL quality checks and monitoring, reducing pipeline defects by 29% and improving recovery time after failures.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Data Engineer</span><span class="dates">May 2025 – Jan 2026</span></div>
+  <div class="sub">Kestrel Data</div>
+  <ul>
+    <li>Built ETL workflows in Python and Spark to process large daily batches into BigQuery and Snowflake for internal reporting.</li>
+    <li>Used GCP and PostgreSQL to connect operational data sources, standardize extracts, and support a more dependable warehouse refresh.</li>
+    <li>Applied pandas and SQL for reconciliation checks that cut bad-load incidents by 41% and sped up root-cause analysis.</li>
+    <li>Tuned pipeline handling around peak volumes so scheduled jobs completed within the required window.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Analytics Engineer</span><span class="dates">Jan 2024 – May 2025</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Designed data modeling patterns in SQL and Python that simplified reporting tables and made downstream joins easier to maintain.</li>
+    <li>Used pandas to profile source data and catch edge cases before load, lowering rework from recurring feeds by 27%.</li>
+    <li>Reviewed system design choices with product and analytics partners to align warehouse structures with business needs.</li>
+    <li>Improved documentation for the analytics layer so new teammates could contribute to shared datasets faster.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Analytics Engineer</span><span class="dates">May 2021 – Dec 2023</span></div>
+  <div class="sub">Harbor &amp; Pike Software</div>
+  <ul>
+    <li>Built scheduled pipelines with Airflow and Python to move recurring datasets into Snowflake, helping the team deliver fresh reporting each morning.</li>
+    <li>Wrote SQL transformations and validation checks that reduced manual cleanup by 38% and improved consistency across core metrics.</li>
+    <li>Partnered with analysts in Agile planning sessions to refine backlog items and ship smaller changes more predictably.</li>
+    <li>Monitored pipeline runs and resolved failures quickly, keeping data availability above 99% for internal dashboards.</li>
+  </ul>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Agile</li>
+  <li>Airflow</li>
+  <li>Python</li>
+  <li>Snowflake</li>
+  <li>SQL</li>
+  <li>Data modeling</li>
+  <li>pandas</li>
+  <li>System design</li>
+  <li>BigQuery</li>
+  <li>ETL</li>
+  <li>GCP</li>
+  <li>PostgreSQL</li>
+  <li>Spark</li>
+  <li>AWS</li>
+  <li>Azure</li>
+  <li>Bash</li>
+  <li>dbt</li>
+  <li>Git</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2020</span></div>
+  <div class="sub">Northmere Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Applied Analytics</span><span class="dates">2018</span></div>
+  <div class="sub">Riverton School of Computing</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Russian (C1)</li>
+  <li>German (B1)</li>
+</ul>
+  </body>
+</html>

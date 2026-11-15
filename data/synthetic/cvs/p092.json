@@ -1,0 +1,86 @@
+{
+  "personaId": "p092",
+  "language": "en",
+  "name": "Greta Varga",
+  "email": "greta-varga@example.com",
+  "githubUrl": "https://github.com/synth-greta-varga",
+  "headline": "Frontend Engineer",
+  "location": "Budapest, Hungary",
+  "summary": "Frontend engineer focused on building reliable user interfaces, improving product quality, and collaborating closely with design and product teams. Experienced across testing, data-driven features, and accessibility-minded delivery in fast-moving analytics products. Comfortable taking ownership from implementation through release support.",
+  "roles": [
+    {
+      "employer": "Mossgate Software",
+      "title": "Junior Frontend Developer",
+      "start": "2021-04",
+      "end": "2022-11",
+      "bullets": [
+        "Built customer-facing screens with GraphQL, turning mockups into reusable interface flows that reduced rework during handoff.",
+        "Created Cypress checks for key journeys and caught regressions before release, improving confidence in the frontend by 30%.",
+        "Partnered with designers and product stakeholders to refine interactions and keep delivery aligned with user needs."
+      ]
+    },
+    {
+      "employer": "Corvid Analytics",
+      "title": "Frontend Developer",
+      "start": "2023-01",
+      "end": "2024-11",
+      "bullets": [
+        "Delivered new product pages in Vue while working in Agile sprints and coordinating priorities with a cross-functional team of 6.",
+        "Expanded Cypress coverage around GraphQL-powered views, which helped the team spot interface issues earlier and reduce hotfixes by 20%.",
+        "Refined state handling and component structure in the frontend so the dashboard felt faster and easier to maintain.",
+        "Reviewed stories with product and design to keep releases predictable and improve acceptance quality."
+      ]
+    },
+    {
+      "employer": "Yarrow Analytics",
+      "title": "Senior Frontend Engineer",
+      "start": "2024-11",
+      "end": null,
+      "bullets": [
+        "Led implementation of new user-facing features in Next.js and JavaScript, aligning delivery with Agile planning and release goals.",
+        "Improved interface consistency with HTML/CSS and Redux, simplifying shared state flows across several key screens.",
+        "Shaped accessible components and navigation patterns so the product met Web accessibility expectations for keyboard and screen-reader use.",
+        "Strengthened automated checks with Jest and Cypress, cutting escaped UI defects by 25% across major releases.",
+        "Coached two engineers on frontend reviews and release readiness while keeping the codebase stable during active delivery."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Granite Notebook",
+      "description": "Built a note-taking prototype around REST APIs, focusing on smooth data loading and clear interactions across core workflows."
+    },
+    {
+      "name": "Rapid Scheduler",
+      "description": "Created an internal planning tool workflow using Git, keeping shared changes organized during collaborative development."
+    }
+  ],
+  "skills": [
+    "Cypress",
+    "GraphQL",
+    "Agile",
+    "Vue",
+    "HTML/CSS",
+    "JavaScript",
+    "Jest",
+    "Next.js",
+    "Redux",
+    "Web accessibility",
+    "REST APIs",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Interface Design",
+      "school": "Northbridge Institute of Applied Arts",
+      "end": "2020"
+    },
+    {
+      "degree": "Bachelor of Information Studies",
+      "school": "Linden Vale College",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Hungarian (Native)"],
+  "injection": null
+}

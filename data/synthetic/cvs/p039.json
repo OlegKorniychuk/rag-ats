@@ -1,0 +1,98 @@
+{
+  "personaId": "p039",
+  "language": "en",
+  "name": "Kateryna Shevchuk",
+  "email": "kateryna-shevchuk@example.com",
+  "githubUrl": null,
+  "headline": "Platform Engineer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Platform engineer with a track record of improving deployment reliability, infrastructure consistency, and operational readiness across cloud environments. Experienced in supporting cross-functional delivery with Agile practices and automation-focused platform work. Comfortable partnering with product and engineering teams to simplify complex systems and keep releases moving smoothly.",
+  "roles": [
+    {
+      "employer": "Copperline Labs",
+      "title": "Junior DevOps Engineer",
+      "start": "2020-10",
+      "end": "2024-07",
+      "bullets": [
+        "Streamlined environment setup and server provisioning with Ansible and AWS, reducing manual effort by 40% for the delivery team.",
+        "Supported container orchestration on Kubernetes and kept SQL-backed services aligned with release changes through routine checks and fixes.",
+        "Worked in Agile planning sessions to prioritize platform tasks and resolve delivery blockers before they affected the sprint.",
+        "Improved rollback readiness for cloud infrastructure updates by documenting repeatable procedures and validating changes with the team."
+      ]
+    },
+    {
+      "employer": "Vantage Reed",
+      "title": "Platform Engineer",
+      "start": "2024-09",
+      "end": "2025-05",
+      "bullets": [
+        "Built and maintained deployment paths with Ansible, AWS and Helm, improving release consistency across Kubernetes clusters.",
+        "Coordinated platform work for Microservices and MLOps workloads across GCP and AWS, helping teams ship changes with fewer handoffs.",
+        "Reviewed SQL-based operational data to spot service issues early and cut repeat incidents by 25%.",
+        "Standardized cluster configuration with Kubernetes and Helm so application teams could follow the same release pattern across environments."
+      ]
+    },
+    {
+      "employer": "Quartzfield",
+      "title": "Senior Platform Engineer",
+      "start": "2025-07",
+      "end": null,
+      "bullets": [
+        "Led platform standardization across AWS and Azure by combining Terraform, Ansible and Kubernetes for repeatable environment delivery.",
+        "Designed release workflows with CI/CD, Docker and GitHub Actions to speed up delivery and reduce failed deployments by 30%.",
+        "Operated Helm-based Kubernetes packaging for Microservices and kept service updates predictable across shared environments.",
+        "Supported Spark and SQL workloads on cloud infrastructure while improving reliability through clear runbooks and change control.",
+        "Partnered with engineering teams in Agile delivery cycles to remove blockers and keep platform changes aligned with business priorities."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Dashboard",
+      "description": "Built a lightweight automation script in Bash to speed up recurring reporting tasks and reduce manual steps for the team."
+    },
+    {
+      "name": "Meadow Dashboard",
+      "description": "Created a warehouse reporting layer in Snowflake that made seasonal metrics easier to refresh and review."
+    },
+    {
+      "name": "Rapid Compass",
+      "description": "Improved data modeling and version tracking in Git to keep analytical structures consistent as the project evolved."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Ansible",
+    "AWS",
+    "Kubernetes",
+    "SQL",
+    "GCP",
+    "Helm",
+    "Microservices",
+    "MLOps",
+    "Azure",
+    "CI/CD",
+    "Docker",
+    "GitHub Actions",
+    "Spark",
+    "Terraform",
+    "Bash",
+    "Snowflake",
+    "Data modeling",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Information Systems",
+      "school": "Northbridge Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Bachelor of Applied Computing",
+      "school": "Merevale College of Engineering",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (Native)", "English (C1)", "Polish (B1)"],
+  "injection": null
+}

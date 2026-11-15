@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Iryna Pavlenko - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Iryna Pavlenko</h1>
+<div class="headline">Platform and DevOps Engineer</div>
+<div class="contact">iryna-pavlenko@example.com &middot; Kyiv, Ukraine</div>
+<h2>Summary</h2>
+<p>Platform and DevOps engineer with a strong focus on reliable delivery, observability, and secure infrastructure. Experienced in building and operating cloud environments, improving deployment flow, and supporting teams with practical automation. Known for steady execution across microservices, Kubernetes, and monitoring-heavy environments.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior DevOps Engineer</span><span class="dates">Sep 2025 – Sep 2026</span></div>
+  <div class="sub">Pinecrest Cloud</div>
+  <ul>
+    <li>Designed secure automation with Ansible, Terraform, and Linux to support repeatable infrastructure changes across Azure and Kubernetes.</li>
+    <li>Developed operational tooling in Go and Python, and used Grafana with Prometheus to shorten alert investigation time by 32%.</li>
+    <li>Hardened delivery workflows with GitHub Actions, Docker, and Helm while improving governance through OWASP, Threat modeling, SIEM, and Cryptography.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">May 2024 – Aug 2025</span></div>
+  <div class="sub">Larkspur Engineering</div>
+  <ul>
+    <li>Built platform services in Azure and Kubernetes, using Docker and Python to support internal product teams.</li>
+    <li>Introduced GitHub Actions workflows for MLOps delivery and tightened release traceability across environments.</li>
+    <li>Strengthened secret handling with Cryptography and Prometheus-based checks, lowering security review findings by 35%.</li>
+    <li>Improved container image handling with Docker and Kubernetes so teams could roll out changes more predictably.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>DevOps Engineer</span><span class="dates">Mar 2022 – May 2024</span></div>
+  <div class="sub">Driftwood Apps</div>
+  <ul>
+    <li>Automated cloud provisioning across AWS and Azure with Bash and Git, cutting environment setup time by 40%.</li>
+    <li>Managed Kubernetes clusters and Prometheus dashboards to improve service visibility and reduce recurring outages.</li>
+    <li>Standardized release steps with Git and Bash so the team could ship changes with fewer manual handoffs.</li>
+    <li>Partnered with developers to keep cloud infrastructure consistent across production and staging.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Jun 2021 – Mar 2022</span></div>
+  <div class="sub">Saltmarsh Digital</div>
+  <ul>
+    <li>Built and supported microservices for internal services, and added Prometheus checks to catch service degradation earlier.</li>
+    <li>Improved incident triage by tuning Prometheus alerts and reducing noise during release windows by 28%.</li>
+    <li>Worked with the engineering team to stabilize deployments and keep the backend maintainable during rapid change.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Echo Tracker</span></div>
+  <p>Built an access-focused tracking concept centered on IAM to support controlled user onboarding and permission reviews.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Signal Pipeline</span></div>
+  <p>Created a delivery flow using CI/CD to move changes through validation and release with fewer manual steps.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Quiet Compass</span></div>
+  <p>Developed a lightweight operational tool in Go with Grafana to surface service trends and team health metrics.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Microservices</li>
+  <li>Prometheus</li>
+  <li>AWS</li>
+  <li>Azure</li>
+  <li>Bash</li>
+  <li>Git</li>
+  <li>Kubernetes</li>
+  <li>Cryptography</li>
+  <li>Docker</li>
+  <li>GitHub Actions</li>
+  <li>MLOps</li>
+  <li>Python</li>
+  <li>Ansible</li>
+  <li>Go</li>
+  <li>Grafana</li>
+  <li>Helm</li>
+  <li>Linux</li>
+  <li>OWASP</li>
+  <li>SIEM</li>
+  <li>Terraform</li>
+  <li>Threat modeling</li>
+  <li>IAM</li>
+  <li>CI/CD</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computer Engineering</span><span class="dates">2021</span></div>
+  <div class="sub">Velyka Dnipro Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Cloud Operations</span><span class="dates">2020</span></div>
+  <div class="sub">Northbridge Applied College</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>Ukrainian (C2)</li>
+  <li>English (C1)</li>
+  <li>Polish (B1)</li>
+</ul>
+  </body>
+</html>

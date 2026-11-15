@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Freya Petrov - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Freya Petrov</h1>
+<div class="headline">Platform Engineer</div>
+<div class="contact">freya-petrov@example.com &middot; Ostrava, Czech Republic</div>
+<h2>Summary</h2>
+<p>Freya Petrov is a platform engineer focused on reliable infrastructure, access management, and delivery workflows. She has helped teams standardize operational runbooks, improve release consistency, and reduce manual toil across internal platforms. Her background combines hands-on platform operations with pragmatic automation and cross-team support.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Platform Engineer</span><span class="dates">May 2025 – Jun 2026</span></div>
+  <div class="sub">Mossgate Software</div>
+  <ul>
+    <li>Designed repeatable infrastructure changes with Terraform and Ansible, reducing environment setup effort by 40% for new services.</li>
+    <li>Shipped automation services in Go and Python that coordinated access updates in IAM and kept platform tasks consistent across teams.</li>
+    <li>Strengthened Kubernetes operations on Linux by tuning deployment procedures and verifying node readiness before major changes.</li>
+    <li>Expanded GitHub Actions workflows to cover build, approval, and release steps, improving delivery speed for 3 product groups.</li>
+    <li>Partnered with service owners to simplify operational handoffs and keep infrastructure standards aligned across the platform.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Jul 2023 – Mar 2025</span></div>
+  <div class="sub">Juniper Relay</div>
+  <ul>
+    <li>Built delivery workflows with CI/CD and GitHub Actions, shortening release lead time by 28% for the platform team.</li>
+    <li>Managed access policies in IAM across Kubernetes and Linux hosts, helping standardize onboarding for 60 engineers and contractors.</li>
+    <li>Improved cluster reliability in Kubernetes by refining rollout steps and aligning them with Linux host operations.</li>
+    <li>Created clearer deployment controls and status reporting in GitHub Actions, which reduced failed handoffs by 22%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior DevOps Engineer</span><span class="dates">Feb 2020 – May 2023</span></div>
+  <div class="sub">Ostrava Labs</div>
+  <ul>
+    <li>Automated routine server tasks with Bash, cutting manual maintenance time by 35% and keeping the backend serviceable during busy release windows.</li>
+    <li>Tightened access controls in IAM for 12 internal systems, reducing permission review turnaround from days to hours.</li>
+    <li>Supported early MLOps workflows by packaging repeatable setup steps and documenting operational checks for the data team.</li>
+    <li>Handled incident follow-up and maintenance coordination across 4 production services, improving handoff clarity for on-call work.</li>
+  </ul>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Bash</li>
+  <li>IAM</li>
+  <li>MLOps</li>
+  <li>CI/CD</li>
+  <li>GitHub Actions</li>
+  <li>Kubernetes</li>
+  <li>Linux</li>
+  <li>Ansible</li>
+  <li>Go</li>
+  <li>Python</li>
+  <li>Terraform</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Computer Systems Operations</span><span class="dates">2019</span></div>
+  <div class="sub">North Vale Technical School</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Associate Certificate in Infrastructure Support</span><span class="dates">2018</span></div>
+  <div class="sub">Brimford Institute of Technology</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Czech (B2)</li>
+  <li>Polish (B1)</li>
+</ul>
+  </body>
+</html>

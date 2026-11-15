@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Zainab Reyes - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Zainab Reyes</h1>
+<div class="headline">Data Engineer</div>
+<div class="contact">zainab-reyes@example.com &middot; Lisbon, Portugal</div>
+<h2>Summary</h2>
+<p>Data engineer and analytics specialist with a track record of building reliable data pipelines, modeling operational data, and supporting decision-making with clear metrics. Experienced across batch and streaming workflows, with hands-on work in Python, SQL, and data platforms that support both reporting and advanced analytics. Comfortable partnering with product and operations teams to improve data quality, latency, and delivery consistency.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Data Engineer</span><span class="dates">Aug 2025 – Present</span></div>
+  <div class="sub">Emberlight Tech</div>
+  <ul>
+    <li>Built end-to-end ETL flows in Python, SQL, BigQuery and Snowflake to unify reporting across finance and operations, improving daily freshness by 50%.</li>
+    <li>Packaged containerized jobs with Docker and Git so pipeline changes could be reviewed, promoted, and rolled back with less operational risk.</li>
+    <li>Expanded Spark processing for Computer vision datasets and reduced file handling time by 33% on large batch runs.</li>
+    <li>Used R, PyTorch and Python to validate model outputs, compare business segments, and support forecast review meetings.</li>
+    <li>Implemented schema controls and recovery steps across the warehouse environment to keep critical tables stable during high-volume loads.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Analytics Engineer</span><span class="dates">Apr 2024 – Jun 2025</span></div>
+  <div class="sub">Cinder Peak</div>
+  <ul>
+    <li>Designed a more resilient analytics layer with dbt and SQL, aligning business rules to a shared model and reducing rework by 30%.</li>
+    <li>Built Python and Spark pipelines that processed large-scale usage data and supported Computer vision feature preparation.</li>
+    <li>Applied R and PyTorch to explore model outputs, compare experiment results, and surface quality gaps in image-based workflows.</li>
+    <li>Led system design discussions for the data platform, balancing scalability, observability, and dependable delivery for 3 product teams.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Analytics Engineer</span><span class="dates">Jul 2023 – Apr 2024</span></div>
+  <div class="sub">Dovetail Robotics</div>
+  <ul>
+    <li>Orchestrated Python and Airflow workflows to move production metrics through the analytics layer, cutting refresh time by 35%.</li>
+    <li>Integrated Kafka event streams into SQL tables for near-real-time reporting and improved traceability across 12 core events.</li>
+    <li>Built PyTorch-assisted checks to flag unusual sensor patterns before they reached dashboards, lowering false alerts by 22%.</li>
+    <li>Partnered with operations teams to improve data definitions and ensure consistent metric logic across weekly releases.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Data Engineer</span><span class="dates">Apr 2021 – May 2023</span></div>
+  <div class="sub">Ashgrove Digital</div>
+  <ul>
+    <li>Built Bash and SQL scripts to automate daily ingestion jobs and keep tabular data ready for reporting, reducing manual handling by 40%.</li>
+    <li>Designed PostgreSQL data modeling patterns for operational datasets and improved query performance for recurring analyses by 28%.</li>
+    <li>Developed Python transforms that validated source files, standardized records, and prepared features for PyTorch experiments.</li>
+    <li>Maintained a clean handoff between upstream feeds and the warehouse by documenting load rules and resolving data issues within the backend process.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Granite Ledger</span></div>
+  <p>Built Granite Ledger as a finance analytics project using scikit-learn to score transaction risk and compare model performance across labeled samples.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Bash</li>
+  <li>Data modeling</li>
+  <li>PostgreSQL</li>
+  <li>Python</li>
+  <li>PyTorch</li>
+  <li>SQL</li>
+  <li>Airflow</li>
+  <li>Kafka</li>
+  <li>Computer vision</li>
+  <li>dbt</li>
+  <li>R</li>
+  <li>Spark</li>
+  <li>System design</li>
+  <li>BigQuery</li>
+  <li>Docker</li>
+  <li>ETL</li>
+  <li>Git</li>
+  <li>Snowflake</li>
+  <li>scikit-learn</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Data Systems</span><span class="dates">2020</span></div>
+  <div class="sub">North Vale Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Bachelor of Applied Mathematics</span><span class="dates">2018</span></div>
+  <div class="sub">Marlowe School of Sciences</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Spanish (B2)</li>
+</ul>
+  </body>
+</html>

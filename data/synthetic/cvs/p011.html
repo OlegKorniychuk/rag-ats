@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sofia Novak - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>sofia-novak@example.com</li>
+  <li>Vienna, Austria</li>
+  <li>github.com/synth-sofia-novak</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Node.js</li>
+  <li>NestJS</li>
+  <li>PostgreSQL</li>
+  <li>REST APIs</li>
+  <li>SQL</li>
+  <li>Kafka</li>
+  <li>Microservices</li>
+  <li>OAuth</li>
+  <li>Docker</li>
+  <li>MySQL</li>
+  <li>Express</li>
+  <li>JavaScript</li>
+  <li>System design</li>
+  <li>RabbitMQ</li>
+  <li>Redis</li>
+  <li>Agile</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>German (B1)</li>
+  <li>Polish (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Development</span><span class="dates">2020</span></div>
+  <div class="sub">Northbridge Institute of Applied Computing</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Information Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Linden Technical School</div>
+</div>
+</aside>
+<main class="main">
+<h1>Sofia Novak</h1>
+<div class="headline">Backend Engineer</div>
+<h2>Summary</h2>
+<p>Backend engineer with a track record of building reliable services, integrating APIs, and improving data flows across growing product teams. Experienced in REST APIs, Microservices, system design, and database-focused delivery, with a practical approach to shipping maintainable backend features and operational improvements.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Backend Engineer</span><span class="dates">Sep 2025 – May 2026</span></div>
+  <div class="sub">Zephyr Foundry</div>
+  <ul>
+    <li>Shaped service boundaries through system design and Microservices planning, aligning the backend with new product goals.</li>
+    <li>Built containerized services with Docker and NestJS, using JavaScript and Express to speed up feature delivery across 3 services.</li>
+    <li>Optimized MySQL access patterns and supporting SQL logic to improve throughput and keep deployments predictable.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Oct 2024 – Aug 2025</span></div>
+  <div class="sub">Opaline Works</div>
+  <ul>
+    <li>Delivered backend features in NestJS and SQL under Agile, helping the team close 14 planned stories in a release cycle.</li>
+    <li>Maintained MySQL data structures and OAuth flows for secure account actions and cleaner record handling.</li>
+    <li>Reviewed service behavior and improved error handling across the backend, which reduced repeat incidents by 22%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>API Engineer</span><span class="dates">Mar 2023 – Aug 2024</span></div>
+  <div class="sub">Nimbus Garden</div>
+  <ul>
+    <li>Connected event flows with Kafka and Microservices to move customer updates between services with lower manual handoffs.</li>
+    <li>Implemented OAuth-protected API access and tuned PostgreSQL queries to keep response times stable during peak usage.</li>
+    <li>Worked with product and operations teams to refine service contracts, supporting 2 major releases without disrupting clients.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Backend Developer</span><span class="dates">Apr 2021 – Feb 2023</span></div>
+  <div class="sub">Marlowe &amp; Finch Tech</div>
+  <ul>
+    <li>Built backend endpoints in NestJS for REST APIs, cutting integration turnaround by 30% for internal product teams.</li>
+    <li>Designed SQL queries and PostgreSQL tables to support cleaner reporting and fewer data inconsistencies.</li>
+    <li>Improved request handling and validation across the service layer, reducing support escalations by 18%.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Pocket Studio</span></div>
+  <p>Created a lightweight messaging workflow for Pocket Studio using RabbitMQ and Redis to coordinate background tasks and speed up state updates.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "user": {
+    "login": "synth-oksana-pavlenko",
+    "html_url": "https://github.com/synth-oksana-pavlenko",
+    "bio": "Senior frontend developer who builds polished web experiences with a focus on clarity and usability."
+  },
+  "repos": [
+    {
+      "name": "interface-studio",
+      "html_url": "https://github.com/synth-oksana-pavlenko/interface-studio",
+      "description": "A component-driven workspace for building and reviewing shared interface patterns.",
+      "language": "TypeScript",
+      "stargazers_count": 67,
+      "topics": [
+        "typescript",
+        "react",
+        "redux",
+        "web-accessibility",
+        "ui-system"
+      ],
+      "pushed_at": "2026-09-04T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "flowboard",
+      "html_url": "https://github.com/synth-oksana-pavlenko/flowboard",
+      "description": "A planning board for tracking work items with a simple, calm editing flow.",
+      "language": "TypeScript",
+      "stargazers_count": 57,
+      "topics": [
+        "typescript",
+        "angular",
+        "agile",
+        "task-tracking",
+        "productivity"
+      ],
+      "pushed_at": "2026-07-25T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "data-dialogue",
+      "html_url": "https://github.com/synth-oksana-pavlenko/data-dialogue",
+      "description": "A request explorer that compares client data with server responses for shared screens.",
+      "language": "TypeScript",
+      "stargazers_count": 53,
+      "topics": [
+        "typescript",
+        "graphql",
+        "rest-apis",
+        "next-js",
+        "content-review"
+      ],
+      "pushed_at": "2026-04-21T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "interface-studio": "# Interface Studio\n\nInterface Studio is a small workspace for shaping shared interface patterns and checking them against real content. It helps teams keep pages consistent while leaving room for flexible layouts and careful wording.\n\n## What it does\n- Organizes reusable interface pieces in one place\n- Supports content review before pages are published\n- Keeps state changes predictable across the workspace\n- Encourages accessible structure and clear focus states\n\n## Getting started\nOpen the project, install the project files, and start the local workspace with TypeScript enabled. Then create a few sample screens and review them in a browser. Use React and Redux for interactive parts, and keep HTML/CSS clean and readable.",
+    "flowboard": "# Flowboard\n\nFlowboard is a planning board for teams that want a simple way to track work items and keep discussions short. It focuses on a calm editing flow, clear status changes, and easy review during daily work.\n\n## What it does\n- Sorts work items into clear stages\n- Lets people update notes without clutter\n- Shows progress in a compact layout\n- Supports a steady Agile planning rhythm\n\n## Getting started\nOpen the project files and run the app with TypeScript. Create a few work items, move them through the board, and tune the layout with Angular. Keep the page structure plain, readable, and easy to scan.",
+    "data-dialogue": "# Data Dialogue\n\nData Dialogue is a request explorer for comparing client data with server responses when building shared screens. It is useful for spotting mismatched field names, missing content, and awkward loading states before a page is released.\n\n## What it does\n- Compares two data shapes side by side\n- Highlights missing or unexpected fields\n- Keeps request notes attached to each screen\n- Helps teams move between GraphQL and REST APIs with less confusion\n\n## Getting started\nOpen the project in a local workspace, then run it with TypeScript support turned on. Add a few sample requests, compare the results, and refine the screens in Next.js. Keep the layout simple and make sure every view remains easy to read."
+  }
+}

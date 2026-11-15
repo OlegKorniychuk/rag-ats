@@ -1,0 +1,81 @@
+{
+  "personaId": "p042",
+  "language": "en",
+  "name": "Mateo Haddad",
+  "email": "mateo-haddad@example.com",
+  "githubUrl": "https://github.com/synth-mateo-haddad",
+  "headline": "Security Engineer",
+  "location": "Montréal, Canada",
+  "summary": "Security engineer focused on securing application and platform code, reducing risk in production systems, and partnering with engineering teams on practical controls. Comfortable working across cloud environments and low-level services, with a strong bias toward measurable improvements and maintainable fixes.",
+  "roles": [
+    {
+      "employer": "Opaline Works",
+      "title": "Junior Security Engineer",
+      "start": "2023-06",
+      "end": "2024-07",
+      "bullets": [
+        "Supported secure delivery on Agile teams by reviewing changes in Azure and advising engineers on safer implementation patterns.",
+        "Built internal hardening tools in Go and Rust that reduced repeated manual checks by 30%.",
+        "Investigated risky code paths and helped close 18 security issues before release, improving consistency across the backend.",
+        "Created lightweight guidance for developers that translated review findings into clearer repair steps."
+      ]
+    },
+    {
+      "employer": "Emberlight Tech",
+      "title": "Application Security Engineer",
+      "start": "2024-09",
+      "end": "2025-06",
+      "bullets": [
+        "Strengthened application controls in Azure by adding checks around OAuth flows and reducing authorization defects by 25%.",
+        "Worked with developers on C++ services to remove unsafe patterns and improve error handling in user-facing features.",
+        "Reviewed design changes on Agile projects and aligned fixes with the security team’s release priorities.",
+        "Traced recurring account-access issues to weak integration logic and helped stabilize the affected service."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Software Engineer",
+      "start": "2025-07",
+      "end": null,
+      "bullets": [
+        "Developed backend components in AWS using C, C++ and Cryptography to protect sensitive data in transit and at rest.",
+        "Implemented IAM and OAuth safeguards for internal platforms, cutting privileged-access exceptions by 40%.",
+        "Improved service resilience by tightening key handling and reducing security-related incidents across shared infrastructure.",
+        "Partnered with product and operations teams to roll out controls without slowing delivery."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Router",
+      "description": "Built Echo Router in C, Go and Rust to route internal traffic through a compact, security-focused service layer. The project emphasized predictable behavior, clean boundaries and safer handling of messages between components."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Azure",
+    "Go",
+    "Rust",
+    "C++",
+    "OAuth",
+    "AWS",
+    "C",
+    "Cryptography",
+    "IAM",
+    "OWASP"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Information Defense",
+      "school": "Northbridge Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Certificate in Secure Software Practice",
+      "school": "Luma School of Engineering",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Arabic (C2)"],
+  "injection": null
+}

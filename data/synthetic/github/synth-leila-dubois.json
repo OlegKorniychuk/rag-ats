@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-leila-dubois",
+    "html_url": "https://github.com/synth-leila-dubois",
+    "bio": "Builds reliable infrastructure and keeps systems calm under pressure."
+  },
+  "repos": [
+    {
+      "name": "control-room-notes",
+      "html_url": "https://github.com/synth-leila-dubois/control-room-notes",
+      "description": "Operational notes and scripts for keeping environments consistent and easy to recover.",
+      "language": "Bash",
+      "stargazers_count": 100,
+      "topics": ["bash", "linux", "automation", "ops", "observability"],
+      "pushed_at": "2026-09-27T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "fleet-guardrails",
+      "html_url": "https://github.com/synth-leila-dubois/fleet-guardrails",
+      "description": "Helper scripts for enforcing shared rules across compute fleets and change windows.",
+      "language": "Bash",
+      "stargazers_count": 94,
+      "topics": ["bash", "kubernetes", "terraform", "ansible", "security"],
+      "pushed_at": "2026-07-06T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-watchbook",
+      "html_url": "https://github.com/synth-leila-dubois/signal-watchbook",
+      "description": "A compact watchbook for tracing alerts, dashboards, and response steps during busy shifts.",
+      "language": "Bash",
+      "stargazers_count": 86,
+      "topics": ["bash", "grafana", "prometheus", "siem", "incident-response"],
+      "pushed_at": "2026-03-14T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "control-room-notes": "# Control Room Notes\n\nThis project collects small commands and notes for repeatable operations work. It focuses on making setup, checks, and recovery steps easy to run by hand or through simple scripts.\n\n## What it does\n- Keeps common tasks in one place\n- Records safe steps for routine changes\n- Helps track service health and configuration drift\n- Supports shared work with a lightweight process\n\n## Getting started\n1. Review the notes and adjust paths for your environment.\n2. Run the scripts from a Linux shell.\n3. Update values for your own AWS, Azure, or GCP resources as needed.\n4. Use Terraform and Ansible instructions to keep changes consistent.\n\n## Notes\n- Built for small teams that want clear operational habits.\n- Works well with Grafana, Prometheus, and SIEM checks.",
+    "fleet-guardrails": "# Fleet Guardrails\n\nFleet Guardrails provides short Bash routines for checking that hosts and clusters follow the same rules. It is meant for practical upkeep, with simple prompts and clear output for operators.\n\n## Features\n- Validates environment settings before changes\n- Applies common configuration through Ansible\n- Supports Terraform-based rollouts\n- Includes reminders for IAM boundaries and logging checks\n- Fits a steady Agile workflow for recurring maintenance\n\n## Getting started\n1. Open the script files and set the target environment.\n2. Run the checks from a Linux shell.\n3. Point the values to your AWS, Azure, or GCP accounts.\n4. Review the results, then repeat after each planned change.\n\n## Notes\nThis repository stays intentionally small so the steps are easy to audit and reuse.",
+    "signal-watchbook": "# Signal Watchbook\n\nSignal Watchbook is a compact reference for watching alerts and following response steps when systems become noisy. It keeps the process readable and avoids unnecessary ceremony.\n\n## Features\n- Summarizes alert handling in one place\n- Tracks useful dashboard checks in Grafana\n- Notes key indicators from Prometheus\n- Includes response reminders for SIEM review\n- Keeps recovery steps short and practical\n\n## Getting started\n1. Read the watchbook before a shift begins.\n2. Adjust the checklist for your own Linux environment.\n3. Store the commands beside your Bash scripts.\n4. Review the entries after each incident and keep only the helpful ones.\n\n## Notes\nDesigned for steady operations work where clear habits matter more than size."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "personaId": "p021",
+  "language": "en",
+  "name": "Arjun Holm",
+  "email": "arjun-holm@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer",
+  "location": "Stockholm, Sweden",
+  "summary": "Software engineer focused on building data-driven features and improving delivery workflows. Experienced in Python-based development, natural language processing, and collaborative product work across fast-moving teams. Comfortable turning messy data into reliable application behavior and measurable improvements.",
+  "roles": [
+    {
+      "employer": "Thistledown Labs",
+      "title": "Software Developer",
+      "start": "2024-06",
+      "end": "2025-04",
+      "bullets": [
+        "Built Python services for text processing and internal workflows, improving turnaround time for content tasks by 28%.",
+        "Shaped NLP pipelines for classification and extraction, using MLOps to keep releases consistent across environments.",
+        "Partnered with product and research colleagues to refine model outputs, reducing manual review by 19%.",
+        "Monitored production issues and tuned batch jobs, keeping the backend stable during peak usage."
+      ]
+    },
+    {
+      "employer": "Stonebridge Interactive",
+      "title": "Software Engineer",
+      "start": "2025-05",
+      "end": null,
+      "bullets": [
+        "Delivered new product features in Agile cycles, combining Python and pandas to prepare and transform operational data.",
+        "Trained and evaluated ranking models with scikit-learn and MLflow, lifting quality metrics by 14%.",
+        "Scaled report generation across Spark jobs, cutting refresh times from hours to under 40 minutes.",
+        "Reviewed data flows with teammates and simplified edge-case handling in Python, improving reliability for 3 customer-facing workflows.",
+        "Used pandas and Spark to reconcile large datasets and support planning decisions for the broader team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Planner",
+      "description": "Created a personal planning tool in Python with NLP features that organize notes, extract tasks, and surface reminders from free text."
+    }
+  ],
+  "skills": [
+    "Python",
+    "NLP",
+    "MLOps",
+    "Agile",
+    "MLflow",
+    "pandas",
+    "scikit-learn",
+    "Spark",
+    "LLMs"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Practice",
+      "school": "Northmere Technical Institute",
+      "end": "2023"
+    },
+    {
+      "degree": "Bachelor of Information Systems",
+      "school": "Cinder Vale College",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Swedish (B1)"],
+  "injection": null
+}

@@ -1,0 +1,62 @@
+{
+  "user": {
+    "login": "synth-sofia-novak",
+    "html_url": "https://github.com/synth-sofia-novak",
+    "bio": "Backend engineer who builds reliable service systems and clear interfaces."
+  },
+  "repos": [
+    {
+      "name": "schema-gateway",
+      "html_url": "https://github.com/synth-sofia-novak/schema-gateway",
+      "description": "A service layer for combining data from multiple sources behind one query surface.",
+      "language": "TypeScript",
+      "stargazers_count": 96,
+      "topics": [
+        "graphql",
+        "typescript",
+        "api-design",
+        "service-layer",
+        "data-fetching"
+      ],
+      "pushed_at": "2026-09-28T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "order-workflow-core",
+      "html_url": "https://github.com/synth-sofia-novak/order-workflow-core",
+      "description": "A modular service for tracking order steps and message handoffs across internal boundaries.",
+      "language": "TypeScript",
+      "stargazers_count": 93,
+      "topics": [
+        "typescript",
+        "microservices",
+        "event-driven",
+        "messaging",
+        "system-design"
+      ],
+      "pushed_at": "2026-09-11T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "request-auth-studio",
+      "html_url": "https://github.com/synth-sofia-novak/request-auth-studio",
+      "description": "A compact service for login flows, token checks, and protected request paths.",
+      "language": "JavaScript",
+      "stargazers_count": 86,
+      "topics": ["oauth", "express", "rest-apis", "security", "node-js"],
+      "pushed_at": "2026-08-02T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "schema-gateway": "# Schema Gateway\n\nSchema Gateway is a small service layer for shaping data from several internal sources into one query surface. It is designed for teams that want a tidy interface for clients while keeping the underlying services separate.\n\n## What it does\n- Unifies requests into a single query entry point\n- Shapes nested results from multiple services\n- Keeps access rules close to the data surface\n- Supports incremental growth as new fields appear\n\n## Getting started\n1. Install the project dependencies.\n2. Set the service settings for local use.\n3. Start the service and send a sample query.\n\nThe project is written in TypeScript and centers on GraphQL. It is meant to be simple to run, easy to extend, and straightforward to read.",
+    "order-workflow-core": "# Order Workflow Core\n\nOrder Workflow Core models a simple order flow across several internal services. It focuses on clear boundaries, predictable handoffs, and keeping the core rules easy to follow.\n\n## What it does\n- Tracks order state through named steps\n- Passes messages between service boundaries\n- Stores workflow records for later review\n- Keeps the control flow readable for small teams\n\n## Getting started\n1. Install the dependencies.\n2. Configure the local service settings and storage values.\n3. Start the service and send a sample order message.\n\nThis project is written in TypeScript and is useful for exploring system design ideas in a compact codebase.",
+    "request-auth-studio": "# Request Auth Studio\n\nRequest Auth Studio is a compact service for handling login flows and protected request paths. It keeps the examples small so the moving parts are easy to inspect and adapt.\n\n## What it does\n- Handles sign-in and token checks\n- Protects selected request paths\n- Keeps request rules separate from business logic\n- Demonstrates a simple server structure\n\n## Getting started\n1. Install the project dependencies.\n2. Set the local service values for sign-in and protected paths.\n3. Start the server and send a sample request.\n\nThis project uses JavaScript and focuses on OAuth with Express for REST APIs."
+  }
+}

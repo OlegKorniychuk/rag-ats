@@ -1,0 +1,95 @@
+{
+  "personaId": "p090",
+  "language": "en",
+  "name": "Hannah Ivanova",
+  "email": "hannah-ivanova@example.com",
+  "githubUrl": null,
+  "headline": "Senior Data Engineer",
+  "location": "Tallinn, Estonia",
+  "summary": "Data engineer with a strong track record of building reliable analytics pipelines, improving data quality, and supporting decision-making across fast-moving teams. Comfortable partnering with stakeholders on system design, modeling, and operational improvements from ingestion through reporting. Known for delivering practical solutions with clear ownership and a steady focus on maintainability.",
+  "roles": [
+    {
+      "employer": "Harbor & Pike Software",
+      "title": "Junior Analytics Engineer",
+      "start": "2021-05",
+      "end": "2023-12",
+      "bullets": [
+        "Built scheduled pipelines with Airflow and Python to move recurring datasets into Snowflake, helping the team deliver fresh reporting each morning.",
+        "Wrote SQL transformations and validation checks that reduced manual cleanup by 38% and improved consistency across core metrics.",
+        "Partnered with analysts in Agile planning sessions to refine backlog items and ship smaller changes more predictably.",
+        "Monitored pipeline runs and resolved failures quickly, keeping data availability above 99% for internal dashboards."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Analytics Engineer",
+      "start": "2024-01",
+      "end": "2025-05",
+      "bullets": [
+        "Designed data modeling patterns in SQL and Python that simplified reporting tables and made downstream joins easier to maintain.",
+        "Used pandas to profile source data and catch edge cases before load, lowering rework from recurring feeds by 27%.",
+        "Reviewed system design choices with product and analytics partners to align warehouse structures with business needs.",
+        "Improved documentation for the analytics layer so new teammates could contribute to shared datasets faster."
+      ]
+    },
+    {
+      "employer": "Kestrel Data",
+      "title": "Data Engineer",
+      "start": "2025-05",
+      "end": "2026-01",
+      "bullets": [
+        "Built ETL workflows in Python and Spark to process large daily batches into BigQuery and Snowflake for internal reporting.",
+        "Used GCP and PostgreSQL to connect operational data sources, standardize extracts, and support a more dependable warehouse refresh.",
+        "Applied pandas and SQL for reconciliation checks that cut bad-load incidents by 41% and sped up root-cause analysis.",
+        "Tuned pipeline handling around peak volumes so scheduled jobs completed within the required window."
+      ]
+    },
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Senior Data Engineer",
+      "start": "2026-01",
+      "end": null,
+      "bullets": [
+        "Led system design for an enterprise data platform using AWS, Azure and BigQuery, aligning storage choices with team ownership and growth plans.",
+        "Developed ETL jobs with dbt, Python and Spark to prepare trusted datasets for finance and operations.",
+        "Automated deployment scripts with Bash and Git so releases were more repeatable and coordination across teams improved.",
+        "Strengthened SQL quality checks and monitoring, reducing pipeline defects by 29% and improving recovery time after failures."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Agile",
+    "Airflow",
+    "Python",
+    "Snowflake",
+    "SQL",
+    "Data modeling",
+    "pandas",
+    "System design",
+    "BigQuery",
+    "ETL",
+    "GCP",
+    "PostgreSQL",
+    "Spark",
+    "AWS",
+    "Azure",
+    "Bash",
+    "dbt",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Northmere Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Applied Analytics",
+      "school": "Riverton School of Computing",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Russian (C1)", "German (B1)"],
+  "injection": null
+}

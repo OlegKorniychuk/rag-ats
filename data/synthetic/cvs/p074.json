@@ -1,0 +1,79 @@
+{
+  "personaId": "p074",
+  "language": "en",
+  "name": "Elena Rahman",
+  "email": "elena-rahman@example.com",
+  "githubUrl": "https://github.com/synth-elena-rahman",
+  "headline": "Machine Learning Engineer",
+  "location": "London, United Kingdom",
+  "summary": "Machine learning engineer with experience building and improving data-driven products across software and applied ML teams. Known for turning model work into reliable production systems, collaborating closely with product and engineering partners, and delivering measurable gains in quality and speed. Comfortable working across experimentation, deployment, and ongoing model maintenance.",
+  "roles": [
+    {
+      "employer": "Quillstone Systems",
+      "title": "Junior Software Developer",
+      "start": "2022-08",
+      "end": "2023-05",
+      "bullets": [
+        "Built training and evaluation workflows with Agile, Spark and TensorFlow to support early model experiments.",
+        "Used MLflow to track runs and compare results, reducing manual reporting time by 40%.",
+        "Collaborated with the team in Agile planning sessions to refine features, labels and experiment priorities.",
+        "Prepared recurring development updates and release notes for stakeholders, keeping delivery on schedule."
+      ]
+    },
+    {
+      "employer": "Stonebridge Interactive",
+      "title": "ML Engineer",
+      "start": "2023-07",
+      "end": "2024-05",
+      "bullets": [
+        "Developed computer vision models with Spark and TensorFlow to improve image classification for an internal product line.",
+        "Applied Agile delivery practices to break work into short iterations and keep model changes aligned with product needs.",
+        "Analyzed training outputs and edge cases to raise validation accuracy by 12% on a held-out set.",
+        "Worked with engineers and analysts to review model behaviour, triage errors and plan follow-up experiments."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Machine Learning Engineer",
+      "start": "2024-06",
+      "end": "2026-07",
+      "bullets": [
+        "Designed production ML pipelines on Azure with Docker, Git and MLflow, supporting faster and more repeatable releases.",
+        "Built computer vision and NLP solutions with TensorFlow, pandas and scikit-learn to serve multiple internal use cases.",
+        "Managed data preparation and model training in SQL and Spark, improving processing throughput by 30% and reducing rework.",
+        "Introduced MLOps practices to standardize deployment, monitoring and rollback steps across the team.",
+        "Partnered with platform colleagues to harden cloud workflows and keep service availability above 99.5%."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Agile",
+    "MLflow",
+    "Spark",
+    "TensorFlow",
+    "Computer vision",
+    "Azure",
+    "Docker",
+    "Git",
+    "MLOps",
+    "NLP",
+    "pandas",
+    "scikit-learn",
+    "SQL"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Northmere Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "MSc in Applied Data Science",
+      "school": "Larkhaven School of Computing",
+      "end": "2024"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Arabic (B2)"],
+  "injection": null
+}

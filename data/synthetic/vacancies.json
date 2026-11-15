@@ -1,0 +1,713 @@
+[
+  {
+    "id": "frontend",
+    "title": "Frontend Engineer",
+    "intro": "Join our product team as we build a customer-facing web app for a growing fictional business. You’ll take ownership of UI features from design handoff through to production release.",
+    "requirements": [
+      {
+        "id": "fe-exp",
+        "text": "3+ years of professional frontend development experience",
+        "kind": "must",
+        "tags": ["exp-frontend"],
+        "minYears": 3
+      },
+      {
+        "id": "fe-ts",
+        "text": "At least 2 years of production experience with TypeScript",
+        "kind": "must",
+        "tags": ["typescript"],
+        "minYears": 2
+      },
+      {
+        "id": "fe-framework",
+        "text": "2+ years of hands-on experience with React or Vue or Angular",
+        "kind": "must",
+        "tags": ["react", "vue", "angular"],
+        "minYears": 2
+      },
+      {
+        "id": "fe-html",
+        "text": "Strong foundation in HTML/CSS",
+        "kind": "must",
+        "tags": ["html-css"]
+      },
+      {
+        "id": "fe-api",
+        "text": "Experience working with REST APIs or GraphQL APIs",
+        "kind": "must",
+        "tags": ["rest-api", "graphql"]
+      },
+      {
+        "id": "fe-testing",
+        "text": "Familiarity with frontend testing using Jest or Cypress or Playwright",
+        "kind": "nice",
+        "tags": ["jest", "cypress", "playwright"]
+      },
+      {
+        "id": "fe-state",
+        "text": "Exposure to state management or server-side rendering with Redux or Next.js",
+        "kind": "nice",
+        "tags": ["redux", "nextjs"]
+      },
+      {
+        "id": "fe-a11y",
+        "text": "Knowledge of web accessibility, including WCAG",
+        "kind": "nice",
+        "tags": ["web-accessibility"]
+      },
+      {
+        "id": "fe-git",
+        "text": "Comfortable working with Git workflows",
+        "kind": "nice",
+        "tags": ["git"]
+      }
+    ],
+    "text": "Frontend Engineer\n\nJoin our product team as we build a customer-facing web app for a growing fictional business. You’ll take ownership of UI features from design handoff through to production release.\n\nRequirements\n- 3+ years of professional frontend development experience\n- At least 2 years of production experience with TypeScript\n- 2+ years of hands-on experience with React or Vue or Angular\n- Strong foundation in HTML/CSS\n- Experience working with REST APIs or GraphQL APIs\n\nNice to have\n- Familiarity with frontend testing using Jest or Cypress or Playwright\n- Exposure to state management or server-side rendering with Redux or Next.js\n- Knowledge of web accessibility, including WCAG\n- Comfortable working with Git workflows\n"
+  },
+  {
+    "id": "backend-java",
+    "title": "Backend Engineer (Java)",
+    "intro": "Join a product team building the services that power our hiring platform. You will shape APIs, design data models and help keep a growing microservices landscape reliable and easy to evolve.",
+    "requirements": [
+      {
+        "id": "bj-exp",
+        "text": "3+ years of backend development experience",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 3
+      },
+      {
+        "id": "bj-java",
+        "text": "3+ years of Java experience in production",
+        "kind": "must",
+        "tags": ["java"],
+        "minYears": 3
+      },
+      {
+        "id": "bj-spring",
+        "text": "2+ years of experience with Spring Boot",
+        "kind": "must",
+        "tags": ["spring-boot"],
+        "minYears": 2
+      },
+      {
+        "id": "bj-sql",
+        "text": "Experience with PostgreSQL or MySQL",
+        "kind": "must",
+        "tags": ["postgresql", "mysql"]
+      },
+      {
+        "id": "bj-micro",
+        "text": "Experience designing and operating microservices",
+        "kind": "must",
+        "tags": ["microservices"]
+      },
+      {
+        "id": "bj-hibernate",
+        "text": "Experience with Hibernate",
+        "kind": "nice",
+        "tags": ["hibernate"]
+      },
+      {
+        "id": "bj-messaging",
+        "text": "Experience with Kafka or RabbitMQ",
+        "kind": "nice",
+        "tags": ["kafka", "rabbitmq"]
+      },
+      {
+        "id": "bj-test",
+        "text": "Experience with JUnit for unit testing",
+        "kind": "nice",
+        "tags": ["junit"]
+      },
+      {
+        "id": "bj-docker",
+        "text": "Experience containerising services with Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "bj-cicd",
+        "text": "Experience with CI/CD or GitHub Actions pipelines",
+        "kind": "nice",
+        "tags": ["ci-cd", "github-actions"]
+      }
+    ],
+    "text": "Backend Engineer (Java)\n\nJoin a product team building the services that power our hiring platform. You will shape APIs, design data models and help keep a growing microservices landscape reliable and easy to evolve.\n\nRequirements\n- 3+ years of backend development experience\n- 3+ years of Java experience in production\n- 2+ years of experience with Spring Boot\n- Experience with PostgreSQL or MySQL\n- Experience designing and operating microservices\n\nNice to have\n- Experience with Hibernate\n- Experience with Kafka or RabbitMQ\n- Experience with JUnit for unit testing\n- Experience containerising services with Docker\n- Experience with CI/CD or GitHub Actions pipelines\n"
+  },
+  {
+    "id": "backend-node",
+    "title": "Backend Engineer",
+    "intro": "Join a small, fast-moving product team building the backend for a growing platform. You’ll own the API layer, shape how features are delivered, and work closely with teammates to ship dependable software.",
+    "requirements": [
+      {
+        "id": "bn-exp",
+        "text": "3+ years of backend development experience",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 3
+      },
+      {
+        "id": "bn-node",
+        "text": "2+ years of production experience with Node.js",
+        "kind": "must",
+        "tags": ["nodejs"],
+        "minYears": 2
+      },
+      {
+        "id": "bn-ts",
+        "text": "2+ years of server-side experience with TypeScript",
+        "kind": "must",
+        "tags": ["typescript"],
+        "minYears": 2
+      },
+      {
+        "id": "bn-api",
+        "text": "Experience designing REST APIs or GraphQL APIs",
+        "kind": "must",
+        "tags": ["rest-api", "graphql"]
+      },
+      {
+        "id": "bn-db",
+        "text": "Experience working with PostgreSQL or MySQL or MongoDB",
+        "kind": "must",
+        "tags": ["postgresql", "mysql", "mongodb"]
+      },
+      {
+        "id": "bn-framework",
+        "text": "Familiarity with NestJS or Express",
+        "kind": "nice",
+        "tags": ["nestjs", "express"]
+      },
+      {
+        "id": "bn-cache",
+        "text": "Experience with Redis for caching",
+        "kind": "nice",
+        "tags": ["redis"]
+      },
+      {
+        "id": "bn-docker",
+        "text": "Comfort using Docker for local development and deployment",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "bn-messaging",
+        "text": "Exposure to Kafka or RabbitMQ message queues",
+        "kind": "nice",
+        "tags": ["kafka", "rabbitmq"]
+      },
+      {
+        "id": "bn-tests",
+        "text": "Experience writing automated tests with Jest",
+        "kind": "nice",
+        "tags": ["jest"]
+      }
+    ],
+    "text": "Backend Engineer\n\nJoin a small, fast-moving product team building the backend for a growing platform. You’ll own the API layer, shape how features are delivered, and work closely with teammates to ship dependable software.\n\nRequirements\n- 3+ years of backend development experience\n- 2+ years of production experience with Node.js\n- 2+ years of server-side experience with TypeScript\n- Experience designing REST APIs or GraphQL APIs\n- Experience working with PostgreSQL or MySQL or MongoDB\n\nNice to have\n- Familiarity with NestJS or Express\n- Experience with Redis for caching\n- Comfort using Docker for local development and deployment\n- Exposure to Kafka or RabbitMQ message queues\n- Experience writing automated tests with Jest\n"
+  },
+  {
+    "id": "full-stack",
+    "title": "Full-Stack Engineer",
+    "intro": "Join a product team building customer-facing features from the browser to the backend. You’ll help shape polished interfaces, dependable services, and the data layer that ties everything together.",
+    "requirements": [
+      {
+        "id": "fs-exp-be",
+        "text": "2+ years of backend development experience",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 2
+      },
+      {
+        "id": "fs-exp-fe",
+        "text": "2+ years of frontend development experience",
+        "kind": "must",
+        "tags": ["exp-frontend"],
+        "minYears": 2
+      },
+      {
+        "id": "fs-ts",
+        "text": "TypeScript across the stack",
+        "kind": "must",
+        "tags": ["typescript"]
+      },
+      {
+        "id": "fs-ui",
+        "text": "Experience with a modern UI framework such as React or Vue or Angular",
+        "kind": "must",
+        "tags": ["react", "vue", "angular"]
+      },
+      {
+        "id": "fs-server",
+        "text": "Experience with a server-side language such as Node.js or Java or Python or Go",
+        "kind": "must",
+        "tags": ["nodejs", "java", "python", "go"]
+      },
+      {
+        "id": "fs-db",
+        "text": "Experience with PostgreSQL or MySQL or MongoDB",
+        "kind": "must",
+        "tags": ["postgresql", "mysql", "mongodb"]
+      },
+      {
+        "id": "fs-docker",
+        "text": "Docker for development and deployment",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "fs-ci",
+        "text": "Experience with CI/CD or GitHub Actions",
+        "kind": "nice",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "fs-cloud",
+        "text": "Familiarity with a major cloud provider such as AWS or GCP or Azure",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      {
+        "id": "fs-test",
+        "text": "Experience with Jest or Cypress or Playwright",
+        "kind": "nice",
+        "tags": ["jest", "cypress", "playwright"]
+      }
+    ],
+    "text": "Full-Stack Engineer\n\nJoin a product team building customer-facing features from the browser to the backend. You’ll help shape polished interfaces, dependable services, and the data layer that ties everything together.\n\nRequirements\n- 2+ years of backend development experience\n- 2+ years of frontend development experience\n- TypeScript across the stack\n- Experience with a modern UI framework such as React or Vue or Angular\n- Experience with a server-side language such as Node.js or Java or Python or Go\n- Experience with PostgreSQL or MySQL or MongoDB\n\nNice to have\n- Docker for development and deployment\n- Experience with CI/CD or GitHub Actions\n- Familiarity with a major cloud provider such as AWS or GCP or Azure\n- Experience with Jest or Cypress or Playwright\n"
+  },
+  {
+    "id": "data-engineering",
+    "title": "Data Engineer",
+    "intro": "Join a fictional data platform team that powers analytics and machine learning across the company. In this role, you will build reliable pipelines, shape data for downstream use, and help keep the warehouse dependable.",
+    "requirements": [
+      {
+        "id": "de-exp",
+        "text": "3+ years of experience in data engineering",
+        "kind": "must",
+        "tags": ["exp-data"],
+        "minYears": 3
+      },
+      {
+        "id": "de-python",
+        "text": "3+ years of experience working with Python for data processing",
+        "kind": "must",
+        "tags": ["python"],
+        "minYears": 3
+      },
+      {
+        "id": "de-sql",
+        "text": "3+ years of experience writing advanced SQL",
+        "kind": "must",
+        "tags": ["sql"],
+        "minYears": 3
+      },
+      {
+        "id": "de-orchestration",
+        "text": "Hands-on experience with pipeline tooling such as Airflow, dbt or Spark",
+        "kind": "must",
+        "tags": ["airflow", "dbt", "spark"]
+      },
+      {
+        "id": "de-warehouse",
+        "text": "Experience working with a cloud data warehouse such as Snowflake or BigQuery",
+        "kind": "must",
+        "tags": ["snowflake", "bigquery"]
+      },
+      {
+        "id": "de-streaming",
+        "text": "Exposure to streaming with Kafka or Spark",
+        "kind": "nice",
+        "tags": ["kafka", "spark"]
+      },
+      {
+        "id": "de-modeling",
+        "text": "Experience with data modeling or ETL design",
+        "kind": "nice",
+        "tags": ["data-modeling", "etl"]
+      },
+      {
+        "id": "de-cloud",
+        "text": "Familiarity with a major cloud provider such as AWS, GCP or Azure",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      {
+        "id": "de-docker",
+        "text": "Experience using Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "de-git",
+        "text": "Experience using Git",
+        "kind": "nice",
+        "tags": ["git"]
+      }
+    ],
+    "text": "Data Engineer\n\nJoin a fictional data platform team that powers analytics and machine learning across the company. In this role, you will build reliable pipelines, shape data for downstream use, and help keep the warehouse dependable.\n\nRequirements\n- 3+ years of experience in data engineering\n- 3+ years of experience working with Python for data processing\n- 3+ years of experience writing advanced SQL\n- Hands-on experience with pipeline tooling such as Airflow, dbt or Spark\n- Experience working with a cloud data warehouse such as Snowflake or BigQuery\n\nNice to have\n- Exposure to streaming with Kafka or Spark\n- Experience with data modeling or ETL design\n- Familiarity with a major cloud provider such as AWS, GCP or Azure\n- Experience using Docker\n- Experience using Git\n"
+  },
+  {
+    "id": "ml",
+    "title": "Machine Learning Engineer",
+    "intro": "Join a product-focused AI team at Northstar Labs, where we turn prototypes into reliable production systems. You will work on model training and evaluation, build the services around them, and help keep everything measurable and observable.",
+    "requirements": [
+      {
+        "id": "ml-exp",
+        "text": "2+ years of experience in machine learning",
+        "kind": "must",
+        "tags": ["exp-ml"],
+        "minYears": 2
+      },
+      {
+        "id": "ml-python",
+        "text": "3+ years of Python experience",
+        "kind": "must",
+        "tags": ["python"],
+        "minYears": 3
+      },
+      {
+        "id": "ml-framework",
+        "text": "2+ years building deep learning models with PyTorch or TensorFlow",
+        "kind": "must",
+        "tags": ["pytorch", "tensorflow"],
+        "minYears": 2
+      },
+      {
+        "id": "ml-classic",
+        "text": "Experience with classical machine learning using scikit-learn or pandas",
+        "kind": "must",
+        "tags": ["scikit-learn", "pandas"]
+      },
+      {
+        "id": "ml-domain",
+        "text": "Experience working in NLP, computer vision or LLMs",
+        "kind": "must",
+        "tags": ["nlp", "computer-vision", "llm"]
+      },
+      {
+        "id": "ml-mlops",
+        "text": "Exposure to experiment tracking or MLOps with MLflow",
+        "kind": "nice",
+        "tags": ["mlflow", "mlops"]
+      },
+      {
+        "id": "ml-docker",
+        "text": "Docker experience",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "ml-cloud",
+        "text": "Experience with a major cloud provider such as AWS, GCP or Azure",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      {
+        "id": "ml-sql",
+        "text": "Working knowledge of SQL",
+        "kind": "nice",
+        "tags": ["sql"]
+      },
+      {
+        "id": "ml-git",
+        "text": "Comfort using Git",
+        "kind": "nice",
+        "tags": ["git"]
+      }
+    ],
+    "text": "Machine Learning Engineer\n\nJoin a product-focused AI team at Northstar Labs, where we turn prototypes into reliable production systems. You will work on model training and evaluation, build the services around them, and help keep everything measurable and observable.\n\nRequirements\n- 2+ years of experience in machine learning\n- 3+ years of Python experience\n- 2+ years building deep learning models with PyTorch or TensorFlow\n- Experience with classical machine learning using scikit-learn or pandas\n- Experience working in NLP, computer vision or LLMs\n\nNice to have\n- Exposure to experiment tracking or MLOps with MLflow\n- Docker experience\n- Experience with a major cloud provider such as AWS, GCP or Azure\n- Working knowledge of SQL\n- Comfort using Git\n"
+  },
+  {
+    "id": "platform-devops",
+    "title": "Platform / DevOps Engineer",
+    "intro": "Join a product team that builds and operates the internal platform used by our engineers to ship software. You’ll automate environments, own the delivery pipeline, and help strengthen day-to-day reliability across the stack.",
+    "requirements": [
+      {
+        "id": "pd-exp",
+        "text": "3+ years of experience in DevOps or platform engineering",
+        "kind": "must",
+        "tags": ["exp-devops"],
+        "minYears": 3
+      },
+      {
+        "id": "pd-k8s",
+        "text": "2+ years running Kubernetes in production",
+        "kind": "must",
+        "tags": ["kubernetes"],
+        "minYears": 2
+      },
+      {
+        "id": "pd-iac",
+        "text": "Experience with infrastructure as code such as Terraform or Ansible",
+        "kind": "must",
+        "tags": ["terraform", "ansible"]
+      },
+      {
+        "id": "pd-cloud",
+        "text": "2+ years working with AWS or GCP or Azure",
+        "kind": "must",
+        "tags": ["aws", "gcp", "azure"],
+        "minYears": 2
+      },
+      {
+        "id": "pd-cicd",
+        "text": "Experience building CI/CD or GitHub Actions pipelines",
+        "kind": "must",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "pd-linux",
+        "text": "Experience with Linux or Bash for administration and scripting",
+        "kind": "must",
+        "tags": ["linux", "bash"]
+      },
+      {
+        "id": "pd-docker",
+        "text": "Hands-on experience with Docker",
+        "kind": "must",
+        "tags": ["docker"]
+      },
+      {
+        "id": "pd-observability",
+        "text": "Familiarity with Prometheus or Grafana",
+        "kind": "nice",
+        "tags": ["prometheus", "grafana"]
+      },
+      {
+        "id": "pd-helm",
+        "text": "Experience with Helm",
+        "kind": "nice",
+        "tags": ["helm"]
+      },
+      {
+        "id": "pd-script",
+        "text": "Python or Go for tooling",
+        "kind": "nice",
+        "tags": ["python", "go"]
+      }
+    ],
+    "text": "Platform / DevOps Engineer\n\nJoin a product team that builds and operates the internal platform used by our engineers to ship software. You’ll automate environments, own the delivery pipeline, and help strengthen day-to-day reliability across the stack.\n\nRequirements\n- 3+ years of experience in DevOps or platform engineering\n- 2+ years running Kubernetes in production\n- Experience with infrastructure as code such as Terraform or Ansible\n- 2+ years working with AWS or GCP or Azure\n- Experience building CI/CD or GitHub Actions pipelines\n- Experience with Linux or Bash for administration and scripting\n- Hands-on experience with Docker\n\nNice to have\n- Familiarity with Prometheus or Grafana\n- Experience with Helm\n- Python or Go for tooling\n"
+  },
+  {
+    "id": "mobile",
+    "title": "Mobile Engineer",
+    "intro": "Join our product team building mobile apps for candidates and recruiters. You’ll help deliver polished app features for mobile users and keep releases running smoothly.",
+    "requirements": [
+      {
+        "id": "mo-exp",
+        "text": "3+ years of mobile development experience",
+        "kind": "must",
+        "tags": ["exp-mobile"],
+        "minYears": 3
+      },
+      {
+        "id": "mo-platform",
+        "text": "2+ years building production apps on Android or iOS or React Native or Flutter",
+        "kind": "must",
+        "tags": ["android", "ios", "react-native", "flutter"],
+        "minYears": 2
+      },
+      {
+        "id": "mo-lang",
+        "text": "Hands-on experience with Kotlin or Swift or Dart or TypeScript",
+        "kind": "must",
+        "tags": ["kotlin", "swift", "dart", "typescript"]
+      },
+      {
+        "id": "mo-ui",
+        "text": "Experience with a modern declarative UI toolkit such as Jetpack Compose or SwiftUI or React Native or Flutter",
+        "kind": "must",
+        "tags": ["jetpack-compose", "swiftui", "react-native", "flutter"]
+      },
+      {
+        "id": "mo-api",
+        "text": "Experience integrating REST APIs",
+        "kind": "must",
+        "tags": ["rest-api"]
+      },
+      {
+        "id": "mo-git",
+        "text": "Comfortable working with Git",
+        "kind": "must",
+        "tags": ["git"]
+      },
+      {
+        "id": "mo-test",
+        "text": "Experience with unit testing using JUnit or Jest",
+        "kind": "nice",
+        "tags": ["junit", "jest"]
+      },
+      {
+        "id": "mo-cicd",
+        "text": "Exposure to mobile CI/CD",
+        "kind": "nice",
+        "tags": ["ci-cd"]
+      },
+      {
+        "id": "mo-graphql",
+        "text": "Experience with GraphQL clients",
+        "kind": "nice",
+        "tags": ["graphql"]
+      },
+      {
+        "id": "mo-agile",
+        "text": "Experience working in Agile teams",
+        "kind": "nice",
+        "tags": ["agile"]
+      }
+    ],
+    "text": "Mobile Engineer\n\nJoin our product team building mobile apps for candidates and recruiters. You’ll help deliver polished app features for mobile users and keep releases running smoothly.\n\nRequirements\n- 3+ years of mobile development experience\n- 2+ years building production apps on Android or iOS or React Native or Flutter\n- Hands-on experience with Kotlin or Swift or Dart or TypeScript\n- Experience with a modern declarative UI toolkit such as Jetpack Compose or SwiftUI or React Native or Flutter\n- Experience integrating REST APIs\n- Comfortable working with Git\n\nNice to have\n- Experience with unit testing using JUnit or Jest\n- Exposure to mobile CI/CD\n- Experience with GraphQL clients\n- Experience working in Agile teams\n"
+  },
+  {
+    "id": "qa-automation",
+    "title": "QA Automation Engineer",
+    "intro": "Join a fictional product team focused on shipping a reliable web application for our customers. In this role, you will shape the automated quality strategy, grow the test suites, and keep them dependable in the delivery pipeline.",
+    "requirements": [
+      {
+        "id": "qa-exp",
+        "text": "3+ years of experience in QA automation",
+        "kind": "must",
+        "tags": ["exp-qa"],
+        "minYears": 3
+      },
+      {
+        "id": "qa-ui",
+        "text": "2+ years using Selenium or Cypress or Playwright for UI automation",
+        "kind": "must",
+        "tags": ["selenium", "cypress", "playwright"],
+        "minYears": 2
+      },
+      {
+        "id": "qa-lang",
+        "text": "Experience with JavaScript or TypeScript or Python or Java for test scripting",
+        "kind": "must",
+        "tags": ["javascript", "typescript", "python", "java"]
+      },
+      {
+        "id": "qa-framework",
+        "text": "Experience building test automation frameworks",
+        "kind": "must",
+        "tags": ["test-automation"]
+      },
+      {
+        "id": "qa-api",
+        "text": "Experience testing REST APIs with Postman or REST",
+        "kind": "must",
+        "tags": ["postman", "rest-api"]
+      },
+      {
+        "id": "qa-cicd",
+        "text": "Experience running test suites in CI/CD or GitHub Actions",
+        "kind": "must",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "qa-pytest",
+        "text": "Experience with pytest",
+        "kind": "nice",
+        "tags": ["pytest"]
+      },
+      {
+        "id": "qa-perf",
+        "text": "Experience with performance testing",
+        "kind": "nice",
+        "tags": ["performance-testing"]
+      },
+      {
+        "id": "qa-bdd",
+        "text": "Experience with Cucumber for BDD",
+        "kind": "nice",
+        "tags": ["cucumber"]
+      },
+      {
+        "id": "qa-agile",
+        "text": "Experience working in Agile teams",
+        "kind": "nice",
+        "tags": ["agile"]
+      },
+      {
+        "id": "qa-docker",
+        "text": "Experience with Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      }
+    ],
+    "text": "QA Automation Engineer\n\nJoin a fictional product team focused on shipping a reliable web application for our customers. In this role, you will shape the automated quality strategy, grow the test suites, and keep them dependable in the delivery pipeline.\n\nRequirements\n- 3+ years of experience in QA automation\n- 2+ years using Selenium or Cypress or Playwright for UI automation\n- Experience with JavaScript or TypeScript or Python or Java for test scripting\n- Experience building test automation frameworks\n- Experience testing REST APIs with Postman or REST\n- Experience running test suites in CI/CD or GitHub Actions\n\nNice to have\n- Experience with pytest\n- Experience with performance testing\n- Experience with Cucumber for BDD\n- Experience working in Agile teams\n- Experience with Docker\n"
+  },
+  {
+    "id": "security",
+    "title": "Security Engineer",
+    "intro": "Join a fictional product team focused on protecting our software and infrastructure. In this role, you will assess designs, test applications, strengthen cloud environments and help other teams deliver securely.",
+    "requirements": [
+      {
+        "id": "se-exp",
+        "text": "3+ years in security engineering",
+        "kind": "must",
+        "tags": ["exp-security"],
+        "minYears": 3
+      },
+      {
+        "id": "se-owasp",
+        "text": "Experience with application security and the OWASP Top 10",
+        "kind": "must",
+        "tags": ["owasp"]
+      },
+      {
+        "id": "se-pentest",
+        "text": "Hands-on experience with penetration testing or threat modeling",
+        "kind": "must",
+        "tags": ["penetration-testing", "threat-modeling"]
+      },
+      {
+        "id": "se-iam",
+        "text": "Strong understanding of IAM or OAuth for identity and access management",
+        "kind": "must",
+        "tags": ["iam", "oauth"]
+      },
+      {
+        "id": "se-cloud",
+        "text": "Cloud security experience with AWS or Azure or GCP",
+        "kind": "must",
+        "tags": ["aws", "azure", "gcp"]
+      },
+      {
+        "id": "se-linux",
+        "text": "Experience hardening Linux systems",
+        "kind": "must",
+        "tags": ["linux"]
+      },
+      {
+        "id": "se-siem",
+        "text": "Exposure to SIEM and log analysis",
+        "kind": "nice",
+        "tags": ["siem"]
+      },
+      {
+        "id": "se-script",
+        "text": "Scripting skills in Python or Bash",
+        "kind": "nice",
+        "tags": ["python", "bash"]
+      },
+      {
+        "id": "se-crypto",
+        "text": "Familiarity with applied cryptography and TLS",
+        "kind": "nice",
+        "tags": ["cryptography"]
+      },
+      {
+        "id": "se-burp",
+        "text": "Working knowledge of Burp Suite",
+        "kind": "nice",
+        "tags": ["burp-suite"]
+      },
+      {
+        "id": "se-ci",
+        "text": "Experience adding security checks in CI/CD",
+        "kind": "nice",
+        "tags": ["ci-cd"]
+      }
+    ],
+    "text": "Security Engineer\n\nJoin a fictional product team focused on protecting our software and infrastructure. In this role, you will assess designs, test applications, strengthen cloud environments and help other teams deliver securely.\n\nRequirements\n- 3+ years in security engineering\n- Experience with application security and the OWASP Top 10\n- Hands-on experience with penetration testing or threat modeling\n- Strong understanding of IAM or OAuth for identity and access management\n- Cloud security experience with AWS or Azure or GCP\n- Experience hardening Linux systems\n\nNice to have\n- Exposure to SIEM and log analysis\n- Scripting skills in Python or Bash\n- Familiarity with applied cryptography and TLS\n- Working knowledge of Burp Suite\n- Experience adding security checks in CI/CD\n"
+  }
+]

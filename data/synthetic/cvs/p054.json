@@ -1,0 +1,65 @@
+{
+  "personaId": "p054",
+  "language": "en",
+  "name": "Samuel Holm",
+  "email": "samuel-holm@example.com",
+  "githubUrl": null,
+  "headline": "Backend and API Engineer",
+  "location": "Oulu, Finland",
+  "summary": "Backend and API engineer who builds reliable services, data flows and internal tooling across cloud platforms and distributed systems. Comfortable working across service boundaries, improving throughput and keeping delivery predictable in fast-moving product teams.",
+  "roles": [
+    {
+      "employer": "Northgrove Networks",
+      "title": "Backend Engineer",
+      "start": "2023-08",
+      "end": "2025-03",
+      "bullets": [
+        "Built service components in C#, Java and Scala on Azure to support customer-facing workflows and reduce manual handling by 34%.",
+        "Deployed backend workloads on Kubernetes and tuned resource usage so peak traffic stayed stable during a 2-month rollout.",
+        "Improved fault handling across the backend by introducing clearer retries and state checks, cutting incident follow-up time by 27%.",
+        "Partnered with product and operations colleagues to refine interfaces between services and keep releases on schedule."
+      ]
+    },
+    {
+      "employer": "Ostrava Labs",
+      "title": "API Engineer",
+      "start": "2025-03",
+      "end": null,
+      "bullets": [
+        "Designed and delivered Java services with Kafka and PostgreSQL, shaping the event flow for a platform used by 18 internal teams.",
+        "Strengthened release confidence by expanding JUnit coverage around critical business rules and integration points.",
+        "Reviewed system design decisions for new APIs, aligning the service model with growth targets and reducing rework in planning by 22%.",
+        "Standardized build steps with Maven and kept delivery tasks predictable across parallel workstreams."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Microservices",
+    "Spring Boot",
+    "Azure",
+    "C#",
+    "Java",
+    "Kubernetes",
+    "Scala",
+    "JUnit",
+    "Kafka",
+    "Maven",
+    "PostgreSQL",
+    "System design"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Engineering",
+      "school": "Alderfjord Institute of Technology",
+      "end": "2023"
+    },
+    {
+      "degree": "Diploma in Applied Software Systems",
+      "school": "Merevale Technical College",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Finnish (B2)"],
+  "injection": null
+}
