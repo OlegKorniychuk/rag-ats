@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
@@ -132,6 +133,22 @@ describe('Auth (e2e)', () => {
       await request(testApp.app.getHttpServer())
         .get('/auth/me')
         .set('Cookie', 'access_token=not-a-real-jwt')
+        .expect(401);
+    });
+
+    it('rejects a validly signed token for a recruiter that does not exist', async () => {
+      const token = testApp.app
+        .get(JwtService)
+        .sign({ sub: randomUUID(), email: uniqueEmail() });
+      const cookie = `access_token=${token}`;
+
+      await request(testApp.app.getHttpServer())
+        .get('/auth/me')
+        .set('Cookie', cookie)
+        .expect(401);
+      await request(testApp.app.getHttpServer())
+        .get('/vacancies')
+        .set('Cookie', cookie)
         .expect(401);
     });
   });

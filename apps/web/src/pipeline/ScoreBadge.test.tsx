@@ -56,6 +56,47 @@ describe('ScoreBadge', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Waiting for CV');
   });
 
+  it('keeps the spinner for a score waiting on a parse that is still running', () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ waitingForParse: true })}
+        parseStatus="parsing"
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button', {
+      name: 'Fit score: Waiting for CV',
+    });
+    expect(badge).toHaveTextContent('Waiting for CV');
+    expect(badge.querySelector('[role="progressbar"]')).not.toBeNull();
+  });
+
+  it('shows a static chip when the score waits on a failed parse', () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ waitingForParse: true })}
+        parseStatus="failed"
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button', {
+      name: 'Fit score: waiting for CV (parse failed)',
+    });
+    expect(badge).toHaveTextContent('Waiting for CV (parse failed)');
+    expect(badge.querySelector('[role="progressbar"]')).toBeNull();
+  });
+
+  it('ignores a failed parse when the score is not waiting for it', () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ status: 'scoring' })}
+        parseStatus="failed"
+        onClick={() => undefined}
+      />,
+    );
+    expect(screen.getByRole('button')).toHaveTextContent('Scoring…');
+  });
+
   it('keeps the old number while a stale score is being recomputed', () => {
     render(
       <ScoreBadge
@@ -111,6 +152,50 @@ describe('ScoreBadge', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Score failed');
   });
 
+  it('keeps the previous number, greyed out, when a rescore failed', async () => {
+    render(
+      <ScoreBadge
+        score={makeScore({
+          status: 'failed',
+          error: 'boom',
+          stale: true,
+          result: result(74),
+        })}
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button', {
+      name: 'Fit score 74 of 100 (last rescore failed)',
+    });
+    expect(badge).toHaveTextContent('74');
+    expect(badge).not.toHaveTextContent('Score failed');
+    expect(badge).toHaveClass('MuiChip-colorError');
+    expect(
+      badge.querySelector('[data-testid="ErrorOutlinedIcon"]'),
+    ).not.toBeNull();
+    expect(badge.querySelector('[role="progressbar"]')).toBeNull();
+    expect(badge).toHaveStyle({ opacity: '0.6' });
+
+    await userEvent.hover(badge);
+    expect(await screen.findByRole('tooltip')).toHaveTextContent(
+      'Last rescore failed — showing the previous score',
+    );
+  });
+
+  it('shows no marker or tooltip for a failed score without a result', async () => {
+    render(
+      <ScoreBadge
+        score={makeScore({ status: 'failed', error: 'boom' })}
+        onClick={() => undefined}
+      />,
+    );
+    const badge = screen.getByRole('button', { name: 'Fit score failed' });
+    expect(badge).toHaveClass('MuiChip-colorError');
+    expect(badge.querySelector('[data-testid="ErrorOutlinedIcon"]')).toBeNull();
+    await userEvent.hover(badge);
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+
   it('calls onClick without bubbling to the parent', async () => {
     const onClick = vi.fn();
     const onParentClick = vi.fn();
@@ -144,6 +229,34 @@ describe('ScoreBadge', () => {
       expect(badge).toHaveTextContent('82');
       expect(screen.queryByRole('button')).not.toBeInTheDocument();
       expect(badge.tagName).not.toBe('BUTTON');
+    });
+
+    it('shows the previous number for a failed rescore', async () => {
+      render(
+        <ScoreBadge
+          score={makeScore({
+            status: 'failed',
+            stale: true,
+            result: result(74),
+          })}
+        />,
+      );
+      const badge = screen.getByRole('img', {
+        name: 'Fit score 74 of 100 (last rescore failed)',
+      });
+      expect(badge).toHaveTextContent('74');
+      expect(badge).toHaveClass('MuiChip-colorError');
+      await userEvent.hover(badge);
+      expect(await screen.findByRole('tooltip')).toHaveTextContent(
+        'Last rescore failed — showing the previous score',
+      );
+    });
+
+    it('keeps "Score failed" when there is no previous result', () => {
+      render(<ScoreBadge score={makeScore({ status: 'failed' })} />);
+      expect(
+        screen.getByRole('img', { name: 'Fit score failed' }),
+      ).toHaveTextContent('Score failed');
     });
 
     it('keeps the in-flight and waiting states', () => {

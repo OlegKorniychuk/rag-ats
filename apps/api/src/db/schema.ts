@@ -128,6 +128,9 @@ export const cvDocuments = pgTable(
     sizeBytes: integer('size_bytes').notNull(),
     content: bytea('content').notNull(),
     text: text('text').notNull(),
+    // hex SHA-256 of `content`; nullable only so the migration can backfill
+    // existing rows, the app always writes it
+    contentSha256: text('content_sha256'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (t) => [index('cv_documents_candidate_id_idx').on(t.candidateId)],
@@ -167,6 +170,9 @@ export const applicationScores = pgTable('application_scores', {
     .references(() => applications.id, { onDelete: 'cascade' }),
   status: scoreStatusEnum('status').notNull().default('pending'),
   error: text('error'),
+  // internal diagnosis of a failure (e.g. the rejected quotes of a grounding
+  // failure); never mapped into the API. Kept until a new outcome replaces it.
+  failureDetails: jsonb('failure_details').$type<string[]>(),
   // the last good score; kept while a rescore is pending
   result: jsonb('result').$type<ScoreResult>(),
   // what `result` was computed from, to derive staleness

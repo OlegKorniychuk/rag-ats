@@ -1,8 +1,13 @@
 import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { CV_MAX_SIZE_BYTES } from '../src/cv/cv.constants.js';
+import { CV_PROFILE_SCHEMA_NAME } from '../src/llm/cv-profile.schema.js';
 import { server } from './msw/server.js';
-import { openaiProfileHandler } from './msw/openai.handlers.js';
+import {
+  captureOpenaiRequests,
+  openaiProfileHandler,
+  openaiRefusalHandler,
+} from './msw/openai.handlers.js';
 import { applyWithCv, fixtureBytes, fixturePath } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 
@@ -12,12 +17,20 @@ function uniqueEmail(): string {
 
 describe('Apply (e2e)', () => {
   let testApp: TestApp;
+  // counts CV parse calls only (scoring and embedding use other requests)
+  const parseCapture = captureOpenaiRequests(CV_PROFILE_SCHEMA_NAME);
 
   beforeAll(async () => {
     testApp = await createTestApp();
+    server.events.on('request:start', parseCapture.listener);
   }, 60_000);
 
+  afterEach(() => {
+    parseCapture.bodies.length = 0;
+  });
+
   afterAll(async () => {
+    server.events.removeListener('request:start', parseCapture.listener);
     await closeTestApp(testApp);
   });
 
@@ -223,6 +236,189 @@ describe('Apply (e2e)', () => {
         where: { candidateId: before.id },
       });
       expect(applications).toHaveLength(2);
+    });
+
+    describe('repeat applicant re-sending a CV', () => {
+      async function waitForCandidateStatus(
+        candidateId: string,
+        status: 'parsed' | 'failed',
+      ) {
+        const deadline = Date.now() + 10_000;
+        for (;;) {
+          const row = await testApp.testDb.db.query.candidates.findFirst({
+            where: { id: candidateId },
+          });
+          if (row?.parseStatus === status) return row;
+          if (Date.now() > deadline) {
+            throw new Error(
+              `Timed out waiting for '${status}'; last status: ${row?.parseStatus}`,
+            );
+          }
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
+
+      async function waitForScored(applicationId: string) {
+        const deadline = Date.now() + 15_000;
+        for (;;) {
+          const score =
+            await testApp.testDb.db.query.applicationScores.findFirst({
+              where: { applicationId },
+            });
+          if (score?.status === 'scored') return score;
+          if (Date.now() > deadline) {
+            throw new Error(
+              `Timed out waiting for scored; last status: ${score?.status}`,
+            );
+          }
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
+
+      async function applicationFor(vacancyId: string, candidateId: string) {
+        const row = await testApp.testDb.db.query.applications.findFirst({
+          where: { vacancyId, candidateId },
+        });
+        expect(row).toBeDefined();
+        return row!;
+      }
+
+      // first application, parsed to completion, then the capture is cleared
+      async function parsedCandidate(
+        fields: { email: string; githubUrl?: string },
+        fixture = 'cv-text.pdf',
+      ) {
+        const first = await openVacancy();
+        await applyWithCv(
+          testApp.app,
+          first.applyToken,
+          { name: 'Jane Applicant', ...fields },
+          fixture,
+        ).expect(201);
+        const [candidate] = await candidateRows(fields.email);
+        await waitForCandidateStatus(candidate.id, 'parsed');
+        parseCapture.bodies.length = 0;
+        return candidate;
+      }
+
+      it('reuses the CV and skips the parse for an identical PDF and unchanged GitHub URL', async () => {
+        const email = uniqueEmail();
+        const githubUrl = 'https://github.com/jane';
+        const candidate = await parsedCandidate({ email, githubUrl });
+        const before = await cvRows(candidate.id);
+        const second = await openVacancy();
+
+        // same bytes under a different file name: the hash decides, not the name
+        await applyWithCv(
+          testApp.app,
+          second.applyToken,
+          { name: 'Jane Renamed', email, githubUrl },
+          'cv-text.pdf',
+          'renamed.pdf',
+        ).expect(201);
+
+        const afterApply = await candidateRows(email);
+        expect(afterApply[0]).toMatchObject({
+          id: candidate.id,
+          name: 'Jane Renamed',
+          parseStatus: 'parsed',
+        });
+        const application = await applicationFor(second.id, candidate.id);
+        await waitForScored(application.id);
+
+        const cvs = await cvRows(candidate.id);
+        expect(cvs.map((c) => c.id)).toEqual(before.map((c) => c.id));
+        expect(cvs[0].contentSha256).toMatch(/^[0-9a-f]{64}$/);
+        expect(parseCapture.bodies).toHaveLength(0);
+        expect((await candidateRows(email))[0].parseStatus).toBe('parsed');
+      });
+
+      it('also reuses the CV when the GitHub URL is omitted', async () => {
+        const email = uniqueEmail();
+        const candidate = await parsedCandidate({
+          email,
+          githubUrl: 'https://github.com/jane',
+        });
+        const second = await openVacancy();
+
+        await applyWithCv(testApp.app, second.applyToken, {
+          name: 'Jane Applicant',
+          email,
+        }).expect(201);
+
+        const application = await applicationFor(second.id, candidate.id);
+        await waitForScored(application.id);
+        expect(await cvRows(candidate.id)).toHaveLength(1);
+        expect(parseCapture.bodies).toHaveLength(0);
+      });
+
+      it('stores a new CV and re-parses when the PDF differs', async () => {
+        const email = uniqueEmail();
+        const candidate = await parsedCandidate({ email });
+        const second = await openVacancy();
+
+        await applyWithCv(
+          testApp.app,
+          second.applyToken,
+          { name: 'Jane Applicant', email },
+          'cv-text-2.pdf',
+        ).expect(201);
+
+        const application = await applicationFor(second.id, candidate.id);
+        await waitForScored(application.id);
+
+        const cvs = await cvRows(candidate.id);
+        expect(cvs).toHaveLength(2);
+        expect(new Set(cvs.map((c) => c.contentSha256)).size).toBe(2);
+        expect(parseCapture.bodies).toHaveLength(1);
+      });
+
+      it('re-parses an identical PDF when the GitHub URL changed', async () => {
+        const email = uniqueEmail();
+        const candidate = await parsedCandidate({
+          email,
+          githubUrl: 'https://github.com/jane',
+        });
+        const second = await openVacancy();
+
+        await applyWithCv(testApp.app, second.applyToken, {
+          name: 'Jane Applicant',
+          email,
+          githubUrl: 'https://github.com/jane-new',
+        }).expect(201);
+
+        const application = await applicationFor(second.id, candidate.id);
+        await waitForScored(application.id);
+
+        expect(await cvRows(candidate.id)).toHaveLength(2);
+        expect(parseCapture.bodies).toHaveLength(1);
+      });
+
+      it('re-parses an identical PDF when the previous parse failed', async () => {
+        const email = uniqueEmail();
+        server.use(openaiRefusalHandler());
+        const first = await openVacancy();
+        await applyWithCv(testApp.app, first.applyToken, {
+          name: 'Jane Applicant',
+          email,
+        }).expect(201);
+        const [candidate] = await candidateRows(email);
+        await waitForCandidateStatus(candidate.id, 'failed');
+        server.resetHandlers();
+        parseCapture.bodies.length = 0;
+        const second = await openVacancy();
+
+        await applyWithCv(testApp.app, second.applyToken, {
+          name: 'Jane Applicant',
+          email,
+        }).expect(201);
+
+        await waitForCandidateStatus(candidate.id, 'parsed');
+        const application = await applicationFor(second.id, candidate.id);
+        await waitForScored(application.id);
+        expect(await cvRows(candidate.id)).toHaveLength(2);
+        expect(parseCapture.bodies).toHaveLength(1);
+      });
     });
 
     it('stores a UTF-8 filename intact', async () => {

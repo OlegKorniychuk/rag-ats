@@ -52,9 +52,18 @@ export interface ScoresRepository {
    * `scoring` is allowed so a job recovered after a crash can re-run.
    */
   markScoring(applicationId: string): Promise<boolean>;
-  /** Stores the result and marks the score `scored` (clearing the error). */
+  /** Stores the result and marks the score `scored` (clearing the error and failure details). */
   saveResult(applicationId: string, saved: SavedScore): Promise<void>;
-  markFailed(applicationId: string, error: string): Promise<void>;
+  /**
+   * `details` (internal, never exposed) explain the failure for diagnosis; null
+   * when there are none. A reset to `pending` keeps them until the next
+   * outcome (`saveResult` / `markFailed`) overwrites them.
+   */
+  markFailed(
+    applicationId: string,
+    error: string,
+    details?: readonly string[] | null,
+  ): Promise<void>;
   /** Back to `pending` with the error cleared; the last result is kept. */
   resetToPending(applicationId: string): Promise<void>;
   /**

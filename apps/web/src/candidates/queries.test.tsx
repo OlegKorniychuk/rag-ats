@@ -6,6 +6,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import type {
   ApplicationScore,
   CandidateApplicationResponse,
+  CandidateResponse,
 } from '@rag-ats/shared';
 import { server } from '../test/server';
 import {
@@ -110,5 +111,39 @@ describe('candidate queries', () => {
 
     await new Promise((resolve) => setTimeout(resolve, 200));
     expect(calls).toBe(2);
+  });
+
+  it('useCandidateApplications stops polling a score waiting on a failed parse', async () => {
+    let calls = 0;
+    server.use(
+      http.get(`${baseUrl}/candidates/c1/applications`, () => {
+        calls += 1;
+        return HttpResponse.json([
+          {
+            ...application('pending'),
+            score: { ...score('pending'), waitingForParse: true },
+          },
+        ]);
+      }),
+    );
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    queryClient.setQueryData(candidateKeys.detail('c1'), {
+      id: 'c1',
+      parseStatus: 'failed',
+    } as CandidateResponse);
+
+    const { result } = renderHook(() => useCandidateApplications('c1'), {
+      wrapper: ({ children }: { children: ReactNode }) => (
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      ),
+    });
+
+    await waitFor(() => expect(result.current.data).toHaveLength(1));
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    expect(calls).toBe(1);
   });
 });

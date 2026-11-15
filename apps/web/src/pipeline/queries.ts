@@ -13,7 +13,11 @@ import {
   hasParseInFlight,
   PARSE_POLL_INTERVAL_MS,
 } from '../candidates/parseStatus';
-import { hasScoreInFlight, SCORE_POLL_INTERVAL_MS } from './score';
+import {
+  BOARD_IDLE_POLL_INTERVAL_MS,
+  hasScoreInFlight,
+  SCORE_POLL_INTERVAL_MS,
+} from './score';
 import { candidateKeys } from '../candidates/queries';
 import { vacancyKeys } from '../vacancies/queries';
 
@@ -26,7 +30,9 @@ export function useVacancyApplications(vacancyId: string) {
       if (hasParseInFlight(data?.map((a) => a.candidate))) {
         return PARSE_POLL_INTERVAL_MS;
       }
-      return hasScoreInFlight(data) ? SCORE_POLL_INTERVAL_MS : false;
+      return hasScoreInFlight(data)
+        ? SCORE_POLL_INTERVAL_MS
+        : BOARD_IDLE_POLL_INTERVAL_MS;
     },
   });
 }

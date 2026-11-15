@@ -72,6 +72,27 @@ describe('toApplicationScore', () => {
     ).toBeNull();
   });
 
+  it('never maps failure details (internal columns stay out of the API shape)', () => {
+    const row = {
+      ...rowWith(null),
+      status: 'failed' as const,
+      error: 'Could not ground the score in the CV',
+      failureDetails: ['Criterion c1: quote "secret CV text" is not verbatim'],
+    };
+
+    const score = toApplicationScore(row, context);
+
+    expect(score).not.toHaveProperty('failureDetails');
+    expect(JSON.stringify(score)).not.toContain('secret CV text');
+    expect(Object.keys(score).sort()).toEqual([
+      'error',
+      'result',
+      'stale',
+      'status',
+      'waitingForParse',
+    ]);
+  });
+
   it('leaves a missing row or null result as it was', () => {
     expect(toApplicationScore(undefined, context).result).toBeNull();
     expect(toApplicationScore(rowWith(null), context).result).toBeNull();

@@ -18,6 +18,9 @@ import {
   ApplicationScorer,
   LlmGroundingError,
   LlmScoreError,
+  MAX_GROUNDING_PROBLEMS,
+  MAX_GROUNDING_PROBLEM_CHARS,
+  capProblems,
   type ScoringCriterion,
 } from './application-scorer.js';
 import { LlmClient } from './llm-client.js';
@@ -232,6 +235,62 @@ describe('ApplicationScorer', () => {
       message: 'Could not ground the score in the CV',
     });
     expect(capture.bodies).toHaveLength(2); // one retry only
+  });
+
+  it('carries the second attempt’s problems on the LlmGroundingError, and keeps them out of the log', async () => {
+    const warn = jest.spyOn(Logger.prototype, 'warn');
+    server.use(
+      sequence([
+        fabricatedScoreResponse(IDS),
+        // c3 missing, c1/c2 fabricated: differs from the first attempt
+        validScoreResponse(['c1', 'c2'], {
+          source: 'cv',
+          text: 'Led a team of 40 engineers at Imaginary Corp Ltd',
+        }),
+      ]),
+    );
+
+    const error = await makeScorer()
+      .score({ criteria: CRITERIA, cvText: CV_TEXT })
+      .catch((e: unknown) => e);
+
+    expect(error).toBeInstanceOf(LlmGroundingError);
+    const problems = (error as LlmGroundingError).problems;
+    expect(problems).toContain('Criterion c3 is missing');
+    expect(problems.some((p) => p.includes('Imaginary Corp'))).toBe(true);
+    expect(problems).toHaveLength(3);
+    const logged = warn.mock.calls.map((call) => String(call[0])).join('\n');
+    expect(logged).toContain('problems=3');
+    expect(logged).toContain('details stored on the score row');
+    expect(logged).not.toContain('Imaginary Corp');
+  });
+
+  it('caps the stored problems of a grounding failure', async () => {
+    const response = fabricatedScoreResponse(IDS);
+    // 25 unknown ids: 25 more problems on top of the 3 fabricated quotes
+    for (let i = 0; i < 25; i++) {
+      response.criteria.push({
+        ...response.criteria[0],
+        criterionId: `unknown-${i}`,
+      });
+    }
+    server.use(sequence([response]));
+
+    const error = await makeScorer()
+      .score({ criteria: CRITERIA, cvText: CV_TEXT })
+      .catch((e: unknown) => e);
+
+    expect((error as LlmGroundingError).problems).toHaveLength(
+      MAX_GROUNDING_PROBLEMS,
+    );
+  });
+
+  it('truncates every stored problem to a bounded length', () => {
+    const capped = capProblems(['a'.repeat(2000), 'short']);
+
+    expect(capped[0]).toHaveLength(MAX_GROUNDING_PROBLEM_CHARS);
+    expect(capped[1]).toBe('short');
+    expect(new LlmGroundingError().problems).toEqual([]);
   });
 
   it('retries when criterion ids are missing', async () => {

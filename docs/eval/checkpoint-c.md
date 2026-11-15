@@ -86,6 +86,21 @@ In this small sample the modes agree to within 6 points, in line with `docs/eval
 
 Observed and by design: three criteria scored 0 carry a quote (e.g. Elena's "Mobile Developer (Android, iOS, Flutter)" against the React criterion). The Checkpoint B rule allows one concrete contrary fact for a 0.
 
+## Fixed after the checkpoint
+
+Plan: `docs/plans/stage-2-checkpoint-c-fixes.md`. The six code gaps were fixed in a follow-up PR. Each fix was re-checked live on a migrated copy of this checkpoint's database (`rag_ats_checkpoint_c_fixes`), so the original DB still holds the checkpoint's evidence.
+
+| Gap | Fix                                                                                                                     | Live re-check                                                                                                                      |
+| --- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| G1  | `JwtStrategy.validate` looks the recruiter up and rejects a token whose recruiter is gone                               | `/auth/me` 200 → recruiter row deleted → `/auth/me` and `/vacancies` 401                                                           |
+| G2  | An open board refreshes every 30 s when nothing is in flight                                                            | A curl apply appeared on the open board with no reload; 3 requests in about 90 s                                                   |
+| G3  | `cv_documents.content_sha256`; an identical re-upload by a parsed candidate with an unchanged GitHub URL reuses the CV  | Maya re-applied with the same PDF: still 1 CV, 0 parse calls, other score untouched, new application scored at once                |
+| G6  | A double grounding failure stores its problems in `application_scores.failure_details` (never logged, never in the API) | Covered by unit and integration tests; a non-grounding failure stored `null` live                                                  |
+| G7  | A score behind a failed parse no longer counts as in flight; static "Waiting for CV (parse failed)" chip                | That badge live; the board fell back to the 30 s idle interval instead of 3 s                                                      |
+| G8  | A failed rescore shows the previous score greyed out with "Last rescore failed — showing the previous score"            | An invalid-key rescore of Tomasz: badge "Fit score 97 of 100 (last rescore failed)", the drawer adds "Showing the previous score." |
+
+G4 (full_text ignores GitHub) and G5 (Find matches false positives) stay open for step 11, which measures retrieval and score quality.
+
 ## Caveats
 
 - One run on 8 short fictional CVs; the judgements on search and matches are plausibility checks, not precision/recall (step 11).

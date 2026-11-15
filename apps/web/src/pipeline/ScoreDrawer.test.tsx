@@ -182,6 +182,25 @@ describe('ScoreDrawer', () => {
       makeScore({ status: 'failed', error: 'LLM exploded', result: null }),
     );
     expect(screen.getByRole('alert')).toHaveTextContent('LLM exploded');
+    expect(screen.getByRole('alert')).not.toHaveTextContent(
+      'Showing the previous score.',
+    );
+    expect(screen.getByRole('button', { name: 'Rescore' })).toBeEnabled();
+    expect(screen.queryByText(/Overall score/)).not.toBeInTheDocument();
+  });
+
+  it('keeps the previous result under the error of a failed rescore', () => {
+    renderDrawer(
+      makeScore({ status: 'failed', error: 'Provider down', stale: true }),
+    );
+    const alerts = screen.getAllByRole('alert');
+    expect(alerts).toHaveLength(1);
+    expect(alerts[0]).toHaveTextContent('Provider down');
+    expect(alerts[0]).toHaveTextContent('Showing the previous score.');
+    expect(
+      screen.getByLabelText('Overall score 82 of 100'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/out of date/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Rescore' })).toBeEnabled();
   });
 

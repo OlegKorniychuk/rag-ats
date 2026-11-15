@@ -112,6 +112,7 @@ export class DrizzleScoresRepository implements ScoresRepository {
       .set({
         status: 'scored',
         error: null,
+        failureDetails: null,
         result: saved.result,
         cvDocumentId: saved.cvDocumentId,
         criteriaHash: saved.criteriaHash,
@@ -125,10 +126,19 @@ export class DrizzleScoresRepository implements ScoresRepository {
       .where(eq(applicationScores.applicationId, applicationId));
   }
 
-  async markFailed(applicationId: string, error: string): Promise<void> {
+  async markFailed(
+    applicationId: string,
+    error: string,
+    details?: readonly string[] | null,
+  ): Promise<void> {
     await this.txHost.tx
       .update(applicationScores)
-      .set({ status: 'failed', error, updatedAt: new Date() })
+      .set({
+        status: 'failed',
+        error,
+        failureDetails: details ? [...details] : null,
+        updatedAt: new Date(),
+      })
       .where(eq(applicationScores.applicationId, applicationId));
   }
 

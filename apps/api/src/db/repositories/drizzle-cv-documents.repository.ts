@@ -5,6 +5,7 @@ import { cvDocuments } from '../schema.js';
 import type {
   CvDocumentsRepository,
   CvDocumentSummary,
+  LatestCvIdentity,
   NewCvDocument,
 } from './cv-documents.repository.js';
 
@@ -41,6 +42,17 @@ export class DrizzleCvDocumentsRepository implements CvDocumentsRepository {
     const row = await this.txHost.tx.query.cvDocuments.findFirst({
       where: { candidateId },
       columns: { filename: true, content: true },
+      orderBy: { createdAt: 'desc' },
+    });
+    return row ?? null;
+  }
+
+  async findLatestIdentityByCandidate(
+    candidateId: string,
+  ): Promise<LatestCvIdentity | null> {
+    const row = await this.txHost.tx.query.cvDocuments.findFirst({
+      where: { candidateId },
+      columns: { id: true, contentSha256: true },
       orderBy: { createdAt: 'desc' },
     });
     return row ?? null;

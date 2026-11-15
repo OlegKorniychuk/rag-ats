@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { Global, Module } from '@nestjs/common';
 import { ClsPluginTransactional } from '@nestjs-cls/transactional';
 import { TransactionalAdapterDrizzleOrm } from '@nestjs-cls/transactional-adapter-drizzle-orm';
@@ -170,6 +170,47 @@ describe('CvDocumentsRepository (Testcontainers integration)', () => {
       await cvDocumentsRepository.findLatestContentByCandidate(randomUUID());
 
     expect(found).toBeNull();
+  });
+
+  it('stores the content hash and returns it with the id of the latest CV', async () => {
+    const candidate = await candidatesRepository.create(newCandidate());
+    const hash = (content: Buffer) =>
+      createHash('sha256').update(content).digest('hex');
+    const oldContent = Buffer.from('old-cv');
+    const newContent = Buffer.from('new-cv');
+    await cvDocumentsRepository.create(
+      newCvDocument(candidate.id, {
+        content: oldContent,
+        contentSha256: hash(oldContent),
+        createdAt: new Date('2026-01-01T00:00:00Z'),
+      }),
+    );
+    const newer = await cvDocumentsRepository.create(
+      newCvDocument(candidate.id, {
+        content: newContent,
+        contentSha256: hash(newContent),
+        createdAt: new Date('2026-02-01T00:00:00Z'),
+      }),
+    );
+
+    const latest = await cvDocumentsRepository.findLatestIdentityByCandidate(
+      candidate.id,
+    );
+
+    expect(latest).toEqual({ id: newer.id, contentSha256: hash(newContent) });
+    const [row] = await testDb.pool
+      .query<{ content_sha256: string }>(
+        'SELECT content_sha256 FROM cv_documents WHERE id = $1',
+        [newer.id],
+      )
+      .then((r) => r.rows);
+    expect(row.content_sha256).toBe(hash(newContent));
+  });
+
+  it('findLatestIdentityByCandidate returns null for an unknown candidate', async () => {
+    expect(
+      await cvDocumentsRepository.findLatestIdentityByCandidate(randomUUID()),
+    ).toBeNull();
   });
 
   it('findTextById returns the extracted text, or null when unknown', async () => {
