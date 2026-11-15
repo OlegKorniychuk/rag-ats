@@ -792,7 +792,7 @@
         },
         {
           "employer": "Marlowe & Finch Tech",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2020-10",
           "end": "2022-01",
           "tags": ["ci-cd", "exp-qa", "playwright", "postman"]
@@ -814,7 +814,7 @@
         },
         {
           "employer": "Ashgrove Digital",
-          "title": "Senior Test Automation Engineer",
+          "title": "Senior Software Engineer in Test",
           "start": "2023-01",
           "end": "2025-12",
           "tags": [
@@ -2159,14 +2159,14 @@
       "roles": [
         {
           "employer": "Northgrove Networks",
-          "title": "Junior Test Automation Engineer",
+          "title": "Junior Software Engineer in Test",
           "start": "2020-03",
           "end": "2022-03",
           "tags": ["csharp", "cypress", "exp-qa"]
         },
         {
           "employer": "Brightwater Digital",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2022-04",
           "end": "2023-09",
           "tags": ["exp-qa", "git", "javascript", "junit"]
@@ -3237,7 +3237,7 @@
       "roles": [
         {
           "employer": "Zephyr Foundry",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2025-06",
           "end": null,
           "tags": [
@@ -5692,14 +5692,14 @@
       "roles": [
         {
           "employer": "Emberlight Tech",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2023-04",
           "end": "2023-12",
           "tags": ["exp-qa", "github-actions", "rest-api"]
         },
         {
           "employer": "Pinecrest Cloud",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2024-01",
           "end": "2025-11",
           "tags": [
@@ -6536,7 +6536,7 @@
       "roles": [
         {
           "employer": "Zephyr Foundry",
-          "title": "Test Automation Engineer",
+          "title": "Software Engineer in Test",
           "start": "2020-12",
           "end": "2023-12",
           "tags": [
@@ -6549,7 +6549,7 @@
         },
         {
           "employer": "Juniper Relay",
-          "title": "Senior Test Automation Engineer",
+          "title": "Senior Software Engineer in Test",
           "start": "2024-01",
           "end": "2026-06",
           "tags": [

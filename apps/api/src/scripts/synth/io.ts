@@ -50,12 +50,19 @@ export async function writeJson(path: string, data: unknown): Promise<void> {
 export const loadTaxonomy = (dir: string): Promise<Taxonomy> =>
   readJson<Taxonomy>(join(dir, 'taxonomy.json'));
 
-/** vacancies.json (LLM prose) when present, otherwise the hand-written draft. */
-export async function loadVacancies(dir: string): Promise<VacancySpec[]> {
+/**
+ * vacancies.json (LLM prose) when present, otherwise the hand-written draft;
+ * `{ draft: true }` always reads the draft.
+ */
+export async function loadVacancies(
+  dir: string,
+  options: { draft?: boolean } = {},
+): Promise<VacancySpec[]> {
   const final = join(dir, 'vacancies.json');
-  const path = (await exists(final))
-    ? final
-    : join(dir, 'vacancies.draft.json');
+  const path =
+    options.draft !== true && (await exists(final))
+      ? final
+      : join(dir, 'vacancies.draft.json');
   const data = await readJson<VacancySpec[] | { vacancies: VacancySpec[] }>(
     path,
   );

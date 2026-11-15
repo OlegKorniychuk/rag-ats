@@ -1,4 +1,7 @@
-/** Loads the committed data set for specs. Test helper, not shipped logic. */
+/**
+ * Loads the committed taxonomy and the hand-written vacancy drafts for specs.
+ * Test helper, not shipped logic.
+ */
 import { loadTaxonomy, loadVacancies, SYNTH_DIR } from './io.js';
 import type { Taxonomy, VacancySpec } from './types.js';
 
@@ -11,7 +14,8 @@ export function loadDraftData(): Promise<{
 }> {
   cache ??= Promise.all([
     loadTaxonomy(SYNTH_DIR),
-    loadVacancies(SYNTH_DIR),
+    // always the draft: specs must not depend on generated prose
+    loadVacancies(SYNTH_DIR, { draft: true }),
   ]).then(([taxonomy, vacancies]) => ({ taxonomy, vacancies }));
   return cache;
 }

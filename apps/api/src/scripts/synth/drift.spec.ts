@@ -1,5 +1,6 @@
 import { checkCv, checkGithub, checkVacancy } from './drift.js';
-import { assembleCv, assembleFixture } from './assemble.js';
+import { findTagsIn } from './aliases.js';
+import { assembleCv, assembleFixture, completeSkills } from './assemble.js';
 import { generatePersonas } from './personas.js';
 import { loadDraftData } from './test-data.js';
 import {
@@ -65,6 +66,20 @@ describe('checkCv', () => {
     });
     const { errors } = checkCv(cv, p, taxonomy);
     expect(errors.join('\n')).toContain(`"${label(tag)}" must appear by name`);
+  });
+
+  it('counts an own ambiguous tag without a context cue ("pipelines in R")', () => {
+    const p = personas.find((x) =>
+      x.skills.some((s) => s.tag === 'r' && s.evidence === 'cv_role'),
+    );
+    if (!p) return; // seed-dependent; the generator gives several R personas
+    const cv = cvFor(p);
+    const role = p.roles.findIndex((r) => r.tags.includes('r'));
+    cv.roles[role].bullets = cv.roles[role].bullets.map((b) =>
+      b.replace(/\bR\b/g, 'tools'),
+    );
+    cv.roles[role].bullets.push('Rebuilt the forecasting pipelines in R.');
+    expect(checkCv(cv, p, taxonomy).errors).toEqual([]);
   });
 
   it('only warns when a role mentions a tag the persona has elsewhere', () => {
@@ -288,7 +303,29 @@ describe('checkVacancy', () => {
     }
   });
 
-  it('fails when a requirement drops a tag', () => {
+  it('accepts one named alternative, ambiguous aliases without a cue', () => {
+    const v = vacancies.find((x) => x.id === 'full-stack')!;
+    const out = goodVacancyOutput(v, taxonomy);
+    // the draft names React, Vue and Angular; "in React" has no context cue
+    out.requirements.find((r) => r.id === 'fs-ui')!.text =
+      'Ship polished interfaces in React';
+    expect(checkVacancy(v, out, taxonomy).errors).toEqual([]);
+  });
+
+  it('fails when alternatives are joined with "and"', () => {
+    const v = vacancies.find((x) => x.id === 'data-engineering')!;
+    const out = goodVacancyOutput(v, taxonomy);
+    out.requirements.find((r) => r.id === 'de-orchestration')!.text =
+      'Experience with Airflow, dbt and Spark';
+    expect(checkVacancy(v, out, taxonomy).errors.join('\n')).toContain(
+      'de-orchestration: "Airflow", "dbt", "Spark" are alternatives',
+    );
+    out.requirements.find((r) => r.id === 'de-orchestration')!.text =
+      'Pipeline tooling such as Airflow, dbt or Spark';
+    expect(checkVacancy(v, out, taxonomy).errors).toEqual([]);
+  });
+
+  it('fails when a requirement names none of its alternatives', () => {
     const v = vacancies[0];
     const out = goodVacancyOutput(v, taxonomy);
     const req = v.requirements.find(
@@ -339,5 +376,36 @@ describe('checkVacancy', () => {
     const report = checkVacancy(v, out, taxonomy);
     expect(report.errors).toEqual([]);
     expect(report.warnings.join('\n')).toContain('Kubernetes');
+  });
+});
+
+describe('completeSkills', () => {
+  it('adds every CV-evidenced label the model left out, never github_only', () => {
+    const p =
+      personas.find(
+        (x) =>
+          x.skills.some((s) => s.evidence === 'github_only') &&
+          x.skills.some((s) => s.evidence === 'cv_skills_only'),
+      ) ??
+      personas.find((x) => x.skills.some((s) => s.evidence === 'github_only'))!;
+    const skills = completeSkills([], p, taxonomy);
+    const tags = findTagsIn(skills, taxonomy, { assumeTechContext: true });
+    for (const s of p.skills) {
+      const kind = taxonomy.tags.find((t) => t.tag === s.tag)?.kind;
+      if (kind === 'experience') continue;
+      expect({ tag: s.tag, listed: tags.has(s.tag) }).toEqual({
+        tag: s.tag,
+        listed: s.evidence !== 'github_only',
+      });
+    }
+  });
+
+  it('keeps the model entries and does not duplicate them', () => {
+    const p = personas[0];
+    const first = completeSkills([], p, taxonomy);
+    expect(completeSkills(first, p, taxonomy)).toEqual(first);
+    expect(completeSkills(['Team leadership'], p, taxonomy)[0]).toBe(
+      'Team leadership',
+    );
   });
 });

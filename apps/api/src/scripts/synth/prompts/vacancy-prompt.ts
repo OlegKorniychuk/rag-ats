@@ -31,6 +31,8 @@ Rules:
 - Keep every requirement id and answer once per id, in the given order. Do not add, drop, merge or reorder requirements.
 - Keep the meaning of each requirement: the same technologies, the same must / nice-to-have level, the same number of years.
 - Each requirement text must name every technology listed for it, using the listed spelling or a common alias, and no other technology, language, framework or tool.
+- Several technologies in one requirement are alternatives: any one of them is enough. Join them with "or" ("PostgreSQL or MySQL", "such as Airflow, dbt or Spark"), never with "and".
+- Do not start a requirement with a section label such as "Nice to have:" or "Must have:"; the post adds the headings.
 - When a requirement lists a number of years, write that number as a digit ("3+ years", "at least 2 years").
 - Requirement texts are single short bullets without a leading dash.
 - The title and intro must not name technologies that the requirements do not list.

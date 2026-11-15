@@ -1,3 +1,11 @@
+import { findTags } from './aliases.js';
+import {
+  EMPLOYERS,
+  EXP_TITLES,
+  FULL_STACK_TITLES,
+  GENERIC_TITLES,
+  NON_TECH_TITLES,
+} from './names.js';
 import { computeGroundTruth } from './ground-truth.js';
 import { loadDraftData } from './test-data.js';
 import {
@@ -23,6 +31,30 @@ describe('generatePersonas', () => {
     expect(buildPersonas(taxonomy, vacancies, 2)).not.toEqual(
       buildPersonas(taxonomy, vacancies, 3),
     );
+  });
+
+  it('never names a taxonomy tag in a title, employer or project name', () => {
+    // Code writes these, the drift checks don't see them, and the scorer
+    // reads them: a title like "Test Automation Engineer" would evidence a
+    // tag the spec puts elsewhere (or not at all).
+    const named = (text: string): string[] => [
+      ...findTags(text, taxonomy, { assumeTechContext: true }),
+    ];
+    const pools = [
+      ...Object.values(EXP_TITLES).flat(),
+      ...FULL_STACK_TITLES,
+      ...GENERIC_TITLES,
+      ...NON_TECH_TITLES,
+      ...EMPLOYERS,
+    ];
+    expect(pools.filter((t) => named(t).length > 0)).toEqual([]);
+    const hits = personas.flatMap((p) => [
+      ...p.roles.flatMap((r) =>
+        [r.title, r.employer].map((text) => ({ id: p.id, text })),
+      ),
+      ...p.projects.map((pr) => ({ id: p.id, text: pr.name })),
+    ]);
+    expect(hits.filter((h) => named(h.text).length > 0)).toEqual([]);
   });
 
   it('produces the planned population', () => {

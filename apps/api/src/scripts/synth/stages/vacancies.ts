@@ -26,6 +26,20 @@ import {
 import type { VacancySpec } from '../types.js';
 import { renderVacancyText, validateVacancies } from '../vacancies.js';
 
+/**
+ * The rendered text already has "Requirements" / "Nice to have" headings, so a
+ * leading label the model repeats in a bullet ("Nice to have: Docker") goes.
+ */
+export function stripSectionLabel(text: string): string {
+  const stripped = text
+    .trim()
+    .replace(
+      /^(nice to have|must have|required|requirement|bonus|plus)\s*[:\u2013\u2014-]\s*/i,
+      '',
+    );
+  return stripped.charAt(0).toUpperCase() + stripped.slice(1);
+}
+
 export const VACANCIES_USAGE = `synth vacancies [--force] [--concurrency N] [--max-usd N] [--dry-run]
   Rewrites the prose of vacancies.draft.json (title, intro, requirement text)
   into vacancies.json; ids, kinds, tags and minYears stay as drafted. Skips when
@@ -99,7 +113,10 @@ export async function runVacancies(
               return { ok: false, problems: report.errors };
             }
             const text = new Map(
-              rewrite.requirements.map((r) => [r.id, r.text.trim()]),
+              rewrite.requirements.map((r) => [
+                r.id,
+                stripSectionLabel(r.text),
+              ]),
             );
             const final: VacancySpec = {
               ...draft,

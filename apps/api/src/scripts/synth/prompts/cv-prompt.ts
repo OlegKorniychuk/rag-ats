@@ -58,7 +58,9 @@ const SYSTEM = `You write the content of a realistic CV for a synthetic recruiti
 
 The spec decides which technologies appear where. The CV is checked automatically against it, so follow these rules exactly:
 - For every role, name each listed technology at least once in that role's bullets, spelled as given. For every project, name each listed technology in its description.
-- Technologies marked "skills section only" appear in the skills list and nowhere else (not in bullets, projects, headline, summary or education). The skills list may also repeat technologies from roles and projects.
+- Spread a role's technologies over its bullets the way a real CV does: usually one to three per bullet, inside a sentence about what was built, run or improved. Never list all of a role's technologies in every bullet, and never repeat the same list.
+- Write practices and concepts (microservices, system design, data modeling, accessibility) in natural sentence case; keep product, language, tool and methodology names exactly as given (Agile, Scrum, IAM).
+- Technologies marked "skills section only" appear in the skills list and nowhere else (not in bullets, projects, headline, summary or education). The skills list also names every technology from the roles and projects.
 - Technologies marked "never mention" must not appear anywhere in the CV.
 - Do not name any other technology, programming language, framework, library, database, cloud, tool, methodology or practice. When a bullet needs one that is not listed, use a generic word ("the backend", "a database", "cloud infrastructure", "automated checks"). The user message names common words to avoid.
 - A role with no technologies is not a software role: its bullets describe ordinary duties and results with no technology at all.

@@ -120,7 +120,7 @@ export function goodVacancyOutput(
         id: r.id,
         text:
           labels.length > 0 && unnamed
-            ? `${r.text} (${labels.join(', ')})`
+            ? `${r.text} (e.g. ${labels.join(' or ')})`
             : r.text,
       };
     }),

@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { checkCv } from '../drift.js';
-import { assembleCv } from '../assemble.js';
+import { assembleCv, completeSkills } from '../assemble.js';
 import {
   Budget,
   estimateUsd,
@@ -93,6 +93,7 @@ export async function runCvs(
           (out) => {
             const { cv, problems } = assembleCv(persona, out);
             if (!cv) return { ok: false, problems };
+            cv.skills = completeSkills(cv.skills, persona, taxonomy);
             const report = checkCv(cv, persona, taxonomy);
             return report.errors.length > 0
               ? { ok: false, problems: report.errors }

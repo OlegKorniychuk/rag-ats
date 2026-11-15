@@ -322,7 +322,7 @@
       },
       {
         "id": "de-modeling",
-        "text": "Data modeling and ETL design",
+        "text": "Data modeling or ETL design",
         "kind": "nice",
         "tags": ["data-modeling", "etl"]
       },
@@ -340,7 +340,7 @@
       },
       { "id": "de-git", "text": "Git", "kind": "nice", "tags": ["git"] }
     ],
-    "text": "Data Engineer\n\nBuild the pipelines that feed analytics and machine learning. You will model data, orchestrate batch and streaming jobs and keep the warehouse trustworthy.\n\nRequirements\n- 3+ years in data engineering\n- Python for data processing, 3+ years\n- Advanced SQL, 3+ years\n- Pipeline tooling such as Airflow, dbt or Spark\n- A cloud data warehouse (Snowflake or BigQuery)\n\nNice to have\n- Streaming with Kafka or Spark\n- Data modeling and ETL design\n- A major cloud provider\n- Docker\n- Git\n"
+    "text": "Data Engineer\n\nBuild the pipelines that feed analytics and machine learning. You will model data, orchestrate batch and streaming jobs and keep the warehouse trustworthy.\n\nRequirements\n- 3+ years in data engineering\n- Python for data processing, 3+ years\n- Advanced SQL, 3+ years\n- Pipeline tooling such as Airflow, dbt or Spark\n- A cloud data warehouse (Snowflake or BigQuery)\n\nNice to have\n- Streaming with Kafka or Spark\n- Data modeling or ETL design\n- A major cloud provider\n- Docker\n- Git\n"
   },
   {
     "id": "ml",
@@ -641,7 +641,7 @@
       },
       {
         "id": "se-iam",
-        "text": "Identity and access management (IAM, OAuth)",
+        "text": "Identity and access management (IAM or OAuth)",
         "kind": "must",
         "tags": ["iam", "oauth"]
       },
@@ -688,6 +688,6 @@
         "tags": ["ci-cd"]
       }
     ],
-    "text": "Security Engineer\n\nProtect our product and infrastructure. You will review designs, test applications, harden cloud environments and help teams ship securely.\n\nRequirements\n- 3+ years in security engineering\n- Application security and the OWASP Top 10\n- Penetration testing or threat modeling\n- Identity and access management (IAM, OAuth)\n- Cloud security on AWS, Azure or GCP\n- Linux hardening\n\nNice to have\n- SIEM and log analysis\n- Scripting in Python or Bash\n- Applied cryptography and TLS\n- Burp Suite\n- Security checks in CI/CD\n"
+    "text": "Security Engineer\n\nProtect our product and infrastructure. You will review designs, test applications, harden cloud environments and help teams ship securely.\n\nRequirements\n- 3+ years in security engineering\n- Application security and the OWASP Top 10\n- Penetration testing or threat modeling\n- Identity and access management (IAM or OAuth)\n- Cloud security on AWS, Azure or GCP\n- Linux hardening\n\nNice to have\n- SIEM and log analysis\n- Scripting in Python or Bash\n- Applied cryptography and TLS\n- Burp Suite\n- Security checks in CI/CD\n"
   }
 ]

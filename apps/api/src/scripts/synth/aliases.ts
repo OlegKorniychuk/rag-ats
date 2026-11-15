@@ -213,13 +213,32 @@ function rawMatches(text: string, taxonomy: Taxonomy): Match[] {
   return kept;
 }
 
+export interface FindTagsOptions {
+  /**
+   * Treat the whole text as tech context, so ambiguous aliases need no
+   * context cue (still case-sensitive). For text that is about technology by
+   * construction, such as a vacancy requirement.
+   */
+  assumeTechContext?: boolean;
+}
+
 /** Tags mentioned in `text`. */
-export function findTags(text: string, taxonomy: Taxonomy): Set<string> {
+export function findTags(
+  text: string,
+  taxonomy: Taxonomy,
+  options: FindTagsOptions = {},
+): Set<string> {
   const clean = text.replace(URL_PATTERN, (u) => ' '.repeat(u.length));
   const all = rawMatches(clean, taxonomy);
   const tags = new Set<string>();
   for (const m of all) {
-    if (!m.needsContext || inTechContext(clean, m, all)) tags.add(m.tag);
+    if (
+      !m.needsContext ||
+      options.assumeTechContext === true ||
+      inTechContext(clean, m, all)
+    ) {
+      tags.add(m.tag);
+    }
   }
   return tags;
 }
@@ -233,10 +252,14 @@ export function mentions(
 }
 
 /** Tags mentioned in any of the texts. */
-export function findTagsIn(texts: string[], taxonomy: Taxonomy): Set<string> {
+export function findTagsIn(
+  texts: string[],
+  taxonomy: Taxonomy,
+  options: FindTagsOptions = {},
+): Set<string> {
   const out = new Set<string>();
   for (const text of texts) {
-    for (const tag of findTags(text, taxonomy)) out.add(tag);
+    for (const tag of findTags(text, taxonomy, options)) out.add(tag);
   }
   return out;
 }

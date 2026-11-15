@@ -196,11 +196,11 @@ describe('LLM stages', () => {
       const p = sample[0];
       const llm = new FakeLlm(() => {
         const out = goodCvOutput(p, taxonomy);
-        out.skills = []; // always fails the "skills list is empty" check
+        out.headline = ''; // always fails the "must not be empty" check
         return parsed(out);
       });
       await expect(runCvs(['--only', p.id], dir, { llm })).rejects.toThrow(
-        new RegExp(`${p.id}.*skills list is empty`, 's'),
+        new RegExp(`${p.id}.*must not be empty`, 's'),
       );
       expect(llm.calls).toHaveLength(5);
       const withFeedback = llm.calls.map((c) =>
@@ -211,7 +211,7 @@ describe('LLM stages', () => {
 
       const [record] = await log(dir);
       expect(record.failures).toEqual([
-        { id: p.id, problems: ['The skills list is empty.'] },
+        { id: p.id, problems: ['Headline and summary must not be empty.'] },
       ]);
       expect(record.retries).toBe(4);
       expect(record.generated).toEqual([]);

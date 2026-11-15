@@ -209,7 +209,7 @@ export const EXP_TITLES: Record<string, string[]> = {
     'Platform Engineer',
     'Site Reliability Engineer',
   ],
-  'exp-qa': ['QA Automation Engineer', 'Test Automation Engineer'],
+  'exp-qa': ['QA Automation Engineer', 'Software Engineer in Test'],
   'exp-security': ['Security Engineer', 'Application Security Engineer'],
 };
 export const FULL_STACK_TITLES = [

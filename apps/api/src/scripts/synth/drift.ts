@@ -139,8 +139,32 @@ export function checkCv(
   );
   const union = (sets: Set<string>[]): Set<string> =>
     new Set(sets.flatMap((s) => [...s]));
-  const anyRole = union(roleTags);
-  const anyProject = union(projectTags);
+
+  // The leak check above keeps the strict tech-context rule: a tag the persona
+  // lacks must not be reported for "Go to market". Presence and placement of
+  // the persona's own tags use case-sensitive matching without the context
+  // cue, so "pipelines in R" counts as R (and a stray "Go" in the wrong
+  // section is caught rather than missed).
+  const owned = { assumeTechContext: true };
+  const ownRoleTags = cv.roles.map((r) =>
+    findTags(r.bullets.join('\n'), taxonomy, owned),
+  );
+  const ownProjectTags = cv.projects.map((p) =>
+    findTags(p.description, taxonomy, owned),
+  );
+  const ownSkillsTags = findTagsIn(cv.skills, taxonomy, owned);
+  const ownProfileTags = findTagsIn([cv.headline, cv.summary], taxonomy, owned);
+  const ownOtherTags = findTagsIn(
+    [
+      cv.location,
+      ...cv.spokenLanguages,
+      ...cv.education.flatMap((e) => [e.degree, e.school]),
+    ],
+    taxonomy,
+    owned,
+  );
+  const anyRole = union(ownRoleTags);
+  const anyProject = union(ownProjectTags);
 
   errors.push(
     ...leakErrors(
@@ -163,7 +187,7 @@ export function checkCv(
     ),
   );
 
-  const inProse = [anyRole, anyProject, profileTags, otherTags];
+  const inProse = [anyRole, anyProject, ownProfileTags, ownOtherTags];
   for (const [tag, ev] of evidence) {
     const name = label(tag);
     switch (ev) {
@@ -171,12 +195,12 @@ export function checkCv(
         const carrying = persona.roles
           .map((r, i) => (r.tags.includes(tag) ? i : -1))
           .filter((i) => i >= 0);
-        if (!carrying.some((i) => roleTags[i]?.has(tag))) {
+        if (!carrying.some((i) => ownRoleTags[i]?.has(tag))) {
           errors.push(
             `"${name}" must appear by name in the bullets of ${carrying.map((i) => `role ${i + 1} (${persona.roles[i].title})`).join(' or ')}.`,
           );
         }
-        roleTags.forEach((tags, i) => {
+        ownRoleTags.forEach((tags, i) => {
           if (tags.has(tag) && !carrying.includes(i)) {
             warnings.push(
               `"${name}" is mentioned in role ${i + 1}, which does not list it.`,
@@ -189,7 +213,7 @@ export function checkCv(
         const carrying = persona.projects
           .map((p, i) => (p.tags.includes(tag) ? i : -1))
           .filter((i) => i >= 0);
-        if (!carrying.some((i) => projectTags[i]?.has(tag))) {
+        if (!carrying.some((i) => ownProjectTags[i]?.has(tag))) {
           errors.push(
             `"${name}" must appear by name in the description of project ${carrying.map((i) => `"${persona.projects[i].name}"`).join(' or ')}.`,
           );
@@ -202,7 +226,7 @@ export function checkCv(
         break;
       }
       case 'cv_skills_only': {
-        if (!skillsTags.has(tag)) {
+        if (!ownSkillsTags.has(tag)) {
           errors.push(`"${name}" must be listed in the skills list.`);
         }
         if (inProse.some((s) => s.has(tag))) {
@@ -216,9 +240,9 @@ export function checkCv(
         if (
           anyRole.has(tag) ||
           anyProject.has(tag) ||
-          skillsTags.has(tag) ||
-          profileTags.has(tag) ||
-          otherTags.has(tag)
+          ownSkillsTags.has(tag) ||
+          ownProfileTags.has(tag) ||
+          ownOtherTags.has(tag)
         ) {
           errors.push(
             `"${name}" must not appear anywhere in the CV (it is evidenced on GitHub only).`,
@@ -346,6 +370,10 @@ export interface VacancyRewrite {
   requirements: { id: string; text: string }[];
 }
 
+/** Wording that offers technologies as alternatives (English or Ukrainian). */
+const ALTERNATIVE_CUE =
+  /\bor\b|\bsuch as\b|\be\.g\.|\bany of\b|\bone of\b|(?:^|\s)або(?:\s|$)/i;
+
 export function checkVacancy(
   draft: VacancySpec,
   rewrite: VacancyRewrite,
@@ -373,12 +401,18 @@ export function checkVacancy(
     );
   }
 
-  // Any one of a requirement's tags satisfies it, so a draft may name only
-  // some of them ("CI/CD pipelines" for ci-cd + github-actions). Require
-  // the tags the draft text names; when it names none, require them all.
-  const required = (req: VacancySpec['requirements'][number]): string[] => {
+  // Requirement text is about technology by construction, so ambiguous
+  // aliases ("React", "Spark") need no context cue here.
+  const tagsIn = (text: string): Set<string> =>
+    findTags(text, taxonomy, { assumeTechContext: true });
+
+  // Any one of a requirement's tags satisfies it, so the text only has to
+  // name one of them. The candidates are the tags the draft text names (it
+  // may name only some: "CI/CD pipelines" for ci-cd + github-actions); when
+  // it names none, any of the requirement's tags.
+  const alternatives = (req: VacancySpec['requirements'][number]): string[] => {
     const own = req.tags.filter((t) => prose.has(t));
-    const named = findTags(req.text, taxonomy);
+    const named = tagsIn(req.text);
     const kept = own.filter((t) => named.has(t));
     return kept.length > 0 ? kept : own;
   };
@@ -386,14 +420,15 @@ export function checkVacancy(
   for (const req of draft.requirements) {
     const text = rewrite.requirements.find((r) => r.id === req.id)?.text;
     if (text === undefined) continue;
-    const found = findTags(text, taxonomy);
-    const drafted = findTags(req.text, taxonomy);
-    for (const tag of required(req)) {
-      if (!found.has(tag)) {
-        errors.push(
-          `${req.id}: the text must mention "${label(tag)}" by name.`,
-        );
-      }
+    const found = tagsIn(text);
+    const drafted = tagsIn(req.text);
+    const options = alternatives(req);
+    if (options.length > 0 && !options.some((tag) => found.has(tag))) {
+      errors.push(
+        `${req.id}: the text must mention ${options
+          .map((tag) => `"${label(tag)}"`)
+          .join(' or ')} by name.`,
+      );
     }
     for (const tag of found) {
       if (!req.tags.includes(tag) && !drafted.has(tag)) {
@@ -401,6 +436,18 @@ export function checkVacancy(
           `${req.id}: the text mentions "${label(tag)}", which is not part of this requirement.`,
         );
       }
+    }
+    // The ground-truth rule counts any one tag as meeting the requirement, so
+    // a text naming several must offer them as alternatives, not demand all.
+    const named = req.tags.filter((tag) => found.has(tag));
+    if (named.length >= 2 && !ALTERNATIVE_CUE.test(text)) {
+      errors.push(
+        `${req.id}: ${named
+          .map((tag) => `"${label(tag)}"`)
+          .join(
+            ', ',
+          )} are alternatives (any one is enough): join them with "or", never "and".`,
+      );
     }
     if (
       req.minYears !== undefined &&
