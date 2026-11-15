@@ -14,8 +14,13 @@ import 'reflect-metadata'; // shared/cli.js pulls in decorated env config
 import { fromRoot, UsageError } from './shared/cli.js';
 import { extractDir } from './synth/args.js';
 import { SYNTH_DIR } from './synth/io.js';
+import { CVS_USAGE, runCvs } from './synth/stages/cvs.js';
+import { GITHUB_USAGE, runGithub } from './synth/stages/github.js';
 import { LABELS_USAGE, runLabels } from './synth/stages/labels.js';
 import { PERSONAS_USAGE, runPersonas } from './synth/stages/personas.js';
+import { runVacancies, VACANCIES_USAGE } from './synth/stages/vacancies.js';
+import { RENDER_USAGE, runRender } from './synth/stages/render.js';
+import { runSpotCheck, SPOT_CHECK_USAGE } from './synth/stages/spot-check.js';
 
 interface Stage {
   usage: string;
@@ -26,6 +31,11 @@ interface Stage {
 const STAGES: Record<string, Stage> = {
   personas: { usage: PERSONAS_USAGE, run: runPersonas },
   labels: { usage: LABELS_USAGE, run: runLabels },
+  vacancies: { usage: VACANCIES_USAGE, run: runVacancies },
+  cvs: { usage: CVS_USAGE, run: runCvs },
+  github: { usage: GITHUB_USAGE, run: runGithub },
+  render: { usage: RENDER_USAGE, run: runRender },
+  'spot-check': { usage: SPOT_CHECK_USAGE, run: runSpotCheck },
 };
 
 function usage(): string {
