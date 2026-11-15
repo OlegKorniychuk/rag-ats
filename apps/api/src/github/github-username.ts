@@ -1,5 +1,5 @@
 const GITHUB_HOSTS = new Set(['github.com', 'www.github.com']);
-const USERNAME_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
+export const USERNAME_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
 
 /**
  * Extracts the GitHub username from a profile URL. Strict on purpose: only

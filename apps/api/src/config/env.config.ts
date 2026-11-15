@@ -73,4 +73,13 @@ export class EnvConfig {
   @IsOptional()
   @IsString()
   public readonly GITHUB_TOKEN?: string;
+
+  // Dev/seed only: a directory of `<username>.json` GitHub fixtures served
+  // instead of the real GitHub API (no network call is made). Absolute, or
+  // relative to the process working directory (apps/api when started through
+  // npm). Boot fails when set with NODE_ENV=production. Empty string counts
+  // as unset.
+  @IsOptional()
+  @IsString()
+  public readonly GITHUB_FIXTURES_DIR?: string;
 }
