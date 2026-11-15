@@ -19,7 +19,8 @@
     "format:check": "prettier --check .",
     "db:up": "docker compose up -d db",
     "db:generate": "npm run db:generate -w apps/api",
-    "db:migrate": "npm run db:migrate -w apps/api"
+    "db:migrate": "npm run db:migrate -w apps/api",
+    "db:seed": "npm run db:seed -w apps/api --"
   },
   "devDependencies": {
     "drizzle-orm": "1.0.0-rc.4",
