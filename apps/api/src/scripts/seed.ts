@@ -37,6 +37,7 @@ import { buildPlan, validateInputs } from './seed/planner.js';
 import { buildReport, renderMarkdown } from './seed/report.js';
 import { DEFAULT_SEED_PASSWORD, runSeed } from './seed/run.js';
 import { fromRoot, loadEnv, UsageError } from './shared/cli.js';
+import { writeMarkdown } from './synth/io.js';
 
 async function main(): Promise<number> {
   const argv = process.argv.slice(2);
@@ -108,6 +109,7 @@ async function main(): Promise<number> {
       maxUsd: args.maxUsd,
       timeoutMs: args.timeoutMin * 60_000,
       concurrency: args.concurrency,
+      retryFailed: args.retryFailed,
       meter,
       log: (line) => console.log(line),
     });
@@ -126,6 +128,7 @@ async function main(): Promise<number> {
     maxUsd: args.maxUsd,
     stopped: result.stopped,
     durationMs: result.durationMs,
+    retriedScores: result.retriedScores,
     snapshot: result.snapshot,
     meter,
     submitErrors: result.submitErrors,
@@ -135,7 +138,8 @@ async function main(): Promise<number> {
   const jsonPath = join(outDir, `${args.label}.json`);
   const mdPath = join(outDir, `${args.label}.md`);
   await writeFile(jsonPath, JSON.stringify(report, null, 2) + '\n');
-  await writeFile(mdPath, renderMarkdown(report));
+  // Through prettier, so `prettier --check` never flags a fresh report.
+  await writeMarkdown(mdPath, renderMarkdown(report));
 
   const { counts, costUsd, parseSuccessPct } = report;
   console.log(

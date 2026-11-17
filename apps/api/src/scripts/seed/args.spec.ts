@@ -8,6 +8,7 @@ describe('parseSeedArgs', () => {
     expect(parseSeedArgs(['--label', 'run1'])).toEqual({
       label: 'run1',
       dryRun: false,
+      retryFailed: false,
       maxUsd: 3,
       only: null,
       dir: 'data/synthetic',
@@ -65,6 +66,13 @@ describe('parseSeedArgs', () => {
     expect(() => parseSeedArgs(['--label', 'a', '--nope'])).toThrow(UsageError);
     expect(() => parseSeedArgs(['--label', 'a', '--only', ' , '])).toThrow(
       UsageError,
+    );
+  });
+
+  it('parses --retry-failed (off by default)', () => {
+    expect(parseSeedArgs(['--label', 'x']).retryFailed).toBe(false);
+    expect(parseSeedArgs(['--label', 'x', '--retry-failed']).retryFailed).toBe(
+      true,
     );
   });
 });

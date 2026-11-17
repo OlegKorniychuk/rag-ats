@@ -152,4 +152,11 @@ describe('renderMarkdown', () => {
       'Backend \\| Engineer',
     );
   });
+
+  it('lists retried scores only when there were any', () => {
+    expect(renderMarkdown(buildReport(input()))).not.toContain('retried');
+    const report = buildReport({ ...input(), retriedScores: 11 });
+    expect(report.retriedScores).toBe(11);
+    expect(renderMarkdown(report)).toContain('- Failed scores retried: 11');
+  });
 });

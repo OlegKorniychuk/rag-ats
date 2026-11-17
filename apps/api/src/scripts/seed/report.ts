@@ -30,6 +30,8 @@ export interface SeedReport {
   maxUsd: number;
   stopped: StopReason;
   durationSec: number;
+  /** Failed scores re-queued by `--retry-failed` in this run. */
+  retriedScores: number;
   counts: SnapshotCounts & { personas: number };
   parseSuccessPct: number | null;
   parseSuccessTarget: number;
@@ -91,6 +93,7 @@ export interface ReportInput {
   maxUsd: number;
   stopped: StopReason;
   durationMs: number;
+  retriedScores?: number;
   snapshot: SeedSnapshot;
   meter: SeedMeter;
   submitErrors: SubmitError[];
@@ -114,6 +117,7 @@ export function buildReport(input: ReportInput): SeedReport {
     maxUsd: input.maxUsd,
     stopped: input.stopped,
     durationSec: Math.round(input.durationMs / 1000),
+    retriedScores: input.retriedScores ?? 0,
     counts: { ...counts, personas: counts.candidates },
     parseSuccessPct,
     parseSuccessTarget: PARSE_SUCCESS_TARGET_PCT,
@@ -170,6 +174,9 @@ export function renderMarkdown(report: SeedReport): string {
     `- Model: ${report.model} (embeddings: ${report.embeddingModel})`,
     `- Duration: ${report.durationSec}s`,
     `- Stopped: ${report.stopped ?? 'no (ran to completion)'}`,
+    ...(report.retriedScores > 0
+      ? [`- Failed scores retried: ${report.retriedScores}`]
+      : []),
     `- Cap: ${usd(report.maxUsd)}`,
     '',
     '## Result',

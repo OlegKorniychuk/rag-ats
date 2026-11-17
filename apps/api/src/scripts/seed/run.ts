@@ -9,6 +9,7 @@ import { ClsService } from 'nestjs-cls';
 import type { Pool } from 'pg';
 import { ApplyService } from '../../apply/apply.service.js';
 import type { SubmitApplicationDto } from '../../apply/dto/submit-application.dto.js';
+import { ApplicationsService } from '../../applications/applications.service.js';
 import { AuthService } from '../../auth/auth.service.js';
 import { DRIZZLE, type AppDatabase } from '../../db/db.tokens.js';
 import { JobsService } from '../../jobs/jobs.service.js';
@@ -60,6 +61,8 @@ export interface RunSeedOptions {
   timeoutMs: number;
   /** Personas applying at once. */
   concurrency: number;
+  /** Rescore the seeded applications whose score is `failed` (one more attempt each). */
+  retryFailed?: boolean;
   meter: SeedMeter;
   pollMs?: number;
   log?: (line: string) => void;
@@ -71,6 +74,8 @@ export interface RunSeedResult {
   submitErrors: SubmitError[];
   /** Personas whose remaining applications were not submitted (parse failed). */
   skippedPersonaIds: string[];
+  /** Failed scores sent back to the queue by `retryFailed`. */
+  retriedScores: number;
   durationMs: number;
 }
 
@@ -127,6 +132,7 @@ export async function runSeed(
   const vacanciesService = app.get(VacanciesService);
   const applyService = app.get(ApplyService);
   const jobs = app.get(JobsService);
+  const applicationsService = app.get(ApplicationsService);
 
   const submitErrors: SubmitError[] = [];
   const skippedPersonaIds: string[] = [];
@@ -452,6 +458,40 @@ export async function runSeed(
 
   await runPool(plan.items, options.concurrency, applyPersona);
 
+  // 5b. retry failed scores ----------------------------------------------------
+  // Same path as the recruiter's Rescore button: reset to pending, enqueue.
+  let retriedScores = 0;
+  if (options.retryFailed && !halted()) {
+    const before = await takeSnapshot();
+    const parsed = new Set(
+      before.candidates
+        .filter((c) => c.parseStatus === 'parsed')
+        .map((c) => c.id),
+    );
+    const failed = before.scores.filter(
+      (s) => s.status === 'failed' && parsed.has(s.candidateId),
+    );
+    log(`Retrying ${failed.length} failed score(s)`);
+    const next = UNIT_COST_USD.score * MARGIN;
+    for (const score of failed) {
+      if (timedOut()) {
+        stopped = 'timeout';
+        break;
+      }
+      if (!canSubmit(meter.spentUsd, await queuedUsd(), next, maxUsd)) {
+        stopped = 'budget';
+        log(
+          `Budget cap reached; ${failed.length - retriedScores} failed score(s) not retried`,
+        );
+        break;
+      }
+      await cls.run(() =>
+        applicationsService.rescore(recruiterId, score.applicationId),
+      );
+      retriedScores++;
+    }
+  }
+
   // 6. drain ------------------------------------------------------------------
   let snapshot = await takeSnapshot();
   let lastLine = '';
@@ -477,6 +517,7 @@ export async function runSeed(
     snapshot,
     submitErrors,
     skippedPersonaIds,
+    retriedScores,
     durationMs: Date.now() - startedAt,
   };
 }

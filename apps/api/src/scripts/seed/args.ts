@@ -10,6 +10,7 @@ export const SEED_USAGE = [
   'Usage: db:seed [options]',
   '  --label <name>        report name (docs/eval/seed/<name>.{json,md}); required unless --dry-run',
   '  --dry-run             print the plan and the cost estimate, no DB, no LLM calls',
+  '  --retry-failed        also rescore the seeded applications whose score failed',
   `  --max-usd <n>         stop submitting when the spend plus queued work would pass n (default ${DEFAULT_MAX_USD})`,
   '  --only <ids>          comma-separated persona ids (a subset, e.g. a smoke run)',
   `  --dir <path>          synthetic data directory (default ${DEFAULT_DIR})`,
@@ -21,6 +22,7 @@ export const SEED_USAGE = [
 export interface SeedArgs {
   label: string | null;
   dryRun: boolean;
+  retryFailed: boolean;
   maxUsd: number;
   only: string[] | null;
   dir: string;
@@ -40,6 +42,7 @@ export function parseSeedArgs(argv: string[]): SeedArgs {
       options: {
         label: { type: 'string' },
         'dry-run': { type: 'boolean', default: false },
+        'retry-failed': { type: 'boolean', default: false },
         'max-usd': { type: 'string' },
         only: { type: 'string' },
         dir: { type: 'string' },
@@ -79,6 +82,7 @@ export function parseSeedArgs(argv: string[]): SeedArgs {
   return {
     label,
     dryRun,
+    retryFailed: values['retry-failed'] ?? false,
     maxUsd: parseNumber('max-usd', values['max-usd'], DEFAULT_MAX_USD),
     only,
     dir: values.dir ?? DEFAULT_DIR,

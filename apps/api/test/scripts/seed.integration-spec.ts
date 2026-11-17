@@ -88,6 +88,8 @@ const BUDGET_SET = [
   persona('b3', ['alpha', 'beta']),
   persona('b4', ['alpha', 'beta']),
 ];
+// A third set for the retry test.
+const RETRY_SET = [persona('r1', ['alpha', 'beta'])];
 
 describe('db:seed core (Testcontainers + MSW + real pg-boss)', () => {
   let testDb: TestDatabase;
@@ -162,7 +164,7 @@ describe('db:seed core (Testcontainers + MSW + real pg-boss)', () => {
     dir = await mkdtemp(join(tmpdir(), 'seed-it-'));
     await mkdir(join(dir, 'pdf'));
     await mkdir(join(dir, 'github'));
-    for (const p of [...MINI_SET, ...BUDGET_SET]) {
+    for (const p of [...MINI_SET, ...BUDGET_SET, ...RETRY_SET]) {
       await writeFile(
         join(dir, 'pdf', `${p.id}.pdf`),
         textPdf([`CV of ${p.name}`, `Unique marker ${p.id}`, 'TypeScript']),
@@ -271,5 +273,51 @@ describe('db:seed core (Testcontainers + MSW + real pg-boss)', () => {
     expect(meter.spentUsd).toBeLessThanOrEqual(0.02);
     // the cap holds back parses too: not every persona got a candidate
     expect(counts.candidates).toBeLessThan(4);
+  });
+
+  it('--retry-failed rescores only the failed scores', async () => {
+    // Another open context's workers would take jobs off the shared queue
+    // and meter them elsewhere.
+    await closeContexts();
+    const meter = new SeedMeter(DEFAULT_PRICING);
+    const app = await boot(meter);
+    const first = await seed(app, meter, RETRY_SET);
+    expect(summarize(first.snapshot)).toMatchObject({
+      applications: 2,
+      scored: 2,
+    });
+    expect(first.retriedScores).toBe(0);
+
+    // One score failed, as a grounding failure would leave it.
+    const { rows } = await pool.query<{ application_id: string }>(
+      `UPDATE application_scores s SET status = 'failed', error = 'Could not ground the score in the CV'
+         FROM applications a JOIN candidates c ON c.id = a.candidate_id
+        WHERE a.id = s.application_id AND c.email = $1
+          AND s.application_id = (
+            SELECT a2.id FROM applications a2 JOIN candidates c2 ON c2.id = a2.candidate_id
+             WHERE c2.email = $1 ORDER BY a2.id LIMIT 1)
+        RETURNING s.application_id`,
+      ['r1@example.com'],
+    );
+    expect(rows).toHaveLength(1);
+
+    // A plain re-run leaves it failed and calls no model.
+    const callsBefore = meter.chatCalls;
+    const plain = await seed(app, meter, RETRY_SET);
+    expect(summarize(plain.snapshot).failedScores).toBe(1);
+    expect(meter.chatCalls).toBe(callsBefore);
+
+    const retry = await seed(app, meter, RETRY_SET, { retryFailed: true });
+    expect(retry.retriedScores).toBe(1);
+    expect(retry.stopped).toBeNull();
+    expect(isDrained(retry.snapshot)).toBe(true);
+    expect(summarize(retry.snapshot)).toMatchObject({
+      applications: 2,
+      scored: 2,
+      failedScores: 0,
+    });
+    // exactly one more score call; no parse, no criteria
+    expect(meter.chatCalls).toBe(callsBefore + 1);
+    expect(meter.calls(APPLICATION_SCORE_SCHEMA_NAME)).toBe(3);
   });
 });
