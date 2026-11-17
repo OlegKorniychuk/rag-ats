@@ -1,0 +1,68 @@
+{
+  "user": {
+    "login": "synth-marta-larsen",
+    "html_url": "https://github.com/synth-marta-larsen",
+    "bio": "Mobile developer focused on polished apps and dependable delivery."
+  },
+  "repos": [
+    {
+      "name": "pulse-tracker",
+      "html_url": "https://github.com/synth-marta-larsen/pulse-tracker",
+      "description": "A personal app for tracking daily habits and checking progress at a glance.",
+      "language": "Kotlin",
+      "stargazers_count": 61,
+      "topics": [
+        "mobile-app",
+        "habit-tracking",
+        "kotlin",
+        "redux",
+        "rest-apis"
+      ],
+      "pushed_at": "2026-09-24T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "meal-planner",
+      "html_url": "https://github.com/synth-marta-larsen/meal-planner",
+      "description": "A compact meal planning app with weekly lists and saved favorites.",
+      "language": "Swift",
+      "stargazers_count": 49,
+      "topics": [
+        "meal-planning",
+        "swiftui",
+        "mobile-app",
+        "productivity",
+        "weekly-plans"
+      ],
+      "pushed_at": "2026-08-17T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "release-checklist",
+      "html_url": "https://github.com/synth-marta-larsen/release-checklist",
+      "description": "A small checklist app for coordinating handoffs and delivery steps.",
+      "language": "Java",
+      "stargazers_count": 39,
+      "topics": [
+        "release-process",
+        "checklists",
+        "ci-cd",
+        "team-work",
+        "agile"
+      ],
+      "pushed_at": "2026-07-23T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "pulse-tracker": "# Pulse Tracker\n\nPulse Tracker is a mobile app for recording daily habits, reviewing streaks, and keeping a simple view of progress over time. It is designed for quick entries and calm, readable summaries.\n\n## Features\n- Add and edit habit items\n- Store progress data and review trends\n- Use a simple state flow for updates\n- Connect to REST APIs for shared data\n\n## Getting Started\nOpen the project in a Kotlin workspace, sync the project files, and run the app on a device or simulator. The project is organized for small, iterative changes and steady delivery.",
+    "meal-planner": "# Meal Planner\n\nMeal Planner helps people organize weekly meals, keep favorite dishes nearby, and review plans in a clean mobile layout. It keeps the focus on fast edits and easy planning.\n\n## Features\n- Build a weekly meal list\n- Save favorite meals for reuse\n- View plans in a simple SwiftUI screen\n- Keep data changes easy to follow\n\n## Getting Started\nOpen the project in a Swift workspace and run it on a simulator or device. The app is structured for small updates, steady review, and smooth day-to-day use.",
+    "release-checklist": "# Release Checklist\n\nRelease Checklist is a lightweight app for organizing delivery steps, marking completed items, and keeping handoffs clear for a small team. It supports careful review before each release.\n\n## Features\n- Create reusable checklists\n- Track handoff items from start to finish\n- Keep work grouped by release\n- Support a simple team workflow\n\n## Getting Started\nOpen the project in a Java workspace and run the main project tasks. The app is intended for small teams that value clear review, regular delivery, and disciplined follow-through."
+  }
+}

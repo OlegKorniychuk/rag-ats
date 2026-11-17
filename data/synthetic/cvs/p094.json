@@ -1,0 +1,75 @@
+{
+  "personaId": "p094",
+  "language": "en",
+  "name": "Zainab Holm",
+  "email": "zainab-holm@example.com",
+  "githubUrl": null,
+  "headline": "Software Developer",
+  "location": "Lindenport, England",
+  "summary": "Software developer who has built and supported customer-facing and internal products across web application teams. Comfortable working across implementation, integration, and delivery, with a focus on clear collaboration and reliable outcomes. Brings steady ownership from junior development through full product delivery.",
+  "roles": [
+    {
+      "employer": "Driftwood Apps",
+      "title": "Junior Software Engineer",
+      "start": "2021-10",
+      "end": "2022-09",
+      "bullets": [
+        "Built interface features in JavaScript and TypeScript, connecting them to REST APIs and fixing issues before release.",
+        "Updated existing screens and data flows, improving reliability for a 15% drop in recurring support tickets.",
+        "Worked with the product team to turn feedback into small, maintainable changes and clearer application behavior."
+      ]
+    },
+    {
+      "employer": "Fernhollow Studio",
+      "title": "Software Engineer",
+      "start": "2022-09",
+      "end": "2023-12",
+      "bullets": [
+        "Implemented account and session flows with OAuth, helping secure access for a customer portal used by over 8,000 users.",
+        "Wrote SQL queries to support reporting and operational views, reducing manual lookups by 40%.",
+        "Reviewed edge cases with designers and analysts to keep data handling accurate across the application."
+      ]
+    },
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Software Developer",
+      "start": "2023-12",
+      "end": "2026-07",
+      "bullets": [
+        "Delivered backend services in Go and Node.js using Express and NestJS, with GraphQL endpoints for a multi-team product line.",
+        "Ran an Agile delivery cadence, breaking work into small increments and keeping priorities aligned across 3 squads.",
+        "Improved request handling and service reliability by tightening server logic and trimming slow paths in the backend.",
+        "Partnered with testers and product owners to refine integration points and ship changes with fewer rework cycles.",
+        "Built reusable application modules that simplified feature delivery and supported a faster release flow for internal teams."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "JavaScript",
+    "REST APIs",
+    "TypeScript",
+    "OAuth",
+    "SQL",
+    "Agile",
+    "Express",
+    "Go",
+    "GraphQL",
+    "NestJS",
+    "Node.js"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Practice",
+      "school": "Northmere Institute of Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "BSc in Computing Systems",
+      "school": "Pinewatch College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Spanish (B1)"],
+  "injection": null
+}

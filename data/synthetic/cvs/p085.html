@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Arjun Lindqvist - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>arjun-lindqvist@example.com</li>
+  <li>Helsinki, Finland</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>iOS</li>
+  <li>Jest</li>
+  <li>Redux</li>
+  <li>Git</li>
+  <li>Java</li>
+  <li>JUnit</li>
+  <li>Swift</li>
+  <li>TypeScript</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Swedish (C1)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Development</span><span class="dates">2022</span></div>
+  <div class="sub">Northvale Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Associate Degree in Digital Media</span><span class="dates">2021</span></div>
+  <div class="sub">Riverset College of Applied Arts</div>
+</div>
+</aside>
+<main class="main">
+<h1>Arjun Lindqvist</h1>
+<div class="headline">Mobile Engineer</div>
+<h2>Summary</h2>
+<p>Mobile engineer with experience delivering consumer-facing app features, improving release quality, and supporting product teams through clear implementation and steady delivery. Known for building reliable mobile experiences, tightening state management, and working closely with designers and backend partners to ship polished updates.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Mobile Developer</span><span class="dates">Jan 2025 – Present</span></div>
+  <div class="sub">Stonebridge Interactive</div>
+  <ul>
+    <li>Developed new app features in Swift and TypeScript for the mobile client, keeping the implementation aligned with shared product rules.</li>
+    <li>Maintained state logic in Redux and reviewed Git history to keep releases organized across parallel workstreams.</li>
+    <li>Implemented unit coverage in JUnit and Java for core business rules, cutting escaped defects by 31%.</li>
+    <li>Updated iOS components and shared mobile behavior to improve stability across device sizes and operating conditions.</li>
+    <li>Coordinated with QA and product leads on sprint planning and issue triage to keep the team on schedule.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Mobile Engineer</span><span class="dates">Dec 2023 – Dec 2024</span></div>
+  <div class="sub">Pinecrest Cloud</div>
+  <ul>
+    <li>Built new iOS screens for onboarding and account management, using Redux to keep app state consistent across flows.</li>
+    <li>Wrote Jest checks for key user journeys and reduced regression issues by 28% before release.</li>
+    <li>Refined navigation and form handling in iOS, improving completion rates for the main setup flow by 14%.</li>
+    <li>Partnered with product and design teams to translate requirements into small, testable mobile changes.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

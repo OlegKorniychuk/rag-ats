@@ -1,0 +1,62 @@
+{
+  "user": {
+    "login": "synth-marta-demir",
+    "html_url": "https://github.com/synth-marta-demir",
+    "bio": "Senior quality engineer who builds reliable test systems and fast feedback loops."
+  },
+  "repos": [
+    {
+      "name": "checkout-watchtower",
+      "html_url": "https://github.com/synth-marta-demir/checkout-watchtower",
+      "description": "End-to-end test coverage for a storefront flow with stable checks and clear failure reports.",
+      "language": "Java",
+      "stargazers_count": 95,
+      "topics": ["playwright", "test-automation", "rest-apis", "junit", "cicd"],
+      "pushed_at": "2026-09-17T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "search-quality-suite",
+      "html_url": "https://github.com/synth-marta-demir/search-quality-suite",
+      "description": "A compact suite for checking search behavior, filter rules, and result consistency.",
+      "language": "JavaScript",
+      "stargazers_count": 92,
+      "topics": [
+        "cypress",
+        "test-automation",
+        "cicd",
+        "performance-testing",
+        "agile"
+      ],
+      "pushed_at": "2026-07-08T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "api-contract-lab",
+      "html_url": "https://github.com/synth-marta-demir/api-contract-lab",
+      "description": "A set of service contract checks for request shapes, response rules, and edge cases.",
+      "language": "C#",
+      "stargazers_count": 83,
+      "topics": [
+        "postman",
+        "rest-apis",
+        "cucumber",
+        "test-automation",
+        "docker"
+      ],
+      "pushed_at": "2026-03-10T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "checkout-watchtower": "# Checkout Watchtower\n\nCheckout Watchtower is a test project for a storefront flow. It uses Playwright with Java to exercise the main path from start to finish and to verify responses from supporting services. The goal is to keep the journey steady, repeatable, and easy to inspect when something changes.\n\n## Features\n- Playwright flows for the critical user path\n- Java test structure with JUnit assertions\n- REST API checks for setup and cleanup\n- Clear reports for failed runs\n- Built to fit CI/CD feedback loops\n\n## Getting started\n- Install Java and Playwright.\n- Open the project and run the test suite from your local shell.\n- Review the output, then adjust data or steps as needed.",
+    "search-quality-suite": "# Search Quality Suite\n\nSearch Quality Suite is a compact test set for search behavior and result quality. It focuses on core user paths, repeatable data setup, and quick signals when results drift. The project is small on purpose so it can be used during active development and in scheduled runs.\n\n## Features\n- Cypress coverage for common search journeys\n- Test cases organized for Agile team work\n- Checks for stable results across repeated runs\n- Performance testing notes for slow pages and heavy filters\n- Simple setup for local execution\n\n## Getting started\n- Install JavaScript and the needed test tools.\n- Open the project, prepare sample data, and start the suite.\n- Review the output and refine the checks as the app changes.",
+    "api-contract-lab": "# API Contract Lab\n\nAPI Contract Lab is a small project for verifying request and response rules in service endpoints. It combines clear scenario files with test code so edge cases can be reviewed without a heavy setup. The focus is on readable checks that help a team spot breaks early.\n\n## Features\n- Cucumber scenarios for shared behavior notes\n- REST API checks for common and rare cases\n- Postman collections for exploratory review\n- Docker-based local runs for a consistent environment\n- Easy-to-read outputs for triage\n\n## Getting started\n- Install C# and the matching test tools.\n- Open the project, prepare sample requests, and run the suite.\n- Use the results to refine cases before the next review."
+  }
+}

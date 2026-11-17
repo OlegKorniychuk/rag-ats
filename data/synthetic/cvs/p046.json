@@ -1,0 +1,75 @@
+{
+  "personaId": "p046",
+  "language": "en",
+  "name": "Oksana Pavlenko",
+  "email": "oksana-pavlenko@example.com",
+  "githubUrl": "https://github.com/synth-oksana-pavlenko",
+  "headline": "Frontend Engineer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Frontend engineer focused on building responsive web products and improving user experience across customer-facing platforms. Experienced in collaborating with product and design teams, shaping interface behaviour, and delivering reliable features through structured delivery practices. Comfortable working across modern application layers and maintaining accessible, maintainable user interfaces.",
+  "roles": [
+    {
+      "employer": "Ravenmoor Tech",
+      "title": "Software Developer",
+      "start": "2020-10",
+      "end": "2022-02",
+      "bullets": [
+        "Built interactive customer screens in React that consumed REST APIs and reduced page handoff delays by 28%.",
+        "Refined form flows and state handling in React to improve completion rates and keep the UI responsive during data updates.",
+        "Partnered with product teams to translate requirements into maintainable frontend features and support release readiness."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Senior Frontend Developer",
+      "start": "2022-02",
+      "end": null,
+      "bullets": [
+        "Led feature delivery in Agile teams using Angular and TypeScript to ship interface updates for a fast-moving product area.",
+        "Implemented shared data flows with Redux and GraphQL, trimming duplicated requests and improving state consistency across screens.",
+        "Extended customer journeys in React and REST APIs while improving Web accessibility for keyboard and screen-reader users.",
+        "Worked with designers and engineers to review edge cases, stabilize releases, and keep changes aligned with sprint goals."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Gateway",
+      "description": "Created a responsive gateway interface in HTML/CSS, focusing on clear layout structure and consistent presentation across screen sizes."
+    },
+    {
+      "name": "Orbit Scheduler",
+      "description": "Built a scheduling interface in Next.js with streamlined navigation and page rendering for planning workflows."
+    },
+    {
+      "name": "Maple Gateway",
+      "description": "Developed shared interface state patterns in Redux to coordinate user actions and keep screens synchronized."
+    }
+  ],
+  "skills": [
+    "React",
+    "REST APIs",
+    "Agile",
+    "Angular",
+    "GraphQL",
+    "Redux",
+    "TypeScript",
+    "Web accessibility",
+    "HTML/CSS",
+    "Next.js"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Interactive Media Systems",
+      "school": "Northbridge Institute of Applied Arts",
+      "end": "2019"
+    },
+    {
+      "degree": "Bachelor of Software Interfaces",
+      "school": "Linden Vale College",
+      "end": "2016"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (Native)", "English (C1)"],
+  "injection": null
+}

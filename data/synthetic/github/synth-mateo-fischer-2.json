@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-mateo-fischer-2",
+    "html_url": "https://github.com/synth-mateo-fischer-2",
+    "bio": "Senior UI engineer who builds clear, dependable interfaces and values thoughtful teamwork."
+  },
+  "repos": [
+    {
+      "name": "atlas-console",
+      "html_url": "https://github.com/synth-mateo-fischer-2/atlas-console",
+      "description": "A polished interface for viewing and editing structured records with responsive layouts and fast filtering.",
+      "language": "TypeScript",
+      "stargazers_count": 49,
+      "topics": [
+        "react",
+        "typescript",
+        "graphql",
+        "rest-apis",
+        "state-management"
+      ],
+      "pushed_at": "2026-09-20T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "northstar-form-kit",
+      "html_url": "https://github.com/synth-mateo-fischer-2/northstar-form-kit",
+      "description": "A small form toolkit for building reusable inputs, validation helpers, and shared page patterns.",
+      "language": "TypeScript",
+      "stargazers_count": 37,
+      "topics": ["react", "typescript", "jest", "forms", "ui-patterns"],
+      "pushed_at": "2026-07-26T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-panel",
+      "html_url": "https://github.com/synth-mateo-fischer-2/signal-panel",
+      "description": "A lightweight dashboard for tracking events, reviewing changes, and organizing work across teams.",
+      "language": "JavaScript",
+      "stargazers_count": 26,
+      "topics": ["vue", "javascript", "cypress", "dashboard", "workflows"],
+      "pushed_at": "2026-03-28T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "atlas-console": "# Atlas Console\nAtlas Console is a focused app for browsing structured records, editing details, and keeping related views in sync. It is designed for teams that need a clean, dependable workspace with predictable interactions.\n\n## Features\n- Browse records in a compact, readable layout\n- Edit fields with immediate feedback\n- Switch between summary and detail views\n- Keep data updates consistent across the screen\n\n## Getting Started\nUse a recent TypeScript setup and run the app in a browser. The project is built with React and TypeScript, so you can explore the interface, adjust sample data, and shape the screens to fit your workflow.",
+    "northstar-form-kit": "# Northstar Form Kit\nNorthstar Form Kit helps you build reusable form pieces for product screens and internal tools. It focuses on consistent structure, clear validation messages, and easy composition across different views.\n\n## Features\n- Shared input and label patterns\n- Validation helpers for common field states\n- Simple layout pieces for multi-step flows\n- Test-friendly components for repeatable checks\n\n## Getting Started\nStart from a TypeScript project and include the components where you need them. React and TypeScript are the core pieces, and the included examples show how to wire inputs, validation, and submission into a plain browser app.",
+    "signal-panel": "# Signal Panel\nSignal Panel is a lightweight dashboard for reviewing events and keeping an eye on changing work items. It is aimed at small teams that want a simple view into active tasks and recent updates.\n\n## Features\n- Filter events by status and time\n- Review change history in one place\n- Organize work into clear sections\n- Keep the interface easy to scan\n\n## Getting Started\nOpen the project in a browser after setting up the source files. The app uses JavaScript and can be adapted to your preferred component style, with the sample screens ready for quick updates and review."
+  }
+}

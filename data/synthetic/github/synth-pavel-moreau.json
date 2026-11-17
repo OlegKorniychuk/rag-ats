@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-pavel-moreau",
+    "html_url": "https://github.com/synth-pavel-moreau",
+    "bio": "Mobile engineer who builds practical app experiences across platforms."
+  },
+  "repos": [
+    {
+      "name": "signal-board",
+      "html_url": "https://github.com/synth-pavel-moreau/signal-board",
+      "description": "A cross-device alert board for field teams with a shared view and quick status updates.",
+      "language": "TypeScript",
+      "stargazers_count": 43,
+      "topics": ["android", "typescript", "graphql", "rest-apis", "ci-cd"],
+      "pushed_at": "2026-09-15T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "metro-pulse",
+      "html_url": "https://github.com/synth-pavel-moreau/metro-pulse",
+      "description": "An Android companion app for checking route changes and service notices in one place.",
+      "language": "Kotlin",
+      "stargazers_count": 34,
+      "topics": ["android", "jetpack-compose", "junit", "kotlin", "rest-apis"],
+      "pushed_at": "2026-06-04T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "craft-link",
+      "html_url": "https://github.com/synth-pavel-moreau/craft-link",
+      "description": "A shared component kit for mobile screens with motion, forms, and reusable patterns.",
+      "language": "Dart",
+      "stargazers_count": 23,
+      "topics": ["flutter", "dart", "swiftui", "react-native", "java"],
+      "pushed_at": "2026-03-01T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-board": "# Signal Board\n\nSignal Board is a small app for tracking time-sensitive updates across mobile devices. It helps teams view incoming items, sort them by priority, and mark progress without leaving the flow.\n\n## Features\n- Shared list of updates with quick filtering\n- Detail view for each item with notes and status\n- Simple sync layer for remote data\n- Clear error states and offline-friendly caching\n\n## Getting started\n1. Open the project in a TypeScript workspace.\n2. Set the Android target for a local run.\n3. Add your endpoint values and start the app.\n\nThe project is kept small so it can be reviewed, extended, and maintained with ease.",
+    "metro-pulse": "# Metro Pulse\n\nMetro Pulse is an Android app that presents route notices in a clean, fast interface. It focuses on quick reading, simple actions, and a steady layout for busy moments.\n\n## Features\n- Route cards with current status and timestamps\n- Search and filter for fast lookup\n- Compact detail pages for notices and notes\n- Kotlin-based screens with a modern layout approach\n\n## Getting started\n1. Open the project as an Android app.\n2. Configure your service endpoint.\n3. Run the app on a device or emulator.\n\nUse the included Kotlin sources and update the notice data to try the main flow.",
+    "craft-link": "# Craft Link\n\nCraft Link is a reusable set of mobile building blocks for common screen patterns. It gathers buttons, cards, form fields, and layout helpers into one place for consistent app work.\n\n## Features\n- Reusable components for lists, forms, and summaries\n- Simple spacing and typography rules\n- Motion-friendly patterns for smooth transitions\n- Example screens that show common usage\n\n## Getting started\n1. Open the project in Dart.\n2. Connect the component samples to your app flow.\n3. Run the demo and adjust the shared styles.\n\nThis kit is meant to stay small, readable, and easy to adapt for future screens."
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "personaId": "p099",
+  "language": "en",
+  "name": "Arjun Moreau",
+  "email": "arjun-moreau@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer in Test",
+  "location": "Lyon, France",
+  "summary": "Software engineer in test with a track record of building reliable automated checks and strengthening release confidence across product teams. Combines hands-on test automation, security-focused validation, and fast feedback loops to improve quality in complex delivery environments. Comfortable working across backend and user-facing work while partnering closely with engineers and product teams.",
+  "roles": [
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Software Engineer in Test",
+      "start": "2020-12",
+      "end": "2023-12",
+      "bullets": [
+        "Built C# test coverage for core application flows and reduced regression escapes by 28%.",
+        "Set up GitHub Actions workflows to run automated checks on every change and shorten feedback time for the team.",
+        "Expanded Selenium suites to cover critical browser journeys and improved repeatable verification before release."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Senior Software Engineer in Test",
+      "start": "2024-01",
+      "end": "2026-06",
+      "bullets": [
+        "Led test automation planning in Agile delivery, using C#, Cypress and pytest to improve coverage across new features.",
+        "Built CI/CD checks on Azure and Docker, cutting release verification time by 35% for the team.",
+        "Validated REST APIs and React flows with JUnit, Python and test automation practices to catch issues earlier in the cycle.",
+        "Strengthened security review work with Cryptography, OAuth, penetration testing and SIEM findings to reduce exposure in sensitive paths.",
+        "Hardened Linux-based environments and ran controlled checks with Selenium-style browser coverage plus Cypress for end-to-end confidence."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Quiet Garden",
+      "description": "Designed validation scenarios for Quiet Garden using OWASP guidance and Performance testing to study resilience, response stability and failure handling."
+    },
+    {
+      "name": "Rapid Library",
+      "description": "Investigated Rapid Library with Burp Suite to review request handling, spot security weaknesses and document safer behavior for the product team."
+    }
+  ],
+  "skills": [
+    "C#",
+    "GitHub Actions",
+    "Selenium",
+    "Agile",
+    "Azure",
+    "CI/CD",
+    "Cryptography",
+    "Cypress",
+    "Docker",
+    "JUnit",
+    "Linux",
+    "OAuth",
+    "Penetration testing",
+    "pytest",
+    "Python",
+    "React",
+    "REST APIs",
+    "SIEM",
+    "Test automation",
+    "JavaScript",
+    "OWASP",
+    "Performance testing",
+    "Burp Suite"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Engineering in Software Quality",
+      "school": "Northgate Institute of Applied Studies",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Veldt Technical College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (C1)"],
+  "injection": null
+}

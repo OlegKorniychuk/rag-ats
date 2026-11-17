@@ -1,0 +1,87 @@
+{
+  "personaId": "p050",
+  "language": "en",
+  "name": "Mateo Fischer",
+  "email": "mateo-fischer@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer",
+  "location": "Munich, Germany",
+  "summary": "Software Engineer with a background in store operations and product-focused delivery. Experienced in building and supporting internal tools and backend services, with a practical approach to reliability, teamwork and continuous improvement. Comfortable working across cloud environments, deployment processes and access management.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Retail Store Manager",
+      "start": "2018-01",
+      "end": "2021-07",
+      "bullets": [
+        "Managed daily store operations, coached a team of 14, and kept service standards consistent across peak trading periods.",
+        "Improved stock control routines and reduced checkout delays by 18% through better floor planning and clearer shift handovers.",
+        "Handled customer issues, returns and merchandising priorities while maintaining a smooth in-store experience.",
+        "Tracked sales performance and staffing needs to support weekly planning and stronger revenue outcomes."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Software Engineer",
+      "start": "2021-08",
+      "end": "2024-09",
+      "bullets": [
+        "Built backend features in Python on Azure, helping ship new product flows for internal users and customers.",
+        "Standardized deployment work with Git and Helm, which cut release preparation time by 30%.",
+        "Supported incident response and routine maintenance across Azure services, improving uptime and reducing recurring faults.",
+        "Worked with product and support teams to refine integrations, diagnose defects and keep the platform stable at scale."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Software Engineer",
+      "start": "2024-10",
+      "end": "2026-05",
+      "bullets": [
+        "Developed automation scripts in Bash and Go to speed up operational tasks and reduce manual intervention by 40%.",
+        "Designed service boundaries for Microservices and implemented IAM controls to tighten access to sensitive functions.",
+        "Improved internal tooling and deployment flows by coordinating changes across multiple services and environments.",
+        "Resolved production issues, reviewed service behavior and helped establish clearer operating practices for the engineering team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Planner",
+      "description": "Built Tidal Planner with Azure, Bash and Python to coordinate schedules, surface exceptions and simplify recurring planning work for small teams."
+    }
+  ],
+  "skills": [
+    "GraphQL",
+    "MySQL",
+    "NestJS",
+    "Node.js",
+    "PostgreSQL",
+    "RabbitMQ",
+    "Redis",
+    "REST APIs",
+    "TypeScript",
+    "Azure",
+    "Bash",
+    "Git",
+    "Go",
+    "Helm",
+    "IAM",
+    "Microservices",
+    "Python"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Business Administration",
+      "school": "Northbridge College of Commerce",
+      "end": "2017"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Elmford Institute of Professional Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B1)"],
+  "injection": null
+}

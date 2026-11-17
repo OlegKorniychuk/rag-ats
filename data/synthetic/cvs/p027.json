@@ -1,0 +1,68 @@
+{
+  "personaId": "p027",
+  "language": "en",
+  "name": "Callum Moreau",
+  "email": "callum-moreau@example.com",
+  "githubUrl": null,
+  "headline": "Backend Developer",
+  "location": "Montreal, Canada",
+  "summary": "Backend developer focused on reliable services, API design and maintainable server-side systems. Experienced in building and supporting production features across layered application stacks, with a strong emphasis on performance, structure and clean integration between services.",
+  "roles": [
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Backend Developer",
+      "start": "2024-07",
+      "end": "2025-05",
+      "bullets": [
+        "Built REST APIs and backend services in Java and Spring Boot, using SQL for data access and TypeScript for shared application logic.",
+        "Shaped system design decisions for a core platform feature, improving request flow and reducing duplicate processing by 28%.",
+        "Implemented Node.js job handlers for asynchronous tasks and tightened validation across the service boundary.",
+        "Collaborated with product and operations teams to refine release scope and resolve defects before launch, supporting a smoother rollout for 3 teams."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Backend Developer",
+      "start": "2025-05",
+      "end": null,
+      "bullets": [
+        "Developed backend features in Go and Spring Boot, connecting Node.js services with TypeScript code for internal tools.",
+        "Added OAuth-based access flows and Redis-backed session handling, cutting login-related support tickets by 31%.",
+        "Wrote automated checks in JUnit and Jest for Java and TypeScript components, raising confidence in weekly releases.",
+        "Optimized MySQL queries and service endpoints to lower median response time by 22%.",
+        "Supported production debugging across Java services and Go workers, resolving recurring incidents faster for a 5-person engineering group."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "GraphQL",
+    "Java",
+    "Node.js",
+    "REST APIs",
+    "Spring Boot",
+    "SQL",
+    "System design",
+    "TypeScript",
+    "Go",
+    "JUnit",
+    "Jest",
+    "MySQL",
+    "OAuth",
+    "Redis"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northbridge Institute of Technology",
+      "end": "2024"
+    },
+    {
+      "degree": "Certificate in Applied Computing",
+      "school": "Lakeside School of Engineering",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B2)"],
+  "injection": null
+}

@@ -1,0 +1,91 @@
+{
+  "personaId": "p009",
+  "language": "en",
+  "name": "Pavel Banerjee",
+  "email": "pavel-banerjee@example.com",
+  "githubUrl": "https://github.com/synth-pavel-banerjee",
+  "headline": "Senior Mobile Engineer",
+  "location": "Montclair, Canada",
+  "summary": "Mobile engineer with a track record of building polished app experiences, improving release stability, and collaborating closely with product and design teams. Experienced across Android and iOS development, interface implementation, and shared state management in fast-moving product groups. Known for shipping reliable features, reducing defects, and keeping teams aligned on delivery goals.",
+  "roles": [
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Junior Mobile Engineer",
+      "start": "2020-10",
+      "end": "2022-02",
+      "bullets": [
+        "Built Android screens in Java and SwiftUI for a companion app, cutting setup-related support requests by 18%.",
+        "Implemented shared state flows with Redux to keep device status and user actions consistent across the app.",
+        "Refined onboarding and navigation logic in Android and Java, improving first-run completion by 12%.",
+        "Partnered with product and design to translate requirements into mobile features that felt smooth and predictable."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Mobile Developer",
+      "start": "2022-03",
+      "end": "2024-06",
+      "bullets": [
+        "Delivered iOS customer features in Java with Redux, supporting a 22% increase in weekly active usage.",
+        "Reworked app state handling to make screen updates more reliable during account changes and refreshes.",
+        "Coordinated with QA and support to triage defects, reducing repeat mobile bugs by 30%.",
+        "Shipped interface improvements for a subscription flow and kept release notes clear for internal teams."
+      ]
+    },
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Mobile Developer",
+      "start": "2024-08",
+      "end": "2025-04",
+      "bullets": [
+        "Built new mobile experiences in Jetpack Compose with Redux, helping launch two major product updates on schedule.",
+        "Simplified state-driven screens to reduce manual refresh issues and improve responsiveness on lower-end devices.",
+        "Reviewed feature behavior with product managers and designers, turning feedback into smaller and clearer app changes."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Senior Mobile Engineer",
+      "start": "2025-05",
+      "end": "2026-07",
+      "bullets": [
+        "Led Android feature delivery in Java and Jetpack Compose, improving core task completion by 15%.",
+        "Maintained shared UI patterns across Android and SwiftUI to keep the app experience consistent across platforms.",
+        "Used Git to coordinate branches and releases across a team of 8 engineers and designers.",
+        "Mentored junior engineers on code quality, review habits, and practical mobile architecture choices.",
+        "Drove bug reduction efforts across mobile surfaces, lowering production incidents by 28% through tighter release checks."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Gateway",
+      "description": "Designed Tidal Gateway as a mobile-facing data layer using GraphQL to simplify screen refreshes and reduce overfetching for connected app views."
+    }
+  ],
+  "skills": [
+    "Android",
+    "Java",
+    "Redux",
+    "SwiftUI",
+    "iOS",
+    "Jetpack Compose",
+    "Git",
+    "GraphQL",
+    "React Native"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Mobile Application Development",
+      "school": "Northlake Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "BSc in Computing Systems",
+      "school": "Riverset School of Digital Arts",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Bengali (C1)", "French (B1)"],
+  "injection": null
+}

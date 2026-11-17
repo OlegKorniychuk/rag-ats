@@ -1,0 +1,76 @@
+{
+  "personaId": "p008",
+  "language": "en",
+  "name": "Samuel Novak",
+  "email": "samuel-novak@example.com",
+  "githubUrl": null,
+  "headline": "Senior QA Automation Engineer",
+  "location": "Prague, Czech Republic",
+  "summary": "QA automation specialist with a track record of building reliable test coverage, stabilizing release pipelines, and improving defect detection across fast-moving product teams. Experienced in designing maintainable test suites, working closely with engineers and product partners, and raising confidence in releases through practical automation. Comfortable supporting both legacy and newer web flows in collaborative delivery environments.",
+  "roles": [
+    {
+      "employer": "Copperline Labs",
+      "title": "Junior QA Automation Engineer",
+      "start": "2021-08",
+      "end": "2023-10",
+      "bullets": [
+        "Built end-to-end regression coverage for the web portal using Cypress and JavaScript, reducing escaped defects by 28% over two release cycles.",
+        "Maintained shared test utilities in Java and Git so the team could review changes faster and keep tests aligned with product updates.",
+        "Created targeted UI checks with Selenium and Java for critical customer journeys, helping the team verify 15 high-risk flows before release.",
+        "Improved flaky test handling and triage routines by pairing Cypress scenarios with JavaScript helpers, which cut repeated reruns by 35%."
+      ]
+    },
+    {
+      "employer": "Corvid Analytics",
+      "title": "QA Automation Engineer",
+      "start": "2023-10",
+      "end": "2025-04",
+      "bullets": [
+        "Partnered in an Agile squad to expand automated coverage with Playwright and C#, adding stable checks for the reporting workflow.",
+        "Kept Selenium suites healthy across sprint work by refactoring brittle selectors and tightening review habits with the team.",
+        "Reviewed defect trends and release risks with Agile rituals, using C# test fixtures to validate 20 priority scenarios before deployment.",
+        "Coordinated test execution across the browser layer with Playwright and Selenium, shortening verification time by 22%."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Senior QA Automation Engineer",
+      "start": "2025-06",
+      "end": null,
+      "bullets": [
+        "Led automation strategy in an Agile delivery team, combining C#, Java and JavaScript to cover core customer journeys.",
+        "Designed Selenium checks for critical releases and added performance testing for the busiest flows, improving confidence during peak launch windows.",
+        "Mentored two QA engineers on maintainable test structure and review practices, while keeping shared suites readable in C# and Java.",
+        "Extended coverage for service handoffs with JavaScript-based validations and Selenium scenarios, reducing post-release incidents by 31%."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Test automation",
+    "TypeScript",
+    "Cypress",
+    "Git",
+    "Java",
+    "JavaScript",
+    "Selenium",
+    "Agile",
+    "C#",
+    "Playwright",
+    "Performance testing"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Quality",
+      "school": "Northbridge Institute of Applied Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Vistara College of Computing",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Czech (B2)"],
+  "injection": null
+}

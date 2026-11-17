@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-mateo-macleod",
+    "html_url": "https://github.com/synth-mateo-macleod",
+    "bio": "Backend developer who builds practical systems with a strong focus on reliability and clear contracts."
+  },
+  "repos": [
+    {
+      "name": "query-harbor",
+      "html_url": "https://github.com/synth-mateo-macleod/query-harbor",
+      "description": "A focused set of PostgreSQL scripts for reporting, auditing, and safe data changes.",
+      "language": "SQL",
+      "stargazers_count": 45,
+      "topics": [
+        "postgresql",
+        "sql",
+        "reporting",
+        "auditing",
+        "data-management"
+      ],
+      "pushed_at": "2026-09-17T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "ledger-signal",
+      "html_url": "https://github.com/synth-mateo-macleod/ledger-signal",
+      "description": "A small SQL toolkit for invoice tracking, status summaries, and reconciliation routines.",
+      "language": "SQL",
+      "stargazers_count": 41,
+      "topics": ["sql", "postgresql", "finance", "reconciliation", "reporting"],
+      "pushed_at": "2026-06-04T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "route-balance",
+      "html_url": "https://github.com/synth-mateo-macleod/route-balance",
+      "description": "A lightweight SQL project for queue counts, processing logs, and operational checks.",
+      "language": "SQL",
+      "stargazers_count": 29,
+      "topics": ["sql", "queues", "operations", "logging", "postgresql"],
+      "pushed_at": "2026-05-23T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "query-harbor": "# Query Harbor\n\nQuery Harbor is a compact collection of SQL scripts for reporting, auditing, and controlled updates in a shared database. It is meant for teams that want repeatable data operations without a lot of ceremony.\n\n## Features\n- Clear reporting queries for common business views\n- Audit helpers that surface changes over time\n- Safe update patterns with rollback-friendly steps\n- Small examples for joins, filters, and aggregates\n\n## Getting started\nOpen the scripts in your SQL editor and run the sample sections against a PostgreSQL database. Start with the reporting queries, review the audit checks, and adapt the update patterns to your own tables.",
+    "ledger-signal": "# Ledger Signal\n\nLedger Signal provides SQL routines for tracking invoice states, checking totals, and preparing summary views for operations review. It is designed for simple handoff between data entry and finance review.\n\n## Features\n- Status summaries for open, paid, and overdue records\n- Reconciliation checks that compare totals across tables\n- Reusable views for monthly and weekly review\n- Example joins for clean record matching\n\n## Getting started\nLoad the scripts into PostgreSQL, create the sample tables, and run the summary sections first. Then review the reconciliation queries and adapt the column names to match your own schema.",
+    "route-balance": "# Route Balance\n\nRoute Balance is a small set of SQL scripts for tracking queue counts, reviewing processing logs, and checking whether work has moved through each step. It helps keep operational data easy to inspect.\n\n## Features\n- Queue count snapshots for regular review\n- Log queries that highlight stalled records\n- Simple status tables for operational follow-up\n- Repeatable checks for basic data health\n\n## Getting started\nCreate the required tables in PostgreSQL, load the scripts, and run the snapshot queries to see the expected outputs. After that, tune the filters and labels to fit your own workflow."
+  }
+}

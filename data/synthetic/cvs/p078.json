@@ -1,0 +1,70 @@
+{
+  "personaId": "p078",
+  "language": "en",
+  "name": "Leila Dubois",
+  "email": "leila-dubois@example.com",
+  "githubUrl": "https://github.com/synth-leila-dubois",
+  "headline": "Software Engineer",
+  "location": "Paris, France",
+  "summary": "Software Engineer with experience building and operating cloud infrastructure, monitoring services, and automating environment management. Known for improving reliability, tightening access controls, and supporting production teams across distributed platforms. Comfortable working across incident response, deployment operations, and system-level troubleshooting.",
+  "roles": [
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Software Engineer",
+      "start": "2024-12",
+      "end": "2025-10",
+      "bullets": [
+        "Built and supported cloud infrastructure across AWS, Azure and GCP, using Kubernetes to standardize deployments for several internal services.",
+        "Created Bash scripts on Linux to automate recurring operational tasks and reduce manual effort by 30%.",
+        "Configured IAM policies and monitored access patterns through Grafana and Prometheus, helping cut misconfiguration incidents by 22%.",
+        "Investigated platform issues with Linux tooling and tuned alerting in Grafana so the team could detect service degradation earlier."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Software Engineer",
+      "start": "2025-12",
+      "end": null,
+      "bullets": [
+        "Automated environment provisioning with Terraform and Ansible, keeping Azure and Kubernetes setups consistent across release cycles.",
+        "Worked in Agile delivery routines while using Git and Bash to coordinate changes across the platform.",
+        "Strengthened access governance with IAM and SIEM, improving audit readiness and reducing risky exceptions by 18%.",
+        "Expanded Prometheus checks and Grafana dashboards on Linux hosts to improve visibility into service health and incident trends.",
+        "Supported production operations by refining Kubernetes configurations and troubleshooting platform issues during high-traffic periods."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "AWS",
+    "Azure",
+    "Bash",
+    "GCP",
+    "Grafana",
+    "IAM",
+    "Kubernetes",
+    "Linux",
+    "Prometheus",
+    "Agile",
+    "Ansible",
+    "Git",
+    "SIEM",
+    "Terraform",
+    "Docker",
+    "GitHub Actions"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Engineering in Computer Systems",
+      "school": "Northbridge Institute of Technology",
+      "end": "2024"
+    },
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Valen School of Digital Practice",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (C2)"],
+  "injection": null
+}

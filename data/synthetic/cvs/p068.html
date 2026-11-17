@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Felix Dubois - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Felix Dubois</h1>
+<div class="headline">Platform Engineer</div>
+<div class="contact">felix-dubois@example.com &middot; Paris, France &middot; github.com/synth-felix-dubois</div>
+<h2>Summary</h2>
+<p>Platform engineer with a track record of improving internal platforms, access controls, and operational reliability across robotics and digital products. Experienced in building practical automation, supporting production services, and partnering with engineering teams to streamline delivery. Known for clear incident follow-up, careful change management, and steady improvements to developer workflows.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Platform Engineer</span><span class="dates">Jun 2024 – Present</span></div>
+  <div class="sub">Brightwater Digital</div>
+  <ul>
+    <li>Automated server configuration with Ansible on AWS and Linux, reducing setup time for new environments by 40%.</li>
+    <li>Packaged backend services with Docker and Bash so releases were more repeatable across the platform fleet.</li>
+    <li>Maintained Git and GitHub Actions workflows to validate changes faster and support a smaller, more reliable release process.</li>
+    <li>Standardized operational tasks and access handling, helping the team support 99.9% service uptime across critical systems.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Jan 2023 – Apr 2024</span></div>
+  <div class="sub">Marlowe &amp; Finch Tech</div>
+  <ul>
+    <li>Built and supported cloud services across AWS and Azure, improving platform availability and cutting manual intervention by 25%.</li>
+    <li>Created Grafana dashboards for Linux hosts and shared service health views that helped the team spot incidents earlier.</li>
+    <li>Administered IAM policies and Linux server access for 60 users, strengthening control over privileged operations.</li>
+    <li>Improved incident triage by refining alerts and operational runbooks for the platform team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Developer</span><span class="dates">May 2021 – Jan 2023</span></div>
+  <div class="sub">Dovetail Robotics</div>
+  <ul>
+    <li>Maintained Git workflows for the development team and helped reduce merge issues by 30% through clearer branch habits and review checks.</li>
+    <li>Managed IAM access requests and role updates for 4 product teams, improving onboarding speed and tightening account control.</li>
+    <li>Supported developers with release preparation and source control hygiene, resolving day-to-day repository problems before they delayed delivery.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Granite Market</span></div>
+  <p>Designed Granite Market monitoring around Prometheus to track service health, surface slowdowns, and give operators a clearer view of production behavior.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Orbit Pipeline</span></div>
+  <p>Built Orbit Pipeline automation with Azure, GitHub Actions, and Linux to move files between environments and keep recurring release steps consistent.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Git</li>
+  <li>IAM</li>
+  <li>AWS</li>
+  <li>Azure</li>
+  <li>Grafana</li>
+  <li>Linux</li>
+  <li>Ansible</li>
+  <li>Bash</li>
+  <li>Docker</li>
+  <li>GitHub Actions</li>
+  <li>Prometheus</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computer Systems</span><span class="dates">2020</span></div>
+  <div class="sub">Lycée Montclair Technique</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Operations</span><span class="dates">2018</span></div>
+  <div class="sub">Institut Saint-Vincent des Arts Numériques</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>French (native)</li>
+  <li>English (C1)</li>
+</ul>
+  </body>
+</html>

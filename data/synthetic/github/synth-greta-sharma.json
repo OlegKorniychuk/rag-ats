@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-greta-sharma",
+    "html_url": "https://github.com/synth-greta-sharma",
+    "bio": "Software engineer who builds practical products and cares about reliable delivery."
+  },
+  "repos": [
+    {
+      "name": "signal-board",
+      "html_url": "https://github.com/synth-greta-sharma/signal-board",
+      "description": "A collaborative status board for tracking work, updates, and handoffs across a small team.",
+      "language": "TypeScript",
+      "stargazers_count": 45,
+      "topics": ["react", "typescript", "rest-apis", "ci-cd", "agile"],
+      "pushed_at": "2026-09-18T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "taskline-verifier",
+      "html_url": "https://github.com/synth-greta-sharma/taskline-verifier",
+      "description": "A test automation suite that checks key user flows and guards against broken releases.",
+      "language": "TypeScript",
+      "stargazers_count": 33,
+      "topics": [
+        "test-automation",
+        "playwright",
+        "jest",
+        "cypress",
+        "typescript"
+      ],
+      "pushed_at": "2026-05-22T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "ledger-path",
+      "html_url": "https://github.com/synth-greta-sharma/ledger-path",
+      "description": "A service for recording personal budget entries and summarizing monthly spending.",
+      "language": "Java",
+      "stargazers_count": 30,
+      "topics": ["java", "junit", "rest-apis", "postgresql", "docker"],
+      "pushed_at": "2026-02-08T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-board": "# Signal Board\n\nSignal Board is a small workspace app for sharing status, collecting updates, and keeping handoffs clear. It is shaped for teams that want a simple place to coordinate daily work without extra clutter.\n\n## Features\n- Create and organize shared status cards\n- Review recent updates in one place\n- Support a clean flow for team handoffs\n- Keep delivery habits steady with built-in checks\n\n## Getting started\nUse TypeScript to run the app and connect it to a service endpoint. The project is intended to be started with Node.js and paired with GitHub Actions for repeatable checks. For local work, keep Docker available for a consistent environment, then run the app and verify the main paths before sharing changes.",
+    "taskline-verifier": "# Taskline Verifier\n\nTaskline Verifier is a focused suite for checking important user flows before a release goes out. It is meant to catch regressions early and keep the team confident in everyday changes.\n\n## Features\n- Run end-to-end checks for core flows\n- Compare expected and actual results with clear reports\n- Organize repeatable checks for fast feedback\n- Support routine verification during CI/CD\n\n## Getting started\nInstall dependencies with Node.js, then run the checks from the project folder. The suite works well with GitHub Actions for automated runs and Docker for a stable local setup. Extend the existing cases, execute the full set, and review the report before merging.",
+    "ledger-path": "# Ledger Path\n\nLedger Path is a compact service for storing budget entries and producing simple monthly summaries. It is designed for a single person or a small group that wants a dependable way to track spending patterns.\n\n## Features\n- Add and review income or expense entries\n- Produce monthly summaries from stored records\n- Keep request handling straightforward and predictable\n- Support automated checks for core behavior\n\n## Getting started\nBuild the service with Java, then run the checks with JUnit. Use Docker for a repeatable local setup, and point the app at PostgreSQL for storage. After that, start the service, submit a few sample entries, and confirm the summary output."
+  }
+}

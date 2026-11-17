@@ -1,0 +1,90 @@
+{
+  "personaId": "p007",
+  "language": "en",
+  "name": "Kwame Silva",
+  "email": "kwame-silva@example.com",
+  "githubUrl": "https://github.com/synth-kwame-silva",
+  "headline": "Frontend Engineer",
+  "location": "Lagos, Nigeria",
+  "summary": "Frontend engineer with a track record of building polished product experiences across fast-moving teams. Experienced in shipping user-facing features, improving reliability, and working closely with designers and backend partners to deliver measurable outcomes. Comfortable turning product requirements into maintainable interfaces and practical test coverage.",
+  "roles": [
+    {
+      "employer": "Tessera Works",
+      "title": "Junior Software Developer",
+      "start": "2019-07",
+      "end": "2020-12",
+      "bullets": [
+        "Built reusable interface components in React and Vue, and used JavaScript to deliver feature work for the product dashboard.",
+        "Added end-to-end checks with Cypress for key user flows, reducing release defects by 28%.",
+        "Collaborated with designers and backend teammates to refine interactions and keep the frontend responsive across core pages."
+      ]
+    },
+    {
+      "employer": "Kestrel Data",
+      "title": "Frontend Engineer",
+      "start": "2021-02",
+      "end": "2021-12",
+      "bullets": [
+        "Delivered customer workflows with Playwright and REST APIs, improving the speed of routine tasks for internal users.",
+        "Refactored state handling in Redux to simplify complex screens and cut duplicated logic across the team’s main views.",
+        "Partnered with product and support teams to resolve edge cases, then rolled out updates that lowered follow-up tickets by 19%."
+      ]
+    },
+    {
+      "employer": "Larkspur Engineering",
+      "title": "Frontend Engineer",
+      "start": "2021-12",
+      "end": "2023-02",
+      "bullets": [
+        "Shipped new product screens in Vue while working in Agile sprints and aligning delivery with weekly planning goals.",
+        "Reworked shared state patterns in Redux to make features easier to maintain and reduced regressions across 3 major releases.",
+        "Coordinated with engineers and designers to tighten feedback loops and keep the frontend moving steadily through each iteration."
+      ]
+    },
+    {
+      "employer": "Lumenfield",
+      "title": "Senior Frontend Engineer",
+      "start": "2023-04",
+      "end": "2025-11",
+      "bullets": [
+        "Led frontend delivery in Agile teams using JavaScript and Jest, guiding implementation choices for high-visibility product areas.",
+        "Improved component test coverage with Jest and raised confidence in releases by 35% across the main application.",
+        "Mentored 4 engineers on review practices, code quality, and practical approaches to building robust user interfaces.",
+        "Drove performance improvements across critical screens, shortening load times and making the experience noticeably smoother for customers."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tidal Notebook",
+      "description": "Built Tidal Notebook in Next.js to help teams capture and organize working notes in one place with a fast, reliable interface."
+    }
+  ],
+  "skills": [
+    "Cypress",
+    "JavaScript",
+    "React",
+    "Vue",
+    "Playwright",
+    "Redux",
+    "REST APIs",
+    "Agile",
+    "Jest",
+    "Next.js",
+    "GraphQL"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Mirestone College of Applied Studies",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Harbor Institute of Technology",
+      "end": "2017"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B1)"],
+  "injection": null
+}

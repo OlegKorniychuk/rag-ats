@@ -1,0 +1,60 @@
+{
+  "personaId": "p053",
+  "language": "en",
+  "name": "Daniel Alvarez",
+  "email": "daniel-alvarez@example.com",
+  "githubUrl": null,
+  "headline": "Software Developer",
+  "location": "Valencia, Spain",
+  "summary": "Software Developer with a track record of building and refining customer-facing web products and internal workflows. Experienced in delivering features with JavaScript, TypeScript, GraphQL, Git and Redux, and in collaborating in Agile teams to keep releases predictable and stable.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Software Developer",
+      "start": "2024-02",
+      "end": "2025-04",
+      "bullets": [
+        "Built interactive user flows in JavaScript and TypeScript, wiring data from GraphQL services into the frontend state with Redux.",
+        "Used Git to keep changes organized across a 14-person product team and reduce merge conflicts during feature work.",
+        "Refined interfaces and bug fixes that improved release quality, cutting rework on the main product area by 22%."
+      ]
+    },
+    {
+      "employer": "Opaline Works",
+      "title": "Software Developer",
+      "start": "2025-05",
+      "end": "2026-05",
+      "bullets": [
+        "Delivered new product pages in Next.js, JavaScript and TypeScript, aligning implementation with Agile planning and weekly reviews.",
+        "Connected GraphQL data into Redux-based screens and tightened Git-based branch coordination across two parallel feature streams.",
+        "Improved frontend performance and launch readiness, supporting 18% faster page rendering for the most visited workflows.",
+        "Partnered with designers and backend colleagues to simplify complex journeys and ship clearer customer experiences."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "REST APIs",
+    "Git",
+    "GraphQL",
+    "JavaScript",
+    "Redux",
+    "TypeScript",
+    "Agile",
+    "Next.js"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Development",
+      "school": "Northbridge Institute of Technology",
+      "end": "2023"
+    },
+    {
+      "degree": "Higher Certificate in Digital Systems",
+      "school": "Lakeside School of Computing",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Spanish (Native)"],
+  "injection": null
+}

@@ -1,0 +1,93 @@
+{
+  "personaId": "p019",
+  "language": "en",
+  "name": "Mei Lindqvist",
+  "email": "mei-lindqvist@example.com",
+  "githubUrl": null,
+  "headline": "Site Reliability Engineer",
+  "location": "Stockholm, Sweden",
+  "summary": "SRE and software engineer focused on reliable cloud platforms, deployment automation, and operational improvement. Experience spans Python development, infrastructure as code, and service ownership across multi-team environments. Known for building practical systems that improve delivery speed, stability, and incident response.",
+  "roles": [
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Junior Software Developer",
+      "start": "2020-07",
+      "end": "2022-02",
+      "bullets": [
+        "Built internal tools in Python and GCP to streamline environment setup and reduce manual work for the engineering team by 35%.",
+        "Automated infrastructure provisioning with Terraform and GitHub Actions, cutting release preparation time from hours to minutes.",
+        "Improved deployment consistency by standardizing cloud configurations and adding automated checks across the delivery pipeline.",
+        "Supported application maintenance and small feature work while keeping code changes reviewable and easy to trace."
+      ]
+    },
+    {
+      "employer": "Ironleaf Systems",
+      "title": "Site Reliability Engineer",
+      "start": "2022-02",
+      "end": "2024-04",
+      "bullets": [
+        "Helped run production services on AWS and Azure, resolving incidents faster and improving platform uptime by 18%.",
+        "Refactored service components into Microservices and strengthened runtime behavior for teams shipping on Agile cadences.",
+        "Used Kubernetes and Rust to stabilize service deployments and reduce memory-related failures by 22%.",
+        "Partnered with product and operations groups to improve on-call workflows, incident follow-up, and release quality."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Senior Site Reliability Engineer",
+      "start": "2024-06",
+      "end": null,
+      "bullets": [
+        "Own cloud operations across Azure and Kubernetes, improving service availability and lowering recovery time during incidents by 40%.",
+        "Build and maintain delivery automation with Git, GitHub Actions, Terraform and Helm for faster and safer releases.",
+        "Develop platform utilities in Go and Bash to support day-to-day operations, environment management, and developer self-service.",
+        "Coordinate MLOps workflows with application teams so model rollouts stay repeatable and traceable across environments.",
+        "Package workloads with Docker and tune deployment standards to keep clusters efficient as usage grows."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Inbox",
+      "description": "Created an internal workflow project using Ansible to standardize environment setup and configuration across shared services."
+    },
+    {
+      "name": "Rapid Compass",
+      "description": "Designed a delivery initiative around CI/CD to shorten approval loops and make releases more predictable for the team."
+    }
+  ],
+  "skills": [
+    "GCP",
+    "GitHub Actions",
+    "Python",
+    "Terraform",
+    "Agile",
+    "AWS",
+    "Azure",
+    "Kubernetes",
+    "Microservices",
+    "Rust",
+    "Bash",
+    "Docker",
+    "Git",
+    "Go",
+    "Helm",
+    "MLOps",
+    "Ansible",
+    "CI/CD"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computing Practice",
+      "school": "North Harbor Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Software Operations",
+      "school": "Mellanvik Technical College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Swedish (C1)"],
+  "injection": null
+}

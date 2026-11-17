@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sofia Hartmann - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>sofia-hartmann@example.com</li>
+  <li>Berlin, Germany</li>
+  <li>github.com/synth-sofia-hartmann</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Microservices</li>
+  <li>OAuth</li>
+  <li>System design</li>
+  <li>TypeScript</li>
+  <li>Agile</li>
+  <li>GraphQL</li>
+  <li>REST APIs</li>
+  <li>SQL</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>German (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computer Science</span><span class="dates">2022</span></div>
+  <div class="sub">Northbridge Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Cedar Vale Technical College</div>
+</div>
+</aside>
+<main class="main">
+<h1>Sofia Hartmann</h1>
+<div class="headline">Software Engineer</div>
+<h2>Summary</h2>
+<p>Software Engineer focused on building reliable backend services and product features across distributed teams. Experienced in system design, API development, and delivering maintainable solutions that support growth and operational stability.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">Jul 2024 – Present</span></div>
+  <div class="sub">Redwren Software</div>
+  <ul>
+    <li>Shipped customer-facing features in TypeScript through Agile delivery cycles, working with GraphQL and REST APIs to keep integrations consistent.</li>
+    <li>Designed and refined SQL-backed data access patterns for reporting and operational screens, reducing slow queries by 34%.</li>
+    <li>Led system design reviews for new services and endpoint changes, balancing product needs with maintainability and predictable behavior.</li>
+    <li>Partnered with product and support teams to triage issues, define fixes, and close an average of 12 customer-impacting tickets per month.</li>
+    <li>Improved API contracts and implementation details across TypeScript, GraphQL and REST APIs to support faster delivery across the team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">Nov 2022 – Jun 2024</span></div>
+  <div class="sub">Vantage Reed</div>
+  <ul>
+    <li>Built Microservices in TypeScript for core platform workflows, improving service separation and reducing release risk across the backend.</li>
+    <li>Implemented OAuth-based sign-in and session handling in TypeScript, cutting account support issues by 28%.</li>
+    <li>Contributed to system design discussions that shaped service boundaries, data flow, and operational ownership for a 6-person engineering team.</li>
+    <li>Delivered new product features and internal tools in TypeScript while coordinating with adjacent teams on integration details.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

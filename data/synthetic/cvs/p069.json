@@ -1,0 +1,89 @@
+{
+  "personaId": "p069",
+  "language": "en",
+  "name": "Ingrid Dubois",
+  "email": "ingrid-dubois@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer",
+  "location": "Paris, France",
+  "summary": "Product-focused software engineer with experience across mobile and front-end delivery, supported by an earlier background in marketing. Known for translating customer needs into reliable features, improving team throughput, and collaborating closely with design, product, and support groups. Comfortable working across TypeScript, Kotlin, Redux, Jest, Android, iOS, Jetpack Compose, and JUnit.",
+  "roles": [
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Marketing Specialist",
+      "start": "2019-09",
+      "end": "2021-11",
+      "bullets": [
+        "Coordinated campaign launches and customer messaging across multiple product lines, improving lead quality by 18%.",
+        "Managed content calendars, approvals, and stakeholder updates to keep releases on schedule.",
+        "Tracked campaign performance and refined weekly reporting to help the team focus on higher-value channels.",
+        "Supported events and partner communications that increased qualified inbound interest by 24%."
+      ]
+    },
+    {
+      "employer": "Opaline Works",
+      "title": "Software Engineer",
+      "start": "2021-11",
+      "end": "2024-01",
+      "bullets": [
+        "Built customer-facing features in TypeScript and Kotlin, pairing business rules with a smoother interface experience.",
+        "Wrote Jest coverage for key flows and reduced regressions by 32% before release.",
+        "Reworked shared state handling with Redux to simplify screen updates and cut duplicate code in the front end.",
+        "Collaborated with product and design on delivery details, shipping 14 feature updates across quarterly cycles.",
+        "Reviewed implementation changes with the team and kept the codebase consistent through regular refactoring."
+      ]
+    },
+    {
+      "employer": "Cinder Peak",
+      "title": "Software Developer",
+      "start": "2024-01",
+      "end": "2025-12",
+      "bullets": [
+        "Delivered mobile features for Android and iOS, shaping interactions in Jetpack Compose for a more consistent experience.",
+        "Strengthened JUnit coverage around core workflows and raised automated confidence for release candidates by 28%.",
+        "Adjusted platform-specific behavior across mobile builds to improve launch stability and reduce customer-reported issues.",
+        "Partnered with designers and support staff to prioritize fixes, resolving 40% more high-severity items each cycle.",
+        "Improved onboarding screens and in-app flows with Jetpack Compose, making the product easier to navigate for new users."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Prism Library",
+      "description": "Created a reusable component library in TypeScript with clear interfaces and shared patterns for multiple product teams."
+    }
+  ],
+  "skills": [
+    "Burp Suite",
+    "CI/CD",
+    "Cryptography",
+    "IAM",
+    "Linux",
+    "OAuth",
+    "OWASP",
+    "Penetration testing",
+    "Python",
+    "Jest",
+    "Kotlin",
+    "Redux",
+    "TypeScript",
+    "Android",
+    "iOS",
+    "Jetpack Compose",
+    "JUnit"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Commerce",
+      "school": "Northbridge School of Business",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Digital Marketing",
+      "school": "Riverton Institute of Applied Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (C2)"],
+  "injection": null
+}

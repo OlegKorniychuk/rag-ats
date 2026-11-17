@@ -1,0 +1,69 @@
+{
+  "personaId": "p031",
+  "language": "en",
+  "name": "Sofia Brandt",
+  "email": "sofia-brandt@example.com",
+  "githubUrl": "https://github.com/synth-sofia-brandt",
+  "headline": "Analytics Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Analytics Engineer with experience turning messy operational data into reliable reporting and decision support. Adept at building clear data workflows, improving data quality, and partnering with stakeholders to deliver practical analytical insight.",
+  "roles": [
+    {
+      "employer": "Quillstone Systems",
+      "title": "Analytics Engineer",
+      "start": "2022-07",
+      "end": "2024-08",
+      "bullets": [
+        "Built recurring reporting datasets with pandas and R, reducing manual cleanup time by 40%.",
+        "Validated source extracts and reconciled metric definitions with pandas to improve consistency across teams.",
+        "Produced ad hoc analysis in R that helped leaders track campaign performance and customer trends."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Analytics Engineer",
+      "start": "2024-10",
+      "end": null,
+      "bullets": [
+        "Coordinated Airflow workflows across AWS and Azure to keep data processing on schedule for 12 product areas.",
+        "Modeled analytics layers in BigQuery and dbt, improving refresh reliability and reducing failed runs by 30%.",
+        "Linked event streams from Kafka into reporting pipelines and maintained change history in Git for shared review.",
+        "Implemented Scala-based transformation logic for a growing warehouse and supported faster delivery of new metrics.",
+        "Partnered with engineers and analysts to improve data quality checks and cut recurring investigation time by 25%."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Prism Compass",
+      "description": "Created Prism Compass as an internal exploration tool that used Spark to process large datasets for pattern discovery and reporting."
+    }
+  ],
+  "skills": [
+    "Airflow",
+    "AWS",
+    "Azure",
+    "BigQuery",
+    "dbt",
+    "Git",
+    "Kafka",
+    "pandas",
+    "R",
+    "Scala",
+    "Spark"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Data Analytics",
+      "school": "Northvale Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Decision Analytics",
+      "school": "Linden Park School of Business",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B2)"],
+  "injection": null
+}

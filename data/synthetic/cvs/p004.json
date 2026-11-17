@@ -1,0 +1,60 @@
+{
+  "personaId": "p004",
+  "language": "en",
+  "name": "Svitlana Shevchuk",
+  "email": "svitlana-shevchuk@example.com",
+  "githubUrl": null,
+  "headline": "Junior Machine Learning Engineer",
+  "location": "Lviv, Ukraine",
+  "summary": "Junior Machine Learning Engineer focused on computer vision products and practical model development. Builds and evaluates solutions in C++, PyTorch and TensorFlow, with an emphasis on reliable experiments and measurable improvements. Works closely with product and engineering teammates to turn research ideas into usable features.",
+  "roles": [
+    {
+      "employer": "Fernhollow Studio",
+      "title": "Junior Machine Learning Engineer",
+      "start": "2026-02",
+      "end": null,
+      "bullets": [
+        "Built computer vision features in C++ and PyTorch, helping the team improve image-based detection quality by 18%.",
+        "Trained and tuned TensorFlow models for production experiments, reducing error rates on key validation sets by 12%.",
+        "Prepared datasets and reviewed outputs to support model iteration, improving consistency across 3 internal test cycles.",
+        "Collaborated with product and engineering peers to translate model findings into implementation plans for the backend."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Granite Inbox",
+      "description": "Created an experiment tracking workflow with Git and MLflow to organize model runs, compare results and keep changes easy to review."
+    },
+    {
+      "name": "Cobalt Market",
+      "description": "Implemented a C++ prototype with TensorFlow to score incoming signals and support faster model comparison during development."
+    },
+    {
+      "name": "Meadow Market",
+      "description": "Built a TensorFlow-based model experiment to test predictions on market-style data and measure changes across multiple runs."
+    }
+  ],
+  "skills": [
+    "Computer vision",
+    "C++",
+    "PyTorch",
+    "TensorFlow",
+    "Git",
+    "MLflow"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Northmere Technical Institute",
+      "end": "2025"
+    },
+    {
+      "degree": "Certificate in Data Analysis",
+      "school": "Valebridge College",
+      "end": "2024"
+    }
+  ],
+  "spokenLanguages": ["Ukrainian (Native)", "English (B2)"],
+  "injection": null
+}

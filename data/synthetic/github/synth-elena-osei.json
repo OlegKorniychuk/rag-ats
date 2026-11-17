@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-elena-osei",
+    "html_url": "https://github.com/synth-elena-osei",
+    "bio": "Senior mobile engineer who builds polished app experiences across platforms."
+  },
+  "repos": [
+    {
+      "name": "signal-loop",
+      "html_url": "https://github.com/synth-elena-osei/signal-loop",
+      "description": "A mobile messaging demo that syncs conversations and presence across devices.",
+      "language": "Dart",
+      "stargazers_count": 72,
+      "topics": ["android", "flutter", "dart", "graphql", "rest-apis"],
+      "pushed_at": "2026-09-24T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "harbor-notes",
+      "html_url": "https://github.com/synth-elena-osei/harbor-notes",
+      "description": "A personal notes app focused on quick capture, tagging, and smooth editing.",
+      "language": "Swift",
+      "stargazers_count": 68,
+      "topics": ["ios", "swiftui", "swift", "agile", "rest-apis"],
+      "pushed_at": "2026-09-10T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "pulse-tracks",
+      "html_url": "https://github.com/synth-elena-osei/pulse-tracks",
+      "description": "A fitness companion app that shows daily progress and summary cards.",
+      "language": "Dart",
+      "stargazers_count": 57,
+      "topics": ["android", "dart", "flutter", "jetpack-compose", "junit"],
+      "pushed_at": "2026-06-10T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-loop": "# Signal Loop\n\nSignal Loop is a compact mobile app demo for synchronized conversations, contact presence, and offline-friendly updates. It shows how a single codebase can deliver a smooth experience on Android and iOS while keeping the interface clear and responsive.\n\n## Features\n- Conversation list with live status updates\n- Message composer with draft recovery\n- Shared view flow for Android and iOS\n- Data refresh through GraphQL and REST APIs\n- Simple state handling for fast screen changes\n\n## Getting started\nOpen the project in Flutter, choose Android or iOS, and run it from Dart. The app is organized for easy navigation between screens, with sample data included so you can explore the flow right away.",
+    "harbor-notes": "# Harbor Notes\n\nHarbor Notes is a clean notes app for quick capture, lightweight organization, and a calm editing flow. It is designed for iOS and keeps the experience simple for everyday use.\n\n## Features\n- Fast note creation and editing\n- Tag-based browsing and search\n- Subtle motion for screen transitions\n- List and detail layouts tuned for small screens\n- Data loading from REST APIs\n\n## Getting started\nOpen the project in Swift, build the app for iOS, and launch the sample workspace. The screens are arranged to support a short feedback loop so you can refine the interface with ease.",
+    "pulse-tracks": "# Pulse Tracks\n\nPulse Tracks is a lightweight progress app for daily goals, summary cards, and simple trend views. It focuses on clear reading, quick updates, and a smooth experience on Android.\n\n## Features\n- Daily activity cards and progress rings\n- History view with compact summaries\n- Exportable snapshots for sharing\n- Shared app flow for Android devices\n- Validation helpers for key screens\n\n## Getting started\nUse Dart and Flutter to open the project, then run it on Android. The sample screens are ready to explore, and the structure supports small iterative changes during Agile planning."
+  }
+}

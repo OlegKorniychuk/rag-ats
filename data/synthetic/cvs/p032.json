@@ -1,0 +1,79 @@
+{
+  "personaId": "p032",
+  "language": "en",
+  "name": "Nadia Haddad",
+  "email": "nadia-haddad@example.com",
+  "githubUrl": "https://github.com/synth-nadia-haddad",
+  "headline": "Backend Developer",
+  "location": "Bristol, United Kingdom",
+  "summary": "Backend engineer focused on building reliable service layers and integrating business systems through clean APIs. Experienced in distributed services, test-driven delivery, and operational improvements across product teams. Comfortable working across implementation, troubleshooting, and release coordination in fast-moving environments.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Backend Developer",
+      "start": "2022-04",
+      "end": "2025-08",
+      "bullets": [
+        "Built backend services in Microservices and REST APIs, packaging them with Docker and coordinating rollout across shared infrastructure.",
+        "Implemented message-driven workflows with RabbitMQ and OAuth to support secure account flows, reducing manual handoffs by 30%.",
+        "Created automated checks with JUnit and Kubernetes, improving release confidence for 4 service teams.",
+        "Refined service interfaces and operational behavior through Docker and REST APIs, helping cut incident follow-up time by 25%."
+      ]
+    },
+    {
+      "employer": "Willowmere Software",
+      "title": "API Engineer",
+      "start": "2025-09",
+      "end": "2026-09",
+      "bullets": [
+        "Delivered new service features in Scala and Microservices under Agile planning, keeping delivery aligned with product priorities.",
+        "Optimized data access with Hibernate and Redis, lowering common request latency by 40%.",
+        "Strengthened platform reliability by updating Docker, Kubernetes and JUnit-based verification across the backend.",
+        "Worked with cross-functional peers to shape deployment changes and service contracts, supporting 2 major releases."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Ledger",
+      "description": "Designed a streaming ledger prototype using Kafka to move transaction events between internal services and support near-real-time reconciliation."
+    },
+    {
+      "name": "Maple Gateway",
+      "description": "Built an integration gateway with GitHub Actions to coordinate automated build and release steps for shared service components."
+    },
+    {
+      "name": "Atlas Inbox",
+      "description": "Created a message inbox prototype with JUnit and REST APIs to validate request handling and simplify service-level testing."
+    }
+  ],
+  "skills": [
+    "Docker",
+    "JUnit",
+    "Kubernetes",
+    "Microservices",
+    "OAuth",
+    "RabbitMQ",
+    "REST APIs",
+    "Agile",
+    "Hibernate",
+    "Redis",
+    "Scala",
+    "Kafka",
+    "GitHub Actions"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Northmere Technical Institute",
+      "end": "2021"
+    },
+    {
+      "degree": "Bachelor of Applied Informatics",
+      "school": "Lakeside College of Technology",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Arabic (Native)"],
+  "injection": null
+}

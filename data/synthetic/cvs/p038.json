@@ -1,0 +1,89 @@
+{
+  "personaId": "p038",
+  "language": "en",
+  "name": "Kwame Rahman",
+  "email": "kwame-rahman@example.com",
+  "githubUrl": null,
+  "headline": "Full-Stack Developer",
+  "location": "Accra, Ghana",
+  "summary": "Full-stack developer with experience building backend services and user-facing applications across product teams. Known for shipping reliable features, improving service quality, and working closely with peers to deliver practical solutions. Comfortable moving between service design, testing, and cloud delivery in fast-paced environments.",
+  "roles": [
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Junior Backend Developer",
+      "start": "2022-01",
+      "end": "2023-12",
+      "bullets": [
+        "Built REST APIs in Java with Spring Boot to support customer workflows and reduced response times by 28%.",
+        "Used Git to manage feature branches and coordinate code reviews across the team.",
+        "Refined backend logic and data handling so new endpoints were released with fewer defects.",
+        "Worked with product peers to translate requirements into maintainable service changes."
+      ]
+    },
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Full-Stack Developer",
+      "start": "2023-12",
+      "end": "2025-12",
+      "bullets": [
+        "Developed microservices in Java and Spring Boot on AWS and Azure, improving release frequency by 22%.",
+        "Implemented user-facing features in TypeScript and C# while keeping shared behavior aligned across services.",
+        "Wrote JUnit coverage for core workflows and added GitHub Actions checks that caught regressions earlier.",
+        "Optimized PostgreSQL queries and Redis usage to lower endpoint latency by 35%."
+      ]
+    },
+    {
+      "employer": "Quartzfield",
+      "title": "Full-Stack Developer",
+      "start": "2026-01",
+      "end": null,
+      "bullets": [
+        "Deliver microservices in Java and Kotlin with Spring Boot and Hibernate, supporting a platform used by 12 internal teams.",
+        "Build Angular interfaces and TypeScript features for operational users, with OAuth protecting sensitive access paths.",
+        "Automate delivery workflows with GitHub Actions and coordinate Agile planning to keep releases on schedule.",
+        "Tune PostgreSQL-backed services on AWS and maintain JUnit coverage for critical business rules."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Inbox",
+      "description": "Designed Pocket Inbox in Go to organize incoming messages and route them through a lightweight workflow for faster triage."
+    }
+  ],
+  "skills": [
+    "Git",
+    "Java",
+    "REST APIs",
+    "Spring Boot",
+    "AWS",
+    "Azure",
+    "C#",
+    "GitHub Actions",
+    "JUnit",
+    "Microservices",
+    "PostgreSQL",
+    "Redis",
+    "TypeScript",
+    "Agile",
+    "Angular",
+    "Hibernate",
+    "Kotlin",
+    "OAuth",
+    "Go"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Asterbrook Institute of Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Northbridge College of Applied Studies",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B1)"],
+  "injection": null
+}

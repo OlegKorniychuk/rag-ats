@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-iryna-zinchenko",
+    "html_url": "https://github.com/synth-iryna-zinchenko",
+    "bio": "Machine learning engineer who turns messy data into practical tools and experiments."
+  },
+  "repos": [
+    {
+      "name": "vision-quality-lab",
+      "html_url": "https://github.com/synth-iryna-zinchenko/vision-quality-lab",
+      "description": "Image analysis toolkit for checking visual consistency in large photo sets.",
+      "language": "Python",
+      "stargazers_count": 80,
+      "topics": ["python", "computer-vision", "pandas", "scikit-learn"],
+      "pushed_at": "2026-09-28T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "spark-feature-sifter",
+      "html_url": "https://github.com/synth-iryna-zinchenko/spark-feature-sifter",
+      "description": "Batch feature preparation tool for large datasets with a focus on repeatable analysis.",
+      "language": "Python",
+      "stargazers_count": 74,
+      "topics": ["python", "spark", "pandas", "data-preparation"],
+      "pushed_at": "2026-07-15T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "trainer-notes",
+      "html_url": "https://github.com/synth-iryna-zinchenko/trainer-notes",
+      "description": "Shared notes for an agile project focused on model review and planning.",
+      "language": null,
+      "stargazers_count": 64,
+      "topics": ["agile", "project-notes", "ml-workflow"],
+      "pushed_at": "2026-07-05T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "vision-quality-lab": "# Vision Quality Lab\n\nVision Quality Lab is a compact project for reviewing image groups and flagging items that look unusual. It is built for experiments around visual inspection, data cleaning, and simple scoring workflows.\n\n## Features\n- Loads image metadata and summary tables\n- Computes lightweight comparison scores for grouped images\n- Helps sort likely outliers for manual review\n- Keeps results in readable tables for follow-up analysis\n\n## Getting started\n1. Prepare a small image set and a matching table of notes.\n2. Run the Python entry point to build the report.\n3. Review the output and adjust the scoring rules as needed.\n\nThe project is designed for local use with Python and simple tabular data. It is a good starting point for trying new review ideas on small collections before scaling up.",
+    "spark-feature-sifter": "# Spark Feature Sifter\n\nSpark Feature Sifter prepares large tables for model experiments and summary reports. It is aimed at quick feature shaping, grouping, and clean handoff between data stages.\n\n## Features\n- Reads raw tables and builds filtered working sets\n- Creates grouped summaries for downstream scoring\n- Applies simple rules to standardize columns\n- Produces compact outputs for inspection and reuse\n\n## Getting started\n1. Place your source tables in the expected input folder.\n2. Launch the Python workflow to run the batch preparation step.\n3. Check the generated tables and tune the rules for your dataset.\n\nThis repository focuses on Python for orchestration and Spark for distributed table work, with a small amount of table handling through pandas.",
+    "trainer-notes": "# Trainer Notes\n\nTrainer Notes is a lightweight place to keep planning ideas, review checkpoints, and short experiment summaries. It supports a small team rhythm where tasks, findings, and next steps stay easy to revisit.\n\n## Features\n- Organizes weekly goals and review notes\n- Captures experiment results in short form\n- Tracks open questions and follow-up items\n- Keeps planning language simple and easy to scan\n\n## Getting started\n1. Add a new note for each review cycle.\n2. Write down the main goal, the result, and one next action.\n3. Keep the structure consistent so the notes stay useful over time.\n\nUse this repository as a calm workspace for planning around Python-based experiments and shared review work."
+  }
+}

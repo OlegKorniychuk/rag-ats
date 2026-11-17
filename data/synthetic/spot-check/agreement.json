@@ -1,0 +1,498 @@
+{
+  "pairs": 30,
+  "exactAgreement": 0.7666666666666667,
+  "kappa": 0.65,
+  "quadraticKappa": 0.8292682926829268,
+  "confusion": [
+    [7, 3, 0],
+    [1, 6, 3],
+    [0, 0, 10]
+  ],
+  "bands": ["strong", "partial", "weak"],
+  "disagreements": [
+    {
+      "pair": 5,
+      "vacancyId": "ml",
+      "personaId": "p040",
+      "score": 40,
+      "rule": "partial",
+      "human": "weak",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "ml-exp",
+          "status": "not_met",
+          "text": "2+ years of experience in machine learning"
+        },
+        {
+          "requirementId": "ml-python",
+          "status": "met",
+          "tag": "python",
+          "text": "3+ years of Python experience"
+        },
+        {
+          "requirementId": "ml-framework",
+          "status": "not_met",
+          "text": "2+ years building deep learning models with PyTorch or TensorFlow"
+        },
+        {
+          "requirementId": "ml-classic",
+          "status": "not_met",
+          "text": "Experience with classical machine learning using scikit-learn or pandas"
+        },
+        {
+          "requirementId": "ml-domain",
+          "status": "not_met",
+          "text": "Experience working in NLP, computer vision or LLMs"
+        },
+        {
+          "requirementId": "ml-mlops",
+          "status": "not_met",
+          "text": "Exposure to experiment tracking or MLOps with MLflow"
+        },
+        {
+          "requirementId": "ml-docker",
+          "status": "met",
+          "tag": "docker",
+          "text": "Docker experience"
+        },
+        {
+          "requirementId": "ml-cloud",
+          "status": "met",
+          "tag": "aws",
+          "text": "Experience with a major cloud provider such as AWS, GCP or Azure"
+        },
+        {
+          "requirementId": "ml-sql",
+          "status": "met",
+          "tag": "sql",
+          "text": "Working knowledge of SQL"
+        },
+        {
+          "requirementId": "ml-git",
+          "status": "met",
+          "tag": "git",
+          "text": "Comfort using Git"
+        }
+      ]
+    },
+    {
+      "pair": 11,
+      "vacancyId": "mobile",
+      "personaId": "p013",
+      "score": 56,
+      "rule": "partial",
+      "human": "weak",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "mo-exp",
+          "status": "not_met",
+          "text": "3+ years of mobile development experience"
+        },
+        {
+          "requirementId": "mo-platform",
+          "status": "not_met",
+          "text": "2+ years building production apps on Android or iOS or React Native or Flutter"
+        },
+        {
+          "requirementId": "mo-lang",
+          "status": "met",
+          "tag": "typescript",
+          "text": "Hands-on experience with Kotlin or Swift or Dart or TypeScript"
+        },
+        {
+          "requirementId": "mo-ui",
+          "status": "not_met",
+          "text": "Experience with a modern declarative UI toolkit such as Jetpack Compose or SwiftUI or React Native or Flutter"
+        },
+        {
+          "requirementId": "mo-api",
+          "status": "met",
+          "tag": "rest-api",
+          "text": "Experience integrating REST APIs"
+        },
+        {
+          "requirementId": "mo-git",
+          "status": "met",
+          "tag": "git",
+          "text": "Comfortable working with Git"
+        },
+        {
+          "requirementId": "mo-test",
+          "status": "met",
+          "tag": "junit",
+          "text": "Experience with unit testing using JUnit or Jest"
+        },
+        {
+          "requirementId": "mo-cicd",
+          "status": "met",
+          "tag": "ci-cd",
+          "text": "Exposure to mobile CI/CD"
+        },
+        {
+          "requirementId": "mo-graphql",
+          "status": "not_met",
+          "text": "Experience with GraphQL clients"
+        },
+        {
+          "requirementId": "mo-agile",
+          "status": "met",
+          "tag": "agile",
+          "text": "Experience working in Agile teams"
+        }
+      ]
+    },
+    {
+      "pair": 12,
+      "vacancyId": "data-engineering",
+      "personaId": "p055",
+      "score": 80,
+      "rule": "strong",
+      "human": "partial",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "de-exp",
+          "status": "met",
+          "tag": "exp-data",
+          "text": "3+ years of experience in data engineering"
+        },
+        {
+          "requirementId": "de-python",
+          "status": "met",
+          "tag": "python",
+          "text": "3+ years of experience working with Python for data processing"
+        },
+        {
+          "requirementId": "de-sql",
+          "status": "met",
+          "tag": "sql",
+          "text": "3+ years of experience writing advanced SQL"
+        },
+        {
+          "requirementId": "de-orchestration",
+          "status": "met",
+          "tag": "airflow",
+          "text": "Hands-on experience with pipeline tooling such as Airflow, dbt or Spark"
+        },
+        {
+          "requirementId": "de-warehouse",
+          "status": "met",
+          "tag": "bigquery",
+          "text": "Experience working with a cloud data warehouse such as Snowflake or BigQuery"
+        },
+        {
+          "requirementId": "de-streaming",
+          "status": "not_met",
+          "text": "Exposure to streaming with Kafka or Spark"
+        },
+        {
+          "requirementId": "de-modeling",
+          "status": "met",
+          "tag": "data-modeling",
+          "text": "Experience with data modeling or ETL design"
+        },
+        {
+          "requirementId": "de-cloud",
+          "status": "not_met",
+          "text": "Familiarity with a major cloud provider such as AWS, GCP or Azure"
+        },
+        {
+          "requirementId": "de-docker",
+          "status": "not_met",
+          "text": "Experience using Docker"
+        },
+        {
+          "requirementId": "de-git",
+          "status": "met",
+          "tag": "git",
+          "text": "Experience using Git"
+        }
+      ]
+    },
+    {
+      "pair": 19,
+      "vacancyId": "full-stack",
+      "personaId": "p095",
+      "score": 88,
+      "rule": "strong",
+      "human": "partial",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "fs-exp-be",
+          "status": "met",
+          "tag": "exp-backend",
+          "text": "2+ years of backend development experience"
+        },
+        {
+          "requirementId": "fs-exp-fe",
+          "status": "met",
+          "tag": "exp-frontend",
+          "text": "2+ years of frontend development experience"
+        },
+        {
+          "requirementId": "fs-ts",
+          "status": "met",
+          "tag": "typescript",
+          "text": "TypeScript across the stack"
+        },
+        {
+          "requirementId": "fs-ui",
+          "status": "met",
+          "tag": "vue",
+          "text": "Experience with a modern UI framework such as React or Vue or Angular"
+        },
+        {
+          "requirementId": "fs-server",
+          "status": "met",
+          "tag": "nodejs",
+          "text": "Experience with a server-side language such as Node.js or Java or Python or Go"
+        },
+        {
+          "requirementId": "fs-db",
+          "status": "met",
+          "tag": "postgresql",
+          "text": "Experience with PostgreSQL or MySQL or MongoDB"
+        },
+        {
+          "requirementId": "fs-docker",
+          "status": "met",
+          "tag": "docker",
+          "text": "Docker for development and deployment"
+        },
+        {
+          "requirementId": "fs-ci",
+          "status": "not_met",
+          "text": "Experience with CI/CD or GitHub Actions"
+        },
+        {
+          "requirementId": "fs-cloud",
+          "status": "not_met",
+          "text": "Familiarity with a major cloud provider such as AWS or GCP or Azure"
+        },
+        {
+          "requirementId": "fs-test",
+          "status": "met",
+          "tag": "jest",
+          "text": "Experience with Jest or Cypress or Playwright"
+        }
+      ]
+    },
+    {
+      "pair": 22,
+      "vacancyId": "security",
+      "personaId": "p099",
+      "score": 100,
+      "rule": "strong",
+      "human": "partial",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "se-exp",
+          "status": "met",
+          "tag": "exp-security",
+          "text": "3+ years in security engineering"
+        },
+        {
+          "requirementId": "se-owasp",
+          "status": "met",
+          "tag": "owasp",
+          "text": "Experience with application security and the OWASP Top 10"
+        },
+        {
+          "requirementId": "se-pentest",
+          "status": "met",
+          "tag": "penetration-testing",
+          "text": "Hands-on experience with penetration testing or threat modeling"
+        },
+        {
+          "requirementId": "se-iam",
+          "status": "met",
+          "tag": "oauth",
+          "text": "Strong understanding of IAM or OAuth for identity and access management"
+        },
+        {
+          "requirementId": "se-cloud",
+          "status": "met",
+          "tag": "azure",
+          "text": "Cloud security experience with AWS or Azure or GCP"
+        },
+        {
+          "requirementId": "se-linux",
+          "status": "met",
+          "tag": "linux",
+          "text": "Experience hardening Linux systems"
+        },
+        {
+          "requirementId": "se-siem",
+          "status": "met",
+          "tag": "siem",
+          "text": "Exposure to SIEM and log analysis"
+        },
+        {
+          "requirementId": "se-script",
+          "status": "met",
+          "tag": "python",
+          "text": "Scripting skills in Python or Bash"
+        },
+        {
+          "requirementId": "se-crypto",
+          "status": "met",
+          "tag": "cryptography",
+          "text": "Familiarity with applied cryptography and TLS"
+        },
+        {
+          "requirementId": "se-burp",
+          "status": "met",
+          "tag": "burp-suite",
+          "text": "Working knowledge of Burp Suite"
+        },
+        {
+          "requirementId": "se-ci",
+          "status": "met",
+          "tag": "ci-cd",
+          "text": "Experience adding security checks in CI/CD"
+        }
+      ]
+    },
+    {
+      "pair": 23,
+      "vacancyId": "backend-node",
+      "personaId": "p005",
+      "score": 47,
+      "rule": "partial",
+      "human": "weak",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "bn-exp",
+          "status": "not_met",
+          "text": "3+ years of backend development experience"
+        },
+        {
+          "requirementId": "bn-node",
+          "status": "partial",
+          "tag": "nodejs",
+          "text": "2+ years of production experience with Node.js"
+        },
+        {
+          "requirementId": "bn-ts",
+          "status": "not_met",
+          "text": "2+ years of server-side experience with TypeScript"
+        },
+        {
+          "requirementId": "bn-api",
+          "status": "met",
+          "tag": "rest-api",
+          "text": "Experience designing REST APIs or GraphQL APIs"
+        },
+        {
+          "requirementId": "bn-db",
+          "status": "met",
+          "tag": "postgresql",
+          "text": "Experience working with PostgreSQL or MySQL or MongoDB"
+        },
+        {
+          "requirementId": "bn-framework",
+          "status": "not_met",
+          "text": "Familiarity with NestJS or Express"
+        },
+        {
+          "requirementId": "bn-cache",
+          "status": "not_met",
+          "text": "Experience with Redis for caching"
+        },
+        {
+          "requirementId": "bn-docker",
+          "status": "met",
+          "tag": "docker",
+          "text": "Comfort using Docker for local development and deployment"
+        },
+        {
+          "requirementId": "bn-messaging",
+          "status": "not_met",
+          "text": "Exposure to Kafka or RabbitMQ message queues"
+        },
+        {
+          "requirementId": "bn-tests",
+          "status": "met",
+          "tag": "jest",
+          "text": "Experience writing automated tests with Jest"
+        }
+      ]
+    },
+    {
+      "pair": 27,
+      "vacancyId": "qa-automation",
+      "personaId": "p014",
+      "score": 53,
+      "rule": "partial",
+      "human": "strong",
+      "note": "",
+      "requirements": [
+        {
+          "requirementId": "qa-exp",
+          "status": "met",
+          "tag": "exp-qa",
+          "text": "3+ years of experience in QA automation"
+        },
+        {
+          "requirementId": "qa-ui",
+          "status": "met",
+          "tag": "selenium",
+          "text": "2+ years using Selenium or Cypress or Playwright for UI automation"
+        },
+        {
+          "requirementId": "qa-lang",
+          "status": "met",
+          "tag": "javascript",
+          "text": "Experience with JavaScript or TypeScript or Python or Java for test scripting"
+        },
+        {
+          "requirementId": "qa-framework",
+          "status": "met",
+          "tag": "test-automation",
+          "text": "Experience building test automation frameworks"
+        },
+        {
+          "requirementId": "qa-api",
+          "status": "not_met",
+          "text": "Experience testing REST APIs with Postman or REST"
+        },
+        {
+          "requirementId": "qa-cicd",
+          "status": "not_met",
+          "text": "Experience running test suites in CI/CD or GitHub Actions"
+        },
+        {
+          "requirementId": "qa-pytest",
+          "status": "not_met",
+          "text": "Experience with pytest"
+        },
+        {
+          "requirementId": "qa-perf",
+          "status": "met",
+          "tag": "performance-testing",
+          "text": "Experience with performance testing"
+        },
+        {
+          "requirementId": "qa-bdd",
+          "status": "not_met",
+          "text": "Experience with Cucumber for BDD"
+        },
+        {
+          "requirementId": "qa-agile",
+          "status": "not_met",
+          "text": "Experience working in Agile teams"
+        },
+        {
+          "requirementId": "qa-docker",
+          "status": "not_met",
+          "text": "Experience with Docker"
+        }
+      ]
+    }
+  ]
+}

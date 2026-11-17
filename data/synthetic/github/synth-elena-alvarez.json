@@ -1,0 +1,62 @@
+{
+  "user": {
+    "login": "synth-elena-alvarez",
+    "html_url": "https://github.com/synth-elena-alvarez",
+    "bio": "Senior QA automation engineer who builds practical test tools and careful release checks."
+  },
+  "repos": [
+    {
+      "name": "signal-checker",
+      "html_url": "https://github.com/synth-elena-alvarez/signal-checker",
+      "description": "A project for checking flows, retry behavior, and release readiness across browser journeys and service calls.",
+      "language": "JavaScript",
+      "stargazers_count": 116,
+      "topics": [
+        "cypress",
+        "test-automation",
+        "rest-apis",
+        "javascript",
+        "release-checks"
+      ],
+      "pushed_at": "2026-09-05T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "boundary-suite",
+      "html_url": "https://github.com/synth-elena-alvarez/boundary-suite",
+      "description": "A Java-based suite for browser and service validation with readable scenario steps.",
+      "language": "Java",
+      "stargazers_count": 108,
+      "topics": ["java", "cucumber", "junit", "test-automation", "rest-apis"],
+      "pushed_at": "2026-06-10T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "response-guard",
+      "html_url": "https://github.com/synth-elena-alvarez/response-guard",
+      "description": "A Python utility for probing service responses and timing changes during regression work.",
+      "language": "Python",
+      "stargazers_count": 103,
+      "topics": [
+        "pytest",
+        "performance-testing",
+        "rest-apis",
+        "test-automation",
+        "python"
+      ],
+      "pushed_at": "2026-03-19T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-checker": "# Signal Checker\n\nSignal Checker is a small test automation project for browser journeys and service calls. It helps validate key paths before a release and keeps checks easy to read for a QA team.\n\n## Features\n- Cypress coverage for critical browser flows\n- REST APIs checks for request and response behavior\n- Test automation patterns that keep cases clear\n- Basic reporting for pass and fail results\n\n## Getting started\nUse JavaScript with Cypress to run the checks. Update the sample data in the config file, then start the suite from your local environment. The project is designed for quick setup and repeatable validation.",
+    "boundary-suite": "# Boundary Suite\n\nBoundary Suite is a Java project for test automation across browser and service boundaries. It is intended for teams that want readable scenarios and dependable checks around core user flows.\n\n## Features\n- Java scenarios for stable validation\n- Cucumber steps that describe behavior in plain language\n- JUnit execution for consistent test runs\n- REST APIs coverage for service-level checks\n\n## Getting started\nUse Java with Cucumber and JUnit. Place your scenarios in the sample structure, adjust the test data, and run the suite from your local setup. Keep the first run small so the checks stay easy to review.",
+    "response-guard": "# Response Guard\n\nResponse Guard is a Python utility for regression support and response review. It focuses on quick checks that help spot slowdowns, data drift, and unexpected failures.\n\n## Features\n- pytest-based regression checks\n- Performance testing for timing trends\n- REST APIs probes for service behavior\n- Simple output for fast triage\n\n## Getting started\nUse Python with pytest to run the checks. Add your target values, review the sample cases, and launch the utility from your local environment. It is meant to stay lightweight and easy to extend."
+  }
+}

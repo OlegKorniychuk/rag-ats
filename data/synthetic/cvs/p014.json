@@ -1,0 +1,73 @@
+{
+  "personaId": "p014",
+  "language": "en",
+  "name": "Ananya Banerjee",
+  "email": "ananya-banerjee@example.com",
+  "githubUrl": "https://github.com/synth-ananya-banerjee",
+  "headline": "QA Automation Engineer",
+  "location": "N/A",
+  "summary": "QA Automation Engineer with a track record of strengthening release confidence through disciplined test coverage, defect analysis, and stable automation suites. Experienced in building repeatable checks, improving test reliability, and partnering with product and development teams to keep delivery predictable. Known for clear reporting, careful investigation, and practical quality improvements across fast-moving teams.",
+  "roles": [
+    {
+      "employer": "Northgrove Networks",
+      "title": "Junior QA Automation Engineer",
+      "start": "2023-08",
+      "end": "2025-01",
+      "bullets": [
+        "Built and maintained automated checks in Git and JUnit, reducing repeated manual verification across the main release flow.",
+        "Reviewed failures and improved test reliability, cutting flaky runs by 28% over several release cycles.",
+        "Organized test cases and defect notes for the team, helping engineers resolve issues faster and with fewer handoffs."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "QA Automation Engineer",
+      "start": "2025-01",
+      "end": "2025-10",
+      "bullets": [
+        "Expanded browser coverage with Cypress and Playwright, improving confidence in the checkout and account journeys.",
+        "Wrote maintainable test scripts in JavaScript and supported Test automation for recurring regression work.",
+        "Ran Performance testing on key pages and flagged slowdowns before release, helping keep response times within target levels by 19%.",
+        "Coordinated test execution with product and development partners, ensuring defects were documented clearly and retested quickly."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "QA Automation Engineer",
+      "start": "2025-12",
+      "end": null,
+      "bullets": [
+        "Maintained automation coverage with Git, Java, JavaScript and JUnit across a fast-changing feature set.",
+        "Strengthened Test automation for the React interface by adding stable checks around user flows and edge cases.",
+        "Performed Performance testing on critical screens and reported bottlenecks that affected nearly 15% of sessions during peak use.",
+        "Partnered with developers to isolate failures, improve coverage, and keep releases moving with fewer last-minute surprises."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Git",
+    "JUnit",
+    "Cypress",
+    "JavaScript",
+    "Performance testing",
+    "Playwright",
+    "Test automation",
+    "Java",
+    "React"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Quality Engineering",
+      "school": "Briarmere Institute of Applied Studies",
+      "end": "2023"
+    },
+    {
+      "degree": "Certificate in Software Testing Practice",
+      "school": "Larkspur Technical School",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Bengali (C2)"],
+  "injection": null
+}

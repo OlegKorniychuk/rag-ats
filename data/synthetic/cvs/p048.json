@@ -1,0 +1,70 @@
+{
+  "personaId": "p048",
+  "language": "en",
+  "name": "Viktor Mensah",
+  "email": "viktor-mensah@example.com",
+  "githubUrl": null,
+  "headline": "Software Developer",
+  "location": "Accra, Ghana",
+  "summary": "Software Developer who builds reliable backend services and improves release workflows across product teams. Experienced in REST APIs, Spring Boot, microservices delivery, and cloud-native deployment practices. Known for shipping maintainable systems, tightening automated checks, and supporting teams through fast-moving product changes.",
+  "roles": [
+    {
+      "employer": "Northgrove Networks",
+      "title": "Software Developer",
+      "start": "2022-08",
+      "end": "2025-05",
+      "bullets": [
+        "Built REST APIs and service endpoints in Scala and Spring Boot, improving response consistency across core backend workflows.",
+        "Deployed services on Kubernetes and tuned rollout steps so the team could ship updates with fewer interruptions.",
+        "Worked with product and support teams to refine backend behavior and reduce recurring defects by 18%.",
+        "Expanded internal service logic in Scala while keeping integration points stable for downstream consumers."
+      ]
+    },
+    {
+      "employer": "Velvet Circuit",
+      "title": "Software Developer",
+      "start": "2025-06",
+      "end": null,
+      "bullets": [
+        "Developed Microservices in Kotlin with Spring Boot and REST APIs, supporting a faster path from feature design to release.",
+        "Set up Azure delivery environments and containerized services with Docker, reducing environment drift across the team.",
+        "Maintained Git workflows and GitHub Actions pipelines to automate checks and keep merges predictable for 12 active repositories.",
+        "Wrote JUnit test suites for Spring Boot services and improved defect detection before release by 24%.",
+        "Reviewed code changes with peers and coordinated small backend improvements that kept service behavior aligned across Microservices."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Compass",
+      "description": "Designed Pocket Compass as a set of Microservices with GitHub Actions to support frequent integration and release steps."
+    }
+  ],
+  "skills": [
+    "Kubernetes",
+    "REST APIs",
+    "Scala",
+    "Spring Boot",
+    "Azure",
+    "Docker",
+    "Git",
+    "GitHub Actions",
+    "JUnit",
+    "Kotlin",
+    "Microservices"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Marlowe Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Eastbridge College of Applied Sciences",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Twi (Native)"],
+  "injection": null
+}

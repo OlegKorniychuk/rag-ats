@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-jonas-hartmann",
+    "html_url": "https://github.com/synth-jonas-hartmann",
+    "bio": "Mobile engineer who builds calm, reliable products across apps and internal tools."
+  },
+  "repos": [
+    {
+      "name": "pulse-route",
+      "html_url": "https://github.com/synth-jonas-hartmann/pulse-route",
+      "description": "A mobile route planner with offline-friendly maps, trip notes, and shared favorites.",
+      "language": "Java",
+      "stargazers_count": 43,
+      "topics": ["mobile", "offline", "maps", "jetpack-compose", "redux"],
+      "pushed_at": "2026-09-29T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "harbor-planner",
+      "html_url": "https://github.com/synth-jonas-hartmann/harbor-planner",
+      "description": "An internal planning board for small teams that tracks work, owners, and weekly goals.",
+      "language": "Java",
+      "stargazers_count": 38,
+      "topics": [
+        "planning",
+        "team-work",
+        "weekly-review",
+        "agile",
+        "github-actions"
+      ],
+      "pushed_at": "2026-08-19T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "studio-ink",
+      "html_url": "https://github.com/synth-jonas-hartmann/studio-ink",
+      "description": "A compact content workspace for drafting, tagging, and reviewing short notes.",
+      "language": "Java",
+      "stargazers_count": 26,
+      "topics": ["content", "notes", "drafting", "vue", "node-js"],
+      "pushed_at": "2026-04-30T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "pulse-route": "# Pulse Route\nPulse Route is a mobile app for planning short trips, saving route notes, and keeping a shared list of favorites. It is designed for quick daily use with a clear layout and simple flows.\n\n## Features\n- Browse saved places and recent routes\n- Edit notes and mark favorite stops\n- Keep state consistent across screens\n- Work from a compact, offline-friendly data set\n\n## Getting started\nOpen the project in Java and run the app from your local environment. The sample data and screen state are included so you can explore the main flows right away. If you want to inspect the structure, start with the route list and then move to the detail screen.",
+    "harbor-planner": "# Harbor Planner\nHarbor Planner helps a small team organize work, review weekly goals, and keep ownership visible. It focuses on short updates and a clean board that is easy to scan.\n\n## Features\n- Create work cards with a status and owner\n- Review a weekly list of goals and blockers\n- Move items through a simple board flow\n- Keep the project structure easy to maintain\n\n## Getting started\nUse Java to open the project and review the sample board data. The app is set up to be explored locally, and the main screens can be read without extra setup. Start by opening the board view, then check the goal summary and card detail flow.",
+    "studio-ink": "# Studio Ink\nStudio Ink is a compact workspace for writing short notes, adding tags, and reviewing draft history. It is meant for quick editing sessions and simple organization.\n\n## Features\n- Draft and revise short notes\n- Organize items with tags and folders\n- Review recent changes in a tidy list\n- Keep the interface lightweight and focused\n\n## Getting started\nOpen the Java project in your local environment and run the sample workspace. The included content makes it easy to explore the main views and editing flow. Begin with the note list, then open a draft and try the tag editor."
+  }
+}

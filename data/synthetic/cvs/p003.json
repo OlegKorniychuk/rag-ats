@@ -1,0 +1,90 @@
+{
+  "personaId": "p003",
+  "language": "en",
+  "name": "Ananya Petrov",
+  "email": "ananya-petrov@example.com",
+  "githubUrl": null,
+  "headline": "Full-Stack Developer",
+  "location": "Gdansk, Poland",
+  "summary": "Full-stack developer with experience building mobile and web products across client-facing and backend features. Comfortable shipping polished user experiences, improving delivery flow, and working across multiple codebases and platforms. Known for practical ownership, clear communication, and steady feature delivery in fast-moving product teams.",
+  "roles": [
+    {
+      "employer": "Kestrel Data",
+      "title": "Junior Software Developer",
+      "start": "2020-11",
+      "end": "2022-08",
+      "bullets": [
+        "Built customer-facing screens in Dart and Flutter, helping the team ship 12 new flows for a mobile product.",
+        "Implemented reusable interface components with Jetpack Compose and Redux, which reduced duplicated code across the app.",
+        "Refined state handling and release fixes in Dart, supporting smoother handoffs between design and development."
+      ]
+    },
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Full-Stack Developer",
+      "start": "2022-09",
+      "end": "2024-10",
+      "bullets": [
+        "Delivered mobile features in Android and Dart, including onboarding improvements that lifted activation by 9%.",
+        "Maintained shared product logic in Java and React Native, keeping behavior aligned across the mobile app and companion client.",
+        "Shipped polished interface updates in Swift while coordinating bug fixes and release support for a cross-platform product.",
+        "Reviewed edge cases and improved navigation flows, cutting recurring support issues by 18%."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Senior Full-Stack Developer",
+      "start": "2024-11",
+      "end": null,
+      "bullets": [
+        "Built backend and mobile features with Android, Go and GraphQL, supporting a product used by 30,000 active users.",
+        "Designed and delivered services with Kotlin, MySQL and REST APIs, improving data consistency and reducing response time by 22%.",
+        "Streamlined delivery with CI/CD, Docker, GCP and Git, shortening release cycles from days to hours.",
+        "Implemented interface work in Jetpack Compose, React Native, SwiftUI, TypeScript and Vue for a unified client experience.",
+        "Partnered on data models and integrations across Android and GraphQL, resolving 40+ production issues and stabilizing the platform."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Ledger",
+      "description": "Built Rapid Ledger in Kotlin with MySQL and Redux to support fast account tracking and synchronized user actions across the product."
+    }
+  ],
+  "skills": [
+    "Dart",
+    "Flutter",
+    "Jetpack Compose",
+    "Redux",
+    "Android",
+    "Java",
+    "React Native",
+    "Swift",
+    "CI/CD",
+    "Docker",
+    "GCP",
+    "Git",
+    "Go",
+    "GraphQL",
+    "Kotlin",
+    "MySQL",
+    "REST APIs",
+    "SwiftUI",
+    "TypeScript",
+    "Vue"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "North Harbor Technical Institute",
+      "end": "2020"
+    },
+    {
+      "degree": "Advanced Certificate in Applied Computing",
+      "school": "Rivermark College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Russian (C1)", "Polish (B2)"],
+  "injection": null
+}

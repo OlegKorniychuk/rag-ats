@@ -1,0 +1,90 @@
+{
+  "personaId": "p033",
+  "language": "en",
+  "name": "Marta Demir",
+  "email": "marta-demir@example.com",
+  "githubUrl": "https://github.com/synth-marta-demir",
+  "headline": "Senior QA Automation Engineer",
+  "location": "Istanbul, Turkey",
+  "summary": "Quality-focused software engineer with a background in test automation, product validation, and release support across web and backend systems. Known for building dependable checks, improving defect detection, and working closely with delivery teams to keep releases stable. Comfortable translating product risks into practical test coverage and maintaining clear quality reporting.",
+  "roles": [
+    {
+      "employer": "Northgrove Networks",
+      "title": "Junior Software Engineer in Test",
+      "start": "2020-03",
+      "end": "2022-03",
+      "bullets": [
+        "Built automated checks for the product backend in C# and Cypress, cutting repeated manual regression work by 35%.",
+        "Created end-to-end scenarios in Cypress and C# for critical user journeys, helping the team catch issues earlier in the release cycle.",
+        "Supported daily test runs and defect triage with C#, improving turnaround time on verification for 4 active workstreams.",
+        "Documented test coverage gaps and collaborated on fixes in C# and Cypress to keep the release pipeline reliable."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Software Engineer in Test",
+      "start": "2022-04",
+      "end": "2023-09",
+      "bullets": [
+        "Maintained test suites in Git and JavaScript, keeping branch changes organized across 2 release tracks.",
+        "Expanded automated coverage with JUnit and JavaScript for core business flows, reducing escaped defects by 22%.",
+        "Reviewed failures and pinpointed unstable checks using Git, then updated JUnit coverage to improve signal quality.",
+        "Partnered with developers to refine test data and execution steps in JavaScript and JUnit during sprint delivery."
+      ]
+    },
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Senior QA Automation Engineer",
+      "start": "2023-10",
+      "end": "2025-08",
+      "bullets": [
+        "Led test automation across CI/CD pipelines with Docker and GitHub Actions, shortening validation cycles by 40%.",
+        "Designed API checks with Postman and REST APIs, covering critical integrations and reducing post-release incidents by 30%.",
+        "Built performance testing routines with pytest and REST APIs to measure response stability under peak load.",
+        "Standardized automated test execution with Test automation in Docker, improving repeatability across 6 release candidates.",
+        "Coordinated quality gates in CI/CD and GitHub Actions while keeping defect triage and reporting aligned with delivery goals."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Meadow Ledger",
+      "description": "Defined delivery expectations in Agile and shaped acceptance scenarios in Cucumber for a finance tracking prototype."
+    },
+    {
+      "name": "Amber Atlas",
+      "description": "Created browser-level checks in Cypress for a mapping dashboard, focusing on stable user journeys and fast feedback."
+    }
+  ],
+  "skills": [
+    "C#",
+    "Cypress",
+    "Git",
+    "JavaScript",
+    "JUnit",
+    "CI/CD",
+    "Docker",
+    "GitHub Actions",
+    "Performance testing",
+    "Postman",
+    "pytest",
+    "REST APIs",
+    "Test automation",
+    "Agile",
+    "Cucumber"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Quality Engineering",
+      "school": "Selden Technical Institute",
+      "end": "2019"
+    },
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Rivenhall College",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Turkish (C2)", "German (B1)"],
+  "injection": null
+}

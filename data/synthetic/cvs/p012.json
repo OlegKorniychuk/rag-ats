@@ -1,0 +1,89 @@
+{
+  "personaId": "p012",
+  "language": "en",
+  "name": "Jonas MacLeod",
+  "email": "jonas-macleod@example.com",
+  "githubUrl": "https://github.com/synth-jonas-macleod",
+  "headline": "Security Engineer",
+  "location": "Edinburgh, UK",
+  "summary": "Security engineer with a background in software development and product security across cloud and systems environments. Experienced in writing secure code, improving threat models, and supporting delivery teams with practical security guidance. Comfortable working across engineering, review, and incident response workflows.",
+  "roles": [
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Junior Software Developer",
+      "start": "2020-11",
+      "end": "2022-08",
+      "bullets": [
+        "Built internal services in C and Go, and supported secure deployment work in Azure for the product team.",
+        "Reviewed designs with threat modeling and helped reduce high-risk findings by 30% before release.",
+        "Implemented defensive checks in the backend and improved error handling for a set of 12 core workflows."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Security Engineer",
+      "start": "2022-08",
+      "end": "2024-01",
+      "bullets": [
+        "Partnered with developers in Agile ceremonies to add security requirements to C and Rust features.",
+        "Applied threat modeling to new platform changes and closed 18 design issues before implementation.",
+        "Investigated security defects in the codebase and wrote clear remediation notes that shortened follow-up work by 25%."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "Security Engineer",
+      "start": "2024-02",
+      "end": "2025-05",
+      "bullets": [
+        "Developed low-level components in C++ and improved memory-safety handling in shared modules.",
+        "Supported Azure integrations for internal services and resolved 40% of configuration issues found during release reviews.",
+        "Worked with product owners to translate security concerns into practical engineering tasks for the team."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Senior Security Engineer",
+      "start": "2025-05",
+      "end": null,
+      "bullets": [
+        "Lead security reviews in Agile delivery cycles and coordinated fixes across AWS workloads and service teams.",
+        "Used Burp Suite, CI/CD and Git to validate changes, catch regressions early, and keep release risk under control.",
+        "Strengthened cryptography usage and Linux hardening standards, cutting recurring security findings by 35%.",
+        "Expanded threat modeling coverage for major initiatives and guided engineers on secure implementation choices.",
+        "Mentored junior engineers on secure coding and incident follow-up while maintaining a steady delivery pace."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Azure",
+    "C",
+    "Go",
+    "Threat modeling",
+    "Agile",
+    "Rust",
+    "C++",
+    "AWS",
+    "Burp Suite",
+    "CI/CD",
+    "Cryptography",
+    "Git",
+    "Linux",
+    "IAM"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Security",
+      "school": "Northmere Technical Institute",
+      "end": "2020"
+    },
+    {
+      "degree": "BSc in Computer Systems",
+      "school": "Elmridge College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B1)"],
+  "injection": null
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <title>Olha Zinchenko - резюме</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Olha Zinchenko</h1><div class="headline">Координаторка проєктів та API-інженерка</div></div>
+  <div class="contact"><div>olha-zinchenko@example.com</div>
+<div>Острава, Чехія</div></div>
+</header>
+<h2>Про себе</h2>
+<p>Досвідчена фахівчиня з керування роздрібними операціями, координації міжкомандних ініціатив і побудови API-рішень. Уміє організовувати роботу, узгоджувати процеси між відділами та підтримувати стабільну поставку результатів. Працює на стику операційного менеджменту й технічної реалізації, з акцентом на якість та передбачуваність виконання.</p>
+<h2>Досвід роботи</h2>
+<div class="job">
+  <div class="row"><span>API Engineer</span><span class="dates">трав. 2024 – лист. 2025</span></div>
+  <div class="sub">Willowmere Software</div>
+  <ul>
+    <li>Розробляла backend-сервіси на Java і Kotlin, будуючи ендпоїнти для внутрішніх клієнтських сценаріїв.</li>
+    <li>Створювала інтеграції з REST APIs та оптимізувала обмін даними між сервісами, скоротивши затримку відповідей на 25%.</li>
+    <li>Підтримувала архітектуру Microservices і впроваджувала зміни в Spring Boot, щоб команда швидше доставляла нові можливості.</li>
+    <li>Налаштовувала збірку через Maven і використовувала Redis для кешування часто запитуваних даних, зменшивши навантаження на сервери на 20%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Project Coordinator</span><span class="dates">жовт. 2021 – квіт. 2024</span></div>
+  <div class="sub">Brightwater Digital</div>
+  <ul>
+    <li>Координувала міжфункціональні проєкти, узгоджуючи строки, обсяг робіт і відповідальність між 5 командами.</li>
+    <li>Вела комунікацію зі стейкхолдерами та готувала статусні оновлення, що скоротило кількість ескалацій на 30%.</li>
+    <li>Підтримувала планування релізів і контроль залежностей, щоб команди стабільно виконували пріоритетні завдання.</li>
+    <li>Систематизувала документацію проєктів і допомогла скоротити час пошуку актуальної інформації на 40%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Retail Store Manager</span><span class="dates">лют. 2018 – вер. 2021</span></div>
+  <div class="sub">Ostrava Labs</div>
+  <ul>
+    <li>Керувала щоденною роботою магазину, забезпечуючи стабільний сервіс для понад 1200 клієнтів на місяць і своєчасне закриття змін.</li>
+    <li>Організувала графіки для команди з 18 співробітників і зменшила простої на 15% завдяки кращому розподілу завдань.</li>
+    <li>Контролювала запаси, приймання товару та викладку, підтримуючи точність обліку на рівні 98%.</li>
+    <li>Проводила навчання нових працівників і покращила швидкість адаптації команди до щоденних операцій.</li>
+  </ul>
+</div>
+<h2>Проєкти</h2>
+<div class="project">
+  <div class="row"><span>Prism Market</span></div>
+  <p>Створила компонентну платформу для обробки транзакцій у форматі Microservices, використовуючи Maven для керованої збірки та узгодженого випуску змін.</p>
+</div>
+<h2>Навички</h2>
+<ul class="skills">
+  <li>MySQL</li>
+  <li>Java</li>
+  <li>Kotlin</li>
+  <li>Maven</li>
+  <li>Microservices</li>
+  <li>Redis</li>
+  <li>REST APIs</li>
+  <li>Spring Boot</li>
+</ul>
+<h2>Освіта</h2>
+<div class="edu">
+  <div class="row"><span>Бакалаврка з ділового адміністрування</span><span class="dates">2017</span></div>
+  <div class="sub">Кам&#39;янська школа менеджменту</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Диплом з прикладної організації роботи</span><span class="dates">2015</span></div>
+  <div class="sub">Лабораторія професійних студій Вітерра</div>
+</div>
+<h2>Мови</h2>
+<ul>
+  <li>Українська (рідна)</li>
+  <li>Англійська (B2)</li>
+  <li>Чеська (B1)</li>
+</ul>
+  </body>
+</html>

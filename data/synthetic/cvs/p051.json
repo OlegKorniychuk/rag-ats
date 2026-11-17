@@ -1,0 +1,116 @@
+{
+  "personaId": "p051",
+  "language": "en",
+  "name": "Greta Sharma",
+  "email": "greta-sharma@example.com",
+  "githubUrl": "https://github.com/synth-greta-sharma",
+  "headline": "Software Engineer",
+  "location": "Aurelia, UK",
+  "summary": "Software engineer with a background in customer support and product-focused development. Known for improving testing, delivery flow, and collaboration across cross-functional teams. Comfortable working from manual workflows through to structured Agile delivery.",
+  "roles": [
+    {
+      "employer": "Fernhollow Studio",
+      "title": "Customer Support Lead",
+      "start": "2019-10",
+      "end": "2021-07",
+      "bullets": [
+        "Led the customer support team, resolving complex client issues and improving response quality across daily operations.",
+        "Coached 6 support agents on service standards, escalation handling, and knowledge sharing.",
+        "Coordinated with internal teams to close recurring customer pain points and reduce repeat contacts by 18%.",
+        "Prepared weekly service summaries for leadership and tracked team workload against service goals."
+      ]
+    },
+    {
+      "employer": "Corvid Analytics",
+      "title": "Junior Software Engineer",
+      "start": "2021-09",
+      "end": "2023-01",
+      "bullets": [
+        "Built and maintained internal features with REST APIs, improving request handling for support tools.",
+        "Wrote JUnit checks and expanded Test automation to catch regressions before release.",
+        "Partnered with senior engineers to debug service issues and stabilize delivery for 3 client-facing workflows.",
+        "Updated integration notes and verified endpoint behavior across changing product requirements."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Software Engineer",
+      "start": "2023-01",
+      "end": "2023-09",
+      "bullets": [
+        "Implemented product features in C# and used pytest to validate changes across core user journeys.",
+        "Created Playwright coverage for critical screens, reducing manual verification time by 30%.",
+        "Investigated defects with product and QA partners, then shipped fixes that improved release confidence.",
+        "Refined backend logic and supported day-to-day maintenance for a fast-moving app team."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Software Developer",
+      "start": "2023-10",
+      "end": "2024-08",
+      "bullets": [
+        "Developed service enhancements in C# and kept shared work aligned through Git reviews.",
+        "Extended Playwright and pytest coverage for key workflows, helping the team detect issues earlier.",
+        "Resolved production defects and improved turnaround on small requests by 22%.",
+        "Collaborated with designers and support staff to translate feedback into clear implementation tasks."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Software Engineer",
+      "start": "2024-08",
+      "end": "2025-10",
+      "bullets": [
+        "Delivered features in an Agile team and paired with colleagues to keep priorities moving each sprint.",
+        "Strengthened JUnit coverage around core business rules, lowering escaped defects by 15%.",
+        "Reviewed incoming work, clarified requirements, and coordinated delivery across 5 teammates.",
+        "Improved release readiness by tightening test habits and keeping planned work visible to stakeholders."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Meadow Inbox",
+      "description": "Built a message triage tool using Agile, Git and Playwright to streamline review and routing for support teams. The project focused on repeatable delivery, clear collaboration, and dependable browser checks."
+    }
+  ],
+  "skills": [
+    "AWS",
+    "CI/CD",
+    "Cypress",
+    "Docker",
+    "GCP",
+    "GitHub Actions",
+    "Java",
+    "Jest",
+    "MySQL",
+    "Node.js",
+    "PostgreSQL",
+    "React",
+    "TypeScript",
+    "Vue",
+    "JUnit",
+    "REST APIs",
+    "Test automation",
+    "C#",
+    "Playwright",
+    "pytest",
+    "Agile",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Business Operations",
+      "school": "Northgate Institute of Professional Studies",
+      "end": "2019"
+    },
+    {
+      "degree": "Certificate in Digital Service Management",
+      "school": "Larkspur College of Arts and Commerce",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Hindi (C1)", "Spanish (B1)"],
+  "injection": null
+}

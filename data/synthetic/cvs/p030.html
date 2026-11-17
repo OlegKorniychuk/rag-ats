@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ananya Banerjee - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>ananya-banerjee-2@example.com</li>
+  <li>Kolkata, India</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Agile</li>
+  <li>Computer vision</li>
+  <li>C++</li>
+  <li>Python</li>
+  <li>pandas</li>
+  <li>SQL</li>
+  <li>PyTorch</li>
+  <li>Data modeling</li>
+  <li>Docker</li>
+  <li>Git</li>
+  <li>NLP</li>
+  <li>scikit-learn</li>
+  <li>Spark</li>
+  <li>BigQuery</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Bengali (Native)</li>
+  <li>Hindi (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Applied Computing</span><span class="dates">2020</span></div>
+  <div class="sub">Virelton College of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Higher Secondary Certificate, Science</span><span class="dates">2016</span></div>
+  <div class="sub">Mornhaven Public School</div>
+</div>
+</aside>
+<main class="main">
+<h1>Ananya Banerjee</h1>
+<div class="headline">Senior ML Engineer</div>
+<h2>Summary</h2>
+<p>Machine learning engineer with a background in computer vision, analytics, and production support across product teams. Known for building practical models, improving data workflows, and working closely with product and engineering partners to ship reliable features.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior ML Engineer</span><span class="dates">Mar 2025 – Present</span></div>
+  <div class="sub">Ironleaf Systems</div>
+  <ul>
+    <li>Designed Data modeling flows and built feature sets in Python, SQL and pandas to support high-volume NLP scoring jobs.</li>
+    <li>Developed training and inference services with PyTorch, Spark, Docker and Git, cutting deployment lead time by 30%.</li>
+    <li>Implemented C++ components for fast text and image preprocessing, then integrated them with the broader model pipeline.</li>
+    <li>Improved prediction quality by 14% through scikit-learn experiments and iterative feature refinement across multiple datasets.</li>
+    <li>Aligned with Agile teams on release planning, monitored production metrics, and maintained reliable data jobs for daily operations.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>ML Engineer</span><span class="dates">Apr 2024 – Feb 2025</span></div>
+  <div class="sub">Emberlight Tech</div>
+  <ul>
+    <li>Trained and evaluated image models in Python and PyTorch, lifting validation performance by 11% on a changing dataset.</li>
+    <li>Queried experiment tables with SQL to track drift, compare runs, and share clear results with stakeholders.</li>
+    <li>Supported Agile planning by breaking model work into smaller releases and keeping the vision pipeline stable for production use.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Machine Learning Engineer</span><span class="dates">Dec 2022 – Feb 2024</span></div>
+  <div class="sub">Brightwater Digital</div>
+  <ul>
+    <li>Developed computer vision pipelines in Python and C++ to classify image sets, improving batch accuracy by 9%.</li>
+    <li>Analyzed operational data with pandas and SQL to spot failure patterns and prioritize fixes for the product team.</li>
+    <li>Worked in Agile sprints to refine model inputs, tune evaluation reports, and support weekly delivery across a 6-person team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Developer</span><span class="dates">Oct 2020 – Dec 2022</span></div>
+  <div class="sub">Quillstone Systems</div>
+  <ul>
+    <li>Built computer vision prototypes in Python and C++ for document understanding tasks, reducing manual review effort by 18%.</li>
+    <li>Partnered in Agile delivery to turn early model ideas into working backend features and supported release testing with the team.</li>
+    <li>Cleaned and labeled training data, then compared model outputs to improve precision on a small internal benchmark by 12%.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Rapid Router</span></div>
+  <p>Built the Rapid Router prototype around BigQuery to analyze routing events and surface faster decision paths for the operations team.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

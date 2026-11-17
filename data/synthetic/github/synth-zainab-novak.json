@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-zainab-novak",
+    "html_url": "https://github.com/synth-zainab-novak",
+    "bio": "Backend engineer who builds practical services and careful delivery flows."
+  },
+  "repos": [
+    {
+      "name": "service-workbench",
+      "html_url": "https://github.com/synth-zainab-novak/service-workbench",
+      "description": "A service-oriented application for managing internal work requests and routing events across teams.",
+      "language": "Java",
+      "stargazers_count": 112,
+      "topics": ["java", "spring-boot", "microservices", "hibernate", "mysql"],
+      "pushed_at": "2026-09-11T00:00:00.000Z",
+      "created_at": "2025-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "delivery-loop",
+      "html_url": "https://github.com/synth-zainab-novak/delivery-loop",
+      "description": "A lightweight delivery tracker that helps teams plan work and keep releases moving on schedule.",
+      "language": "C#",
+      "stargazers_count": 109,
+      "topics": ["c-sharp", "agile", "ci-cd", "docker", "postgresql"],
+      "pushed_at": "2026-07-01T00:00:00.000Z",
+      "created_at": "2023-06-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "message-bridge",
+      "html_url": "https://github.com/synth-zainab-novak/message-bridge",
+      "description": "A small Scala utility for moving messages between internal services and keeping traffic organized.",
+      "language": "Scala",
+      "stargazers_count": 99,
+      "topics": ["scala", "rabbitmq", "microservices", "oauth", "ci-cd"],
+      "pushed_at": "2026-05-09T00:00:00.000Z",
+      "created_at": "2021-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "service-workbench": "# Service Workbench\n\nService Workbench is a small service platform for tracking internal work requests, assigning ownership, and moving updates between parts of a system. It is built with Java and Spring Boot and keeps the focus on clear boundaries and predictable behavior.\n\n## Features\n- Request intake with status tracking\n- Ownership rules for team routing\n- Data storage with Hibernate and MySQL\n- Event-based handoff for async updates\n- Simple security flow with OAuth\n\n## Getting started\n1. Open the project in Java.\n2. Configure Spring Boot settings for MySQL and OAuth.\n3. Start the service and create a few sample requests.\n4. Review the routing flow and update rules.",
+    "delivery-loop": "# Delivery Loop\n\nDelivery Loop is a compact tracker for planning work, following progress, and keeping release steps visible. It is designed for small teams that want a clear view of tasks, milestones, and handoff timing.\n\n## Features\n- Work item planning with simple status stages\n- Release checklist support\n- History view for progress changes\n- Container-based local setup\n- Postgres-backed storage for team records\n\n## Getting started\n1. Open the project in C#.\n2. Set the database settings for PostgreSQL.\n3. Build and run the service in Docker.\n4. Add a few sample items and move them through a release flow.",
+    "message-bridge": "# Message Bridge\n\nMessage Bridge is a compact utility for passing messages between services and keeping updates ordered. It helps separate request handling from background work and gives teams a simple path for controlled handoff.\n\n## Features\n- Message intake and forwarding\n- Queue-based work separation\n- Lightweight authorization checks with OAuth\n- Delivery tracing for service coordination\n- Friendly defaults for local setup\n\n## Getting started\n1. Open the project in Scala.\n2. Configure OAuth values and message settings.\n3. Start the utility and publish a sample message.\n4. Observe how messages move through the bridge."
+  }
+}

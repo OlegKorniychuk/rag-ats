@@ -1,0 +1,52 @@
+{
+  "personaId": "p049",
+  "language": "en",
+  "name": "Freya Kaya",
+  "email": "freya-kaya@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer in Test",
+  "location": "Berlin, Germany",
+  "summary": "Software Engineer in Test with experience building reliable test coverage across web applications and backend services. Comfortable working in Agile teams to improve release confidence, reduce regressions, and keep product quality high. Brings a practical approach to automation, defect investigation, and collaboration with developers and product partners.",
+  "roles": [
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Software Engineer in Test",
+      "start": "2025-06",
+      "end": null,
+      "bullets": [
+        "Built automated checks for Angular and React interfaces using Jest and HTML/CSS, improving coverage for core user flows.",
+        "Developed test suites in TypeScript and Python with pytest to validate business logic and catch regressions earlier.",
+        "Supported backend verification in Java by pairing exploratory checks with repeatable scripted scenarios, reducing escaped defects by 27%.",
+        "Worked in Agile delivery cycles with engineers and analysts to refine acceptance criteria and keep testing aligned with sprint goals."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Agile",
+    "Angular",
+    "HTML/CSS",
+    "Java",
+    "Jest",
+    "pytest",
+    "Python",
+    "React",
+    "TypeScript",
+    "Postman",
+    "Test automation"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Quality Engineering",
+      "school": "Northbridge Institute of Applied Technology",
+      "end": "2024"
+    },
+    {
+      "degree": "Higher Certificate in Digital Systems",
+      "school": "Larkspur Technical College",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

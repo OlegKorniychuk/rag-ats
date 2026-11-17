@@ -1,0 +1,62 @@
+{
+  "personaId": "p037",
+  "language": "en",
+  "name": "Sofia Hartmann",
+  "email": "sofia-hartmann@example.com",
+  "githubUrl": "https://github.com/synth-sofia-hartmann",
+  "headline": "Software Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Software Engineer focused on building reliable backend services and product features across distributed teams. Experienced in system design, API development, and delivering maintainable solutions that support growth and operational stability.",
+  "roles": [
+    {
+      "employer": "Vantage Reed",
+      "title": "Software Engineer",
+      "start": "2022-11",
+      "end": "2024-06",
+      "bullets": [
+        "Built Microservices in TypeScript for core platform workflows, improving service separation and reducing release risk across the backend.",
+        "Implemented OAuth-based sign-in and session handling in TypeScript, cutting account support issues by 28%.",
+        "Contributed to system design discussions that shaped service boundaries, data flow, and operational ownership for a 6-person engineering team.",
+        "Delivered new product features and internal tools in TypeScript while coordinating with adjacent teams on integration details."
+      ]
+    },
+    {
+      "employer": "Redwren Software",
+      "title": "Software Engineer",
+      "start": "2024-07",
+      "end": null,
+      "bullets": [
+        "Shipped customer-facing features in TypeScript through Agile delivery cycles, working with GraphQL and REST APIs to keep integrations consistent.",
+        "Designed and refined SQL-backed data access patterns for reporting and operational screens, reducing slow queries by 34%.",
+        "Led system design reviews for new services and endpoint changes, balancing product needs with maintainability and predictable behavior.",
+        "Partnered with product and support teams to triage issues, define fixes, and close an average of 12 customer-impacting tickets per month.",
+        "Improved API contracts and implementation details across TypeScript, GraphQL and REST APIs to support faster delivery across the team."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Microservices",
+    "OAuth",
+    "System design",
+    "TypeScript",
+    "Agile",
+    "GraphQL",
+    "REST APIs",
+    "SQL"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Northbridge Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Diploma in Software Systems",
+      "school": "Cedar Vale Technical College",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "German (B2)"],
+  "injection": null
+}

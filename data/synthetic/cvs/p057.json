@@ -1,0 +1,103 @@
+{
+  "personaId": "p057",
+  "language": "en",
+  "name": "Mei Demir",
+  "email": "mei-demir@example.com",
+  "githubUrl": null,
+  "headline": "Security and Software Engineer",
+  "location": "Istanbul, Turkey",
+  "summary": "Security-focused software engineer with a track record of building secure backend components, strengthening authentication flows, and improving test coverage across product teams. Experienced in low-level systems work, code review, and coordinated delivery with cross-functional partners. Comfortable turning security requirements into practical implementation and test plans.",
+  "roles": [
+    {
+      "employer": "Ostrava Labs",
+      "title": "Junior Security Engineer",
+      "start": "2019-11",
+      "end": "2022-03",
+      "bullets": [
+        "Built secure backend components in C and Go, and tightened OAuth handling for authentication flows.",
+        "Reduced recurring access issues by 28% through Rust fixes in shared security code and careful review of edge cases.",
+        "Investigated incidents and improved the reliability of low-level services with C while supporting release checks."
+      ]
+    },
+    {
+      "employer": "Vantage Reed",
+      "title": "Software Engineer",
+      "start": "2022-05",
+      "end": "2023-04",
+      "bullets": [
+        "Delivered product features in C++ and Rust, using OAuth to protect user sessions and sensitive operations.",
+        "Expanded automated checks with Cypress and Git, cutting late defect escapes by 31% across monthly releases.",
+        "Reviewed changes from other engineers and kept the codebase stable through disciplined version control practices."
+      ]
+    },
+    {
+      "employer": "Willowmere Software",
+      "title": "Software Developer",
+      "start": "2023-04",
+      "end": "2024-10",
+      "bullets": [
+        "Shipped security-focused features in C++ under Agile delivery, aligning implementation with IAM and OAuth requirements.",
+        "Strengthened release confidence with Burp Suite, OWASP and Threat modeling, helping remove 22 high-risk findings before launch.",
+        "Improved Test automation with Cypress and Git, raising coverage for critical user journeys and reducing manual regression effort.",
+        "Partnered with the team on defect triage and implementation reviews, keeping secure changes moving through the backlog."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Senior Software Developer",
+      "start": "2024-12",
+      "end": "2025-08",
+      "bullets": [
+        "Led secure feature work in C, C++ and TypeScript, coordinating Agile delivery across a team of 8 engineers.",
+        "Improved authentication and access flows with IAM, OAuth and Go services, reducing support tickets by 19%.",
+        "Expanded security validation with Burp Suite, OWASP, pytest and Test automation, catching issues earlier in the release cycle.",
+        "Drove Threat modeling workshops and applied the results to product changes, strengthening design decisions before implementation.",
+        "Built and maintained Cypress checks for key journeys, helping stabilize releases and shorten verification time."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Quiet Router",
+      "description": "Built alert routing logic for Quiet Router with SIEM so security events could be grouped and surfaced more consistently."
+    },
+    {
+      "name": "Amber Notebook",
+      "description": "Created Amber Notebook test coverage with pytest to validate core workflows and catch regressions earlier."
+    }
+  ],
+  "skills": [
+    "Linux",
+    "Penetration testing",
+    "C",
+    "Go",
+    "OAuth",
+    "Rust",
+    "C++",
+    "Cypress",
+    "Git",
+    "Agile",
+    "Burp Suite",
+    "IAM",
+    "OWASP",
+    "Test automation",
+    "Threat modeling",
+    "TypeScript",
+    "SIEM",
+    "pytest"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Security",
+      "school": "Northlake Technical Institute",
+      "end": "2018"
+    },
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Merevale School of Computing",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Turkish (C2)", "German (B1)"],
+  "injection": null
+}

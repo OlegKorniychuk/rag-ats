@@ -1,0 +1,77 @@
+{
+  "personaId": "p036",
+  "language": "en",
+  "name": "Samuel Larsen",
+  "email": "samuel-larsen@example.com",
+  "githubUrl": null,
+  "headline": "Frontend and UI Engineer",
+  "location": "Brighton, United Kingdom",
+  "summary": "Versatile product engineer with a background in accounting and a strong focus on building clear, reliable user interfaces. Experienced in improving customer-facing flows, strengthening accessibility, and collaborating across product and design to ship measurable improvements.",
+  "roles": [
+    {
+      "employer": "Emberlight Tech",
+      "title": "Accountant",
+      "start": "2022-08",
+      "end": "2024-02",
+      "bullets": [
+        "Managed month-end reconciliations, invoice tracking and expense reviews for multiple business units, keeping records organized and audit-ready.",
+        "Prepared financial reports and supported payment follow-ups, resolving discrepancies that reduced open items by 18%.",
+        "Coordinated with internal teams to improve process clarity and maintain accurate documentation for routine operations."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "UI Engineer",
+      "start": "2024-04",
+      "end": "2025-03",
+      "bullets": [
+        "Built interactive interface features in JavaScript with GraphQL and REST APIs, improving task completion time by 22%.",
+        "Developed and maintained automated browser checks with Cypress and Playwright, covering key customer flows across the product.",
+        "Applied Web accessibility practices to forms, navigation and content structure, helping pass review with fewer defects.",
+        "Partnered with product and design to refine UI behavior and edge cases, using JavaScript to keep the experience consistent."
+      ]
+    },
+    {
+      "employer": "Cinder Peak",
+      "title": "Frontend Developer",
+      "start": "2025-03",
+      "end": "2026-01",
+      "bullets": [
+        "Shipped responsive views in HTML/CSS and JavaScript, connecting them to GraphQL and REST APIs for live data updates.",
+        "Expanded test coverage with Jest and Playwright, catching regressions before release and reducing escaped issues by 31%.",
+        "Improved Web accessibility across core screens by tightening labels, focus order and error messaging.",
+        "Reviewed implementation details with designers and engineers to keep the frontend aligned with product requirements."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Gateway",
+      "description": "Created a compact customer portal in GraphQL and HTML/CSS, focusing on clear data display and fast navigation between account sections."
+    }
+  ],
+  "skills": [
+    "Cypress",
+    "GraphQL",
+    "JavaScript",
+    "Playwright",
+    "REST APIs",
+    "Web accessibility",
+    "HTML/CSS",
+    "Jest"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Business Studies",
+      "school": "Northmere School of Commerce",
+      "end": "2021"
+    },
+    {
+      "degree": "Certificate in Applied Finance",
+      "school": "Valebrook Institute of Professional Learning",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Swedish (B1)"],
+  "injection": null
+}

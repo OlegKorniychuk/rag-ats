@@ -1,0 +1,74 @@
+{
+  "personaId": "p028",
+  "language": "en",
+  "name": "Roman Kravets",
+  "email": "roman-kravets@example.com",
+  "githubUrl": null,
+  "headline": "Software Developer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Software developer and security engineer with experience building reliable backend components, improving secure delivery practices, and supporting internal teams with practical technical solutions. Worked across low-level software, access controls, and test coverage in collaborative product environments. Comfortable turning operational needs into maintainable implementations and measurable process improvements.",
+  "roles": [
+    {
+      "employer": "Emberlight Tech",
+      "title": "Software Developer",
+      "start": "2020-03",
+      "end": "2021-05",
+      "bullets": [
+        "Built low-level features in C and Rust, using Git to keep changes organized across the codebase.",
+        "Refactored shared modules to reduce defects by 18% and improve maintainability for the backend.",
+        "Collaborated on debugging and release support, tracing issues through C components and versioned updates in Git."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "Senior Security Engineer",
+      "start": "2021-06",
+      "end": "2026-03",
+      "bullets": [
+        "Led secure delivery work in an Agile team, coordinating IAM improvements and review routines for critical access flows.",
+        "Implemented automated checks with Cypress and pytest for JavaScript services, raising regression coverage by 32%.",
+        "Built and tuned detection workflows in SIEM, helping the team identify suspicious activity 40% faster.",
+        "Developed internal tools in Go and JavaScript to streamline incident response and reduce manual effort.",
+        "Partnered with engineers on Git-based change control and Test automation, keeping releases stable across recurring deployments."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Dashboard",
+      "description": "Created a monitoring dashboard for internal operations on Linux, focusing on reliable setup, repeatable administration, and clear status visibility."
+    },
+    {
+      "name": "Meadow Tracker",
+      "description": "Built a tracking utility in Rust with Git for version control, emphasizing small updates, clean history, and dependable maintenance."
+    }
+  ],
+  "skills": [
+    "C",
+    "Git",
+    "Rust",
+    "Agile",
+    "Cypress",
+    "Go",
+    "IAM",
+    "JavaScript",
+    "pytest",
+    "SIEM",
+    "Test automation",
+    "Linux"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Engineering",
+      "school": "Briar Vale Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Applied Information Systems",
+      "school": "Northbridge Technical College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Ukrainian (Native)"],
+  "injection": null
+}

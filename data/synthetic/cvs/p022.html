@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Diego Mensah - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Diego Mensah</h1><div class="headline">Full-Stack Developer</div></div>
+  <div class="contact"><div>diego-mensah@example.com</div>
+<div>Accra, Ghana</div>
+<div>github.com/synth-diego-mensah</div></div>
+</header>
+<h2>Summary</h2>
+<p>Full-stack developer with experience building business applications and internal tools across product teams. Comfortable delivering features in Agile environments, integrating REST APIs, and improving backend services and user interfaces. Known for collaborating closely with product and operations teams to ship reliable releases and refine customer workflows.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Full-Stack Developer</span><span class="dates">Jan 2024 – Dec 2025</span></div>
+  <div class="sub">Umber &amp; Oak</div>
+  <ul>
+    <li>Led delivery of customer-facing features in Java, Spring Boot and React, helping the team ship 18% more work per release cycle.</li>
+    <li>Designed and maintained Microservices that exchanged data through RabbitMQ, improving responsiveness during peak usage.</li>
+    <li>Built and reviewed UI changes in TypeScript and Vue, while keeping backend behavior consistent with PostgreSQL-backed records.</li>
+    <li>Strengthened release confidence with CI/CD workflows in GitHub Actions and automated checks using Jest and JUnit.</li>
+    <li>Collaborated across product and engineering to coordinate dependencies, reduce rework, and support a 7-person delivery team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Full-Stack Developer</span><span class="dates">Mar 2019 – Nov 2023</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Built core product features in Java and Spring Boot, connecting the frontend to REST APIs and reducing manual support requests by 24%.</li>
+    <li>Worked in Agile teams to deliver planned releases, refine priorities, and keep development aligned with changing business needs.</li>
+    <li>Improved service reliability by simplifying backend flows and tightening validation across the application stack.</li>
+    <li>Partnered with designers and analysts to translate requirements into maintainable features and clearer user journeys.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Prism Tracker</span></div>
+  <p>Built Prism Tracker around MySQL to store scheduling data, track status updates, and keep records organized for operational reporting.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Pocket Scheduler</span></div>
+  <p>Created Pocket Scheduler with Cypress to validate key user journeys, catch regressions early, and support smooth release cycles.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Agile</li>
+  <li>Java</li>
+  <li>REST APIs</li>
+  <li>Spring Boot</li>
+  <li>CI/CD</li>
+  <li>GitHub Actions</li>
+  <li>Jest</li>
+  <li>JUnit</li>
+  <li>Microservices</li>
+  <li>PostgreSQL</li>
+  <li>RabbitMQ</li>
+  <li>React</li>
+  <li>TypeScript</li>
+  <li>Vue</li>
+  <li>MySQL</li>
+  <li>Cypress</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computer Science</span><span class="dates">2018</span></div>
+  <div class="sub">Kintara Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Engineering</span><span class="dates">2016</span></div>
+  <div class="sub">Mavora Polytechnic</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>French (B1)</li>
+</ul>
+  </body>
+</html>

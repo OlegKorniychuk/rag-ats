@@ -1,0 +1,79 @@
+{
+  "personaId": "p093",
+  "language": "en",
+  "name": "Pavel Hartmann",
+  "email": "pavel-hartmann-2@example.com",
+  "githubUrl": null,
+  "headline": "Backend Engineer",
+  "location": "Prague, Czech Republic",
+  "summary": "Backend engineer with experience building reliable server-side features, improving data flows, and supporting product teams across several fast-moving environments. Comfortable working across APIs, messaging, and data storage while keeping delivery practical and maintainable. Known for clear collaboration, steady execution, and thoughtful system improvement.",
+  "roles": [
+    {
+      "employer": "Vantage Reed",
+      "title": "Junior Software Engineer",
+      "start": "2020-09",
+      "end": "2021-11",
+      "bullets": [
+        "Built internal services in Git and PostgreSQL, helping the team ship the first production release with cleaner version control and safer data handling.",
+        "Integrated Kafka into the backend to process events asynchronously, reducing manual follow-up work by 30%.",
+        "Supported bug fixes and release preparation, and kept PostgreSQL routines stable for the product team."
+      ]
+    },
+    {
+      "employer": "Marlowe & Finch Tech",
+      "title": "Backend Engineer",
+      "start": "2021-11",
+      "end": "2023-11",
+      "bullets": [
+        "Delivered new backend features in Node.js and JavaScript under Agile planning, working closely with product and QA to keep sprint goals on track.",
+        "Designed and maintained REST APIs for customer workflows, using PostgreSQL to store account and transaction data with fewer support escalations.",
+        "Improved request handling and service reliability by tightening backend logic in Node.js, which cut average response time by 18%.",
+        "Partnered with engineers and analysts to refine data contracts, ensuring REST APIs stayed consistent across multiple client integrations."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Senior Backend Developer",
+      "start": "2024-01",
+      "end": "2026-06",
+      "bullets": [
+        "Led backend delivery across Microservices built in TypeScript and Node.js, improving team throughput by 22% through clearer service boundaries and delivery planning.",
+        "Architected event-driven components with Kafka and RabbitMQ, and used Redis to speed up hot-path lookups for high-traffic features.",
+        "Shaped system design for a growing platform, aligning GraphQL interfaces with MongoDB data models and reducing integration churn for downstream teams.",
+        "Reviewed Git workflows and release practices across several services, helping the team keep production changes controlled and predictable.",
+        "Coached engineers on backend patterns for Microservices, GraphQL and Node.js, raising code consistency across the group."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Git",
+    "Kafka",
+    "PostgreSQL",
+    "Agile",
+    "JavaScript",
+    "Node.js",
+    "REST APIs",
+    "GraphQL",
+    "Microservices",
+    "MongoDB",
+    "RabbitMQ",
+    "Redis",
+    "System design",
+    "TypeScript"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Northbridge Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Software Systems",
+      "school": "Cedar Vale Polytechnic",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Czech (B2)", "German (A2)"],
+  "injection": null
+}

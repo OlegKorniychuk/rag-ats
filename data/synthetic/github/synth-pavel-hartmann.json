@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-pavel-hartmann",
+    "html_url": "https://github.com/synth-pavel-hartmann",
+    "bio": "Frontend engineer focused on building clear, reliable interfaces for everyday products."
+  },
+  "repos": [
+    {
+      "name": "interface-foundry",
+      "html_url": "https://github.com/synth-pavel-hartmann/interface-foundry",
+      "description": "A component workshop for designing and refining reusable interface patterns.",
+      "language": "TypeScript",
+      "stargazers_count": 52,
+      "topics": ["typescript", "react", "frontend", "components", "ui"],
+      "pushed_at": "2026-09-13T00:00:00.000Z",
+      "created_at": "2026-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-board",
+      "html_url": "https://github.com/synth-pavel-hartmann/signal-board",
+      "description": "A dashboard prototype for tracking simple team updates and daily priorities.",
+      "language": "JavaScript",
+      "stargazers_count": 47,
+      "topics": [
+        "javascript",
+        "vue",
+        "dashboard",
+        "productivity",
+        "collaboration"
+      ],
+      "pushed_at": "2026-08-07T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "layout-lab",
+      "html_url": "https://github.com/synth-pavel-hartmann/layout-lab",
+      "description": "A collection of page experiments for comparing structure, spacing, and visual rhythm.",
+      "language": "TypeScript",
+      "stargazers_count": 40,
+      "topics": ["typescript", "angular", "layout", "html-css", "experiments"],
+      "pushed_at": "2026-05-11T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "interface-foundry": "# Interface Foundry\n\nInterface Foundry is a small project for shaping reusable interface pieces and testing how they fit together in real product screens. It is meant for fast experimentation, steady iteration, and a tidy handoff between ideas and implementation.\n\n## Features\n- Shared interface patterns for common screen layouts\n- Clear structure for reusable pieces and variants\n- Lightweight state handling for interactive views\n- Easy extension for new sections and flows\n\n## Getting started\nOpen the project, review the sample screens, and adjust the reusable pieces to match your own product needs. The code is organized for TypeScript and React, with simple local editing and quick feedback while you refine the interface.",
+    "signal-board": "# Signal Board\n\nSignal Board is a compact dashboard prototype that helps a team keep track of daily priorities, recent updates, and open items in one place. It is designed to stay easy to scan while still supporting small interactive workflows.\n\n## Features\n- Priority cards with quick status changes\n- Summary panels for recent activity\n- Flexible page sections for different team rhythms\n- Simple interactions for sorting and filtering content\n\n## Getting started\nOpen the project and review the sample data model, then adapt the screens to your own team flow. The project is built with JavaScript and Vue, so you can edit the views, tune the layout, and keep the experience lightweight.",
+    "layout-lab": "# Layout Lab\n\nLayout Lab is a set of page experiments for comparing different structures, spacing rules, and visual rhythm across common screen types. It is intended for quick exploration before settling on a final direction.\n\n## Features\n- Side-by-side layout comparisons\n- Reusable page sections for headers, panels, and content blocks\n- Simple theme switches for visual testing\n- Clear source structure for fast adjustments\n\n## Getting started\nOpen the project in a local editor and start by changing the sample sections and spacing values. The code is written with TypeScript and Angular, and the styles are kept in plain HTML/CSS so it is easy to refine the look and feel."
+  }
+}

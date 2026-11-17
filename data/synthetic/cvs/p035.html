@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ananya Fischer - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Ananya Fischer</h1><div class="headline">Software Engineer</div></div>
+  <div class="contact"><div>ananya-fischer@example.com</div>
+<div>Berlin, Germany</div>
+<div>github.com/synth-ananya-fischer</div></div>
+</header>
+<h2>Summary</h2>
+<p>Software engineer and security engineer with experience building reliable backend systems and hardening internal platforms. Known for shipping practical improvements in C, Rust and Python, and for strengthening access controls and operational runbooks across growing teams.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Security Engineer</span><span class="dates">Feb 2022 – Present</span></div>
+  <div class="sub">Thistledown Labs</div>
+  <ul>
+    <li>Led security work in an Agile team, delivering Python scripts and Bash tooling that reduced manual access-review effort by 40%.</li>
+    <li>Hardened Linux servers and Azure-hosted environments by tightening configuration, logging and account controls for internal services.</li>
+    <li>Implemented OAuth-based sign-in flows and cryptography checks for sensitive workflows, improving protection for 3 customer-facing systems.</li>
+    <li>Automated incident-response tasks with Python and Bash, helping the team cut response time by 25% during on-call rotations.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">Aug 2020 – Jan 2022</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Built low-level components in C and Rust to improve data processing reliability, and used Git to keep releases traceable across the team.</li>
+    <li>Refactored performance-sensitive modules in Rust, cutting service latency by 18% in one workflow while preserving compatibility with existing C code.</li>
+    <li>Reviewed merges and branch history in Git to reduce integration issues and keep the codebase stable during weekly release cycles.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Tidal Gateway</span></div>
+  <p>Designed Tidal Gateway delivery flow with CI/CD to speed up releases and keep validation consistent across environments.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Agile</li>
+  <li>Azure</li>
+  <li>Bash</li>
+  <li>C</li>
+  <li>CI/CD</li>
+  <li>Cryptography</li>
+  <li>Git</li>
+  <li>Linux</li>
+  <li>OAuth</li>
+  <li>Python</li>
+  <li>Rust</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Computer Engineering</span><span class="dates">2020</span></div>
+  <div class="sub">Northgate Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Applied Information Security</span><span class="dates">2019</span></div>
+  <div class="sub">Linden Academy of Technology</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>German (B2)</li>
+</ul>
+  </body>
+</html>

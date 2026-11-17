@@ -1,0 +1,693 @@
+[
+  {
+    "id": "frontend",
+    "title": "Frontend Engineer",
+    "intro": "Join the product team building our customer-facing web application. You will own UI features end to end, from design handoff to production.",
+    "requirements": [
+      {
+        "id": "fe-exp",
+        "text": "3+ years of professional frontend development",
+        "kind": "must",
+        "tags": ["exp-frontend"],
+        "minYears": 3
+      },
+      {
+        "id": "fe-ts",
+        "text": "Solid TypeScript, at least 2 years in production",
+        "kind": "must",
+        "tags": ["typescript"],
+        "minYears": 2
+      },
+      {
+        "id": "fe-framework",
+        "text": "Hands-on with a modern UI framework (React, Vue or Angular), 2+ years",
+        "kind": "must",
+        "tags": ["react", "vue", "angular"],
+        "minYears": 2
+      },
+      {
+        "id": "fe-html",
+        "text": "Strong HTML and CSS fundamentals",
+        "kind": "must",
+        "tags": ["html-css"]
+      },
+      {
+        "id": "fe-api",
+        "text": "Experience consuming REST or GraphQL APIs",
+        "kind": "must",
+        "tags": ["rest-api", "graphql"]
+      },
+      {
+        "id": "fe-testing",
+        "text": "Frontend testing with Jest, Cypress or Playwright",
+        "kind": "nice",
+        "tags": ["jest", "cypress", "playwright"]
+      },
+      {
+        "id": "fe-state",
+        "text": "State management or server-side rendering (Redux, Next.js)",
+        "kind": "nice",
+        "tags": ["redux", "nextjs"]
+      },
+      {
+        "id": "fe-a11y",
+        "text": "Knowledge of web accessibility (WCAG)",
+        "kind": "nice",
+        "tags": ["web-accessibility"]
+      },
+      {
+        "id": "fe-git",
+        "text": "Comfortable with Git workflows",
+        "kind": "nice",
+        "tags": ["git"]
+      }
+    ],
+    "text": "Frontend Engineer\n\nJoin the product team building our customer-facing web application. You will own UI features end to end, from design handoff to production.\n\nRequirements\n- 3+ years of professional frontend development\n- Solid TypeScript, at least 2 years in production\n- Hands-on with a modern UI framework (React, Vue or Angular), 2+ years\n- Strong HTML and CSS fundamentals\n- Experience consuming REST or GraphQL APIs\n\nNice to have\n- Frontend testing with Jest, Cypress or Playwright\n- State management or server-side rendering (Redux, Next.js)\n- Knowledge of web accessibility (WCAG)\n- Comfortable with Git workflows\n"
+  },
+  {
+    "id": "backend-java",
+    "title": "Backend Engineer (Java)",
+    "intro": "Build and run the services behind our hiring platform. You will design APIs, model data and keep a growing set of microservices healthy.",
+    "requirements": [
+      {
+        "id": "bj-exp",
+        "text": "3+ years of backend development",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 3
+      },
+      {
+        "id": "bj-java",
+        "text": "Java in production for at least 3 years",
+        "kind": "must",
+        "tags": ["java"],
+        "minYears": 3
+      },
+      {
+        "id": "bj-spring",
+        "text": "Spring Boot, 2+ years",
+        "kind": "must",
+        "tags": ["spring-boot"],
+        "minYears": 2
+      },
+      {
+        "id": "bj-sql",
+        "text": "A relational database such as PostgreSQL or MySQL",
+        "kind": "must",
+        "tags": ["postgresql", "mysql"]
+      },
+      {
+        "id": "bj-micro",
+        "text": "Designing and operating microservices",
+        "kind": "must",
+        "tags": ["microservices"]
+      },
+      {
+        "id": "bj-hibernate",
+        "text": "Hibernate or JPA for persistence",
+        "kind": "nice",
+        "tags": ["hibernate"]
+      },
+      {
+        "id": "bj-messaging",
+        "text": "Messaging with Kafka or RabbitMQ",
+        "kind": "nice",
+        "tags": ["kafka", "rabbitmq"]
+      },
+      {
+        "id": "bj-test",
+        "text": "Unit testing with JUnit",
+        "kind": "nice",
+        "tags": ["junit"]
+      },
+      {
+        "id": "bj-docker",
+        "text": "Containerising services with Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "bj-cicd",
+        "text": "CI/CD pipelines",
+        "kind": "nice",
+        "tags": ["ci-cd", "github-actions"]
+      }
+    ],
+    "text": "Backend Engineer (Java)\n\nBuild and run the services behind our hiring platform. You will design APIs, model data and keep a growing set of microservices healthy.\n\nRequirements\n- 3+ years of backend development\n- Java in production for at least 3 years\n- Spring Boot, 2+ years\n- A relational database such as PostgreSQL or MySQL\n- Designing and operating microservices\n\nNice to have\n- Hibernate or JPA for persistence\n- Messaging with Kafka or RabbitMQ\n- Unit testing with JUnit\n- Containerising services with Docker\n- CI/CD pipelines\n"
+  },
+  {
+    "id": "backend-node",
+    "title": "Backend Engineer (Node.js)",
+    "intro": "Own the API layer of our product: design endpoints, tune queries and ship reliable features in a small, fast-moving team.",
+    "requirements": [
+      {
+        "id": "bn-exp",
+        "text": "3+ years of backend development",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 3
+      },
+      {
+        "id": "bn-node",
+        "text": "Node.js in production, 2+ years",
+        "kind": "must",
+        "tags": ["nodejs"],
+        "minYears": 2
+      },
+      {
+        "id": "bn-ts",
+        "text": "TypeScript on the server, 2+ years",
+        "kind": "must",
+        "tags": ["typescript"],
+        "minYears": 2
+      },
+      {
+        "id": "bn-api",
+        "text": "Designing REST or GraphQL APIs",
+        "kind": "must",
+        "tags": ["rest-api", "graphql"]
+      },
+      {
+        "id": "bn-db",
+        "text": "A database such as PostgreSQL, MySQL or MongoDB",
+        "kind": "must",
+        "tags": ["postgresql", "mysql", "mongodb"]
+      },
+      {
+        "id": "bn-framework",
+        "text": "NestJS or Express",
+        "kind": "nice",
+        "tags": ["nestjs", "express"]
+      },
+      {
+        "id": "bn-cache",
+        "text": "Caching with Redis",
+        "kind": "nice",
+        "tags": ["redis"]
+      },
+      {
+        "id": "bn-docker",
+        "text": "Docker for local development and deployment",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "bn-messaging",
+        "text": "Message queues (Kafka or RabbitMQ)",
+        "kind": "nice",
+        "tags": ["kafka", "rabbitmq"]
+      },
+      {
+        "id": "bn-tests",
+        "text": "Automated tests with Jest",
+        "kind": "nice",
+        "tags": ["jest"]
+      }
+    ],
+    "text": "Backend Engineer (Node.js)\n\nOwn the API layer of our product: design endpoints, tune queries and ship reliable features in a small, fast-moving team.\n\nRequirements\n- 3+ years of backend development\n- Node.js in production, 2+ years\n- TypeScript on the server, 2+ years\n- Designing REST or GraphQL APIs\n- A database such as PostgreSQL, MySQL or MongoDB\n\nNice to have\n- NestJS or Express\n- Caching with Redis\n- Docker for local development and deployment\n- Message queues (Kafka or RabbitMQ)\n- Automated tests with Jest\n"
+  },
+  {
+    "id": "full-stack",
+    "title": "Full-Stack Engineer",
+    "intro": "Work across the whole product: React interfaces on the front, Node-style services and a relational database behind them.",
+    "requirements": [
+      {
+        "id": "fs-exp-be",
+        "text": "2+ years of backend development",
+        "kind": "must",
+        "tags": ["exp-backend"],
+        "minYears": 2
+      },
+      {
+        "id": "fs-exp-fe",
+        "text": "2+ years of frontend development",
+        "kind": "must",
+        "tags": ["exp-frontend"],
+        "minYears": 2
+      },
+      {
+        "id": "fs-ts",
+        "text": "TypeScript across the stack",
+        "kind": "must",
+        "tags": ["typescript"]
+      },
+      {
+        "id": "fs-ui",
+        "text": "A modern UI framework (React, Vue or Angular)",
+        "kind": "must",
+        "tags": ["react", "vue", "angular"]
+      },
+      {
+        "id": "fs-server",
+        "text": "A server-side language such as Node.js, Java, Python or Go",
+        "kind": "must",
+        "tags": ["nodejs", "java", "python", "go"]
+      },
+      {
+        "id": "fs-db",
+        "text": "Relational or document database experience",
+        "kind": "must",
+        "tags": ["postgresql", "mysql", "mongodb"]
+      },
+      {
+        "id": "fs-docker",
+        "text": "Docker for development and deployment",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "fs-ci",
+        "text": "CI/CD pipelines",
+        "kind": "nice",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "fs-cloud",
+        "text": "A major cloud provider (AWS, GCP or Azure)",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      {
+        "id": "fs-test",
+        "text": "End-to-end or unit testing (Jest, Cypress, Playwright)",
+        "kind": "nice",
+        "tags": ["jest", "cypress", "playwright"]
+      }
+    ],
+    "text": "Full-Stack Engineer\n\nWork across the whole product: React interfaces on the front, Node-style services and a relational database behind them.\n\nRequirements\n- 2+ years of backend development\n- 2+ years of frontend development\n- TypeScript across the stack\n- A modern UI framework (React, Vue or Angular)\n- A server-side language such as Node.js, Java, Python or Go\n- Relational or document database experience\n\nNice to have\n- Docker for development and deployment\n- CI/CD pipelines\n- A major cloud provider (AWS, GCP or Azure)\n- End-to-end or unit testing (Jest, Cypress, Playwright)\n"
+  },
+  {
+    "id": "data-engineering",
+    "title": "Data Engineer",
+    "intro": "Build the pipelines that feed analytics and machine learning. You will model data, orchestrate batch and streaming jobs and keep the warehouse trustworthy.",
+    "requirements": [
+      {
+        "id": "de-exp",
+        "text": "3+ years in data engineering",
+        "kind": "must",
+        "tags": ["exp-data"],
+        "minYears": 3
+      },
+      {
+        "id": "de-python",
+        "text": "Python for data processing, 3+ years",
+        "kind": "must",
+        "tags": ["python"],
+        "minYears": 3
+      },
+      {
+        "id": "de-sql",
+        "text": "Advanced SQL, 3+ years",
+        "kind": "must",
+        "tags": ["sql"],
+        "minYears": 3
+      },
+      {
+        "id": "de-orchestration",
+        "text": "Pipeline tooling such as Airflow, dbt or Spark",
+        "kind": "must",
+        "tags": ["airflow", "dbt", "spark"]
+      },
+      {
+        "id": "de-warehouse",
+        "text": "A cloud data warehouse (Snowflake or BigQuery)",
+        "kind": "must",
+        "tags": ["snowflake", "bigquery"]
+      },
+      {
+        "id": "de-streaming",
+        "text": "Streaming with Kafka or Spark",
+        "kind": "nice",
+        "tags": ["kafka", "spark"]
+      },
+      {
+        "id": "de-modeling",
+        "text": "Data modeling or ETL design",
+        "kind": "nice",
+        "tags": ["data-modeling", "etl"]
+      },
+      {
+        "id": "de-cloud",
+        "text": "A major cloud provider",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      {
+        "id": "de-docker",
+        "text": "Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      { "id": "de-git", "text": "Git", "kind": "nice", "tags": ["git"] }
+    ],
+    "text": "Data Engineer\n\nBuild the pipelines that feed analytics and machine learning. You will model data, orchestrate batch and streaming jobs and keep the warehouse trustworthy.\n\nRequirements\n- 3+ years in data engineering\n- Python for data processing, 3+ years\n- Advanced SQL, 3+ years\n- Pipeline tooling such as Airflow, dbt or Spark\n- A cloud data warehouse (Snowflake or BigQuery)\n\nNice to have\n- Streaming with Kafka or Spark\n- Data modeling or ETL design\n- A major cloud provider\n- Docker\n- Git\n"
+  },
+  {
+    "id": "ml",
+    "title": "Machine Learning Engineer",
+    "intro": "Take models from notebook to production. You will train and evaluate models, build the surrounding services and keep them observable.",
+    "requirements": [
+      {
+        "id": "ml-exp",
+        "text": "2+ years in machine learning",
+        "kind": "must",
+        "tags": ["exp-ml"],
+        "minYears": 2
+      },
+      {
+        "id": "ml-python",
+        "text": "Python, 3+ years",
+        "kind": "must",
+        "tags": ["python"],
+        "minYears": 3
+      },
+      {
+        "id": "ml-framework",
+        "text": "Deep learning with PyTorch or TensorFlow, 2+ years",
+        "kind": "must",
+        "tags": ["pytorch", "tensorflow"],
+        "minYears": 2
+      },
+      {
+        "id": "ml-classic",
+        "text": "Classical ML or data tooling (scikit-learn, pandas)",
+        "kind": "must",
+        "tags": ["scikit-learn", "pandas"]
+      },
+      {
+        "id": "ml-domain",
+        "text": "Experience in NLP, computer vision or LLMs",
+        "kind": "must",
+        "tags": ["nlp", "computer-vision", "llm"]
+      },
+      {
+        "id": "ml-mlops",
+        "text": "Experiment tracking or MLOps (MLflow)",
+        "kind": "nice",
+        "tags": ["mlflow", "mlops"]
+      },
+      {
+        "id": "ml-docker",
+        "text": "Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      },
+      {
+        "id": "ml-cloud",
+        "text": "A major cloud provider",
+        "kind": "nice",
+        "tags": ["aws", "gcp", "azure"]
+      },
+      { "id": "ml-sql", "text": "SQL", "kind": "nice", "tags": ["sql"] },
+      { "id": "ml-git", "text": "Git", "kind": "nice", "tags": ["git"] }
+    ],
+    "text": "Machine Learning Engineer\n\nTake models from notebook to production. You will train and evaluate models, build the surrounding services and keep them observable.\n\nRequirements\n- 2+ years in machine learning\n- Python, 3+ years\n- Deep learning with PyTorch or TensorFlow, 2+ years\n- Classical ML or data tooling (scikit-learn, pandas)\n- Experience in NLP, computer vision or LLMs\n\nNice to have\n- Experiment tracking or MLOps (MLflow)\n- Docker\n- A major cloud provider\n- SQL\n- Git\n"
+  },
+  {
+    "id": "platform-devops",
+    "title": "Platform / DevOps Engineer",
+    "intro": "Run the infrastructure our engineers deploy on. You will automate environments, own the CI/CD platform and improve reliability.",
+    "requirements": [
+      {
+        "id": "pd-exp",
+        "text": "3+ years in DevOps or platform engineering",
+        "kind": "must",
+        "tags": ["exp-devops"],
+        "minYears": 3
+      },
+      {
+        "id": "pd-k8s",
+        "text": "Kubernetes in production, 2+ years",
+        "kind": "must",
+        "tags": ["kubernetes"],
+        "minYears": 2
+      },
+      {
+        "id": "pd-iac",
+        "text": "Infrastructure as code (Terraform or Ansible)",
+        "kind": "must",
+        "tags": ["terraform", "ansible"]
+      },
+      {
+        "id": "pd-cloud",
+        "text": "A major cloud provider, 2+ years",
+        "kind": "must",
+        "tags": ["aws", "gcp", "azure"],
+        "minYears": 2
+      },
+      {
+        "id": "pd-cicd",
+        "text": "Building CI/CD pipelines",
+        "kind": "must",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "pd-linux",
+        "text": "Linux administration and scripting",
+        "kind": "must",
+        "tags": ["linux", "bash"]
+      },
+      {
+        "id": "pd-docker",
+        "text": "Docker",
+        "kind": "must",
+        "tags": ["docker"]
+      },
+      {
+        "id": "pd-observability",
+        "text": "Monitoring with Prometheus or Grafana",
+        "kind": "nice",
+        "tags": ["prometheus", "grafana"]
+      },
+      {
+        "id": "pd-helm",
+        "text": "Helm charts",
+        "kind": "nice",
+        "tags": ["helm"]
+      },
+      {
+        "id": "pd-script",
+        "text": "Python or Go for tooling",
+        "kind": "nice",
+        "tags": ["python", "go"]
+      }
+    ],
+    "text": "Platform / DevOps Engineer\n\nRun the infrastructure our engineers deploy on. You will automate environments, own the CI/CD platform and improve reliability.\n\nRequirements\n- 3+ years in DevOps or platform engineering\n- Kubernetes in production, 2+ years\n- Infrastructure as code (Terraform or Ansible)\n- A major cloud provider, 2+ years\n- Building CI/CD pipelines\n- Linux administration and scripting\n- Docker\n\nNice to have\n- Monitoring with Prometheus or Grafana\n- Helm charts\n- Python or Go for tooling\n"
+  },
+  {
+    "id": "mobile",
+    "title": "Mobile Engineer",
+    "intro": "Ship our candidate and recruiter mobile apps. You will build native or cross-platform features and keep releases smooth.",
+    "requirements": [
+      {
+        "id": "mo-exp",
+        "text": "3+ years of mobile development",
+        "kind": "must",
+        "tags": ["exp-mobile"],
+        "minYears": 3
+      },
+      {
+        "id": "mo-platform",
+        "text": "Production apps on Android, iOS, React Native or Flutter, 2+ years",
+        "kind": "must",
+        "tags": ["android", "ios", "react-native", "flutter"],
+        "minYears": 2
+      },
+      {
+        "id": "mo-lang",
+        "text": "Kotlin, Swift, Dart or TypeScript",
+        "kind": "must",
+        "tags": ["kotlin", "swift", "dart", "typescript"]
+      },
+      {
+        "id": "mo-ui",
+        "text": "A modern declarative UI toolkit",
+        "kind": "must",
+        "tags": ["jetpack-compose", "swiftui", "react-native", "flutter"]
+      },
+      {
+        "id": "mo-api",
+        "text": "Integrating REST APIs",
+        "kind": "must",
+        "tags": ["rest-api"]
+      },
+      { "id": "mo-git", "text": "Git", "kind": "must", "tags": ["git"] },
+      {
+        "id": "mo-test",
+        "text": "Unit testing (JUnit or Jest)",
+        "kind": "nice",
+        "tags": ["junit", "jest"]
+      },
+      {
+        "id": "mo-cicd",
+        "text": "Mobile CI/CD",
+        "kind": "nice",
+        "tags": ["ci-cd"]
+      },
+      {
+        "id": "mo-graphql",
+        "text": "GraphQL clients",
+        "kind": "nice",
+        "tags": ["graphql"]
+      },
+      {
+        "id": "mo-agile",
+        "text": "Agile teams",
+        "kind": "nice",
+        "tags": ["agile"]
+      }
+    ],
+    "text": "Mobile Engineer\n\nShip our candidate and recruiter mobile apps. You will build native or cross-platform features and keep releases smooth.\n\nRequirements\n- 3+ years of mobile development\n- Production apps on Android, iOS, React Native or Flutter, 2+ years\n- Kotlin, Swift, Dart or TypeScript\n- A modern declarative UI toolkit\n- Integrating REST APIs\n- Git\n\nNice to have\n- Unit testing (JUnit or Jest)\n- Mobile CI/CD\n- GraphQL clients\n- Agile teams\n"
+  },
+  {
+    "id": "qa-automation",
+    "title": "QA Automation Engineer",
+    "intro": "Own the automated quality gates for our web product: design the test strategy, build suites and make them reliable in CI.",
+    "requirements": [
+      {
+        "id": "qa-exp",
+        "text": "3+ years in QA automation",
+        "kind": "must",
+        "tags": ["exp-qa"],
+        "minYears": 3
+      },
+      {
+        "id": "qa-ui",
+        "text": "A UI automation tool (Selenium, Cypress or Playwright), 2+ years",
+        "kind": "must",
+        "tags": ["selenium", "cypress", "playwright"],
+        "minYears": 2
+      },
+      {
+        "id": "qa-lang",
+        "text": "A scripting language (JavaScript, TypeScript, Python or Java)",
+        "kind": "must",
+        "tags": ["javascript", "typescript", "python", "java"]
+      },
+      {
+        "id": "qa-framework",
+        "text": "Building test automation frameworks",
+        "kind": "must",
+        "tags": ["test-automation"]
+      },
+      {
+        "id": "qa-api",
+        "text": "API testing (Postman or REST)",
+        "kind": "must",
+        "tags": ["postman", "rest-api"]
+      },
+      {
+        "id": "qa-cicd",
+        "text": "Running suites in CI/CD",
+        "kind": "must",
+        "tags": ["ci-cd", "github-actions"]
+      },
+      {
+        "id": "qa-pytest",
+        "text": "pytest",
+        "kind": "nice",
+        "tags": ["pytest"]
+      },
+      {
+        "id": "qa-perf",
+        "text": "Performance testing",
+        "kind": "nice",
+        "tags": ["performance-testing"]
+      },
+      {
+        "id": "qa-bdd",
+        "text": "BDD with Cucumber",
+        "kind": "nice",
+        "tags": ["cucumber"]
+      },
+      {
+        "id": "qa-agile",
+        "text": "Agile teams",
+        "kind": "nice",
+        "tags": ["agile"]
+      },
+      {
+        "id": "qa-docker",
+        "text": "Docker",
+        "kind": "nice",
+        "tags": ["docker"]
+      }
+    ],
+    "text": "QA Automation Engineer\n\nOwn the automated quality gates for our web product: design the test strategy, build suites and make them reliable in CI.\n\nRequirements\n- 3+ years in QA automation\n- A UI automation tool (Selenium, Cypress or Playwright), 2+ years\n- A scripting language (JavaScript, TypeScript, Python or Java)\n- Building test automation frameworks\n- API testing (Postman or REST)\n- Running suites in CI/CD\n\nNice to have\n- pytest\n- Performance testing\n- BDD with Cucumber\n- Agile teams\n- Docker\n"
+  },
+  {
+    "id": "security",
+    "title": "Security Engineer",
+    "intro": "Protect our product and infrastructure. You will review designs, test applications, harden cloud environments and help teams ship securely.",
+    "requirements": [
+      {
+        "id": "se-exp",
+        "text": "3+ years in security engineering",
+        "kind": "must",
+        "tags": ["exp-security"],
+        "minYears": 3
+      },
+      {
+        "id": "se-owasp",
+        "text": "Application security and the OWASP Top 10",
+        "kind": "must",
+        "tags": ["owasp"]
+      },
+      {
+        "id": "se-pentest",
+        "text": "Penetration testing or threat modeling",
+        "kind": "must",
+        "tags": ["penetration-testing", "threat-modeling"]
+      },
+      {
+        "id": "se-iam",
+        "text": "Identity and access management (IAM or OAuth)",
+        "kind": "must",
+        "tags": ["iam", "oauth"]
+      },
+      {
+        "id": "se-cloud",
+        "text": "Cloud security on AWS, Azure or GCP",
+        "kind": "must",
+        "tags": ["aws", "azure", "gcp"]
+      },
+      {
+        "id": "se-linux",
+        "text": "Linux hardening",
+        "kind": "must",
+        "tags": ["linux"]
+      },
+      {
+        "id": "se-siem",
+        "text": "SIEM and log analysis",
+        "kind": "nice",
+        "tags": ["siem"]
+      },
+      {
+        "id": "se-script",
+        "text": "Scripting in Python or Bash",
+        "kind": "nice",
+        "tags": ["python", "bash"]
+      },
+      {
+        "id": "se-crypto",
+        "text": "Applied cryptography and TLS",
+        "kind": "nice",
+        "tags": ["cryptography"]
+      },
+      {
+        "id": "se-burp",
+        "text": "Burp Suite",
+        "kind": "nice",
+        "tags": ["burp-suite"]
+      },
+      {
+        "id": "se-ci",
+        "text": "Security checks in CI/CD",
+        "kind": "nice",
+        "tags": ["ci-cd"]
+      }
+    ],
+    "text": "Security Engineer\n\nProtect our product and infrastructure. You will review designs, test applications, harden cloud environments and help teams ship securely.\n\nRequirements\n- 3+ years in security engineering\n- Application security and the OWASP Top 10\n- Penetration testing or threat modeling\n- Identity and access management (IAM or OAuth)\n- Cloud security on AWS, Azure or GCP\n- Linux hardening\n\nNice to have\n- SIEM and log analysis\n- Scripting in Python or Bash\n- Applied cryptography and TLS\n- Burp Suite\n- Security checks in CI/CD\n"
+  }
+]

@@ -1,0 +1,95 @@
+{
+  "personaId": "p066",
+  "language": "en",
+  "name": "Rohan Moreau",
+  "email": "rohan-moreau@example.com",
+  "githubUrl": null,
+  "headline": "Backend Engineer",
+  "location": "Lyon, France",
+  "summary": "Software engineer who has built customer-facing and internal systems across web application and API teams. Comfortable working across full-stack delivery, service structure, and data-heavy features in fast-moving product groups. Known for improving reliability, tightening implementation details, and collaborating closely with product and design partners.",
+  "roles": [
+    {
+      "employer": "Juniper Relay",
+      "title": "Junior Software Developer",
+      "start": "2021-04",
+      "end": "2022-03",
+      "bullets": [
+        "Built customer-facing features in JavaScript and Node.js, connecting the frontend to a MySQL data model for core account workflows.",
+        "Shipped reusable pages in Next.js and kept the release scope small enough to cut support follow-ups by 18%.",
+        "Implemented server-side request handling in Node.js with JavaScript, reducing manual rework during routine updates by 22%.",
+        "Adjusted database queries in MySQL and coordinated small fixes across the product surface to keep weekly delivery on track."
+      ]
+    },
+    {
+      "employer": "Emberlight Tech",
+      "title": "API Engineer",
+      "start": "2022-03",
+      "end": "2023-05",
+      "bullets": [
+        "Developed API-facing screens in Next.js and React, and worked with System design to keep the user flow consistent across modules.",
+        "Refined component behavior in Vue while aligning interface changes with service contracts, which improved handoff quality for the team.",
+        "Mapped request paths and data flow during System design reviews, helping the team avoid late changes in three major releases.",
+        "Partnered with product and support to translate feedback into smaller, clearer interface updates across the frontend."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Software Developer",
+      "start": "2023-07",
+      "end": "2025-05",
+      "bullets": [
+        "Delivered internal tools in Angular and HTML/CSS, using Node.js and MySQL to support operational workflows for 40+ daily users.",
+        "Automated data handling with Python and SQL, cutting recurring reporting time by 35%.",
+        "Built cloud-backed services on AWS and improved backend logic in Node.js so teams could process higher request volume with fewer delays.",
+        "Cleaned up data models in MySQL and SQL, improving consistency in monthly extracts and reducing manual corrections by 28%.",
+        "Coordinated frontend and backend changes in Angular and Python across several product areas, keeping launches aligned with business deadlines."
+      ]
+    },
+    {
+      "employer": "Emberlight Tech",
+      "title": "Backend Engineer",
+      "start": "2025-06",
+      "end": "2026-02",
+      "bullets": [
+        "Designed backend services in Express and REST APIs, using Python to support high-volume account operations with predictable responses.",
+        "Worked across Angular, React and AWS to deliver interface updates and service improvements for two customer-facing products.",
+        "Reworked data storage in MongoDB and PostgreSQL, improving query stability and reducing failed lookups by 19%.",
+        "Built validation and routing logic in Express and Python, keeping integration issues low during cross-team delivery.",
+        "Collaborated on system design decisions for REST APIs and AWS infrastructure, helping the team scale a growing set of requests without service interruptions."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "JavaScript",
+    "MySQL",
+    "Next.js",
+    "Node.js",
+    "React",
+    "System design",
+    "Vue",
+    "Angular",
+    "AWS",
+    "HTML/CSS",
+    "Express",
+    "MongoDB",
+    "PostgreSQL",
+    "Python",
+    "SQL",
+    "REST APIs"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Software Practice",
+      "school": "Northbridge Institute of Digital Studies",
+      "end": "2020"
+    },
+    {
+      "degree": "Associate Degree in Information Systems",
+      "school": "Lakeview College of Technology",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "French (B2)"],
+  "injection": null
+}

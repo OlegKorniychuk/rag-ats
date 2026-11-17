@@ -1,0 +1,62 @@
+{
+  "user": {
+    "login": "synth-pavel-banerjee",
+    "html_url": "https://github.com/synth-pavel-banerjee",
+    "bio": "Senior mobile engineer who builds polished cross-platform product experiences."
+  },
+  "repos": [
+    {
+      "name": "flutter-order-flow",
+      "html_url": "https://github.com/synth-pavel-banerjee/flutter-order-flow",
+      "description": "A shared ordering experience for mobile apps with a focus on smooth navigation and consistent state handling.",
+      "language": "Java",
+      "stargazers_count": 105,
+      "topics": [
+        "flutter",
+        "mobile",
+        "state-management",
+        "cross-platform",
+        "product-ui"
+      ],
+      "pushed_at": "2026-09-29T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "compose-cart-panel",
+      "html_url": "https://github.com/synth-pavel-banerjee/compose-cart-panel",
+      "description": "A compact cart panel prototype for Android with quick edits, totals, and a tidy layout.",
+      "language": "Java",
+      "stargazers_count": 94,
+      "topics": ["android", "jetpack-compose", "cart", "mobile-ui", "shopping"],
+      "pushed_at": "2026-06-18T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "native-profile-switcher",
+      "html_url": "https://github.com/synth-pavel-banerjee/native-profile-switcher",
+      "description": "A profile switcher concept for mobile apps that compares two native presentation styles in one place.",
+      "language": "Java",
+      "stargazers_count": 83,
+      "topics": [
+        "ios",
+        "swiftui",
+        "react-native",
+        "redux",
+        "profile-switching"
+      ],
+      "pushed_at": "2026-04-29T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "flutter-order-flow": "# Flutter Order Flow\n\nFlutter Order Flow is a compact sample project that explores a shared mobile ordering journey with a clean, repeatable structure. It is meant to show how a product flow can stay consistent across screens while still feeling fast and polished.\n\n## Features\n- Clear step-by-step order flow\n- Shared state for user choices and summary data\n- Simple screen transitions for a smoother experience\n- Small component set for easy reuse\n\n## Getting Started\nOpen the project in a mobile app workspace, then run the sample on an emulator or device. The code is organized so you can follow the flow from entry screen to confirmation screen and adapt it for your own app ideas.",
+    "compose-cart-panel": "# Compose Cart Panel\n\nCompose Cart Panel is a lightweight Android prototype for a cart summary panel. It focuses on quick quantity changes, a readable total section, and a layout that feels comfortable on small screens.\n\n## Features\n- Adjustable item counts\n- Live subtotal and total display\n- Clean arrangement for compact devices\n- Easy extension for new cart fields\n\n## Getting Started\nOpen the project in Android Studio and run it on an Android device or emulator. The sample is intentionally small so you can inspect the structure, make edits, and reuse the cart pattern in a larger app.",
+    "native-profile-switcher": "# Native Profile Switcher\n\nNative Profile Switcher is a small concept project for exploring a profile screen that can shift between two presentation styles. It is useful for comparing layout choices, state updates, and the feel of a profile switch action.\n\n## Features\n- Profile summary with editable sections\n- Toggle-driven view updates\n- Simple state container for screen data\n- Side-by-side comparison of two native presentation styles\n\n## Getting Started\nOpen the project in a mobile app workspace and run the sample on a simulator or device. Start with the profile screen, then adjust the sample data to see how the interface responds to different user details and section layouts."
+  }
+}

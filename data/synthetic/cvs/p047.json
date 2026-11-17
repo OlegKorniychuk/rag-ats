@@ -1,0 +1,80 @@
+{
+  "personaId": "p047",
+  "language": "en",
+  "name": "Lukas Dubois",
+  "email": "lukas-dubois@example.com",
+  "githubUrl": null,
+  "headline": "Mobile Engineer",
+  "location": "Paris, France",
+  "summary": "Mobile engineer with a track record of building and improving customer-facing apps across native and cross-platform teams. Experienced in shipping polished mobile experiences, coordinating releases, and partnering with product and design to improve reliability and user satisfaction.",
+  "roles": [
+    {
+      "employer": "Birchway Systems",
+      "title": "Junior Software Engineer",
+      "start": "2020-12",
+      "end": "2022-08",
+      "bullets": [
+        "Built onboarding and account flows in SwiftUI, then used Redux to keep state handling predictable across screens.",
+        "Reduced interface churn by 28% by tightening shared mobile patterns and simplifying data updates in SwiftUI and Redux.",
+        "Partnered with designers and backend teams to deliver cleaner navigation and faster feature rollouts for the mobile app."
+      ]
+    },
+    {
+      "employer": "Stonebridge Interactive",
+      "title": "Mobile Engineer",
+      "start": "2022-08",
+      "end": "2024-11",
+      "bullets": [
+        "Delivered new app features in Dart for React Native screens while supporting the native iOS experience.",
+        "Improved release stability by 34% by refactoring shared mobile flows and removing duplicate logic across Dart, Java and React Native.",
+        "Worked with product stakeholders to prioritize fixes, polish key journeys and keep the mobile app on schedule."
+      ]
+    },
+    {
+      "employer": "Lumenfield",
+      "title": "Senior Mobile Engineer",
+      "start": "2024-11",
+      "end": null,
+      "bullets": [
+        "Led delivery of mobile features using Agile practices, coordinating CI/CD checks, Git workflows and review cycles for a cross-functional team.",
+        "Built shared app screens in Flutter and Jetpack Compose, while integrating GraphQL and REST APIs in Dart, Kotlin, Swift and iOS modules.",
+        "Raised release confidence by adding JUnit coverage and tightening build validation, cutting post-release defects by 22%.",
+        "Guided the team through architecture decisions for mobile state handling, faster delivery and cleaner handoff between app layers.",
+        "Partnered with designers and backend engineers to ship 6 major updates with smoother sync, clearer error handling and better performance."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Redux",
+    "SwiftUI",
+    "Dart",
+    "iOS",
+    "Java",
+    "React Native",
+    "Agile",
+    "CI/CD",
+    "Flutter",
+    "Git",
+    "GraphQL",
+    "Jetpack Compose",
+    "JUnit",
+    "Kotlin",
+    "REST APIs",
+    "Swift"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Montreval Institute of Applied Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Associate Degree in Computer Applications",
+      "school": "Valedune College of Digital Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (C1)"],
+  "injection": null
+}

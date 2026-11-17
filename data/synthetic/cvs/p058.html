@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hannah Tanaka - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hannah Tanaka</h1>
+<div class="headline">Full-Stack Engineer</div>
+<div class="contact">hannah-tanaka@example.com &middot; Tokyo, Japan</div>
+<h2>Summary</h2>
+<p>Full-stack engineer who builds reliable web products across the stack and partners closely with product and operations teams. Experienced delivering customer-facing features, improving backend services, and shaping technical decisions for growing teams. Comfortable working across cloud infrastructure, data stores, and modern interfaces.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Full-Stack Developer</span><span class="dates">Nov 2025 – Present</span></div>
+  <div class="sub">Corvid Analytics</div>
+  <ul>
+    <li>Architected new product services in Go and TypeScript across AWS and GCP, supporting a team of 8 engineers.</li>
+    <li>Built customer-facing dashboards in Vue and connected them to MySQL-backed workflows for daily operations.</li>
+    <li>Expanded end-to-end checks with Playwright, reducing escaped defects by 28%.</li>
+    <li>Shaped system design decisions for a growing platform and helped the team keep releases predictable.</li>
+    <li>Implemented automation around recurring business flows so support teams could complete tasks faster.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Full-Stack Engineer</span><span class="dates">Sep 2024 – Sep 2025</span></div>
+  <div class="sub">Mossgate Software</div>
+  <ul>
+    <li>Designed service boundaries and shared data structures for customer workflows using GraphQL and PostgreSQL.</li>
+    <li>Built a searchable records experience in Vue backed by MongoDB, cutting lookup time by 35%.</li>
+    <li>Coordinated the backend and frontend implementation to keep the product stable during rapid changes.</li>
+    <li>Reviewed schema changes and application behavior to preserve consistency across the platform.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Full-Stack Engineer</span><span class="dates">Apr 2023 – Sep 2024</span></div>
+  <div class="sub">Yarrow Analytics</div>
+  <ul>
+    <li>Delivered new backend endpoints in Node.js on AWS to support customer reporting tools used by 12 internal users.</li>
+    <li>Improved request handling and service reliability by simplifying the backend logic in Node.js.</li>
+    <li>Worked with product stakeholders to translate feature requests into practical application changes.</li>
+    <li>Supported ongoing releases by reviewing defects, testing fixes, and coordinating rollouts on AWS.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Jun 2022 – Feb 2023</span></div>
+  <div class="sub">Redwren Software</div>
+  <ul>
+    <li>Built responsive pages for the main product with HTML/CSS and JavaScript, and connected them to the frontend in Next.js.</li>
+    <li>Shipped cloud-hosted feature updates on AWS that reduced release defects by 20%.</li>
+    <li>Refined page interactions and layout behavior to improve task completion for 3 key user flows.</li>
+    <li>Collaborated with designers and engineers to keep the interface consistent while adding new screens in Next.js.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Signal Scheduler</span></div>
+  <p>Built a scheduling tool in Next.js and TypeScript with MongoDB to coordinate reminders and task timing for internal users.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>AWS</li>
+  <li>HTML/CSS</li>
+  <li>JavaScript</li>
+  <li>Next.js</li>
+  <li>Node.js</li>
+  <li>GraphQL</li>
+  <li>MongoDB</li>
+  <li>PostgreSQL</li>
+  <li>System design</li>
+  <li>Vue</li>
+  <li>GCP</li>
+  <li>Go</li>
+  <li>MySQL</li>
+  <li>Playwright</li>
+  <li>TypeScript</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2022</span></div>
+  <div class="sub">Kiyosato Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Practice</span><span class="dates">2020</span></div>
+  <div class="sub">Minato College of Applied Computing</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Japanese (B2)</li>
+</ul>
+  </body>
+</html>

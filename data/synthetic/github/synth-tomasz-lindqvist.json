@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-tomasz-lindqvist",
+    "html_url": "https://github.com/synth-tomasz-lindqvist",
+    "bio": "Backend engineer who likes building dependable systems and clean developer workflows."
+  },
+  "repos": [
+    {
+      "name": "signal-queue",
+      "html_url": "https://github.com/synth-tomasz-lindqvist/signal-queue",
+      "description": "A small job processing service for reliable background work and retry handling.",
+      "language": "Python",
+      "stargazers_count": 41,
+      "topics": ["python", "aws", "docker", "system-design"],
+      "pushed_at": "2026-09-13T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "schema-lane",
+      "html_url": "https://github.com/synth-tomasz-lindqvist/schema-lane",
+      "description": "A database migration tracker for organizing table changes and release notes.",
+      "language": "SQL",
+      "stargazers_count": 37,
+      "topics": ["postgresql", "sql", "schema-management", "release-notes"],
+      "pushed_at": "2026-07-06T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "viewcraft-console",
+      "html_url": "https://github.com/synth-tomasz-lindqvist/viewcraft-console",
+      "description": "A compact admin interface for browsing records and handling user tasks.",
+      "language": "TypeScript",
+      "stargazers_count": 31,
+      "topics": ["typescript", "angular", "express", "playwright"],
+      "pushed_at": "2026-06-06T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-queue": "# Signal Queue\n\nSignal Queue is a compact background job service for handling queued work, retries, and timed processing. It is designed for small teams that want predictable behavior without a large setup.\n\n## Features\n- Stores jobs and delivery status in a simple data model\n- Retries failed work with backoff rules\n- Supports scheduled execution windows\n- Keeps worker behavior easy to inspect\n\n## Getting started\n1. Prepare a Python environment.\n2. Set the required variables for storage and timing.\n3. Start the worker process and add a few sample jobs.\n\nUse Python for the service code and Docker for a repeatable local run.",
+    "schema-lane": "# Schema Lane\n\nSchema Lane helps track table changes, version order, and deployment notes for small data projects. It focuses on a clear workflow for editing, reviewing, and applying changes.\n\n## Features\n- Tracks ordered schema updates\n- Records notes for each change set\n- Keeps rollback steps alongside each version\n- Makes table history easier to audit\n\n## Getting started\n1. Create a PostgreSQL database for the project.\n2. Load the provided SQL files in order.\n3. Review the change log before applying updates.\n\nThe project is written in SQL and is meant to stay easy to read and maintain.",
+    "viewcraft-console": "# Viewcraft Console\n\nViewcraft Console is an internal screen for browsing records, updating status, and reviewing user tasks. It aims to keep day-to-day work fast and simple for operators.\n\n## Features\n- Lists records with sorting and filters\n- Shows detail views with editable fields\n- Includes a guided flow for common support actions\n- Uses checks that help catch broken interactions early\n\n## Getting started\n1. Install the project dependencies.\n2. Set the service address and sample data path.\n3. Run the app and open the console in a browser.\n\nTypeScript powers the main code, and Angular and Express are used for the interface and service layer."
+  }
+}

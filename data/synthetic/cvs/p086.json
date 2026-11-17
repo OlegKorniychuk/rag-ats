@@ -1,0 +1,61 @@
+{
+  "personaId": "p086",
+  "language": "en",
+  "name": "Leila Demir",
+  "email": "leila-demir@example.com",
+  "githubUrl": null,
+  "headline": "Software Engineer in Test",
+  "location": "Istanbul, Turkey",
+  "summary": "Software Engineer in Test with experience building reliable release checks and improving quality gates for fast-moving product teams. Comfortable working across API validation, build pipelines, and test execution to reduce escaped defects and speed up delivery. Known for clear collaboration, practical problem solving, and steady improvements to test coverage and feedback loops.",
+  "roles": [
+    {
+      "employer": "Emberlight Tech",
+      "title": "Software Engineer in Test",
+      "start": "2023-04",
+      "end": "2023-12",
+      "bullets": [
+        "Built release checks around REST APIs and GitHub Actions to catch integration issues earlier and keep the main delivery flow stable.",
+        "Expanded automated coverage for new endpoints, cutting manual verification effort by 35% on recurring builds.",
+        "Partnered with developers to triage flaky failures and tighten the feedback loop for the backend, improving trust in test results.",
+        "Documented test scenarios and exit criteria for the team so changes could be reviewed more consistently before release."
+      ]
+    },
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Software Engineer in Test",
+      "start": "2024-01",
+      "end": "2025-11",
+      "bullets": [
+        "Designed and maintained CI/CD checks with Docker, GitHub Actions, JUnit, pytest and REST APIs for a service platform used by multiple teams.",
+        "Improved pipeline reliability by 28% by isolating environment issues and standardizing how test containers were started and cleaned up.",
+        "Created a layered regression suite in JUnit and pytest that shortened verification time by 40% for common release paths.",
+        "Reviewed failed runs, traced defects back to the backend, and helped developers resolve build blockers before deployment.",
+        "Coordinated quality gates across CI/CD stages so the team could ship with faster and more predictable sign-off."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Postman",
+    "GitHub Actions",
+    "REST APIs",
+    "CI/CD",
+    "Docker",
+    "JUnit",
+    "pytest"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Marmara Institute of Applied Computing",
+      "end": "2022"
+    },
+    {
+      "degree": "Associate Certificate in Information Systems",
+      "school": "Bosporus Technical College",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Turkish (Native)"],
+  "injection": null
+}

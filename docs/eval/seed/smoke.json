@@ -1,0 +1,73 @@
+{
+  "label": "smoke",
+  "date": "2026-11-17T19:34:51.046Z",
+  "db": {
+    "host": "localhost:5432",
+    "database": "rag_ats_seed"
+  },
+  "scoringMode": "full_text",
+  "model": "gpt-5.4-mini",
+  "embeddingModel": "text-embedding-3-small",
+  "pricing": {
+    "inputPerMillion": 0.75,
+    "outputPerMillion": 4.5
+  },
+  "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page.",
+  "maxUsd": 0.5,
+  "stopped": null,
+  "durationSec": 39,
+  "counts": {
+    "candidates": 3,
+    "parsed": 3,
+    "failedParses": 0,
+    "parsePending": 0,
+    "embedded": 3,
+    "applications": 7,
+    "scored": 6,
+    "failedScores": 1,
+    "scoresPending": 0,
+    "personas": 3
+  },
+  "parseSuccessPct": 100,
+  "parseSuccessTarget": 90,
+  "meetsParseTarget": true,
+  "tokens": {
+    "chatCalls": 16,
+    "chatInput": 22604,
+    "chatOutput": 8835,
+    "embeddingCalls": 3,
+    "embeddingTokens": 3156,
+    "callsBySchema": {
+      "vacancy_criteria": {
+        "calls": 5,
+        "inputTokens": 3277,
+        "outputTokens": 851
+      },
+      "cv_profile": {
+        "calls": 3,
+        "inputTokens": 4357,
+        "outputTokens": 1063
+      },
+      "application_score": {
+        "calls": 8,
+        "inputTokens": 14970,
+        "outputTokens": 6921
+      }
+    }
+  },
+  "costUsd": {
+    "chat": 0.0567105,
+    "embedding": 0.00006312,
+    "total": 0.05677362
+  },
+  "submitErrors": [],
+  "failedParses": [],
+  "failedScores": [
+    {
+      "applicationId": "d65f00a7-9e8a-4c58-a908-1c462f222960",
+      "candidateId": "ba5463fe-c6ef-4df8-b81f-f6571e168d19",
+      "vacancy": "Backend Engineer",
+      "error": "Could not ground the score in the CV"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sofia Nair - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sofia Nair</h1>
+<div class="headline">Junior Platform Engineer</div>
+<div class="contact">sofia-nair@example.com &middot; Aarhus, Denmark</div>
+<h2>Summary</h2>
+<p>Junior platform engineer focused on keeping internal systems reliable, secure, and easy to operate. Comfortable working across container setup, access control, monitoring, and automation. Known for clear handoffs, steady follow-through, and practical improvements to day-to-day operations.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Junior Platform Engineer</span><span class="dates">Nov 2025 – Present</span></div>
+  <div class="sub">Dovetail Robotics</div>
+  <ul>
+    <li>Automated setup tasks with Bash and Docker, reducing new environment preparation time by 40% for the support team.</li>
+    <li>Maintained access policies in IAM and reviewed account requests, cutting manual approval delays by 25%.</li>
+    <li>Built monitoring views in Grafana to surface service health trends and helped the team resolve issues before they spread.</li>
+    <li>Packaged repeatable platform tasks into simple runbooks, improving on-call response consistency across 3 shifts.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Tidal Inbox</span></div>
+  <p>Set up automated checks with GitHub Actions and Prometheus to track delivery status and alert the team when message processing drifted.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Lantern Dashboard</span></div>
+  <p>Shaped the access flow in IAM so reviewers could grant and revoke permissions with fewer manual steps.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Quiet Pipeline</span></div>
+  <p>Created operational views in Grafana to highlight queue buildup, retry spikes, and other early warning signs.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Bash</li>
+  <li>Docker</li>
+  <li>Grafana</li>
+  <li>IAM</li>
+  <li>Linux</li>
+  <li>GitHub Actions</li>
+  <li>Prometheus</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Computer Operations</span><span class="dates">2024</span></div>
+  <div class="sub">Northbridge Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Systems Support</span><span class="dates">2023</span></div>
+  <div class="sub">Myren College of Applied Science</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Hindi (C2)</li>
+</ul>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "personaId": "p052",
+  "language": "en",
+  "name": "Hannah Nair",
+  "email": "hannah-nair@example.com",
+  "githubUrl": null,
+  "headline": "Frontend Engineer",
+  "location": "London, United Kingdom",
+  "summary": "Frontend engineer with a track record of building reliable web and mobile experiences across product teams. Comfortable turning product requirements into maintainable interfaces, improving release quality, and collaborating closely with design and backend partners. Known for shipping practical improvements that reduce defects and speed up delivery.",
+  "roles": [
+    {
+      "employer": "Emberlight Tech",
+      "title": "Software Developer",
+      "start": "2021-02",
+      "end": "2022-11",
+      "bullets": [
+        "Built customer-facing screens in Angular and Redux, improving task completion flow and reducing support follow-ups by 18%.",
+        "Added Playwright coverage for critical journeys and kept releases stable through repeatable checks on the main interface.",
+        "Worked with product and design to refine layout details, then updated Angular views to match changing requirements without slowing the team down.",
+        "Reviewed and merged frontend changes with Git, helping the team keep a steady delivery pace across weekly releases."
+      ]
+    },
+    {
+      "employer": "Quartzfield",
+      "title": "Senior Frontend Engineer",
+      "start": "2022-12",
+      "end": "2026-09",
+      "bullets": [
+        "Led frontend delivery for a larger product surface in Next.js and TypeScript, improving page performance and simplifying component ownership.",
+        "Shipped mobile features in Android and Jetpack Compose, supporting a smoother cross-platform experience for a release used by 40,000+ users.",
+        "Partnered with backend engineers on GraphQL and REST APIs, reducing integration rework and keeping data flows consistent across channels.",
+        "Strengthened CI/CD and Git practices while adding Jest and Playwright checks, which cut escaped frontend defects by 27%.",
+        "Built reusable UI patterns in Vue and HTML/CSS, helping the team launch new screens faster and keep design changes consistent."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Signal Garden",
+      "description": "Created Signal Garden with Cypress to validate user journeys end to end and catch regressions before launch."
+    }
+  ],
+  "skills": [
+    "Angular",
+    "Playwright",
+    "Redux",
+    "Android",
+    "CI/CD",
+    "Git",
+    "GraphQL",
+    "HTML/CSS",
+    "Jest",
+    "Jetpack Compose",
+    "Next.js",
+    "REST APIs",
+    "TypeScript",
+    "Vue",
+    "Cypress"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Computer Science",
+      "school": "Northgate Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Digital Product Engineering",
+      "school": "Wrenfield College of Applied Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Hindi (C1)"],
+  "injection": null
+}

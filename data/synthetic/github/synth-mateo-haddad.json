@@ -1,0 +1,55 @@
+{
+  "user": {
+    "login": "synth-mateo-haddad",
+    "html_url": "https://github.com/synth-mateo-haddad",
+    "bio": "Software engineer focused on security-minded tools and careful system work."
+  },
+  "repos": [
+    {
+      "name": "black-sentinel",
+      "html_url": "https://github.com/synth-mateo-haddad/black-sentinel",
+      "description": "A toolkit for penetration testing reviews and repeatable security checks.",
+      "language": "Rust",
+      "stargazers_count": 92,
+      "topics": [
+        "penetration-testing",
+        "owasp",
+        "cryptography",
+        "security-tools"
+      ],
+      "pushed_at": "2026-09-29T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "vault-shift",
+      "html_url": "https://github.com/synth-mateo-haddad/vault-shift",
+      "description": "A compact access control service for IAM and OAuth policy experiments.",
+      "language": "Go",
+      "stargazers_count": 81,
+      "topics": ["iam", "oauth", "aws", "azure", "access-control"],
+      "pushed_at": "2026-06-22T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "cipher-loom",
+      "html_url": "https://github.com/synth-mateo-haddad/cipher-loom",
+      "description": "A C++ library for small cryptography experiments and message handling.",
+      "language": "C++",
+      "stargazers_count": 74,
+      "topics": ["cryptography", "c-plus-plus", "message-format", "security"],
+      "pushed_at": "2026-05-28T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "black-sentinel": "# Black Sentinel\n\nBlack Sentinel is a small toolkit for penetration testing reviews and repeatable security checks. It helps a solo engineer collect findings, compare results, and keep notes tied to each check. The focus is on practical safety work with clear outputs.\n\n## Features\n- Organizes security checks into small runs\n- Records findings with severity and notes\n- Supports basic cryptography helpers for sensitive data\n- Keeps a compact history for later review\n\n## Getting Started\nBuild the project with Rust, then run the sample checks from the command line. Edit the included sample data, choose the checks you want, and review the generated report. The project is designed to stay simple and easy to extend.",
+    "vault-shift": "# Vault Shift\n\nVault Shift is a compact access control service for IAM and OAuth policy experiments. It is meant for exploring how permissions change across teams, roles, and protected resources without adding unnecessary complexity.\n\n## Features\n- Models users, roles, and scoped permissions\n- Evaluates access rules with small, readable inputs\n- Tracks changes to policy records for later inspection\n- Works with AWS and Azure style account notes\n\n## Getting Started\nBuild the project with Go and run the sample policy set from the command line. Then edit the example roles and permissions to try different access paths. The code is small enough to read in one sitting and adapt for personal use.",
+    "cipher-loom": "# Cipher Loom\n\nCipher Loom is a C++ library for small cryptography experiments and message handling. It is built for learning how data can be wrapped, checked, and restored in a controlled way.\n\n## Features\n- Implements simple key-based message wrapping\n- Verifies message integrity before decoding\n- Keeps helper routines separated for easier reading\n- Provides sample inputs for quick experimentation\n\n## Getting Started\nCompile the library with C++. Then run the included sample program and inspect the output for the example messages. Adjust the sample keys and payloads to explore different results without changing the overall structure."
+  }
+}

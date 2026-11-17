@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-samuel-dubois",
+    "html_url": "https://github.com/synth-samuel-dubois",
+    "bio": "I build reliable systems and automation for busy teams."
+  },
+  "repos": [
+    {
+      "name": "cluster-ops-notes",
+      "html_url": "https://github.com/synth-samuel-dubois/cluster-ops-notes",
+      "description": "A practical collection of deployment and recovery routines for cluster operations with Ansible and Kubernetes.",
+      "language": "Python",
+      "stargazers_count": 53,
+      "topics": ["ansible", "kubernetes", "ops-automation", "infra-notes"],
+      "pushed_at": "2026-09-04T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "pipeline-lantern",
+      "html_url": "https://github.com/synth-samuel-dubois/pipeline-lantern",
+      "description": "A release helper that watches build flow and keeps delivery steps consistent across teams.",
+      "language": "Go",
+      "stargazers_count": 43,
+      "topics": ["ci-cd", "aws", "delivery", "automation"],
+      "pushed_at": "2026-08-16T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "guarded-queue",
+      "html_url": "https://github.com/synth-samuel-dubois/guarded-queue",
+      "description": "A compact policy tool for access rules, alert review, and environment safety checks.",
+      "language": "Python",
+      "stargazers_count": 32,
+      "topics": ["iam", "linux", "policy", "ops"],
+      "pushed_at": "2026-05-23T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "cluster-ops-notes": "# Cluster Ops Notes\n\nA small project for keeping day-to-day cluster work repeatable and calm. It brings together playbook-style routines for setup, updates, and recovery, with a focus on predictable change and clear operator steps.\n\n## Features\n- Ansible-based routines for common tasks\n- Kubernetes-focused environment checks\n- Lightweight guardrails for rollout and rollback\n- Notes for shared operational habits\n\n## Getting Started\nUse Ansible to run the routines against a Kubernetes target. Review the notes first, adjust the inventory for your own environment, and then run the setup flow from the project root.",
+    "pipeline-lantern": "# Pipeline Lantern\n\nPipeline Lantern helps a small team keep release steps in order. It records build status, highlights blocked work, and keeps the handoff between code review and deployment easy to follow.\n\n## Features\n- Clear release-stage tracking\n- Simple status summaries for teams\n- Checks for common delivery mistakes\n- Support for repeatable rollout steps\n\n## Getting Started\nInstall the tool, point it at your build records, and configure the delivery stages you want to follow. Then run the main command to view the current release flow and update the shared notes.",
+    "guarded-queue": "# Guarded Queue\n\nGuarded Queue is a small utility for reviewing access rules and keeping sensitive changes visible. It is meant for busy operators who want a simple place to track approvals, reminders, and environment checks.\n\n## Features\n- Access-rule review helpers\n- Manual approval tracking\n- Environment safety reminders\n- Compact audit-friendly summaries\n\n## Getting Started\nSet up the project in Python, define the rules you want to review, and run the main script to generate a safety summary. The project is designed for local use with simple input files."
+  }
+}

@@ -1,0 +1,288 @@
+[
+  {
+    "id": "q01",
+    "query": "Kafka event streaming backend",
+    "tags": ["kafka"],
+    "relevant": [
+      "p011",
+      "p016",
+      "p017",
+      "p023",
+      "p026",
+      "p029",
+      "p031",
+      "p032",
+      "p054",
+      "p065",
+      "p087",
+      "p093",
+      "p097"
+    ],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q02",
+    "query": "React Native mobile developer",
+    "tags": ["react-native"],
+    "relevant": ["p003", "p047", "p067", "p076", "p082"],
+    "partiallyRelevant": ["p009"]
+  },
+  {
+    "id": "q03",
+    "query": "Kubernetes platform engineer",
+    "tags": ["kubernetes"],
+    "relevant": [
+      "p002",
+      "p017",
+      "p019",
+      "p023",
+      "p032",
+      "p039",
+      "p043",
+      "p048",
+      "p054",
+      "p061",
+      "p068",
+      "p078",
+      "p084",
+      "p091",
+      "p097"
+    ],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q04",
+    "query": "Spring Boot microservices",
+    "tags": ["spring-boot", "microservices"],
+    "relevant": [
+      "p017",
+      "p018",
+      "p022",
+      "p023",
+      "p026",
+      "p038",
+      "p048",
+      "p075"
+    ],
+    "partiallyRelevant": ["p054"]
+  },
+  {
+    "id": "q05",
+    "query": "TypeScript and React frontend",
+    "tags": ["typescript", "react"],
+    "relevant": [
+      "p013",
+      "p022",
+      "p045",
+      "p046",
+      "p049",
+      "p071",
+      "p072",
+      "p083"
+    ],
+    "partiallyRelevant": ["p051", "p060"]
+  },
+  {
+    "id": "q06",
+    "query": "Python data pipelines with Airflow",
+    "tags": ["python", "airflow"],
+    "relevant": ["p031", "p055", "p065", "p090"],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q07",
+    "query": "Terraform and AWS infrastructure",
+    "tags": ["terraform", "aws"],
+    "relevant": ["p002", "p019", "p039", "p068", "p078", "p084"],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q08",
+    "query": "PyTorch machine learning engineer",
+    "tags": ["pytorch"],
+    "relevant": ["p001", "p004", "p016", "p030", "p065", "p074"],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q09",
+    "query": "Node.js with PostgreSQL",
+    "tags": ["nodejs", "postgresql"],
+    "relevant": ["p005", "p026", "p045", "p058", "p066", "p093", "p095"],
+    "partiallyRelevant": ["p011", "p050", "p051", "p070"]
+  },
+  {
+    "id": "q10",
+    "query": "Selenium or Playwright test automation",
+    "tags": ["playwright"],
+    "relevant": [
+      "p007",
+      "p008",
+      "p013",
+      "p014",
+      "p033",
+      "p036",
+      "p040",
+      "p051",
+      "p052",
+      "p058",
+      "p088"
+    ],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q11",
+    "query": "Kotlin Android developer",
+    "tags": ["kotlin", "android"],
+    "relevant": ["p003", "p069", "p076", "p082"],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q12",
+    "query": "Penetration testing and OWASP",
+    "tags": ["penetration-testing", "owasp"],
+    "relevant": ["p012", "p056", "p062", "p099"],
+    "partiallyRelevant": ["p010", "p042", "p057", "p069", "p098"]
+  },
+  {
+    "id": "q13",
+    "query": "Snowflake data warehouse and dbt",
+    "tags": ["snowflake", "dbt"],
+    "relevant": ["p029", "p041", "p065", "p087", "p090"],
+    "partiallyRelevant": ["p059", "p079"]
+  },
+  {
+    "id": "q14",
+    "query": "Flutter cross-platform apps",
+    "tags": ["flutter"],
+    "relevant": [
+      "p003",
+      "p009",
+      "p034",
+      "p047",
+      "p067",
+      "p073",
+      "p076",
+      "p082"
+    ],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q15",
+    "query": "GraphQL API design",
+    "tags": ["graphql"],
+    "relevant": [
+      "p003",
+      "p009",
+      "p011",
+      "p016",
+      "p020",
+      "p036",
+      "p037",
+      "p044",
+      "p046",
+      "p047",
+      "p052",
+      "p053",
+      "p058",
+      "p060",
+      "p067",
+      "p070",
+      "p073",
+      "p076",
+      "p082",
+      "p083",
+      "p088",
+      "p092",
+      "p093",
+      "p094",
+      "p095"
+    ],
+    "partiallyRelevant": ["p007", "p027", "p050"]
+  },
+  {
+    "id": "q16",
+    "query": "Docker and CI/CD pipelines",
+    "tags": ["docker", "ci-cd"],
+    "relevant": [
+      "p003",
+      "p017",
+      "p018",
+      "p019",
+      "p023",
+      "p033",
+      "p039",
+      "p060",
+      "p061",
+      "p084",
+      "p086",
+      "p091",
+      "p098",
+      "p099"
+    ],
+    "partiallyRelevant": ["p025", "p051"]
+  },
+  {
+    "id": "q17",
+    "query": "NLP engineer",
+    "tags": ["nlp"],
+    "relevant": [
+      "p001",
+      "p015",
+      "p016",
+      "p021",
+      "p030",
+      "p074",
+      "p077",
+      "p079"
+    ],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q18",
+    "query": "Java Hibernate and PostgreSQL",
+    "tags": ["java", "hibernate"],
+    "relevant": ["p018", "p023", "p026", "p032", "p038"],
+    "partiallyRelevant": []
+  },
+  {
+    "id": "q19",
+    "query": "Redis caching and RabbitMQ",
+    "tags": ["redis", "rabbitmq"],
+    "relevant": [
+      "p011",
+      "p017",
+      "p023",
+      "p026",
+      "p032",
+      "p044",
+      "p045",
+      "p080",
+      "p093"
+    ],
+    "partiallyRelevant": ["p050"]
+  },
+  {
+    "id": "q20",
+    "query": "Cypress end to end testing",
+    "tags": ["cypress"],
+    "relevant": [
+      "p006",
+      "p007",
+      "p008",
+      "p014",
+      "p022",
+      "p028",
+      "p033",
+      "p036",
+      "p052",
+      "p057",
+      "p083",
+      "p088",
+      "p092",
+      "p095",
+      "p098",
+      "p099"
+    ],
+    "partiallyRelevant": ["p051"]
+  }
+]

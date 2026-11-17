@@ -1,0 +1,456 @@
+{
+  "runs": [
+    {
+      "stage": "vacancies",
+      "timestamp": "2026-11-15T14:36:21.462Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 22,
+      "inputTokens": 16406,
+      "outputTokens": 5428,
+      "costUsd": 0.03673,
+      "retries": 12,
+      "generated": [
+        "backend-node",
+        "frontend",
+        "ml",
+        "platform-devops",
+        "mobile",
+        "qa-automation",
+        "security"
+      ],
+      "failures": [
+        {
+          "id": "backend-java",
+          "problems": [
+            "bj-hibernate: the text must mention \"Hibernate\" by name."
+          ]
+        },
+        {
+          "id": "full-stack",
+          "problems": [
+            "fs-ui: the text must mention \"React\" by name.",
+            "fs-test: the text must mention \"Playwright\" by name."
+          ]
+        },
+        {
+          "id": "data-engineering",
+          "problems": [
+            "de-orchestration: the text must mention \"Spark\" by name.",
+            "de-streaming: the text must mention \"Spark\" by name."
+          ]
+        }
+      ],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "vacancies",
+      "timestamp": "2026-11-15T14:37:51.414Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 10,
+      "inputTokens": 7315,
+      "outputTokens": 2449,
+      "costUsd": 0.016507,
+      "retries": 0,
+      "generated": [
+        "frontend",
+        "backend-node",
+        "full-stack",
+        "backend-java",
+        "ml",
+        "data-engineering",
+        "platform-devops",
+        "mobile",
+        "qa-automation",
+        "security"
+      ],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "vacancies",
+      "timestamp": "2026-11-15T14:42:05.062Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 13,
+      "inputTokens": 10684,
+      "outputTokens": 3025,
+      "costUsd": 0.021626,
+      "retries": 3,
+      "generated": [
+        "backend-node",
+        "frontend",
+        "data-engineering",
+        "backend-java",
+        "full-stack",
+        "ml",
+        "security",
+        "mobile",
+        "qa-automation",
+        "platform-devops"
+      ],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:42:57.701Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 19,
+      "inputTokens": 18366,
+      "outputTokens": 9929,
+      "costUsd": 0.058455,
+      "retries": 14,
+      "generated": ["p034", "p001"],
+      "failures": [
+        { "id": "p036", "problems": ["The skills list is empty."] },
+        {
+          "id": "p029",
+          "problems": [
+            "The skills list is empty.",
+            "\"Agile\" must appear by name in the bullets of role 2 (Senior Analytics Engineer).",
+            "\"R\" must appear by name in the bullets of role 1 (Data Engineer) or role 2 (Senior Analytics Engineer)."
+          ]
+        },
+        {
+          "id": "p050",
+          "problems": [
+            "\"Go\" must appear by name in the bullets of role 3 (Software Engineer)."
+          ]
+        }
+      ],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {
+        "p034": ["\"JUnit\" is mentioned in role 1, which does not list it."]
+      },
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:45:45.092Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 3,
+      "inputTokens": 2846,
+      "outputTokens": 1536,
+      "costUsd": 0.009046,
+      "retries": 0,
+      "generated": ["p050", "p029", "p036"],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:46:09.266Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 2,
+      "inputTokens": 1899,
+      "outputTokens": 1085,
+      "costUsd": 0.006307,
+      "retries": 0,
+      "generated": ["p034", "p001"],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:46:55.336Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 5,
+      "inputTokens": 5225,
+      "outputTokens": 2674,
+      "costUsd": 0.015952,
+      "retries": 0,
+      "generated": ["p036", "p001", "p029", "p034", "p050"],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {
+        "p034": [
+          "\"Java\" is mentioned in role 2, which does not list it.",
+          "\"Redux\" is mentioned in role 2, which does not list it."
+        ]
+      },
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:49:19.512Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 125,
+      "inputTokens": 129714,
+      "outputTokens": 60469,
+      "costUsd": 0.369396,
+      "retries": 30,
+      "generated": [
+        "p005",
+        "p002",
+        "p004",
+        "p006",
+        "p007",
+        "p008",
+        "p009",
+        "p010",
+        "p003",
+        "p011",
+        "p012",
+        "p014",
+        "p013",
+        "p015",
+        "p016",
+        "p018",
+        "p017",
+        "p019",
+        "p020",
+        "p021",
+        "p022",
+        "p023",
+        "p024",
+        "p026",
+        "p027",
+        "p028",
+        "p030",
+        "p032",
+        "p031",
+        "p035",
+        "p033",
+        "p037",
+        "p038",
+        "p040",
+        "p039",
+        "p042",
+        "p043",
+        "p045",
+        "p044",
+        "p046",
+        "p048",
+        "p041",
+        "p047",
+        "p052",
+        "p051",
+        "p053",
+        "p054",
+        "p055",
+        "p057",
+        "p056",
+        "p059",
+        "p058",
+        "p060",
+        "p061",
+        "p064",
+        "p063",
+        "p062",
+        "p066",
+        "p067",
+        "p068",
+        "p069",
+        "p065",
+        "p072",
+        "p070",
+        "p071",
+        "p073",
+        "p074",
+        "p076",
+        "p075",
+        "p078",
+        "p081",
+        "p077",
+        "p079",
+        "p080",
+        "p082",
+        "p083",
+        "p085",
+        "p087",
+        "p088",
+        "p086",
+        "p084",
+        "p090",
+        "p089",
+        "p091",
+        "p092",
+        "p094",
+        "p093",
+        "p095",
+        "p096",
+        "p097",
+        "p100",
+        "p098",
+        "p099"
+      ],
+      "failures": [
+        {
+          "id": "p025",
+          "problems": [
+            "\"ETL\" is mentioned (role 1 bullets) but the candidate does not have it. Remove it from the CV; use a generic word instead."
+          ]
+        },
+        {
+          "id": "p049",
+          "problems": [
+            "\"Test automation\" belongs to the skills list only; it must not appear in bullets, projects, headline, summary or education."
+          ]
+        }
+      ],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {
+        "p002": [
+          "\"Prometheus\" is mentioned in role 2, which does not list it."
+        ],
+        "p011": ["\"SQL\" is mentioned in role 4, which does not list it."],
+        "p017": [
+          "\"Kafka\" is mentioned in role 4, which does not list it.",
+          "\"SQL\" is mentioned in role 4, which does not list it."
+        ],
+        "p020": ["\"GraphQL\" is mentioned in role 4, which does not list it."],
+        "p030": ["\"Agile\" is mentioned in role 4, which does not list it."],
+        "p052": ["\"Git\" is mentioned in role 1, which does not list it."],
+        "p057": ["\"OAuth\" is mentioned in role 4, which does not list it."],
+        "p061": ["\"Python\" is mentioned in role 3, which does not list it."],
+        "p066": [
+          "\"System design\" is mentioned in role 4, which does not list it."
+        ],
+        "p073": ["\"iOS\" is mentioned in role 2, which does not list it."],
+        "p074": ["\"Spark\" is mentioned in role 3, which does not list it."],
+        "p082": ["\"Swift\" is mentioned in role 4, which does not list it."],
+        "p089": ["\"Spark\" is mentioned in role 2, which does not list it."],
+        "p092": ["\"Cypress\" is mentioned in role 3, which does not list it."],
+        "p098": ["\"C\" is mentioned in role 1, which does not list it."]
+      },
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "github",
+      "timestamp": "2026-11-15T14:50:17.153Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 43,
+      "inputTokens": 27303,
+      "outputTokens": 24985,
+      "costUsd": 0.13291,
+      "retries": 3,
+      "generated": [
+        "p005",
+        "p006",
+        "p001",
+        "p007",
+        "p009",
+        "p012",
+        "p011",
+        "p014",
+        "p018",
+        "p020",
+        "p023",
+        "p022",
+        "p024",
+        "p029",
+        "p031",
+        "p032",
+        "p033",
+        "p035",
+        "p040",
+        "p034",
+        "p037",
+        "p042",
+        "p044",
+        "p046",
+        "p051",
+        "p059",
+        "p060",
+        "p061",
+        "p068",
+        "p070",
+        "p072",
+        "p073",
+        "p074",
+        "p078",
+        "p082",
+        "p083",
+        "p089",
+        "p091",
+        "p092",
+        "p095"
+      ],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:50:54.426Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 10,
+      "inputTokens": 10030,
+      "outputTokens": 3523,
+      "costUsd": 0.023376,
+      "retries": 8,
+      "generated": ["p025"],
+      "failures": [
+        {
+          "id": "p049",
+          "problems": [
+            "\"Test automation\" belongs to the skills list only; it must not appear in bullets, projects, headline, summary or education."
+          ]
+        }
+      ],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {},
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    },
+    {
+      "stage": "cvs",
+      "timestamp": "2026-11-15T14:52:17.192Z",
+      "model": "gpt-5.4-mini-2026-03-17",
+      "calls": 6,
+      "inputTokens": 6182,
+      "outputTokens": 2881,
+      "costUsd": 0.017601,
+      "retries": 1,
+      "generated": ["p049", "p086", "p013", "p033", "p099"],
+      "failures": [],
+      "remaining": [],
+      "stopped": null,
+      "warnings": {
+        "p099": ["\"Selenium\" is mentioned in role 2, which does not list it."]
+      },
+      "maxUsd": 2,
+      "pricing": { "inputPerMillion": 0.75, "outputPerMillion": 4.5 },
+      "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+    }
+  ]
+}

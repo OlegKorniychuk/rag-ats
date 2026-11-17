@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-felix-moreau",
+    "html_url": "https://github.com/synth-felix-moreau",
+    "bio": "Software developer focused on reliable data work and practical team delivery."
+  },
+  "repos": [
+    {
+      "name": "query-lens",
+      "html_url": "https://github.com/synth-felix-moreau/query-lens",
+      "description": "A compact SQL toolkit for checking data quality and surfacing useful patterns in warehouse tables.",
+      "language": "SQL",
+      "stargazers_count": 94,
+      "topics": ["sql", "data-quality", "warehouse", "analysis"],
+      "pushed_at": "2026-09-07T00:00:00.000Z",
+      "created_at": "2025-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "load-notes",
+      "html_url": "https://github.com/synth-felix-moreau/load-notes",
+      "description": "Bash scripts and notes for moving flat files into a warehouse and keeping the load steps easy to repeat.",
+      "language": "Bash",
+      "stargazers_count": 87,
+      "topics": ["bash", "etl", "warehouse", "files"],
+      "pushed_at": "2026-08-23T00:00:00.000Z",
+      "created_at": "2023-06-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "metrics-desk",
+      "html_url": "https://github.com/synth-felix-moreau/metrics-desk",
+      "description": "R reports that combine warehouse extracts with tidy summaries for weekly review and planning.",
+      "language": "R",
+      "stargazers_count": 82,
+      "topics": ["r", "reporting", "summary", "metrics"],
+      "pushed_at": "2026-06-19T00:00:00.000Z",
+      "created_at": "2021-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "query-lens": "# Query Lens\n\nQuery Lens is a small SQL project for reviewing table contents, spotting odd values, and summarizing changes over time. It is written for simple data work where clear queries and repeatable checks matter more than heavy setup.\n\n## Features\n- Table checks for missing values and duplicates\n- Summary queries for counts, ranges, and simple trends\n- Repeatable query patterns for daily review\n- Easy adaptation to different warehouse tables\n\n## Getting started\n1. Open the SQL files and choose a table to inspect.\n2. Update the table and field names to match your data.\n3. Run the queries in your warehouse and review the output.\n\nThe project is intentionally small so it can be reused in many reporting and ETL tasks.",
+    "load-notes": "# Load Notes\n\nLoad Notes is a Bash project for moving flat files through a simple ETL flow and documenting each step in plain language. It is designed for personal data work where a small number of scripts can keep the process understandable.\n\n## Features\n- Step-by-step file checks before loading\n- Simple naming and folder conventions\n- Clear notes for rerunning a load\n- Lightweight helpers for daily ETL tasks\n\n## Getting started\n1. Place input files in the expected folder.\n2. Edit the script settings for your file names and paths.\n3. Run the Bash script and follow the printed steps.\n\nUse this project when you want a repeatable load process without extra moving parts.",
+    "metrics-desk": "# Metrics Desk\n\nMetrics Desk is an R project for turning warehouse extracts into concise weekly summaries. It helps with planning by gathering the key counts, grouping the results, and presenting them in a form that is easy to review.\n\n## Features\n- Basic summaries for volume and change\n- Grouped views for team-level review\n- Small report outputs for weekly meetings\n- Simple structure for swapping in new extracts\n\n## Getting started\n1. Save your source data in a plain text or table export.\n2. Update the file references in the R scripts.\n3. Run the report and review the generated summary.\n\nThis project suits small teams that want a steady reporting rhythm and a clear view of changes over time."
+  }
+}

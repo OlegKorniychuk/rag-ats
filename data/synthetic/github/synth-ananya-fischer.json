@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-ananya-fischer",
+    "html_url": "https://github.com/synth-ananya-fischer",
+    "bio": "Security-minded engineer who builds practical defenses and clear review habits."
+  },
+  "repos": [
+    {
+      "name": "risk-map-notes",
+      "html_url": "https://github.com/synth-ananya-fischer/risk-map-notes",
+      "description": "A compact set of notes for turning system sketches into clear risk decisions.",
+      "language": null,
+      "stargazers_count": 65,
+      "topics": ["owasp", "threat-modeling", "security", "reviews", "risk"],
+      "pushed_at": "2026-09-14T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "policy-guard",
+      "html_url": "https://github.com/synth-ananya-fischer/policy-guard",
+      "description": "A Python tool that checks local policy text for common security gaps.",
+      "language": "Python",
+      "stargazers_count": 55,
+      "topics": ["owasp", "policy", "security", "analysis", "python"],
+      "pushed_at": "2026-06-23T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "token-shield",
+      "html_url": "https://github.com/synth-ananya-fischer/token-shield",
+      "description": "A Rust utility for handling short-lived secrets with careful logging.",
+      "language": "Rust",
+      "stargazers_count": 50,
+      "topics": ["oauth", "cryptography", "secrets", "security", "rust"],
+      "pushed_at": "2026-03-23T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "risk-map-notes": "# Risk Map Notes\n\nRisk Map Notes is a small guide for turning early ideas into a simple defense plan. It helps compare likely misuse, rank weak points, and write down decisions that others can review later. The focus is on clarity, repeatability, and useful notes for day-to-day work.\n\n## Features\n- A short method for spotting trust boundaries\n- Lightweight prompts for abuse paths and weak assumptions\n- Simple templates for recording risk, impact, and next steps\n- Advice for keeping reviews calm and consistent\n\n## Getting started\nRead the notes from top to bottom, then try the template on one real system sketch. Use the same structure each time so the discussion stays focused and easy to compare. The file is designed for manual use and works well with written review sessions.",
+    "policy-guard": "# Policy Guard\n\nPolicy Guard is a small local checker for security policy text. It scans plain files, looks for missing sections, and points out wording that may leave room for unsafe choices. The goal is to make reviews faster without replacing human judgment.\n\n## Features\n- Checks for required policy sections\n- Flags vague language and missing ownership\n- Produces a simple summary for review meetings\n- Keeps the workflow local and easy to repeat\n\n## Getting started\nPlace your policy files in one folder and run the checker from that folder. Review the summary, adjust the text, and run it again until the main gaps are closed. The tool is intended for local use and does not depend on external services.",
+    "token-shield": "# Token Shield\n\nToken Shield is a small utility for handling short-lived secrets with careful logs and narrow output. It is meant for teams that want a simple way to inspect token lifecycles without exposing sensitive values. The project keeps the focus on traceable steps and conservative defaults.\n\n## Features\n- Tracks issue, use, and expiry events\n- Redacts sensitive values in printed output\n- Separates active items from expired items\n- Keeps file input and output straightforward\n\n## Getting started\nBuild the utility, point it at a local text file, and review the generated report. Start with a small sample and confirm that the redaction rules match your internal process. The project is designed to stay local and readable."
+  }
+}

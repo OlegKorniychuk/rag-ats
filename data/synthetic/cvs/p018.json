@@ -1,0 +1,78 @@
+{
+  "personaId": "p018",
+  "language": "en",
+  "name": "Zainab Novak",
+  "email": "zainab-novak@example.com",
+  "githubUrl": "https://github.com/synth-zainab-novak",
+  "headline": "Backend Engineer",
+  "location": "Belgrade, Serbia",
+  "summary": "Backend engineer with experience building reliable APIs and service-layer features across product teams. Comfortable working in Agile environments, improving data handling, and coordinating delivery across backend services. Known for turning ambiguous requirements into stable releases and measurable operational gains.",
+  "roles": [
+    {
+      "employer": "Foxglove Cloud",
+      "title": "API Engineer",
+      "start": "2020-12",
+      "end": "2023-10",
+      "bullets": [
+        "Built and maintained API endpoints in Scala, aligning delivery with Agile planning and reducing rework during releases by 20%.",
+        "Designed data models and query paths in PostgreSQL to support higher traffic and cut slow requests by 35%.",
+        "Partnered with product and QA teams to refine acceptance criteria, helping the team close 12 priority items per quarter with fewer follow-up defects.",
+        "Improved backend error handling and release readiness by reviewing edge cases early in the development cycle."
+      ]
+    },
+    {
+      "employer": "Driftwood Apps",
+      "title": "Backend Engineer",
+      "start": "2023-12",
+      "end": "2025-10",
+      "bullets": [
+        "Developed backend services in C# using Microservices patterns, improving delivery of customer workflows across 3 product areas.",
+        "Integrated authentication flows with OAuth and coordinated service-to-service messaging through RabbitMQ, cutting failed handoffs by 28%.",
+        "Refined persistence logic in MySQL and supported CI/CD checks so releases moved from manual coordination to a steadier weekly cadence.",
+        "Monitored production issues and patched service defects quickly, helping the team keep incident volume low during peak usage.",
+        "Worked with cross-functional partners to simplify backend behavior and keep new features consistent across services."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Atlas Atlas",
+      "description": "Prototype data layer for Atlas Atlas built with Hibernate to streamline object mapping and reduce repetitive database handling."
+    },
+    {
+      "name": "Prism Library",
+      "description": "Shared packaging utility for Prism Library that used Docker to make local setup and deployment steps more consistent."
+    },
+    {
+      "name": "Granite Scheduler",
+      "description": "Scheduling tool for Granite Scheduler that combined OAuth and PostgreSQL to manage secure sign-in and stored planning data."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "PostgreSQL",
+    "Scala",
+    "CI/CD",
+    "C#",
+    "Microservices",
+    "MySQL",
+    "OAuth",
+    "RabbitMQ",
+    "Hibernate",
+    "Docker"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Software Engineering",
+      "school": "Linden Vale Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Information Systems",
+      "school": "Northbridge College of Applied Sciences",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Serbian (B2)", "German (A2)"],
+  "injection": null
+}

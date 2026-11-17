@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <title>Olha Kravets - резюме</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Контакти</h2>
+<ul>
+  <li>olha-kravets@example.com</li>
+  <li>Київ, Україна</li>
+  <li>github.com/synth-olha-kravets</li>
+</ul>
+<h2>Навички</h2>
+<ul>
+  <li>Git</li>
+  <li>GraphQL</li>
+  <li>Microservices</li>
+  <li>System design</li>
+  <li>Agile</li>
+  <li>Docker</li>
+  <li>MySQL</li>
+  <li>NestJS</li>
+  <li>RabbitMQ</li>
+  <li>Redis</li>
+  <li>REST APIs</li>
+</ul>
+<h2>Мови</h2>
+<ul>
+  <li>Українська (C2)</li>
+  <li>Англійська (B2)</li>
+</ul>
+<h2>Освіта</h2>
+<div class="edu">
+  <div class="row"><span>Бакалавр інформатики</span><span class="dates">2020</span></div>
+  <div class="sub">Південний інститут прикладних наук</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Молодший спеціаліст з комп’ютерних систем</span><span class="dates">2017</span></div>
+  <div class="sub">Ліцей цифрової інженерії «Вертикаль»</div>
+</div>
+</aside>
+<main class="main">
+<h1>Olha Kravets</h1>
+<div class="headline">Backend Engineer</div>
+<h2>Про себе</h2>
+<p>Інженерка бекенду та API з досвідом проєктування сервісів, інтеграцій і внутрішніх платформ. Працюю над стабільністю, зрозумілою структурою системи та якістю взаємодії між командами. Орієнтуюся на практичні рішення, які спрощують розробку й підтримку продукту.</p>
+<h2>Досвід роботи</h2>
+<div class="job">
+  <div class="row"><span>Backend Engineer</span><span class="dates">черв. 2023 – груд. 2025</span></div>
+  <div class="sub">Larkspur Engineering</div>
+  <ul>
+    <li>Працювала в Agile-команді над бекендом, впроваджуючи NestJS і REST APIs для нових функцій продукту.</li>
+    <li>Налаштувала обмін повідомленнями між компонентами через RabbitMQ та Redis, що зменшило затримки обробки пікових запитів на 25%.</li>
+    <li>Підтримувала розгортання сервісів у Docker і вела зміни через Git, зберігаючи стабільний цикл поставки для команди з 8 людей.</li>
+    <li>Оптимізувала доступ до даних у MySQL і супроводжувала серверну логіку, підвищивши швидкість виконання ключових запитів на 20%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>API Engineer</span><span class="dates">лют. 2021 – трав. 2023</span></div>
+  <div class="sub">Vantage Reed</div>
+  <ul>
+    <li>Розробила та підтримувала API для внутрішніх продуктів, використовуючи GraphQL і Git, щоб команда швидше узгоджувала зміни.</li>
+    <li>Переосмислила Microservices-частину платформи та застосувала System design для зменшення вузьких місць у взаємодії між сервісами.</li>
+    <li>Супроводжувала інтеграції між сервісами через Git і GraphQL, скоротивши кількість ручних узгоджень на 30%.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

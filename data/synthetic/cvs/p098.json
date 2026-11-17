@@ -1,0 +1,112 @@
+{
+  "personaId": "p098",
+  "language": "en",
+  "name": "Omar Banerjee",
+  "email": "omar-banerjee@example.com",
+  "githubUrl": null,
+  "headline": "Security Engineer",
+  "location": "Bengaluru, India",
+  "summary": "Security engineer with a background in software development, application security, and automation across product teams. Experienced in building reliable systems, strengthening access controls, and improving testing and delivery workflows. Known for practical risk reduction, clear collaboration, and disciplined engineering execution.",
+  "roles": [
+    {
+      "employer": "Velvet Circuit",
+      "title": "Junior Software Engineer",
+      "start": "2020-03",
+      "end": "2020-12",
+      "bullets": [
+        "Built backend components in C++ and Go on Azure, delivering new features for internal tooling with fewer manual handoffs.",
+        "Improved service reliability by tracing defects in C and Go, which cut recurring incident volume by 18%.",
+        "Supported releases in Azure by coordinating code changes and validating fixes across shared components."
+      ]
+    },
+    {
+      "employer": "Northgrove Networks",
+      "title": "Security Engineer",
+      "start": "2021-02",
+      "end": "2022-02",
+      "bullets": [
+        "Hardened core services in C and Go by reviewing source changes and closing security gaps before release.",
+        "Used Git to manage remediation branches and keep fixes aligned across three active product lines.",
+        "Investigated suspicious behavior in network-facing code and reduced repeat findings by 22% through targeted controls."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Application Security Engineer",
+      "start": "2022-03",
+      "end": "2023-03",
+      "bullets": [
+        "Performed Penetration testing against C and C++ services to uncover weaknesses before customer rollout.",
+        "Reviewed risky code paths in C and C++ with Git-based change control, helping the team prioritize the highest-impact fixes.",
+        "Documented findings and retested remediations, which reduced reopened issues by 30%."
+      ]
+    },
+    {
+      "employer": "Copperline Labs",
+      "title": "Senior Security Engineer",
+      "start": "2023-03",
+      "end": "2025-08",
+      "bullets": [
+        "Led Agile security work across CI/CD pipelines, coordinating reviews for Go and Rust services in a fast-moving release cycle.",
+        "Designed Threat modeling sessions for new features and paired them with Cryptography guidance to lower design risk early.",
+        "Built Test automation with Cucumber, Cypress and pytest, increasing coverage for critical paths by 40%.",
+        "Strengthened IAM and Linux hardening for production environments while using Docker and GitHub Actions to keep deployments repeatable.",
+        "Ran Performance testing and Postman checks for APIs, then tuned bottlenecks that improved median response time by 25%."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Atlas",
+      "description": "Built a cloud integration prototype on AWS to collect and route operational data for a small internal dashboard."
+    },
+    {
+      "name": "Cobalt Garden",
+      "description": "Created a Java service for scheduling task flows and simplifying internal coordination between teams."
+    },
+    {
+      "name": "Rapid Garden",
+      "description": "Developed a Postman collection to standardize request checks and speed up manual validation for release support."
+    }
+  ],
+  "skills": [
+    "Azure",
+    "C++",
+    "Go",
+    "C",
+    "Git",
+    "Penetration testing",
+    "Agile",
+    "CI/CD",
+    "Cryptography",
+    "Cucumber",
+    "Cypress",
+    "Docker",
+    "GitHub Actions",
+    "IAM",
+    "Linux",
+    "Performance testing",
+    "Postman",
+    "pytest",
+    "Rust",
+    "Test automation",
+    "Threat modeling",
+    "AWS",
+    "Java",
+    "OWASP"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Engineering in Computer Science",
+      "school": "Mirevale Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Diploma in Secure Software Practice",
+      "school": "Asterfield College of Applied Computing",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Hindi (B2)", "Bengali (B2)"],
+  "injection": null
+}

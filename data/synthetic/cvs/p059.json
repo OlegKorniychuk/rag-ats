@@ -1,0 +1,93 @@
+{
+  "personaId": "p059",
+  "language": "en",
+  "name": "Felix Moreau",
+  "email": "felix-moreau@example.com",
+  "githubUrl": "https://github.com/synth-felix-moreau",
+  "headline": "Software Engineer",
+  "location": "Paris, France",
+  "summary": "Software engineer with experience building data-focused internal tools and analytics workflows. Known for turning messy operational data into reliable reporting and repeatable processes, with a practical approach to system design and delivery. Comfortable working across scripting, transformation, orchestration and warehouse environments.",
+  "roles": [
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Junior Software Engineer",
+      "start": "2021-06",
+      "end": "2022-05",
+      "bullets": [
+        "Built reporting tables in BigQuery and applied system design thinking to make the data flow easier to maintain.",
+        "Worked with product and operations teams to clarify requirements and delivered 4 small features that improved internal visibility.",
+        "Reviewed outputs for accuracy and helped stabilize recurring data jobs used by the team."
+      ]
+    },
+    {
+      "employer": "Cinder Peak",
+      "title": "Software Developer",
+      "start": "2022-05",
+      "end": "2024-05",
+      "bullets": [
+        "Automated daily file checks with Bash and reduced manual review time by 35%.",
+        "Analyzed customer and operations data with pandas to surface trends for weekly planning.",
+        "Refined recurring scripts and documented handoffs so support tasks could be completed more consistently.",
+        "Helped troubleshoot data issues across multiple feeds and kept the team informed of fixes."
+      ]
+    },
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Software Engineer",
+      "start": "2024-06",
+      "end": "2025-06",
+      "bullets": [
+        "Delivered analytics workflows in Agile sprints using Airflow, BigQuery and dbt to support recurring reporting.",
+        "Built 6 scheduled data models and improved refresh reliability for business dashboards.",
+        "Partnered with analysts to align transformation rules with business definitions and reduce rework.",
+        "Monitored pipeline runs and resolved failures quickly to keep reporting on schedule."
+      ]
+    },
+    {
+      "employer": "Ravenmoor Tech",
+      "title": "Software Developer",
+      "start": "2025-06",
+      "end": "2026-05",
+      "bullets": [
+        "Maintained production data pipelines with Airflow, BigQuery and PostgreSQL while improving the ETL process.",
+        "Used Git to manage changes across shared workflow code and coordinate reviews with the team.",
+        "Developed R analyses for operational reporting and connected them to warehouse data for monthly reviews.",
+        "Improved data quality checks and reduced repetitive cleanup work by 28% through better pipeline logic."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Echo Notebook",
+      "description": "Created an exploration workspace on BigQuery to compare operational extracts and support fast answer retrieval for analysts."
+    }
+  ],
+  "skills": [
+    "BigQuery",
+    "System design",
+    "Bash",
+    "pandas",
+    "Agile",
+    "Airflow",
+    "dbt",
+    "ETL",
+    "Git",
+    "PostgreSQL",
+    "R",
+    "Snowflake"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Information Systems",
+      "school": "Lycée Novae Technique",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Data Engineering Foundations",
+      "school": "Institut Clairmont",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["French (Native)", "English (C1)"],
+  "injection": null
+}

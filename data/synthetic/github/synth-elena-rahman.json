@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-elena-rahman",
+    "html_url": "https://github.com/synth-elena-rahman",
+    "bio": "Machine learning engineer who turns messy data into practical models and tools."
+  },
+  "repos": [
+    {
+      "name": "vision-lab-notebooks",
+      "html_url": "https://github.com/synth-elena-rahman/vision-lab-notebooks",
+      "description": "A set of Python notebooks for image experiments and evaluation.",
+      "language": "Python",
+      "stargazers_count": 104,
+      "topics": ["python", "pytorch", "computer-vision", "pandas", "mlops"],
+      "pushed_at": "2026-09-06T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "text-insight-workbench",
+      "html_url": "https://github.com/synth-elena-rahman/text-insight-workbench",
+      "description": "A Python toolkit for cleaning text and scoring simple language tasks.",
+      "language": "Python",
+      "stargazers_count": 99,
+      "topics": ["python", "pytorch", "nlp", "scikit-learn", "mlflow"],
+      "pushed_at": "2026-08-18T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "model-train-tracker",
+      "html_url": "https://github.com/synth-elena-rahman/model-train-tracker",
+      "description": "A small SQL project for tracking model runs and dataset notes.",
+      "language": "SQL",
+      "stargazers_count": 90,
+      "topics": ["sql", "mlflow", "mlops", "azure", "agile"],
+      "pushed_at": "2026-05-26T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "vision-lab-notebooks": "# Vision Lab Notebooks\n\nThis project collects small image experiments for training, checking, and comparing model results. It is built around Python and PyTorch, with simple data handling and repeatable runs.\n\n## What it does\n- Loads image sets and prepares them for training\n- Trains baseline and improved model variants\n- Records metrics for later comparison\n- Summarizes errors for quick review\n\n## Getting started\n1. Open the notebooks in Python.\n2. Install the needed packages for PyTorch and pandas.\n3. Run the training cells and review the output tables.\n4. Adjust the settings and repeat the run to compare results.",
+    "text-insight-workbench": "# Text Insight Workbench\n\nThis repository explores text preparation and model scoring for short messages and documents. It uses Python and PyTorch for model work, with lightweight helpers for data shaping and result tracking.\n\n## What it does\n- Cleans and tokenizes text\n- Trains a text model and checks quality\n- Compares runs with stored metrics\n- Exports compact summaries for review\n\n## Getting started\n1. Create a Python environment with the required packages.\n2. Prepare a small text file set in the expected input folder.\n3. Run the training script and inspect the saved metrics.\n4. Change the settings and repeat the run to compare outcomes.",
+    "model-train-tracker": "# Model Train Tracker\n\nThis SQL project stores run notes, metric snapshots, and review status for model work. It helps keep training history organized for a small team and supports a steady review process.\n\n## What it does\n- Stores run names and dates\n- Keeps metric values and review notes\n- Tracks dataset versions and outcomes\n- Supports simple reporting for model checks\n\n## Getting started\n1. Create the tables in a SQL workspace.\n2. Load sample run records and notes.\n3. Query the tables to review recent results.\n4. Update the records as new runs are completed."
+  }
+}

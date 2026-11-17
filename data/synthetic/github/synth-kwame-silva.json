@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-kwame-silva",
+    "html_url": "https://github.com/synth-kwame-silva",
+    "bio": "Senior frontend engineer who builds polished interfaces and practical web products."
+  },
+  "repos": [
+    {
+      "name": "layout-lab",
+      "html_url": "https://github.com/synth-kwame-silva/layout-lab",
+      "description": "A small interface studio for testing page structure, spacing, and responsive behavior with HTML/CSS at the center.",
+      "language": "JavaScript",
+      "stargazers_count": 64,
+      "topics": ["html-css", "layout", "responsive-design", "design-systems"],
+      "pushed_at": "2026-09-24T00:00:00.000Z",
+      "created_at": "2026-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-board",
+      "html_url": "https://github.com/synth-kwame-silva/signal-board",
+      "description": "A dashboard for reading live service updates, combining React with GraphQL and REST APIs.",
+      "language": "JavaScript",
+      "stargazers_count": 56,
+      "topics": ["react", "graphql", "rest-apis", "dashboard"],
+      "pushed_at": "2026-07-28T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "form-slate",
+      "html_url": "https://github.com/synth-kwame-silva/form-slate",
+      "description": "A form toolkit for building guided input flows with Vue and JavaScript.",
+      "language": "JavaScript",
+      "stargazers_count": 52,
+      "topics": ["vue", "javascript", "forms", "ux"],
+      "pushed_at": "2026-06-08T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "layout-lab": "# Layout Lab\n\nLayout Lab is a small project for exploring page structure and spacing with HTML/CSS. It helps shape consistent sections, align content cleanly, and compare different screen sizes in a simple working space.\n\n## Features\n- Clear page sections for quick experiments\n- Responsive spacing and alignment checks\n- Simple patterns for reusable page parts\n- Fast previews for changing content shapes\n\n## Getting started\nOpen the project files and edit the sample pages with HTML/CSS. Update the sample content, adjust spacing, and refresh the page to review each change.",
+    "signal-board": "# Signal Board\n\nSignal Board is a dashboard that brings together live updates from different service sources in one clear view. It is built for quick reading, compact summaries, and a calm screen that helps people track what matters.\n\n## Features\n- Combined data from more than one source\n- Filtered cards for status and recent changes\n- Detail panels for deeper reading\n- Simple loading and empty states\n\n## Getting started\nOpen the sample data and run the project in a local browser session. Adjust the card content, connect the data fields, and refresh to see the dashboard update.",
+    "form-slate": "# Form Slate\n\nForm Slate is a guided form project that helps people move through input steps with clear feedback and simple rules. It focuses on readable labels, predictable actions, and a smooth path from first entry to final review.\n\n## Features\n- Step-by-step input flow\n- Inline feedback for common mistakes\n- Reusable field patterns\n- Review screen before submit\n\n## Getting started\nOpen the sample form screens and edit the fields in JavaScript. Change the labels, adjust the messages, and refresh the page to test the flow in a local browser."
+  }
+}

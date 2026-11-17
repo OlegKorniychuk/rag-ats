@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Felix Holm - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>felix-holm@example.com</li>
+  <li>Helsinki, Finland</li>
+  <li>github.com/synth-felix-holm</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Agile</li>
+  <li>R</li>
+  <li>AWS</li>
+  <li>Computer vision</li>
+  <li>pandas</li>
+  <li>SQL</li>
+  <li>TensorFlow</li>
+  <li>C++</li>
+  <li>Git</li>
+  <li>MLflow</li>
+  <li>MLOps</li>
+  <li>NLP</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Swedish (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Applied Mathematics</span><span class="dates">2023</span></div>
+  <div class="sub">Northgate Institute of Analytics</div>
+</div>
+<div class="edu">
+  <div class="row"><span>MSc in Data Science</span><span class="dates">2025</span></div>
+  <div class="sub">Linden Vale School of Computing</div>
+</div>
+</aside>
+<main class="main">
+<h1>Felix Holm</h1>
+<div class="headline">Data Scientist</div>
+<h2>Summary</h2>
+<p>Data scientist with a strong background in analytical modeling, applied statistics, and production-focused experimentation. Brings experience working across business-facing teams to improve forecasting, classification, and reporting workflows. Known for turning messy operational data into practical tools and clear decision support.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Data Scientist</span><span class="dates">Sep 2025 – Aug 2026</span></div>
+  <div class="sub">Driftwood Apps</div>
+  <ul>
+    <li>Delivered data products with AWS, C++, Git, MLflow, pandas, R and SQL to support forecasting and retention analysis.</li>
+    <li>Refined feature pipelines in pandas and SQL, cutting manual cleanup work by 40% and improving dataset consistency.</li>
+    <li>Tracked model experiments in MLflow and reviewed results with Git-based collaboration to speed iteration across the team.</li>
+    <li>Worked in Agile with engineers and analysts to ship updates in C++ and maintain reliable cloud processing for 3 major workflows.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Data Scientist</span><span class="dates">Dec 2024 – Sep 2025</span></div>
+  <div class="sub">Vantage Reed</div>
+  <ul>
+    <li>Developed analytical workflows with AWS, pandas, R and SQL to process large datasets and reduce reporting turnaround by 32%.</li>
+    <li>Trained and evaluated image models with Computer vision and TensorFlow, raising classification accuracy on the test set by 11%.</li>
+    <li>Partnered with product and operations teams in Agile to turn SQL-backed findings into experiments and release decisions.</li>
+    <li>Monitored data quality and model drift across AWS jobs, keeping weekly checks stable for a team of 6.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Machine Learning Engineer</span><span class="dates">Jul 2023 – Nov 2024</span></div>
+  <div class="sub">Marlowe &amp; Finch Tech</div>
+  <ul>
+    <li>Built and validated predictive models in R, improving forecast quality for internal planning by 18%.</li>
+    <li>Prepared training data and reviewed model outputs with Agile routines to keep analysis work aligned with changing priorities.</li>
+    <li>Translated stakeholder questions into measurable features and documented assumptions for repeatable analysis in R.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Amber Ledger</span></div>
+  <p>Created a document analysis prototype for Amber Ledger using MLOps and NLP to classify incoming text and surface recurring themes for review.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Granite Compass</span></div>
+  <p>Built a reporting tool for Granite Compass using pandas and SQL to summarize operational trends and support monthly planning.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

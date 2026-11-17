@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="{{lang}}">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    {{body}}
+  </body>
+</html>

@@ -1,0 +1,94 @@
+{
+  "personaId": "p030",
+  "language": "en",
+  "name": "Ananya Banerjee",
+  "email": "ananya-banerjee-2@example.com",
+  "githubUrl": null,
+  "headline": "Senior ML Engineer",
+  "location": "Kolkata, India",
+  "summary": "Machine learning engineer with a background in computer vision, analytics, and production support across product teams. Known for building practical models, improving data workflows, and working closely with product and engineering partners to ship reliable features.",
+  "roles": [
+    {
+      "employer": "Quillstone Systems",
+      "title": "Junior Software Developer",
+      "start": "2020-10",
+      "end": "2022-12",
+      "bullets": [
+        "Built computer vision prototypes in Python and C++ for document understanding tasks, reducing manual review effort by 18%.",
+        "Partnered in Agile delivery to turn early model ideas into working backend features and supported release testing with the team.",
+        "Cleaned and labeled training data, then compared model outputs to improve precision on a small internal benchmark by 12%."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Machine Learning Engineer",
+      "start": "2022-12",
+      "end": "2024-02",
+      "bullets": [
+        "Developed computer vision pipelines in Python and C++ to classify image sets, improving batch accuracy by 9%.",
+        "Analyzed operational data with pandas and SQL to spot failure patterns and prioritize fixes for the product team.",
+        "Worked in Agile sprints to refine model inputs, tune evaluation reports, and support weekly delivery across a 6-person team."
+      ]
+    },
+    {
+      "employer": "Emberlight Tech",
+      "title": "ML Engineer",
+      "start": "2024-04",
+      "end": "2025-02",
+      "bullets": [
+        "Trained and evaluated image models in Python and PyTorch, lifting validation performance by 11% on a changing dataset.",
+        "Queried experiment tables with SQL to track drift, compare runs, and share clear results with stakeholders.",
+        "Supported Agile planning by breaking model work into smaller releases and keeping the vision pipeline stable for production use."
+      ]
+    },
+    {
+      "employer": "Ironleaf Systems",
+      "title": "Senior ML Engineer",
+      "start": "2025-03",
+      "end": null,
+      "bullets": [
+        "Designed Data modeling flows and built feature sets in Python, SQL and pandas to support high-volume NLP scoring jobs.",
+        "Developed training and inference services with PyTorch, Spark, Docker and Git, cutting deployment lead time by 30%.",
+        "Implemented C++ components for fast text and image preprocessing, then integrated them with the broader model pipeline.",
+        "Improved prediction quality by 14% through scikit-learn experiments and iterative feature refinement across multiple datasets.",
+        "Aligned with Agile teams on release planning, monitored production metrics, and maintained reliable data jobs for daily operations."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Router",
+      "description": "Built the Rapid Router prototype around BigQuery to analyze routing events and surface faster decision paths for the operations team."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Computer vision",
+    "C++",
+    "Python",
+    "pandas",
+    "SQL",
+    "PyTorch",
+    "Data modeling",
+    "Docker",
+    "Git",
+    "NLP",
+    "scikit-learn",
+    "Spark",
+    "BigQuery"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Applied Computing",
+      "school": "Virelton College of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Higher Secondary Certificate, Science",
+      "school": "Mornhaven Public School",
+      "end": "2016"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Bengali (Native)", "Hindi (B2)"],
+  "injection": null
+}

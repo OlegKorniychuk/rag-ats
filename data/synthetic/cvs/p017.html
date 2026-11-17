@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Olha Shevchuk - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Olha Shevchuk</h1><div class="headline">Senior Backend Engineer</div></div>
+  <div class="contact"><div>olha-shevchuk@example.com</div>
+<div>Warsaw, Poland</div></div>
+</header>
+<h2>Summary</h2>
+<p>Backend engineer with experience across cloud services, event-driven systems, and service-oriented platforms. Built and supported production backends with a focus on reliability, delivery speed, and clean integrations. Comfortable working across the stack of infrastructure, APIs, data stores, and operational tooling in fast-moving teams.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Backend Engineer</span><span class="dates">Jul 2024 – Sep 2026</span></div>
+  <div class="sub">Velvet Circuit</div>
+  <ul>
+    <li>Led backend delivery in Go and Java across Microservices on AWS, shaping service boundaries through System design for a platform serving 2 million monthly requests.</li>
+    <li>Standardized CI/CD workflows with GitHub Actions, Docker and Git to shorten release cycles by 40% and improve rollback consistency.</li>
+    <li>Operated Kubernetes and Helm deployments on Linux, using Grafana to monitor service health and catch issues before customers noticed them.</li>
+    <li>Built reliable messaging flows with RabbitMQ and Kafka, and extended Spring Boot services backed by MySQL and SQL for new product capabilities.</li>
+    <li>Wrote JUnit coverage for critical paths and improved incident response by documenting runbooks and ownership across the team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Jan 2023 – Jul 2024</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Built backend components in Java and Kotlin under Agile delivery routines, supporting a growing set of customer-facing services.</li>
+    <li>Designed SQL queries and service logic on AWS to improve response times for key workflows by 31%.</li>
+    <li>Integrated Kafka pipelines into Spring Boot services to handle asynchronous processing and reduce blocking requests.</li>
+    <li>Worked with Kubernetes to keep deployments consistent across environments and supported the team in planning releases.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Jan 2022 – Dec 2022</span></div>
+  <div class="sub">Zephyr Foundry</div>
+  <ul>
+    <li>Developed Java services that exposed REST APIs for partner integrations and internal tools.</li>
+    <li>Implemented event-driven communication with Kafka and secure access flows using OAuth for external clients.</li>
+    <li>Reviewed backend changes and improved service behavior under load, cutting repeated incident follow-up by 22%.</li>
+    <li>Coordinated with stakeholders to clarify requirements and deliver small updates on schedule.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Developer</span><span class="dates">May 2020 – Nov 2021</span></div>
+  <div class="sub">Nimbus Garden</div>
+  <ul>
+    <li>Built backend features in Azure with PostgreSQL, improving data handling for customer workflows and reducing manual rework by 18%.</li>
+    <li>Added event processing with Kafka and Redis to keep services responsive during traffic spikes.</li>
+    <li>Supported database changes and routine fixes in PostgreSQL while helping the team stabilize releases.</li>
+    <li>Worked closely with product and support teams to resolve defects and keep the service dependable.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Cobalt Studio</span></div>
+  <p>Created deployment scripts with Ansible to provision environments more consistently and reduce setup errors for the team.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Azure</li>
+  <li>Kafka</li>
+  <li>PostgreSQL</li>
+  <li>Redis</li>
+  <li>Java</li>
+  <li>OAuth</li>
+  <li>REST APIs</li>
+  <li>Agile</li>
+  <li>AWS</li>
+  <li>Kotlin</li>
+  <li>Kubernetes</li>
+  <li>Spring Boot</li>
+  <li>SQL</li>
+  <li>CI/CD</li>
+  <li>Docker</li>
+  <li>Git</li>
+  <li>GitHub Actions</li>
+  <li>Go</li>
+  <li>Grafana</li>
+  <li>Helm</li>
+  <li>JUnit</li>
+  <li>Linux</li>
+  <li>Microservices</li>
+  <li>MySQL</li>
+  <li>RabbitMQ</li>
+  <li>System design</li>
+  <li>Ansible</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Applied Computing</span><span class="dates">2019</span></div>
+  <div class="sub">Northbridge School of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Systems</span><span class="dates">2018</span></div>
+  <div class="sub">Riverside Institute of Digital Studies</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>Ukrainian (Native)</li>
+  <li>English (C1)</li>
+  <li>Polish (B2)</li>
+</ul>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "user": {
+    "login": "synth-ananya-banerjee",
+    "html_url": "https://github.com/synth-ananya-banerjee",
+    "bio": "QA engineer who builds reliable test systems and keeps releases calm."
+  },
+  "repos": [
+    {
+      "name": "signal-check-suite",
+      "html_url": "https://github.com/synth-ananya-banerjee/signal-check-suite",
+      "description": "A browser test suite for stable user journeys.",
+      "language": "Java",
+      "stargazers_count": 75,
+      "topics": ["selenium", "junit", "test-automation", "java"],
+      "pushed_at": "2026-09-23T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "steady-path-tests",
+      "html_url": "https://github.com/synth-ananya-banerjee/steady-path-tests",
+      "description": "A set of cross-checks for form flows and page behavior.",
+      "language": "JavaScript",
+      "stargazers_count": 71,
+      "topics": ["playwright", "cypress", "test-automation", "javascript"],
+      "pushed_at": "2026-08-26T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "latency-watch-notes",
+      "html_url": "https://github.com/synth-ananya-banerjee/latency-watch-notes",
+      "description": "A lightweight tracker for response-time observations during test runs.",
+      "language": null,
+      "stargazers_count": 59,
+      "topics": ["performance-testing", "notes", "quality-checks"],
+      "pushed_at": "2026-08-15T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "signal-check-suite": "# Signal Check Suite\n\nSignal Check Suite is a small test automation project for checking important browser flows with clear, repeatable steps. It is written in Java and centers on Selenium with JUnit for assertions and runner support.\n\n## Features\n- Browser checks for common user journeys\n- Clear setup and cleanup steps\n- Focused assertions for faster failure review\n- Easy-to-read test structure for maintenance\n\n## Getting started\nUse Java to open the project, review the Selenium test files, and run the JUnit suite from your local environment. Update the test data in the source files before running the checks.",
+    "steady-path-tests": "# Steady Path Tests\n\nSteady Path Tests helps verify user flows across a few key pages with repeatable browser checks. It is built in JavaScript and uses Playwright and Cypress for small, focused test runs.\n\n## Features\n- Flow checks for forms and navigation\n- Compact helpers for shared test steps\n- Separate cases for happy and error paths\n- Simple output for quick review\n\n## Getting started\nOpen the JavaScript files, adjust the sample inputs, and run the Playwright or Cypress checks from your local setup. Keep the page data aligned with the test cases before each run.",
+    "latency-watch-notes": "# Latency Watch Notes\n\nLatency Watch Notes is a small companion project for recording response-time observations during test runs. It keeps results in a simple written format so patterns are easy to compare over time.\n\n## Features\n- Notes for timing observations\n- Space for run context and summary comments\n- Easy comparison across repeated checks\n- Lightweight structure for quick updates\n\n## Getting started\nOpen the note files, add your timing observations, and compare results after each run. Use the same page paths and test data each time so the notes stay consistent."
+  }
+}

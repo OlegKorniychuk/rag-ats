@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pavel Hartmann - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 2px 0 4px;
+      }
+      .contact {
+        font-size: 9.3pt;
+        color: #555;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 2px;
+        margin: 13px 0 6px;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 7px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 3px 0 0;
+        padding-left: 18px;
+      }
+      li {
+        margin-bottom: 2px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+      }
+      ul.skills li {
+        display: inline;
+        margin: 0;
+      }
+      ul.skills li:not(:last-child)::after {
+        content: ', ';
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pavel Hartmann</h1>
+<div class="headline">Backend Engineer</div>
+<div class="contact">pavel-hartmann-2@example.com &middot; Prague, Czech Republic</div>
+<h2>Summary</h2>
+<p>Backend engineer with experience building reliable server-side features, improving data flows, and supporting product teams across several fast-moving environments. Comfortable working across APIs, messaging, and data storage while keeping delivery practical and maintainable. Known for clear collaboration, steady execution, and thoughtful system improvement.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Backend Developer</span><span class="dates">Jan 2024 – Jun 2026</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Led backend delivery across Microservices built in TypeScript and Node.js, improving team throughput by 22% through clearer service boundaries and delivery planning.</li>
+    <li>Architected event-driven components with Kafka and RabbitMQ, and used Redis to speed up hot-path lookups for high-traffic features.</li>
+    <li>Shaped system design for a growing platform, aligning GraphQL interfaces with MongoDB data models and reducing integration churn for downstream teams.</li>
+    <li>Reviewed Git workflows and release practices across several services, helping the team keep production changes controlled and predictable.</li>
+    <li>Coached engineers on backend patterns for Microservices, GraphQL and Node.js, raising code consistency across the group.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Engineer</span><span class="dates">Nov 2021 – Nov 2023</span></div>
+  <div class="sub">Marlowe &amp; Finch Tech</div>
+  <ul>
+    <li>Delivered new backend features in Node.js and JavaScript under Agile planning, working closely with product and QA to keep sprint goals on track.</li>
+    <li>Designed and maintained REST APIs for customer workflows, using PostgreSQL to store account and transaction data with fewer support escalations.</li>
+    <li>Improved request handling and service reliability by tightening backend logic in Node.js, which cut average response time by 18%.</li>
+    <li>Partnered with engineers and analysts to refine data contracts, ensuring REST APIs stayed consistent across multiple client integrations.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Sep 2020 – Nov 2021</span></div>
+  <div class="sub">Vantage Reed</div>
+  <ul>
+    <li>Built internal services in Git and PostgreSQL, helping the team ship the first production release with cleaner version control and safer data handling.</li>
+    <li>Integrated Kafka into the backend to process events asynchronously, reducing manual follow-up work by 30%.</li>
+    <li>Supported bug fixes and release preparation, and kept PostgreSQL routines stable for the product team.</li>
+  </ul>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Git</li>
+  <li>Kafka</li>
+  <li>PostgreSQL</li>
+  <li>Agile</li>
+  <li>JavaScript</li>
+  <li>Node.js</li>
+  <li>REST APIs</li>
+  <li>GraphQL</li>
+  <li>Microservices</li>
+  <li>MongoDB</li>
+  <li>RabbitMQ</li>
+  <li>Redis</li>
+  <li>System design</li>
+  <li>TypeScript</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Computer Science</span><span class="dates">2020</span></div>
+  <div class="sub">Northbridge Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Systems</span><span class="dates">2018</span></div>
+  <div class="sub">Cedar Vale Polytechnic</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Czech (B2)</li>
+  <li>German (A2)</li>
+</ul>
+  </body>
+</html>

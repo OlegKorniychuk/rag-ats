@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mateo Haddad - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>mateo-haddad@example.com</li>
+  <li>Montréal, Canada</li>
+  <li>github.com/synth-mateo-haddad</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Agile</li>
+  <li>Azure</li>
+  <li>Go</li>
+  <li>Rust</li>
+  <li>C++</li>
+  <li>OAuth</li>
+  <li>AWS</li>
+  <li>C</li>
+  <li>Cryptography</li>
+  <li>IAM</li>
+  <li>OWASP</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Arabic (C2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Applied Information Defense</span><span class="dates">2022</span></div>
+  <div class="sub">Northbridge Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Secure Software Practice</span><span class="dates">2021</span></div>
+  <div class="sub">Luma School of Engineering</div>
+</div>
+</aside>
+<main class="main">
+<h1>Mateo Haddad</h1>
+<div class="headline">Security Engineer</div>
+<h2>Summary</h2>
+<p>Security engineer focused on securing application and platform code, reducing risk in production systems, and partnering with engineering teams on practical controls. Comfortable working across cloud environments and low-level services, with a strong bias toward measurable improvements and maintainable fixes.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">Jul 2025 – Present</span></div>
+  <div class="sub">Juniper Relay</div>
+  <ul>
+    <li>Developed backend components in AWS using C, C++ and Cryptography to protect sensitive data in transit and at rest.</li>
+    <li>Implemented IAM and OAuth safeguards for internal platforms, cutting privileged-access exceptions by 40%.</li>
+    <li>Improved service resilience by tightening key handling and reducing security-related incidents across shared infrastructure.</li>
+    <li>Partnered with product and operations teams to roll out controls without slowing delivery.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Application Security Engineer</span><span class="dates">Sep 2024 – Jun 2025</span></div>
+  <div class="sub">Emberlight Tech</div>
+  <ul>
+    <li>Strengthened application controls in Azure by adding checks around OAuth flows and reducing authorization defects by 25%.</li>
+    <li>Worked with developers on C++ services to remove unsafe patterns and improve error handling in user-facing features.</li>
+    <li>Reviewed design changes on Agile projects and aligned fixes with the security team’s release priorities.</li>
+    <li>Traced recurring account-access issues to weak integration logic and helped stabilize the affected service.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Security Engineer</span><span class="dates">Jun 2023 – Jul 2024</span></div>
+  <div class="sub">Opaline Works</div>
+  <ul>
+    <li>Supported secure delivery on Agile teams by reviewing changes in Azure and advising engineers on safer implementation patterns.</li>
+    <li>Built internal hardening tools in Go and Rust that reduced repeated manual checks by 30%.</li>
+    <li>Investigated risky code paths and helped close 18 security issues before release, improving consistency across the backend.</li>
+    <li>Created lightweight guidance for developers that translated review findings into clearer repair steps.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Echo Router</span></div>
+  <p>Built Echo Router in C, Go and Rust to route internal traffic through a compact, security-focused service layer. The project emphasized predictable behavior, clean boundaries and safer handling of messages between components.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

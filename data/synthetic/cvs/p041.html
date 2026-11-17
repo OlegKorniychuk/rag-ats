@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mei Holm - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>mei-holm@example.com</li>
+  <li>Helsinki, Finland</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>C++</li>
+  <li>GCP</li>
+  <li>Python</li>
+  <li>TensorFlow</li>
+  <li>Agile</li>
+  <li>AWS</li>
+  <li>Data modeling</li>
+  <li>dbt</li>
+  <li>Snowflake</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Finnish (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Applied Mathematics</span><span class="dates">2020</span></div>
+  <div class="sub">Northmere Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>MSc in Information Systems</span><span class="dates">2021</span></div>
+  <div class="sub">Lindenbridge School of Data Studies</div>
+</div>
+</aside>
+<main class="main">
+<h1>Mei Holm</h1>
+<div class="headline">Data Scientist</div>
+<h2>Summary</h2>
+<p>Data scientist and data engineer with a track record of building dependable data platforms and analytical workflows. Experienced in turning messy operational data into usable models, improving delivery processes, and supporting product decisions with clear metrics. Comfortable working across engineering and analytics teams to ship practical solutions.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Data Scientist</span><span class="dates">Apr 2023 – Present</span></div>
+  <div class="sub">Yarrow Analytics</div>
+  <ul>
+    <li>Led Agile delivery of forecasting work in Python and dbt, coordinating priorities with analysts and engineers across two product squads.</li>
+    <li>Designed Snowflake datasets and Data modeling standards that improved consistency across 18 reporting tables.</li>
+    <li>Built recurring analytics workflows with GCP and AWS, cutting refresh time by 28% and simplifying handoffs for stakeholders.</li>
+    <li>Created Python validation checks around dbt models so the team could catch data issues earlier and reduce rework.</li>
+    <li>Shaped a reusable modeling layer for Snowflake that supported faster experiment turnaround and better metric alignment.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Data Engineer</span><span class="dates">Feb 2021 – Feb 2023</span></div>
+  <div class="sub">Ashgrove Digital</div>
+  <ul>
+    <li>Built batch processing services in Python and C++ on GCP, improving daily data freshness by 35%.</li>
+    <li>Developed TensorFlow-based scoring components that filtered low-quality records before they reached downstream teams.</li>
+    <li>Packaged shared data transformations in Python and C++ to reduce manual rework and stabilize pipeline outputs.</li>
+    <li>Supported production workloads on GCP by monitoring failures, fixing data gaps, and keeping service interruptions under 2 hours per month.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Quiet Router</span></div>
+  <p>Quiet Router used C++, Data modeling and TensorFlow to rank incoming events and route them into the right analytical paths. The project focused on keeping scoring stable while improving the quality of the underlying model inputs.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

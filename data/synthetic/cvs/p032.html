@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Nadia Haddad - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>nadia-haddad@example.com</li>
+  <li>Bristol, United Kingdom</li>
+  <li>github.com/synth-nadia-haddad</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Docker</li>
+  <li>JUnit</li>
+  <li>Kubernetes</li>
+  <li>Microservices</li>
+  <li>OAuth</li>
+  <li>RabbitMQ</li>
+  <li>REST APIs</li>
+  <li>Agile</li>
+  <li>Hibernate</li>
+  <li>Redis</li>
+  <li>Scala</li>
+  <li>Kafka</li>
+  <li>GitHub Actions</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Arabic (Native)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Engineering</span><span class="dates">2021</span></div>
+  <div class="sub">Northmere Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Bachelor of Applied Informatics</span><span class="dates">2019</span></div>
+  <div class="sub">Lakeside College of Technology</div>
+</div>
+</aside>
+<main class="main">
+<h1>Nadia Haddad</h1>
+<div class="headline">Backend Developer</div>
+<h2>Summary</h2>
+<p>Backend engineer focused on building reliable service layers and integrating business systems through clean APIs. Experienced in distributed services, test-driven delivery, and operational improvements across product teams. Comfortable working across implementation, troubleshooting, and release coordination in fast-moving environments.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>API Engineer</span><span class="dates">Sep 2025 – Sep 2026</span></div>
+  <div class="sub">Willowmere Software</div>
+  <ul>
+    <li>Delivered new service features in Scala and Microservices under Agile planning, keeping delivery aligned with product priorities.</li>
+    <li>Optimized data access with Hibernate and Redis, lowering common request latency by 40%.</li>
+    <li>Strengthened platform reliability by updating Docker, Kubernetes and JUnit-based verification across the backend.</li>
+    <li>Worked with cross-functional peers to shape deployment changes and service contracts, supporting 2 major releases.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Apr 2022 – Aug 2025</span></div>
+  <div class="sub">Ashgrove Digital</div>
+  <ul>
+    <li>Built backend services in Microservices and REST APIs, packaging them with Docker and coordinating rollout across shared infrastructure.</li>
+    <li>Implemented message-driven workflows with RabbitMQ and OAuth to support secure account flows, reducing manual handoffs by 30%.</li>
+    <li>Created automated checks with JUnit and Kubernetes, improving release confidence for 4 service teams.</li>
+    <li>Refined service interfaces and operational behavior through Docker and REST APIs, helping cut incident follow-up time by 25%.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Atlas Ledger</span></div>
+  <p>Designed a streaming ledger prototype using Kafka to move transaction events between internal services and support near-real-time reconciliation.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Maple Gateway</span></div>
+  <p>Built an integration gateway with GitHub Actions to coordinate automated build and release steps for shared service components.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Atlas Inbox</span></div>
+  <p>Created a message inbox prototype with JUnit and REST APIs to validate request handling and simplify service-level testing.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

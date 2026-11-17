@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-jonas-macleod",
+    "html_url": "https://github.com/synth-jonas-macleod",
+    "bio": "Security engineer who builds practical defenses and tests them from the attacker’s point of view."
+  },
+  "repos": [
+    {
+      "name": "red-team-notes",
+      "html_url": "https://github.com/synth-jonas-macleod/red-team-notes",
+      "description": "A field guide for planning safe security assessments and capturing repeatable findings.",
+      "language": null,
+      "stargazers_count": 81,
+      "topics": [
+        "owasp",
+        "penetration-testing",
+        "threat-modeling",
+        "security-notes",
+        "risk"
+      ],
+      "pushed_at": "2026-09-27T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "policy-guard",
+      "html_url": "https://github.com/synth-jonas-macleod/policy-guard",
+      "description": "A compact policy engine for checking identity rules and access decisions.",
+      "language": "Go",
+      "stargazers_count": 75,
+      "topics": ["iam", "aws", "azure", "security", "policy"],
+      "pushed_at": "2026-07-21T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "cipher-lab",
+      "html_url": "https://github.com/synth-jonas-macleod/cipher-lab",
+      "description": "A study tool for exploring message secrecy and safe key handling.",
+      "language": "Rust",
+      "stargazers_count": 65,
+      "topics": ["cryptography", "security", "linux", "keys", "analysis"],
+      "pushed_at": "2026-06-28T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "red-team-notes": "# Red Team Notes\n\nRed Team Notes is a compact collection of assessment checklists, observation templates, and write-up outlines for security reviews. It is meant for a solo practitioner or small team that wants a clear path from preparation to findings without extra ceremony.\n\n## Features\n- Planning pages for scope, targets, and timing\n- Checklists for common weaknesses and follow-up questions\n- A simple format for recording evidence and impact\n- Guidance for turning observations into readable reports\n\n## Getting started\nOpen the notes and choose a checklist for the kind of review you want to run. Add your scope, record what you see, and keep the write-up focused on evidence, impact, and remediation.",
+    "policy-guard": "# Policy Guard\n\nPolicy Guard helps you define access rules, evaluate requests, and spot risky combinations before they reach production. It is aimed at teams that want a small, readable core for identity checks and reviewable decisions.\n\n## Features\n- Rule evaluation for allow and deny decisions\n- Reusable policy templates for common access patterns\n- Clear audit output for each decision path\n- Helpers for comparing expected and actual access states\n\n## Getting started\nBuild the project, run the sample policy set, and inspect the decision output. Edit the rules to match your environment, then use the included examples to verify that sensitive actions require the right approval path.",
+    "cipher-lab": "# Cipher Lab\n\nCipher Lab is a small workspace for experimenting with message protection, key handling, and validation of simple security checks. It is designed for learning and for quick experiments that stay close to the code.\n\n## Features\n- Encoders and decoders for sample message flows\n- Key lifecycle helpers with careful error handling\n- Test cases for edge conditions and corrupted input\n- Notes on how each operation affects secrecy and integrity\n\n## Getting started\nCompile the project, then run the example set to see how each transformation changes the message. Adjust the sample inputs, review the output, and compare the results with the included notes."
+  }
+}

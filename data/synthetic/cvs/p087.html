@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Arjun Silva - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Arjun Silva</h1><div class="headline">Analytics and Data Engineer</div></div>
+  <div class="contact"><div>arjun-silva@example.com</div>
+<div>Lisbon, Portugal</div></div>
+</header>
+<h2>Summary</h2>
+<p>Analytics and data engineer who builds dependable data systems, improves reporting quality, and turns messy inputs into trusted metrics. Comfortable working across Python, SQL, Scala and R in analytical environments, and shaping platform work around strong system design and maintainability. Known for practical delivery, clear communication, and steady operational improvements.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Data Engineer</span><span class="dates">May 2025 – Present</span></div>
+  <div class="sub">Northgrove Networks</div>
+  <ul>
+    <li>Built ingestion and transformation jobs with Python, pandas and dbt to support finance and operations reporting.</li>
+    <li>Managed warehouse loading in BigQuery and Snowflake, reducing failed refreshes by 25%.</li>
+    <li>Automated deployment and configuration tasks with Docker, Terraform and Git, helping the team ship changes faster.</li>
+    <li>Created shell-based maintenance scripts in Bash and used SQL to monitor data quality across critical tables.</li>
+    <li>Improved pipeline reliability by documenting recovery steps and coordinating handoffs across 3 internal teams.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Analytics Engineer</span><span class="dates">Nov 2023 – May 2025</span></div>
+  <div class="sub">Quillstone Systems</div>
+  <ul>
+    <li>Built analytical models and reporting workflows in Python and SQL, improving daily metric freshness by 30%.</li>
+    <li>Developed reusable transformations in Scala and R to standardize customer segmentation and reduce manual cleanup.</li>
+    <li>Partnered on system design for shared data layers, cutting duplicated logic across the team by 40%.</li>
+    <li>Produced validation checks and stakeholder-ready datasets that improved trust in monthly reporting.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Signal Inbox</span></div>
+  <p>Built a message triage prototype using Kafka and GitHub Actions to move events through a lightweight processing flow and keep validation steps consistent.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Python</li>
+  <li>R</li>
+  <li>Scala</li>
+  <li>SQL</li>
+  <li>System design</li>
+  <li>Bash</li>
+  <li>BigQuery</li>
+  <li>dbt</li>
+  <li>Docker</li>
+  <li>Git</li>
+  <li>pandas</li>
+  <li>Snowflake</li>
+  <li>Terraform</li>
+  <li>GitHub Actions</li>
+  <li>Kafka</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2021</span></div>
+  <div class="sub">Mariner Point Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>MSc in Data Analytics</span><span class="dates">2023</span></div>
+  <div class="sub">Cedar Vale School of Applied Science</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Portuguese (B2)</li>
+  <li>Spanish (B1)</li>
+</ul>
+  </body>
+</html>

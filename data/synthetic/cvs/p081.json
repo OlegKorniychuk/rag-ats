@@ -1,0 +1,81 @@
+{
+  "personaId": "p081",
+  "language": "en",
+  "name": "Arjun Kaya",
+  "email": "arjun-kaya@example.com",
+  "githubUrl": null,
+  "headline": "Software Developer",
+  "location": "Aurelia, Country",
+  "summary": "Arjun Kaya is a software professional with a background in coordination and customer-facing operations, now focused on building reliable backend features and improving product quality. He has worked across support leadership, project coordination, and software delivery, with an emphasis on clear execution, stable releases, and practical problem solving.",
+  "roles": [
+    {
+      "employer": "Kestrel Data",
+      "title": "Customer Support Lead",
+      "start": "2018-12",
+      "end": "2021-05",
+      "bullets": [
+        "Led a support team that handled incoming cases, set response priorities, and improved customer satisfaction by 18% through clearer escalation paths.",
+        "Coordinated service follow-ups with internal teams and kept delivery commitments on track for 3 major client accounts.",
+        "Prepared weekly status summaries, identified recurring issues, and reduced repeat contacts by 12% with better handoff routines."
+      ]
+    },
+    {
+      "employer": "Hexagon Meadow",
+      "title": "Project Coordinator",
+      "start": "2021-07",
+      "end": "2024-04",
+      "bullets": [
+        "Managed cross-functional project schedules, tracked milestones, and helped complete 14 workstreams on time.",
+        "Organized stakeholder updates, documented decisions, and kept action items moving across multiple departments.",
+        "Monitored budget usage and delivery risks, then adjusted plans early to protect deadlines and control costs by 9%."
+      ]
+    },
+    {
+      "employer": "Thistledown Labs",
+      "title": "Software Engineer",
+      "start": "2024-06",
+      "end": "2025-12",
+      "bullets": [
+        "Built backend features in Java and Kotlin, and wrote JUnit checks that covered critical service paths for the product team.",
+        "Improved data access and session handling with Redis, which cut repeated lookups and reduced response time by 22%.",
+        "Collaborated on defect fixes, reviewed code for edge cases, and kept release quality high across shared modules."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Software Developer",
+      "start": "2025-12",
+      "end": null,
+      "bullets": [
+        "Developed new service modules in Java and Kotlin, using Microservices to keep features isolated and easier to deploy.",
+        "Maintained JUnit coverage for core workflows and used Git to coordinate changes across the team without disrupting delivery.",
+        "Designed PostgreSQL tables and updated backend logic to support cleaner data handling, which lowered incident volume by 15%.",
+        "Refined service integrations, resolved tricky bugs, and improved uptime for customer-facing flows through careful release work."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Java",
+    "JUnit",
+    "Kotlin",
+    "Redis",
+    "Git",
+    "Microservices",
+    "PostgreSQL"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Business Operations",
+      "school": "Northmere Institute",
+      "end": "2018"
+    },
+    {
+      "degree": "Advanced Certificate in Information Coordination",
+      "school": "Bright Vale School of Professional Studies",
+      "end": "2017"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Hindi (B2)"],
+  "injection": null
+}

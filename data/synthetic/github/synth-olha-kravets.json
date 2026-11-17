@@ -1,0 +1,63 @@
+{
+  "user": {
+    "login": "synth-olha-kravets",
+    "html_url": "https://github.com/synth-olha-kravets",
+    "bio": "Backend engineer who enjoys building reliable services and clean interfaces."
+  },
+  "repos": [
+    {
+      "name": "service-splitter",
+      "html_url": "https://github.com/synth-olha-kravets/service-splitter",
+      "description": "A service decomposition playground for turning one backend into smaller parts.",
+      "language": "TypeScript",
+      "stargazers_count": 49,
+      "topics": [
+        "node-js",
+        "typescript",
+        "microservices",
+        "system-design",
+        "docker"
+      ],
+      "pushed_at": "2026-09-28T00:00:00.000Z",
+      "created_at": "2025-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "order-flow-hub",
+      "html_url": "https://github.com/synth-olha-kravets/order-flow-hub",
+      "description": "A compact order service for REST APIs and event-driven delivery tracking.",
+      "language": "TypeScript",
+      "stargazers_count": 42,
+      "topics": [
+        "node-js",
+        "typescript",
+        "nestjs",
+        "rest-apis",
+        "rabbitmq",
+        "redis"
+      ],
+      "pushed_at": "2026-08-20T00:00:00.000Z",
+      "created_at": "2024-10-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "catalog-query-room",
+      "html_url": "https://github.com/synth-olha-kravets/catalog-query-room",
+      "description": "A lightweight query service for fetching catalog data through GraphQL.",
+      "language": "TypeScript",
+      "stargazers_count": 34,
+      "topics": ["node-js", "typescript", "graphql", "mysql", "system-design"],
+      "pushed_at": "2026-06-10T00:00:00.000Z",
+      "created_at": "2023-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "service-splitter": "# Service Splitter\n\nService Splitter is a small project for exploring how one backend can be divided into smaller services with clear boundaries. It focuses on request flow, data ownership, and simple communication between parts.\n\nFeatures:\n- maps a monolith into separate modules\n- compares direct calls with message-based flow\n- keeps sample data models small and easy to trace\n- includes notes for deployment in a local container\n\nGetting started:\n1. Install Node.js.\n2. Install TypeScript.\n3. Start the project in Docker.\n4. Review the service notes and adjust the sample routes for your own study.",
+    "order-flow-hub": "# Order Flow Hub\n\nOrder Flow Hub is a compact backend for managing order intake, status updates, and background delivery steps. It shows how a service can keep fast reads separate from slower work while still staying easy to understand.\n\nFeatures:\n- exposes a small REST API for creating and reading orders\n- sends work items through RabbitMQ for delayed processing\n- uses Redis for short-lived state and simple coordination\n- keeps the codebase organized with NestJS modules\n\nGetting started:\n1. Install Node.js.\n2. Install TypeScript.\n3. Start RabbitMQ and Redis in Docker.\n4. Run the service and try the sample order routes.",
+    "catalog-query-room": "# Catalog Query Room\n\nCatalog Query Room is a lightweight service for reading catalog records through a single GraphQL entry point. It is designed to keep response shapes predictable while the data layer stays simple and focused.\n\nFeatures:\n- serves catalog data through GraphQL\n- stores sample records in MySQL\n- keeps read paths separate from write work\n- includes design notes for growth and service boundaries\n\nGetting started:\n1. Install Node.js.\n2. Install TypeScript.\n3. Prepare MySQL in Docker.\n4. Start the project and open the GraphQL endpoint to explore the sample schema."
+  }
+}

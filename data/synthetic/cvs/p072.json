@@ -1,0 +1,72 @@
+{
+  "personaId": "p072",
+  "language": "en",
+  "name": "Pavel Hartmann",
+  "email": "pavel-hartmann@example.com",
+  "githubUrl": "https://github.com/synth-pavel-hartmann",
+  "headline": "Frontend Engineer",
+  "location": "Prague, Czech Republic",
+  "summary": "Frontend Engineer with a strong focus on building and improving user interfaces across product teams. Experienced in delivering reliable features, refining interaction quality, and collaborating closely with design and product partners. Background also includes finance operations work with careful reporting, reconciliation, and process discipline.",
+  "roles": [
+    {
+      "employer": "Harbor & Pike Software",
+      "title": "Accountant",
+      "start": "2020-09",
+      "end": "2023-02",
+      "bullets": [
+        "Managed monthly invoice reconciliation and expense records for 14 departments, improving close accuracy and reducing follow-up corrections.",
+        "Prepared payment schedules, tracked vendor balances, and resolved documentation gaps to keep reporting on time.",
+        "Supported audit requests and maintained organized records for cross-functional review, helping the team complete reviews without delays."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Frontend Engineer",
+      "start": "2023-04",
+      "end": "2024-08",
+      "bullets": [
+        "Built customer-facing screens in Angular and JavaScript, then refined component logic in TypeScript to support a smoother signup flow.",
+        "Implemented reusable view patterns with Vue and Angular, cutting duplicate interface work by 30% across the product area.",
+        "Partnered with product and design to ship 8 frontend features, keeping interactions consistent and responsive across major pages.",
+        "Reviewed edge cases in JavaScript and TypeScript, which reduced interface defects reported after release."
+      ]
+    },
+    {
+      "employer": "Umber & Oak",
+      "title": "Frontend Engineer",
+      "start": "2024-08",
+      "end": "2025-10",
+      "bullets": [
+        "Delivered new product views in React and Angular while coordinating delivery in Agile, helping the team release 6 features on schedule.",
+        "Expanded shared UI modules in Vue, JavaScript and TypeScript to speed up implementation and keep behavior aligned across screens.",
+        "Improved interaction flow by simplifying page states in React and Angular, which lowered user drop-off in a key journey by 12%.",
+        "Worked with designers and engineers in Agile ceremonies to clarify scope, tighten handoffs, and keep frontend work moving steadily.",
+        "Maintained consistent component behavior across JavaScript and TypeScript code paths, reducing rework during final review."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "HTML/CSS",
+    "Angular",
+    "JavaScript",
+    "TypeScript",
+    "Vue",
+    "Agile",
+    "React"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Commerce",
+      "school": "Northbridge School of Business Practice",
+      "end": "2020"
+    },
+    {
+      "degree": "Certificate in Financial Operations",
+      "school": "Elmport Institute of Professional Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B1)"],
+  "injection": null
+}

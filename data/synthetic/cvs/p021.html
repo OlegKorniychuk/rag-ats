@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Arjun Holm - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>arjun-holm@example.com</li>
+  <li>Stockholm, Sweden</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Python</li>
+  <li>NLP</li>
+  <li>MLOps</li>
+  <li>Agile</li>
+  <li>MLflow</li>
+  <li>pandas</li>
+  <li>scikit-learn</li>
+  <li>Spark</li>
+  <li>LLMs</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Swedish (B1)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Applied Software Practice</span><span class="dates">2023</span></div>
+  <div class="sub">Northmere Technical Institute</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Bachelor of Information Systems</span><span class="dates">2021</span></div>
+  <div class="sub">Cinder Vale College</div>
+</div>
+</aside>
+<main class="main">
+<h1>Arjun Holm</h1>
+<div class="headline">Software Engineer</div>
+<h2>Summary</h2>
+<p>Software engineer focused on building data-driven features and improving delivery workflows. Experienced in Python-based development, natural language processing, and collaborative product work across fast-moving teams. Comfortable turning messy data into reliable application behavior and measurable improvements.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">May 2025 – Present</span></div>
+  <div class="sub">Stonebridge Interactive</div>
+  <ul>
+    <li>Delivered new product features in Agile cycles, combining Python and pandas to prepare and transform operational data.</li>
+    <li>Trained and evaluated ranking models with scikit-learn and MLflow, lifting quality metrics by 14%.</li>
+    <li>Scaled report generation across Spark jobs, cutting refresh times from hours to under 40 minutes.</li>
+    <li>Reviewed data flows with teammates and simplified edge-case handling in Python, improving reliability for 3 customer-facing workflows.</li>
+    <li>Used pandas and Spark to reconcile large datasets and support planning decisions for the broader team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Developer</span><span class="dates">Jun 2024 – Apr 2025</span></div>
+  <div class="sub">Thistledown Labs</div>
+  <ul>
+    <li>Built Python services for text processing and internal workflows, improving turnaround time for content tasks by 28%.</li>
+    <li>Shaped NLP pipelines for classification and extraction, using MLOps to keep releases consistent across environments.</li>
+    <li>Partnered with product and research colleagues to refine model outputs, reducing manual review by 19%.</li>
+    <li>Monitored production issues and tuned batch jobs, keeping the backend stable during peak usage.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Pocket Planner</span></div>
+  <p>Created a personal planning tool in Python with NLP features that organize notes, extract tasks, and surface reminders from free text.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

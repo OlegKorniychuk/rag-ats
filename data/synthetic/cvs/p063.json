@@ -1,0 +1,93 @@
+{
+  "personaId": "p063",
+  "language": "en",
+  "name": "Omar Varga",
+  "email": "omar-varga@example.com",
+  "githubUrl": null,
+  "headline": "Mobile Developer",
+  "location": "Vienna, Austria",
+  "summary": "Mobile developer with a background in sales and client-facing account growth, bringing a practical approach to product delivery and stakeholder communication. Experienced in Agile teams and in building polished mobile features across multiple codebases. Comfortable working across implementation, refinement, and release support in fast-moving environments.",
+  "roles": [
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Sales Manager",
+      "start": "2018-10",
+      "end": "2022-03",
+      "bullets": [
+        "Managed a portfolio of B2B accounts and grew recurring revenue by 18% through structured outreach and renewal planning.",
+        "Led quarterly reviews with key customers, resolved service issues, and improved retention across a team of 6 colleagues.",
+        "Prepared proposals, negotiated contracts, and coordinated delivery timelines with internal stakeholders.",
+        "Tracked pipeline health and forecast accuracy, helping the team close 12 major deals in a year."
+      ]
+    },
+    {
+      "employer": "Juniper Relay",
+      "title": "Sales Manager",
+      "start": "2022-05",
+      "end": "2024-08",
+      "bullets": [
+        "Expanded relationships with enterprise buyers and increased upsell revenue by 22% through targeted account plans.",
+        "Coached junior sales staff on discovery calls, follow-up discipline, and objection handling.",
+        "Ran weekly review meetings, prioritized opportunities, and kept the sales funnel moving with consistent reporting.",
+        "Negotiated contract terms and supported launch coordination for 9 new customer accounts."
+      ]
+    },
+    {
+      "employer": "Brightwater Digital",
+      "title": "Mobile Developer",
+      "start": "2024-10",
+      "end": "2025-08",
+      "bullets": [
+        "Built mobile features in Swift and TypeScript as part of an Agile team, translating product requirements into dependable user flows.",
+        "Implemented state handling with Redux and reduced repeated screen refresh work by 30% across core journeys.",
+        "Collaborated with designers and backend teammates to refine interaction details, fix defects, and keep releases on schedule.",
+        "Reviewed pull requests and improved code consistency across the app with clear implementation notes."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Mobile Developer",
+      "start": "2025-10",
+      "end": "2026-08",
+      "bullets": [
+        "Delivered new mobile screens in Dart and Swift, using Jetpack Compose to speed up interface updates for the main product area.",
+        "Refined app state management with Redux and improved navigation stability for a 25% reduction in user-reported issues.",
+        "Partnered with product and engineering peers in Agile planning sessions to scope work and unblock release milestones.",
+        "Created shared components in Java and maintained them across multiple features, keeping the codebase easier to extend.",
+        "Supported release readiness by tightening edge cases and validating changes before launch."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Quiet Ledger",
+      "description": "Built a personal finance utility with Git to keep change history organized during feature work and cleanup."
+    }
+  ],
+  "skills": [
+    "REST APIs",
+    "SwiftUI",
+    "Agile",
+    "Redux",
+    "Swift",
+    "TypeScript",
+    "Dart",
+    "Java",
+    "Jetpack Compose",
+    "Git"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Business Administration",
+      "school": "Northgate School of Commerce",
+      "end": "2018"
+    },
+    {
+      "degree": "Bachelor of Applied Communication",
+      "school": "Marlowe Institute of Professional Studies",
+      "end": "2016"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Hungarian (B2)", "German (B1)"],
+  "injection": null
+}

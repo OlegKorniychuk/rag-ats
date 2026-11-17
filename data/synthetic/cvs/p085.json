@@ -1,0 +1,62 @@
+{
+  "personaId": "p085",
+  "language": "en",
+  "name": "Arjun Lindqvist",
+  "email": "arjun-lindqvist@example.com",
+  "githubUrl": null,
+  "headline": "Mobile Engineer",
+  "location": "Helsinki, Finland",
+  "summary": "Mobile engineer with experience delivering consumer-facing app features, improving release quality, and supporting product teams through clear implementation and steady delivery. Known for building reliable mobile experiences, tightening state management, and working closely with designers and backend partners to ship polished updates.",
+  "roles": [
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Mobile Engineer",
+      "start": "2023-12",
+      "end": "2024-12",
+      "bullets": [
+        "Built new iOS screens for onboarding and account management, using Redux to keep app state consistent across flows.",
+        "Wrote Jest checks for key user journeys and reduced regression issues by 28% before release.",
+        "Refined navigation and form handling in iOS, improving completion rates for the main setup flow by 14%.",
+        "Partnered with product and design teams to translate requirements into small, testable mobile changes."
+      ]
+    },
+    {
+      "employer": "Stonebridge Interactive",
+      "title": "Mobile Developer",
+      "start": "2025-01",
+      "end": null,
+      "bullets": [
+        "Developed new app features in Swift and TypeScript for the mobile client, keeping the implementation aligned with shared product rules.",
+        "Maintained state logic in Redux and reviewed Git history to keep releases organized across parallel workstreams.",
+        "Implemented unit coverage in JUnit and Java for core business rules, cutting escaped defects by 31%.",
+        "Updated iOS components and shared mobile behavior to improve stability across device sizes and operating conditions.",
+        "Coordinated with QA and product leads on sprint planning and issue triage to keep the team on schedule."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "iOS",
+    "Jest",
+    "Redux",
+    "Git",
+    "Java",
+    "JUnit",
+    "Swift",
+    "TypeScript"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northvale Institute of Technology",
+      "end": "2022"
+    },
+    {
+      "degree": "Associate Degree in Digital Media",
+      "school": "Riverset College of Applied Arts",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Swedish (C1)"],
+  "injection": null
+}

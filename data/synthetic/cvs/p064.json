@@ -1,0 +1,40 @@
+{
+  "personaId": "p064",
+  "language": "en",
+  "name": "Greta Dubois",
+  "email": "greta-dubois@example.com",
+  "githubUrl": null,
+  "headline": "Security Engineer",
+  "location": "Lyon, France",
+  "summary": "Security engineer focused on embedded and platform hardening for robotics environments. Experienced in securing low-level software, tightening authentication flows, and improving defensive coding practices across product teams. Brings a practical approach to risk reduction, incident response, and secure implementation reviews.",
+  "roles": [
+    {
+      "employer": "Dovetail Robotics",
+      "title": "Security Engineer",
+      "start": "2025-03",
+      "end": null,
+      "bullets": [
+        "Hardened device services in C and C++ on Linux, reducing crash-triggered faults by 27% and improving resilience under load.",
+        "Implemented OAuth login flows and session safeguards for operator tools, cutting account-related support issues by 33%.",
+        "Reviewed code and threat scenarios against OWASP guidance, closing 18 high-priority findings before release.",
+        "Built Python scripts to automate security checks and log review, saving about 10 hours per week for the engineering team."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": ["C", "C++", "Linux", "OAuth", "OWASP", "Python", "AWS"],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Engineering",
+      "school": "École des Cimes Techniques",
+      "end": "2024"
+    },
+    {
+      "degree": "Diploma in Applied Cyber Systems",
+      "school": "Institut Valmont de Technologie",
+      "end": "2022"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "French (Native)"],
+  "injection": null
+}

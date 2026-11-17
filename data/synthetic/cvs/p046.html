@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Oksana Pavlenko - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>oksana-pavlenko@example.com</li>
+  <li>Kyiv, Ukraine</li>
+  <li>github.com/synth-oksana-pavlenko</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>React</li>
+  <li>REST APIs</li>
+  <li>Agile</li>
+  <li>Angular</li>
+  <li>GraphQL</li>
+  <li>Redux</li>
+  <li>TypeScript</li>
+  <li>Web accessibility</li>
+  <li>HTML/CSS</li>
+  <li>Next.js</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>Ukrainian (Native)</li>
+  <li>English (C1)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Interactive Media Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Northbridge Institute of Applied Arts</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Bachelor of Software Interfaces</span><span class="dates">2016</span></div>
+  <div class="sub">Linden Vale College</div>
+</div>
+</aside>
+<main class="main">
+<h1>Oksana Pavlenko</h1>
+<div class="headline">Frontend Engineer</div>
+<h2>Summary</h2>
+<p>Frontend engineer focused on building responsive web products and improving user experience across customer-facing platforms. Experienced in collaborating with product and design teams, shaping interface behaviour, and delivering reliable features through structured delivery practices. Comfortable working across modern application layers and maintaining accessible, maintainable user interfaces.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Frontend Developer</span><span class="dates">Feb 2022 – Present</span></div>
+  <div class="sub">Hexagon Meadow</div>
+  <ul>
+    <li>Led feature delivery in Agile teams using Angular and TypeScript to ship interface updates for a fast-moving product area.</li>
+    <li>Implemented shared data flows with Redux and GraphQL, trimming duplicated requests and improving state consistency across screens.</li>
+    <li>Extended customer journeys in React and REST APIs while improving Web accessibility for keyboard and screen-reader users.</li>
+    <li>Worked with designers and engineers to review edge cases, stabilize releases, and keep changes aligned with sprint goals.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Developer</span><span class="dates">Oct 2020 – Feb 2022</span></div>
+  <div class="sub">Ravenmoor Tech</div>
+  <ul>
+    <li>Built interactive customer screens in React that consumed REST APIs and reduced page handoff delays by 28%.</li>
+    <li>Refined form flows and state handling in React to improve completion rates and keep the UI responsive during data updates.</li>
+    <li>Partnered with product teams to translate requirements into maintainable frontend features and support release readiness.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Tidal Gateway</span></div>
+  <p>Created a responsive gateway interface in HTML/CSS, focusing on clear layout structure and consistent presentation across screen sizes.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Orbit Scheduler</span></div>
+  <p>Built a scheduling interface in Next.js with streamlined navigation and page rendering for planning workflows.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Maple Gateway</span></div>
+  <p>Developed shared interface state patterns in Redux to coordinate user actions and keep screens synchronized.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+{
+  "personaId": "p095",
+  "language": "en",
+  "name": "Sofia Silva",
+  "email": "sofia-silva@example.com",
+  "githubUrl": "https://github.com/synth-sofia-silva",
+  "headline": "Full-Stack Developer",
+  "location": "Lisbon, Portugal",
+  "summary": "Full-stack developer with experience building customer-facing products and internal tools across web applications and data-driven features. Comfortable working across the stack, improving delivery processes, and collaborating with product and design to ship reliable releases.",
+  "roles": [
+    {
+      "employer": "Velvet Circuit",
+      "title": "Junior Full-Stack Developer",
+      "start": "2021-10",
+      "end": "2024-08",
+      "bullets": [
+        "Built interactive user workflows with JavaScript and Redux, and kept versioned changes organized with Git across frequent releases.",
+        "Implemented SQL-backed features for reporting and account management, cutting manual lookup time by 35%.",
+        "Partnered with designers and support staff to refine the frontend experience and reduce user-reported issues by 22%.",
+        "Reviewed code changes with the team and stabilized shared components used across 3 product areas."
+      ]
+    },
+    {
+      "employer": "Willowmere Software",
+      "title": "Full-Stack Engineer",
+      "start": "2024-09",
+      "end": "2025-11",
+      "bullets": [
+        "Delivered new application screens in Angular and connected them to backend services, improving turnaround on feature requests by 28%.",
+        "Packaged services with Docker and tuned PostgreSQL queries to keep response times steady during peak usage.",
+        "Designed document workflows in MongoDB for a growing customer base, supporting 4 major product launches.",
+        "Worked closely with product managers and QA to remove release blockers and improve handoff quality."
+      ]
+    },
+    {
+      "employer": "Zephyr Foundry",
+      "title": "Full-Stack Developer",
+      "start": "2026-01",
+      "end": null,
+      "bullets": [
+        "Developed customer features in GraphQL and Redux, and maintained reliable data operations in PostgreSQL and SQL.",
+        "Expanded automated checks with Cypress and Jest, reducing regression defects by 40%.",
+        "Built and supported containerized services with Docker, helping the team ship 2 releases per month with fewer deployment issues.",
+        "Collaborated with engineers and analysts to improve data consistency and keep the product stable under heavier usage."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cobalt Library",
+      "description": "Created a small library service in Node.js to manage catalog operations, borrowing rules and internal lookups for a training environment."
+    }
+  ],
+  "skills": [
+    "Git",
+    "JavaScript",
+    "Redux",
+    "SQL",
+    "Angular",
+    "Docker",
+    "MongoDB",
+    "PostgreSQL",
+    "Cypress",
+    "GraphQL",
+    "Jest",
+    "Node.js"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Systems",
+      "school": "Aurelia Institute of Technology",
+      "end": "2021"
+    },
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Northbridge College of Applied Studies",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Portuguese (Native)"],
+  "injection": null
+}

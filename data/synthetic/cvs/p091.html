@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Omar Nair - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Omar Nair</h1><div class="headline">Platform Engineer</div></div>
+  <div class="contact"><div>omar-nair@example.com</div>
+<div>Berlin, Germany</div>
+<div>github.com/synth-omar-nair</div></div>
+</header>
+<h2>Summary</h2>
+<p>Platform engineer focused on building reliable delivery pipelines, internal tooling and observability for product teams. Experience spans software delivery, containerized services and operational support in fast-moving engineering environments. Known for improving release flow, reducing manual effort and keeping platforms stable under load.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Platform Engineer</span><span class="dates">Feb 2026 – Present</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Owns Docker-based platform components and GitHub Actions workflows that support daily releases across 5 services.</li>
+    <li>Built Python tooling for platform tasks and expanded Prometheus coverage to improve alert quality and reduce noisy incidents by 28%.</li>
+    <li>Developed Rust utilities for safer operational workflows and shared them across the team for reuse.</li>
+    <li>Tuned monitoring dashboards and alert thresholds in Prometheus so on-call engineers could spot service issues earlier.</li>
+    <li>Improved automation around image builds and delivery paths with Docker and GitHub Actions, lowering manual steps for the platform team.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Engineer</span><span class="dates">Jun 2024 – Jan 2026</span></div>
+  <div class="sub">Ostrava Labs</div>
+  <ul>
+    <li>Developed Python services packaged with Docker and wired into CI/CD, supporting faster delivery for internal products.</li>
+    <li>Shaped MLOps workflows for model builds and promotion, improving repeatability across 2 environments.</li>
+    <li>Reduced failure recovery time by 35% by adding safer runtime checks and clearer deployment steps in Python services.</li>
+    <li>Worked with delivery pipelines to keep container images consistent and remove recurring release issues.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior DevOps Engineer</span><span class="dates">Oct 2022 – May 2024</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Built CI/CD pipelines and improved Git-based release workflows, cutting deployment handoffs by 40%.</li>
+    <li>Automated build and release checks across the backend and support services, reducing manual intervention for 3 teams.</li>
+    <li>Partnered with engineers to standardize source control practices in Git and keep branch usage consistent across projects.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Rapid Inbox</span></div>
+  <p>Built a reporting view in Grafana to help teams track service health and release trends. The dashboard combined Grafana panels with operational metrics for faster review.</p>
+</div>
+<h2>Skills</h2>
+<ul class="skills">
+  <li>Bash</li>
+  <li>CI/CD</li>
+  <li>Git</li>
+  <li>Docker</li>
+  <li>MLOps</li>
+  <li>Python</li>
+  <li>GitHub Actions</li>
+  <li>Prometheus</li>
+  <li>Rust</li>
+  <li>Grafana</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Applied Computing</span><span class="dates">2022</span></div>
+  <div class="sub">Northmere Technical College</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Software Operations</span><span class="dates">2021</span></div>
+  <div class="sub">Veybridge Institute of Technology</div>
+</div>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>Arabic (B2)</li>
+</ul>
+  </body>
+</html>

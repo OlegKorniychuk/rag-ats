@@ -1,0 +1,86 @@
+{
+  "personaId": "p073",
+  "language": "en",
+  "name": "Elena Osei",
+  "email": "elena-osei@example.com",
+  "githubUrl": "https://github.com/synth-elena-osei",
+  "headline": "Mobile Engineer",
+  "location": "Accra, Ghana",
+  "summary": "Mobile engineer with a track record of building and improving consumer apps across iOS experiences and cross-platform delivery. Known for turning product requirements into polished features, tightening release quality, and collaborating closely with design and product teams. Comfortable working in fast-moving environments with Agile delivery and disciplined engineering practices.",
+  "roles": [
+    {
+      "employer": "Cinder Peak",
+      "title": "Junior Mobile Developer",
+      "start": "2020-06",
+      "end": "2022-09",
+      "bullets": [
+        "Built early app screens in Swift and SwiftUI, translating designs into a clean and responsive mobile experience.",
+        "Added onboarding and profile flows in Swift, reducing support questions by 18% through clearer navigation and validation.",
+        "Refined state handling in SwiftUI and improved the handoff between feature logic and interface updates.",
+        "Fixed defects and supported release preparation with Swift and SwiftUI, helping the team ship on a steady cadence."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Mobile Engineer",
+      "start": "2022-10",
+      "end": "2024-01",
+      "bullets": [
+        "Delivered reusable product screens in Flutter and SwiftUI, improving consistency across the app and cutting duplicated work.",
+        "Implemented new customer journeys in Flutter while keeping older iOS views aligned in SwiftUI.",
+        "Partnered with designers and QA to polish interaction details in SwiftUI and raise the quality of shipped updates.",
+        "Resolved production issues quickly and improved feature stability, using Flutter and SwiftUI to keep releases smooth."
+      ]
+    },
+    {
+      "employer": "Pinecrest Cloud",
+      "title": "Senior Mobile Engineer",
+      "start": "2024-01",
+      "end": "2026-01",
+      "bullets": [
+        "Led mobile delivery in Agile teams, coordinating work across CI/CD, Flutter and Git to keep releases predictable.",
+        "Built and maintained app features in Flutter and iOS, integrating GraphQL and REST APIs for account and content flows.",
+        "Improved release confidence by strengthening JUnit checks and tightening CI/CD steps around each merge.",
+        "Shipped performance and reliability fixes across the app, reducing crash reports by 22% and shortening review cycles.",
+        "Mentored junior engineers on code review habits, branch discipline in Git, and practical use of Agile ceremonies."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Amber Atlas",
+      "description": "A location-focused companion app prototype built with Jetpack Compose, designed to help users explore mapped collections and structured place notes."
+    },
+    {
+      "name": "Maple Atlas",
+      "description": "A planning app concept shaped with Agile and SwiftUI, focusing on fast iteration, clear navigation, and a polished mobile interface."
+    }
+  ],
+  "skills": [
+    "Swift",
+    "SwiftUI",
+    "Flutter",
+    "Agile",
+    "CI/CD",
+    "Git",
+    "GraphQL",
+    "iOS",
+    "JUnit",
+    "REST APIs",
+    "Jetpack Compose"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Mobile Computing",
+      "school": "Harbor Ridge Institute of Technology",
+      "end": "2019"
+    },
+    {
+      "degree": "Associate Degree in Software Development",
+      "school": "Larkspur Technical College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Twi (Native)"],
+  "injection": null
+}

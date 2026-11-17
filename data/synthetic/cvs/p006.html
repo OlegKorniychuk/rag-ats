@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Elena Alvarez - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>elena-alvarez@example.com</li>
+  <li>Madrid, Spain</li>
+  <li>github.com/synth-elena-alvarez</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>C#</li>
+  <li>JUnit</li>
+  <li>React</li>
+  <li>GitHub Actions</li>
+  <li>JavaScript</li>
+  <li>Performance testing</li>
+  <li>Postman</li>
+  <li>Python</li>
+  <li>REST APIs</li>
+  <li>Test automation</li>
+  <li>pytest</li>
+  <li>Cucumber</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Spanish (C2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Quality Engineering</span><span class="dates">2020</span></div>
+  <div class="sub">Northgate Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>BSc in Information Systems</span><span class="dates">2019</span></div>
+  <div class="sub">Lakeshore College of Applied Studies</div>
+</div>
+</aside>
+<main class="main">
+<h1>Elena Alvarez</h1>
+<div class="headline">Senior QA Automation Engineer</div>
+<h2>Summary</h2>
+<p>QA automation specialist with experience improving test coverage, release confidence, and defect detection across web and API workflows. Known for building reliable automated checks, coordinating with product teams, and tightening regression cycles through practical quality processes. Comfortable working across browser-based features, backend services, and performance-focused validation.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior QA Automation Engineer</span><span class="dates">Apr 2024 – Present</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Designed test automation workflows with Python and JavaScript, then wired them into GitHub Actions for faster release validation.</li>
+    <li>Built API checks with Postman against REST APIs and extended Test automation coverage for critical service flows.</li>
+    <li>Ran Performance testing on React scenarios and surfaced bottlenecks that improved peak-load response by 22%.</li>
+    <li>Maintained a shared quality suite across teams, combining manual investigation with automated checks to support weekly delivery.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>QA Automation Engineer</span><span class="dates">Jan 2021 – Feb 2024</span></div>
+  <div class="sub">Hexagon Meadow</div>
+  <ul>
+    <li>Built C# automation for core regression paths, reducing manual test effort by 35% and improving repeatability across weekly releases.</li>
+    <li>Expanded JUnit coverage for browser journeys in React, helping the team catch UI defects earlier in the cycle.</li>
+    <li>Reviewed test results with developers and triaged failures, cutting turnaround time on urgent fixes by 28%.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Orbit Tracker</span></div>
+  <p>Created automated test coverage in pytest for routing and status calculations, focusing on fast feedback for edge cases and data-driven scenarios.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Cobalt Atlas</span></div>
+  <p>Wrote behavior-focused test scenarios in Cucumber to validate user journeys, acceptance rules, and regression coverage for the product team.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

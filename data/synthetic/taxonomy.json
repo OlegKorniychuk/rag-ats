@@ -1,0 +1,680 @@
+{
+  "description": "Closed vocabulary of skill tags used by the synthetic data set (personas, vacancy requirements, search queries). Each tag has display aliases that may appear in CV or GitHub text. Aliases of tags flagged \"ambiguous\" are short or are also common English words (Go, R, C, Swift, Spring, Express, ...): drift checks must match them case-sensitively and only in technical contexts. \"family\" lists the role families (vacancy ids) the tag naturally belongs to; the persona generator uses it to pick plausible filler skills. Tags without a family (git, agile) are generic. Experience tags (kind \"experience\", no aliases, ids exp-*) express \"N+ years in a field\" requirements: a requirement such as \"5+ years backend\" is { tags: [\"exp-backend\"], minYears: 5 }. A persona gets the tag on every role held in that field, so its years are the summed months of those roles. They never appear in prose, so text checks skip tags without aliases.",
+  "tags": [
+    {
+      "tag": "javascript",
+      "label": "JavaScript",
+      "aliases": ["JavaScript", "ECMAScript"],
+      "family": ["frontend", "backend-node", "full-stack", "qa-automation"]
+    },
+    {
+      "tag": "typescript",
+      "label": "TypeScript",
+      "aliases": ["TypeScript"],
+      "family": [
+        "frontend",
+        "backend-node",
+        "full-stack",
+        "qa-automation",
+        "mobile"
+      ]
+    },
+    {
+      "tag": "python",
+      "label": "Python",
+      "aliases": ["Python"],
+      "family": [
+        "data-engineering",
+        "ml",
+        "qa-automation",
+        "security",
+        "platform-devops"
+      ]
+    },
+    {
+      "tag": "java",
+      "label": "Java",
+      "aliases": ["Java"],
+      "family": ["backend-java", "qa-automation", "mobile"]
+    },
+    {
+      "tag": "kotlin",
+      "label": "Kotlin",
+      "aliases": ["Kotlin"],
+      "family": ["mobile", "backend-java"]
+    },
+    {
+      "tag": "swift",
+      "label": "Swift",
+      "aliases": ["Swift"],
+      "ambiguous": true,
+      "family": ["mobile"]
+    },
+    {
+      "tag": "go",
+      "label": "Go",
+      "aliases": ["Go", "Golang"],
+      "ambiguous": true,
+      "family": ["platform-devops", "backend-node", "security"]
+    },
+    {
+      "tag": "rust",
+      "label": "Rust",
+      "aliases": ["Rust"],
+      "ambiguous": true,
+      "family": ["security", "platform-devops"]
+    },
+    {
+      "tag": "csharp",
+      "label": "C#",
+      "aliases": ["C#", "CSharp"],
+      "ambiguous": true,
+      "family": ["backend-java", "qa-automation"]
+    },
+    {
+      "tag": "cpp",
+      "label": "C++",
+      "aliases": ["C++"],
+      "family": ["ml", "security"]
+    },
+    {
+      "tag": "c",
+      "label": "C",
+      "aliases": ["C"],
+      "ambiguous": true,
+      "family": ["security"]
+    },
+    {
+      "tag": "r",
+      "label": "R",
+      "aliases": ["R"],
+      "ambiguous": true,
+      "family": ["ml", "data-engineering"]
+    },
+    {
+      "tag": "scala",
+      "label": "Scala",
+      "aliases": ["Scala"],
+      "family": ["data-engineering", "backend-java"]
+    },
+    {
+      "tag": "sql",
+      "label": "SQL",
+      "aliases": ["SQL"],
+      "family": [
+        "data-engineering",
+        "ml",
+        "backend-java",
+        "backend-node",
+        "full-stack"
+      ]
+    },
+    {
+      "tag": "bash",
+      "label": "Bash",
+      "aliases": ["Bash", "Shell scripting"],
+      "family": ["platform-devops", "security", "data-engineering"]
+    },
+    {
+      "tag": "dart",
+      "label": "Dart",
+      "aliases": ["Dart"],
+      "ambiguous": true,
+      "family": ["mobile"]
+    },
+    {
+      "tag": "react",
+      "label": "React",
+      "aliases": ["React", "React.js", "ReactJS"],
+      "ambiguous": true,
+      "family": ["frontend", "full-stack", "qa-automation"]
+    },
+    {
+      "tag": "vue",
+      "label": "Vue",
+      "aliases": ["Vue", "Vue.js", "Vue 3"],
+      "family": ["frontend", "full-stack"]
+    },
+    {
+      "tag": "angular",
+      "label": "Angular",
+      "aliases": ["Angular"],
+      "family": ["frontend", "full-stack"]
+    },
+    {
+      "tag": "nextjs",
+      "label": "Next.js",
+      "aliases": ["Next.js", "NextJS"],
+      "family": ["frontend", "full-stack"]
+    },
+    {
+      "tag": "html-css",
+      "label": "HTML/CSS",
+      "aliases": ["HTML", "CSS", "HTML5", "CSS3", "SCSS"],
+      "family": ["frontend", "full-stack"]
+    },
+    {
+      "tag": "redux",
+      "label": "Redux",
+      "aliases": ["Redux", "Redux Toolkit"],
+      "family": ["frontend", "full-stack", "mobile"]
+    },
+    {
+      "tag": "jest",
+      "label": "Jest",
+      "aliases": ["Jest"],
+      "ambiguous": true,
+      "family": ["frontend", "backend-node", "full-stack", "mobile"]
+    },
+    {
+      "tag": "web-accessibility",
+      "label": "Web accessibility",
+      "aliases": ["accessibility", "WCAG", "a11y"],
+      "family": ["frontend"]
+    },
+    {
+      "tag": "spring-boot",
+      "label": "Spring Boot",
+      "aliases": ["Spring Boot", "Spring"],
+      "ambiguous": true,
+      "family": ["backend-java"]
+    },
+    {
+      "tag": "hibernate",
+      "label": "Hibernate",
+      "aliases": ["Hibernate", "JPA"],
+      "ambiguous": true,
+      "family": ["backend-java"]
+    },
+    {
+      "tag": "maven",
+      "label": "Maven",
+      "aliases": ["Maven"],
+      "family": ["backend-java"]
+    },
+    {
+      "tag": "junit",
+      "label": "JUnit",
+      "aliases": ["JUnit", "Mockito"],
+      "family": ["backend-java", "mobile", "qa-automation"]
+    },
+    {
+      "tag": "microservices",
+      "label": "Microservices",
+      "aliases": ["microservices", "microservice architecture"],
+      "family": ["backend-java", "backend-node", "platform-devops"]
+    },
+    {
+      "tag": "rabbitmq",
+      "label": "RabbitMQ",
+      "aliases": ["RabbitMQ"],
+      "family": ["backend-java", "backend-node"]
+    },
+    {
+      "tag": "kafka",
+      "label": "Kafka",
+      "aliases": ["Kafka", "Apache Kafka"],
+      "family": ["backend-java", "backend-node", "data-engineering"]
+    },
+    {
+      "tag": "nodejs",
+      "label": "Node.js",
+      "aliases": ["Node.js", "NodeJS", "Node"],
+      "family": ["backend-node", "full-stack"]
+    },
+    {
+      "tag": "nestjs",
+      "label": "NestJS",
+      "aliases": ["NestJS", "Nest.js"],
+      "family": ["backend-node"]
+    },
+    {
+      "tag": "express",
+      "label": "Express",
+      "aliases": ["Express", "Express.js"],
+      "ambiguous": true,
+      "family": ["backend-node", "full-stack"]
+    },
+    {
+      "tag": "graphql",
+      "label": "GraphQL",
+      "aliases": ["GraphQL"],
+      "family": ["backend-node", "frontend", "full-stack", "mobile"]
+    },
+    {
+      "tag": "rest-api",
+      "label": "REST APIs",
+      "aliases": ["REST", "RESTful", "REST API"],
+      "family": [
+        "backend-java",
+        "backend-node",
+        "full-stack",
+        "frontend",
+        "mobile",
+        "qa-automation"
+      ]
+    },
+    {
+      "tag": "mongodb",
+      "label": "MongoDB",
+      "aliases": ["MongoDB", "Mongo"],
+      "family": ["backend-node", "full-stack"]
+    },
+    {
+      "tag": "redis",
+      "label": "Redis",
+      "aliases": ["Redis"],
+      "family": ["backend-node", "backend-java"]
+    },
+    {
+      "tag": "postgresql",
+      "label": "PostgreSQL",
+      "aliases": ["PostgreSQL", "Postgres"],
+      "family": [
+        "backend-java",
+        "backend-node",
+        "full-stack",
+        "data-engineering"
+      ]
+    },
+    {
+      "tag": "mysql",
+      "label": "MySQL",
+      "aliases": ["MySQL"],
+      "family": ["backend-java", "backend-node", "full-stack"]
+    },
+    {
+      "tag": "spark",
+      "label": "Spark",
+      "aliases": ["Spark", "Apache Spark", "PySpark"],
+      "ambiguous": true,
+      "family": ["data-engineering", "ml"]
+    },
+    {
+      "tag": "airflow",
+      "label": "Airflow",
+      "aliases": ["Airflow", "Apache Airflow"],
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "dbt",
+      "label": "dbt",
+      "aliases": ["dbt"],
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "snowflake",
+      "label": "Snowflake",
+      "aliases": ["Snowflake"],
+      "ambiguous": true,
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "bigquery",
+      "label": "BigQuery",
+      "aliases": ["BigQuery"],
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "etl",
+      "label": "ETL",
+      "aliases": ["ETL", "ELT", "data pipelines"],
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "data-modeling",
+      "label": "Data modeling",
+      "aliases": ["data modeling", "dimensional modeling"],
+      "family": ["data-engineering"]
+    },
+    {
+      "tag": "pandas",
+      "label": "pandas",
+      "aliases": ["pandas"],
+      "family": ["data-engineering", "ml"]
+    },
+    {
+      "tag": "pytorch",
+      "label": "PyTorch",
+      "aliases": ["PyTorch"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "tensorflow",
+      "label": "TensorFlow",
+      "aliases": ["TensorFlow", "Keras"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "scikit-learn",
+      "label": "scikit-learn",
+      "aliases": ["scikit-learn", "sklearn"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "mlflow",
+      "label": "MLflow",
+      "aliases": ["MLflow"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "mlops",
+      "label": "MLOps",
+      "aliases": ["MLOps"],
+      "family": ["ml", "platform-devops"]
+    },
+    {
+      "tag": "nlp",
+      "label": "NLP",
+      "aliases": ["NLP", "natural language processing"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "computer-vision",
+      "label": "Computer vision",
+      "aliases": ["computer vision", "OpenCV"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "llm",
+      "label": "LLMs",
+      "aliases": ["LLM", "large language models", "RAG"],
+      "family": ["ml"]
+    },
+    {
+      "tag": "docker",
+      "label": "Docker",
+      "aliases": ["Docker"],
+      "family": [
+        "platform-devops",
+        "backend-java",
+        "backend-node",
+        "full-stack",
+        "data-engineering",
+        "ml",
+        "qa-automation"
+      ]
+    },
+    {
+      "tag": "kubernetes",
+      "label": "Kubernetes",
+      "aliases": ["Kubernetes", "K8s"],
+      "family": ["platform-devops", "backend-java"]
+    },
+    {
+      "tag": "terraform",
+      "label": "Terraform",
+      "aliases": ["Terraform"],
+      "family": ["platform-devops"]
+    },
+    {
+      "tag": "ansible",
+      "label": "Ansible",
+      "aliases": ["Ansible"],
+      "family": ["platform-devops"]
+    },
+    {
+      "tag": "aws",
+      "label": "AWS",
+      "aliases": ["AWS", "Amazon Web Services"],
+      "family": [
+        "platform-devops",
+        "security",
+        "data-engineering",
+        "full-stack",
+        "ml"
+      ]
+    },
+    {
+      "tag": "gcp",
+      "label": "GCP",
+      "aliases": ["GCP", "Google Cloud"],
+      "family": ["platform-devops", "data-engineering", "ml"]
+    },
+    {
+      "tag": "azure",
+      "label": "Azure",
+      "aliases": ["Azure"],
+      "family": ["platform-devops", "security", "backend-java"]
+    },
+    {
+      "tag": "ci-cd",
+      "label": "CI/CD",
+      "aliases": ["CI/CD", "continuous integration", "continuous delivery"],
+      "family": [
+        "platform-devops",
+        "qa-automation",
+        "full-stack",
+        "mobile",
+        "security"
+      ]
+    },
+    {
+      "tag": "github-actions",
+      "label": "GitHub Actions",
+      "aliases": ["GitHub Actions"],
+      "family": ["platform-devops", "qa-automation", "full-stack"]
+    },
+    {
+      "tag": "linux",
+      "label": "Linux",
+      "aliases": ["Linux"],
+      "family": ["platform-devops", "security"]
+    },
+    {
+      "tag": "prometheus",
+      "label": "Prometheus",
+      "aliases": ["Prometheus"],
+      "family": ["platform-devops"]
+    },
+    {
+      "tag": "grafana",
+      "label": "Grafana",
+      "aliases": ["Grafana"],
+      "family": ["platform-devops"]
+    },
+    {
+      "tag": "helm",
+      "label": "Helm",
+      "aliases": ["Helm"],
+      "ambiguous": true,
+      "family": ["platform-devops"]
+    },
+    {
+      "tag": "android",
+      "label": "Android",
+      "aliases": ["Android"],
+      "family": ["mobile"]
+    },
+    { "tag": "ios", "label": "iOS", "aliases": ["iOS"], "family": ["mobile"] },
+    {
+      "tag": "react-native",
+      "label": "React Native",
+      "aliases": ["React Native"],
+      "family": ["mobile"]
+    },
+    {
+      "tag": "flutter",
+      "label": "Flutter",
+      "aliases": ["Flutter"],
+      "family": ["mobile"]
+    },
+    {
+      "tag": "swiftui",
+      "label": "SwiftUI",
+      "aliases": ["SwiftUI"],
+      "family": ["mobile"]
+    },
+    {
+      "tag": "jetpack-compose",
+      "label": "Jetpack Compose",
+      "aliases": ["Jetpack Compose"],
+      "family": ["mobile"]
+    },
+    {
+      "tag": "selenium",
+      "label": "Selenium",
+      "aliases": ["Selenium", "WebDriver"],
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "cypress",
+      "label": "Cypress",
+      "aliases": ["Cypress"],
+      "ambiguous": true,
+      "family": ["qa-automation", "frontend"]
+    },
+    {
+      "tag": "playwright",
+      "label": "Playwright",
+      "aliases": ["Playwright"],
+      "ambiguous": true,
+      "family": ["qa-automation", "frontend"]
+    },
+    {
+      "tag": "pytest",
+      "label": "pytest",
+      "aliases": ["pytest"],
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "test-automation",
+      "label": "Test automation",
+      "aliases": ["test automation", "automated testing", "automated tests"],
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "postman",
+      "label": "Postman",
+      "aliases": ["Postman"],
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "cucumber",
+      "label": "Cucumber",
+      "aliases": ["Cucumber", "Gherkin"],
+      "ambiguous": true,
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "performance-testing",
+      "label": "Performance testing",
+      "aliases": ["performance testing", "load testing", "JMeter"],
+      "family": ["qa-automation"]
+    },
+    {
+      "tag": "owasp",
+      "label": "OWASP",
+      "aliases": ["OWASP", "OWASP Top 10"],
+      "family": ["security", "full-stack"]
+    },
+    {
+      "tag": "penetration-testing",
+      "label": "Penetration testing",
+      "aliases": ["penetration testing", "pentesting", "pen testing"],
+      "family": ["security"]
+    },
+    {
+      "tag": "siem",
+      "label": "SIEM",
+      "aliases": ["SIEM", "Splunk"],
+      "family": ["security"]
+    },
+    {
+      "tag": "iam",
+      "label": "IAM",
+      "aliases": ["IAM", "identity and access management"],
+      "family": ["security", "platform-devops"]
+    },
+    {
+      "tag": "oauth",
+      "label": "OAuth",
+      "aliases": ["OAuth", "OAuth2", "OpenID Connect"],
+      "family": ["security", "backend-node", "backend-java"]
+    },
+    {
+      "tag": "threat-modeling",
+      "label": "Threat modeling",
+      "aliases": ["threat modeling", "threat modelling"],
+      "family": ["security"]
+    },
+    {
+      "tag": "cryptography",
+      "label": "Cryptography",
+      "aliases": ["cryptography", "PKI", "TLS"],
+      "family": ["security"]
+    },
+    {
+      "tag": "burp-suite",
+      "label": "Burp Suite",
+      "aliases": ["Burp Suite", "Burp"],
+      "family": ["security"]
+    },
+    { "tag": "git", "label": "Git", "aliases": ["Git", "GitHub", "GitLab"] },
+    {
+      "tag": "agile",
+      "label": "Agile",
+      "aliases": ["Agile", "Scrum", "Kanban"],
+      "ambiguous": true
+    },
+    {
+      "tag": "system-design",
+      "label": "System design",
+      "aliases": ["system design", "distributed systems"],
+      "family": [
+        "backend-java",
+        "backend-node",
+        "full-stack",
+        "data-engineering"
+      ]
+    },
+    {
+      "tag": "exp-frontend",
+      "label": "Frontend experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-backend",
+      "label": "Backend experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-mobile",
+      "label": "Mobile experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-data",
+      "label": "Data engineering experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-ml",
+      "label": "Machine learning experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-devops",
+      "label": "DevOps / platform experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-qa",
+      "label": "QA automation experience",
+      "kind": "experience",
+      "aliases": []
+    },
+    {
+      "tag": "exp-security",
+      "label": "Security engineering experience",
+      "kind": "experience",
+      "aliases": []
+    }
+  ]
+}

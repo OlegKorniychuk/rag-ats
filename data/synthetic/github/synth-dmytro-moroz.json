@@ -1,0 +1,56 @@
+{
+  "user": {
+    "login": "synth-dmytro-moroz",
+    "html_url": "https://github.com/synth-dmytro-moroz",
+    "bio": "Analytics engineer building dependable data products and clear reporting paths."
+  },
+  "repos": [
+    {
+      "name": "warehouse-contract-lab",
+      "html_url": "https://github.com/synth-dmytro-moroz/warehouse-contract-lab",
+      "description": "A small project for defining warehouse contracts and checking warehouse shape before release.",
+      "language": "SQL",
+      "stargazers_count": 89,
+      "topics": [
+        "sql",
+        "data-modeling",
+        "warehouse",
+        "validation",
+        "analytics"
+      ],
+      "pushed_at": "2026-09-23T00:00:00.000Z",
+      "created_at": "2025-01-31T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "pipeline-pattern-notes",
+      "html_url": "https://github.com/synth-dmytro-moroz/pipeline-pattern-notes",
+      "description": "A set of Python notes for shaping repeatable analytics workflows and reviewing handoffs.",
+      "language": "Python",
+      "stargazers_count": 85,
+      "topics": ["python", "analytics", "workflow", "notes", "agile"],
+      "pushed_at": "2026-06-11T00:00:00.000Z",
+      "created_at": "2023-06-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "reporting-view-map",
+      "html_url": "https://github.com/synth-dmytro-moroz/reporting-view-map",
+      "description": "A SQL project for mapping reporting views and keeping definitions aligned across teams.",
+      "language": "SQL",
+      "stargazers_count": 82,
+      "topics": ["sql", "reporting", "views", "alignment", "documentation"],
+      "pushed_at": "2026-03-01T00:00:00.000Z",
+      "created_at": "2021-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "warehouse-contract-lab": "# Warehouse Contract Lab\n\nWarehouse Contract Lab is a compact project for describing table expectations and reviewing whether incoming data matches the agreed shape. It is meant for small analytics teams that want a simple, readable contract for important tables.\n\n## Features\n- Define expected columns and basic rules\n- Compare delivered data to the contract\n- Produce a plain summary of mismatches\n- Keep the focus on stable reporting tables\n\n## Getting Started\n1. Open the SQL files and review the contract definitions.\n2. Adjust the example table names and checks for your own warehouse.\n3. Run the statements in your SQL editor and inspect the results.\n\nThe project is intentionally small, so you can adapt it quickly to a new warehouse or reporting area.",
+    "pipeline-pattern-notes": "# Pipeline Pattern Notes\n\nPipeline Pattern Notes collects small Python examples for organizing analytics work into repeatable steps. It focuses on readable code, calm handoffs, and a steady path from source data to reporting tables.\n\n## Features\n- Organize step-by-step workflow notes\n- Show simple checks before and after a run\n- Keep reusable helpers in one place\n- Document decisions for team review\n\n## Getting Started\n1. Open the Python files and read the inline notes.\n2. Update the sample paths and table names for your own workflow.\n3. Run the examples from a local Python session and review the output.\n\nUse this project as a starting point for a small analytics workflow that needs structure without unnecessary complexity.",
+    "reporting-view-map": "# Reporting View Map\n\nReporting View Map is a SQL-first reference for organizing reporting views and keeping their meaning easy to trace. It is useful when several teams depend on the same numbers and need a shared picture of what each view contains.\n\n## Features\n- List reporting views and their purpose\n- Record the source tables behind each view\n- Keep naming and definition notes together\n- Support quick review during team planning\n\n## Getting Started\n1. Open the SQL files and review the example view map.\n2. Replace the sample table and view names with your own reporting objects.\n3. Run the statements in your SQL editor and compare the results with your documentation.\n\nThis project stays lightweight so it can fit into a small reporting process with minimal setup."
+  }
+}

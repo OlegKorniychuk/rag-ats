@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Callum Moreau - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>callum-moreau@example.com</li>
+  <li>Montreal, Canada</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>GraphQL</li>
+  <li>Java</li>
+  <li>Node.js</li>
+  <li>REST APIs</li>
+  <li>Spring Boot</li>
+  <li>SQL</li>
+  <li>System design</li>
+  <li>TypeScript</li>
+  <li>Go</li>
+  <li>JUnit</li>
+  <li>Jest</li>
+  <li>MySQL</li>
+  <li>OAuth</li>
+  <li>Redis</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>French (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Development</span><span class="dates">2024</span></div>
+  <div class="sub">Northbridge Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Certificate in Applied Computing</span><span class="dates">2022</span></div>
+  <div class="sub">Lakeside School of Engineering</div>
+</div>
+</aside>
+<main class="main">
+<h1>Callum Moreau</h1>
+<div class="headline">Backend Developer</div>
+<h2>Summary</h2>
+<p>Backend developer focused on reliable services, API design and maintainable server-side systems. Experienced in building and supporting production features across layered application stacks, with a strong emphasis on performance, structure and clean integration between services.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">May 2025 – Present</span></div>
+  <div class="sub">Brightwater Digital</div>
+  <ul>
+    <li>Developed backend features in Go and Spring Boot, connecting Node.js services with TypeScript code for internal tools.</li>
+    <li>Added OAuth-based access flows and Redis-backed session handling, cutting login-related support tickets by 31%.</li>
+    <li>Wrote automated checks in JUnit and Jest for Java and TypeScript components, raising confidence in weekly releases.</li>
+    <li>Optimized MySQL queries and service endpoints to lower median response time by 22%.</li>
+    <li>Supported production debugging across Java services and Go workers, resolving recurring incidents faster for a 5-person engineering group.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Backend Developer</span><span class="dates">Jul 2024 – May 2025</span></div>
+  <div class="sub">Hexagon Meadow</div>
+  <ul>
+    <li>Built REST APIs and backend services in Java and Spring Boot, using SQL for data access and TypeScript for shared application logic.</li>
+    <li>Shaped system design decisions for a core platform feature, improving request flow and reducing duplicate processing by 28%.</li>
+    <li>Implemented Node.js job handlers for asynchronous tasks and tightened validation across the service boundary.</li>
+    <li>Collaborated with product and operations teams to refine release scope and resolve defects before launch, supporting a smoother rollout for 3 teams.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

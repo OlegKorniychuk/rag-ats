@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lukas Dubois - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>lukas-dubois@example.com</li>
+  <li>Paris, France</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Redux</li>
+  <li>SwiftUI</li>
+  <li>Dart</li>
+  <li>iOS</li>
+  <li>Java</li>
+  <li>React Native</li>
+  <li>Agile</li>
+  <li>CI/CD</li>
+  <li>Flutter</li>
+  <li>Git</li>
+  <li>GraphQL</li>
+  <li>Jetpack Compose</li>
+  <li>JUnit</li>
+  <li>Kotlin</li>
+  <li>REST APIs</li>
+  <li>Swift</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C2)</li>
+  <li>French (C1)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Engineering</span><span class="dates">2019</span></div>
+  <div class="sub">Montreval Institute of Applied Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Associate Degree in Computer Applications</span><span class="dates">2018</span></div>
+  <div class="sub">Valedune College of Digital Studies</div>
+</div>
+</aside>
+<main class="main">
+<h1>Lukas Dubois</h1>
+<div class="headline">Mobile Engineer</div>
+<h2>Summary</h2>
+<p>Mobile engineer with a track record of building and improving customer-facing apps across native and cross-platform teams. Experienced in shipping polished mobile experiences, coordinating releases, and partnering with product and design to improve reliability and user satisfaction.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Mobile Engineer</span><span class="dates">Nov 2024 – Present</span></div>
+  <div class="sub">Lumenfield</div>
+  <ul>
+    <li>Led delivery of mobile features using Agile practices, coordinating CI/CD checks, Git workflows and review cycles for a cross-functional team.</li>
+    <li>Built shared app screens in Flutter and Jetpack Compose, while integrating GraphQL and REST APIs in Dart, Kotlin, Swift and iOS modules.</li>
+    <li>Raised release confidence by adding JUnit coverage and tightening build validation, cutting post-release defects by 22%.</li>
+    <li>Guided the team through architecture decisions for mobile state handling, faster delivery and cleaner handoff between app layers.</li>
+    <li>Partnered with designers and backend engineers to ship 6 major updates with smoother sync, clearer error handling and better performance.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Mobile Engineer</span><span class="dates">Aug 2022 – Nov 2024</span></div>
+  <div class="sub">Stonebridge Interactive</div>
+  <ul>
+    <li>Delivered new app features in Dart for React Native screens while supporting the native iOS experience.</li>
+    <li>Improved release stability by 34% by refactoring shared mobile flows and removing duplicate logic across Dart, Java and React Native.</li>
+    <li>Worked with product stakeholders to prioritize fixes, polish key journeys and keep the mobile app on schedule.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Dec 2020 – Aug 2022</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Built onboarding and account flows in SwiftUI, then used Redux to keep state handling predictable across screens.</li>
+    <li>Reduced interface churn by 28% by tightening shared mobile patterns and simplifying data updates in SwiftUI and Redux.</li>
+    <li>Partnered with designers and backend teams to deliver cleaner navigation and faster feature rollouts for the mobile app.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

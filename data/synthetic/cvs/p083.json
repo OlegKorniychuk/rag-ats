@@ -1,0 +1,82 @@
+{
+  "personaId": "p083",
+  "language": "en",
+  "name": "Mateo Fischer",
+  "email": "mateo-fischer-2@example.com",
+  "githubUrl": "https://github.com/synth-mateo-fischer-2",
+  "headline": "Frontend Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Frontend engineer with experience building and refining customer-facing web interfaces across product teams. Known for turning design goals into reliable features, improving delivery habits, and collaborating closely with product and design partners. Comfortable working across modern frontend stacks and keeping interfaces consistent at scale.",
+  "roles": [
+    {
+      "employer": "Juniper Relay",
+      "title": "Junior Frontend Developer",
+      "start": "2019-10",
+      "end": "2022-09",
+      "bullets": [
+        "Built responsive product screens in Angular and JavaScript, translating wireframes into reusable interface components.",
+        "Added interactive page flows in Next.js and Vue, reducing repetitive manual updates for the team by 30%.",
+        "Worked with designers to polish navigation and content presentation across key customer journeys.",
+        "Resolved front-end defects quickly and kept release-ready features stable through frequent iteration."
+      ]
+    },
+    {
+      "employer": "Tessera Works",
+      "title": "Frontend Developer",
+      "start": "2022-11",
+      "end": "2024-07",
+      "bullets": [
+        "Delivered new customer-facing features in Vue and JavaScript under Agile planning, helping the team ship 12 improvements in one quarter.",
+        "Worked with GraphQL to simplify data loading for the frontend and reduce unnecessary requests.",
+        "Refined component behavior and page states in Vue so the product handled edge cases more cleanly.",
+        "Partnered with product peers in Agile reviews to tighten scope and keep work moving on schedule."
+      ]
+    },
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Senior UI Engineer",
+      "start": "2024-07",
+      "end": "2026-04",
+      "bullets": [
+        "Led interface work in Angular and Next.js, improving the consistency of a shared design system across 4 product areas.",
+        "Built and maintained data-driven views with GraphQL and Jest, raising confidence in frequent UI changes.",
+        "Strengthened release quality by using Cypress and Git to catch regressions earlier and keep work traceable.",
+        "Coached teammates on frontend patterns and review habits, helping the group deliver smoother handoffs."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Amber Notebook",
+      "description": "A personal note-organizing project built with Redux to keep application state predictable while the interface grew more complex."
+    }
+  ],
+  "skills": [
+    "Angular",
+    "JavaScript",
+    "Next.js",
+    "Vue",
+    "Agile",
+    "GraphQL",
+    "Cypress",
+    "Git",
+    "Jest",
+    "Redux",
+    "HTML/CSS",
+    "REST APIs"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Digital Media Design",
+      "school": "Northbridge School of Applied Arts",
+      "end": "2018"
+    },
+    {
+      "degree": "Associate Certificate in Interface Design",
+      "school": "Linden Technical College",
+      "end": "2019"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "German (B2)"],
+  "injection": null
+}

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Leila Demir - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>leila-demir@example.com</li>
+  <li>Istanbul, Turkey</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Postman</li>
+  <li>GitHub Actions</li>
+  <li>REST APIs</li>
+  <li>CI/CD</li>
+  <li>Docker</li>
+  <li>JUnit</li>
+  <li>pytest</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Turkish (Native)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Engineering</span><span class="dates">2022</span></div>
+  <div class="sub">Marmara Institute of Applied Computing</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Associate Certificate in Information Systems</span><span class="dates">2021</span></div>
+  <div class="sub">Bosporus Technical College</div>
+</div>
+</aside>
+<main class="main">
+<h1>Leila Demir</h1>
+<div class="headline">Software Engineer in Test</div>
+<h2>Summary</h2>
+<p>Software Engineer in Test with experience building reliable release checks and improving quality gates for fast-moving product teams. Comfortable working across API validation, build pipelines, and test execution to reduce escaped defects and speed up delivery. Known for clear collaboration, practical problem solving, and steady improvements to test coverage and feedback loops.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Software Engineer in Test</span><span class="dates">Jan 2024 – Nov 2025</span></div>
+  <div class="sub">Pinecrest Cloud</div>
+  <ul>
+    <li>Designed and maintained CI/CD checks with Docker, GitHub Actions, JUnit, pytest and REST APIs for a service platform used by multiple teams.</li>
+    <li>Improved pipeline reliability by 28% by isolating environment issues and standardizing how test containers were started and cleaned up.</li>
+    <li>Created a layered regression suite in JUnit and pytest that shortened verification time by 40% for common release paths.</li>
+    <li>Reviewed failed runs, traced defects back to the backend, and helped developers resolve build blockers before deployment.</li>
+    <li>Coordinated quality gates across CI/CD stages so the team could ship with faster and more predictable sign-off.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Software Engineer in Test</span><span class="dates">Apr 2023 – Dec 2023</span></div>
+  <div class="sub">Emberlight Tech</div>
+  <ul>
+    <li>Built release checks around REST APIs and GitHub Actions to catch integration issues earlier and keep the main delivery flow stable.</li>
+    <li>Expanded automated coverage for new endpoints, cutting manual verification effort by 35% on recurring builds.</li>
+    <li>Partnered with developers to triage flaky failures and tighten the feedback loop for the backend, improving trust in test results.</li>
+    <li>Documented test scenarios and exit criteria for the team so changes could be reviewed more consistently before release.</li>
+  </ul>
+</div>
+</main>
+</div>
+  </body>
+</html>

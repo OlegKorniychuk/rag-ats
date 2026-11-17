@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rohan Hartmann - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>rohan-hartmann@example.com</li>
+  <li>Berlin, Germany</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Git</li>
+  <li>Jetpack Compose</li>
+  <li>REST APIs</li>
+  <li>Flutter</li>
+  <li>Java</li>
+  <li>Kotlin</li>
+  <li>React Native</li>
+  <li>Swift</li>
+  <li>Agile</li>
+  <li>Dart</li>
+  <li>SwiftUI</li>
+  <li>GraphQL</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>German (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>B.Sc. in Digital Media Engineering</span><span class="dates">2022</span></div>
+  <div class="sub">Northgate Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Software Product Design</span><span class="dates">2020</span></div>
+  <div class="sub">Marlow School of Applied Computing</div>
+</div>
+</aside>
+<main class="main">
+<h1>Rohan Hartmann</h1>
+<div class="headline">Mobile Developer</div>
+<h2>Summary</h2>
+<p>Mobile developer with a track record of building polished consumer apps and improving release quality across small product teams. Experienced in shipping features in Flutter, Java, Kotlin, React Native and Swift, and in collaborating on mobile delivery in Agile environments. Known for turning product requirements into reliable app updates and cleaner user experiences.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Mobile Engineer</span><span class="dates">May 2024 – Jan 2026</span></div>
+  <div class="sub">Alderbank Technologies</div>
+  <ul>
+    <li>Led delivery of mobile enhancements in Agile using Dart and Flutter, shipping 12 planned updates on schedule with the product team.</li>
+    <li>Refactored core flows in Kotlin and Swift to improve startup behavior and cut support tickets by 30%.</li>
+    <li>Designed reusable components in SwiftUI and Flutter for a new app surface, which shortened implementation time for the team by 20%.</li>
+    <li>Partnered with designers and QA to tighten acceptance criteria and keep app behavior consistent across releases.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Mobile Developer</span><span class="dates">Apr 2023 – Mar 2024</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Built customer-facing app features in Flutter and Java, reducing reported defects by 18% through clearer state handling and tighter reviews.</li>
+    <li>Implemented shared mobile flows with Kotlin and React Native, improving handoff speed between teams by 25%.</li>
+    <li>Updated native screens in Swift and refined navigation details so release cycles stayed predictable across 3 product launches.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Atlas Ledger</span></div>
+  <p>Built Atlas Ledger as a reporting project with GraphQL to streamline data requests and keep the app responsive for finance reviews.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

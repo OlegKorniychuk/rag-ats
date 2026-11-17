@@ -1,0 +1,96 @@
+{
+  "personaId": "p076",
+  "language": "en",
+  "name": "Lukas Moreau",
+  "email": "lukas-moreau@example.com",
+  "githubUrl": null,
+  "headline": "Senior Mobile Developer",
+  "location": "Lyon, France",
+  "summary": "Mobile engineer with a track record of building and improving cross-platform products from early prototypes to release-ready applications. Experienced in shipping reliable mobile features, tightening quality checks, and collaborating with product and design partners to keep delivery predictable. Comfortable working across app layers, test suites, and release processes in fast-moving teams.",
+  "roles": [
+    {
+      "employer": "Yarrow Analytics",
+      "title": "Junior Software Engineer",
+      "start": "2020-03",
+      "end": "2020-12",
+      "bullets": [
+        "Built early mobile features in Dart and verified core flows with Jest, helping the team stabilize the first release.",
+        "Worked with Dart to refine screens and app behavior, reducing rework from late-stage changes by 20%.",
+        "Wrote Jest checks for input handling and navigation paths, improving confidence before handoff."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Mobile Engineer",
+      "start": "2021-01",
+      "end": "2023-12",
+      "bullets": [
+        "Delivered customer-facing modules in Dart and React Native, supporting a mobile app used by 15,000 users.",
+        "Implemented shared native integrations in Java and React Native, keeping feature work aligned across platforms.",
+        "Expanded Jest coverage around state changes and error cases, which cut regression issues by 30%.",
+        "Collaborated on mobile releases and code reviews, improving delivery consistency across the team."
+      ]
+    },
+    {
+      "employer": "Copperline Labs",
+      "title": "Mobile Developer",
+      "start": "2023-12",
+      "end": "2024-11",
+      "bullets": [
+        "Shipped new app screens in Flutter and TypeScript, and maintained parallel support for Android and iOS releases.",
+        "Refactored shared mobile flows in React Native and Flutter, improving feature reuse across the product.",
+        "Partnered with engineers and designers to tune onboarding and account setup, lifting completion rates by 18%.",
+        "Resolved platform-specific defects across Android, iOS and TypeScript, shortening support turnaround during peak launches."
+      ]
+    },
+    {
+      "employer": "Birchway Systems",
+      "title": "Senior Mobile Developer",
+      "start": "2025-01",
+      "end": "2026-04",
+      "bullets": [
+        "Led mobile delivery using Kotlin, React Native and iOS, coordinating releases through CI/CD and Git.",
+        "Built release checks with Jest and JUnit, catching integration issues earlier and reducing escaped defects by 25%.",
+        "Improved app startup and update paths in Kotlin and React Native, cutting perceived wait time by 1.2 seconds.",
+        "Mentored 4 engineers on code reviews, branching habits and delivery discipline across CI/CD and Git.",
+        "Partnered with product teams to sequence mobile work, keeping the iOS roadmap aligned with production needs."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pocket Gateway",
+      "description": "Built Pocket Gateway around GraphQL and REST APIs to unify mobile data access and simplify request handling across app flows."
+    }
+  ],
+  "skills": [
+    "Dart",
+    "Jest",
+    "Java",
+    "React Native",
+    "Android",
+    "Flutter",
+    "iOS",
+    "TypeScript",
+    "CI/CD",
+    "Git",
+    "Kotlin",
+    "JUnit",
+    "GraphQL",
+    "REST APIs"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Maison d’Informatique de Valenne",
+      "end": "2019"
+    },
+    {
+      "degree": "Bachelor of Applied Computing",
+      "school": "Northbridge Institute of Technology",
+      "end": "2020"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "French (Native)"],
+  "injection": null
+}

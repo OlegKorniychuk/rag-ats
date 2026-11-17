@@ -1,0 +1,133 @@
+{
+  "label": "full",
+  "date": "2026-11-17T19:51:48.276Z",
+  "db": {
+    "host": "localhost:5432",
+    "database": "rag_ats_seed"
+  },
+  "scoringMode": "full_text",
+  "model": "gpt-5.4-mini",
+  "embeddingModel": "text-embedding-3-small",
+  "pricing": {
+    "inputPerMillion": 0.75,
+    "outputPerMillion": 4.5
+  },
+  "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page.",
+  "maxUsd": 3,
+  "stopped": null,
+  "durationSec": 689,
+  "counts": {
+    "candidates": 100,
+    "parsed": 100,
+    "failedParses": 0,
+    "parsePending": 0,
+    "embedded": 100,
+    "applications": 232,
+    "scored": 221,
+    "failedScores": 11,
+    "scoresPending": 0,
+    "personas": 100
+  },
+  "parseSuccessPct": 100,
+  "parseSuccessTarget": 90,
+  "meetsParseTarget": true,
+  "tokens": {
+    "chatCalls": 374,
+    "chatInput": 626605,
+    "chatOutput": 282552,
+    "embeddingCalls": 97,
+    "embeddingTokens": 74455,
+    "callsBySchema": {
+      "vacancy_criteria": {
+        "calls": 5,
+        "inputTokens": 3254,
+        "outputTokens": 851
+      },
+      "cv_profile": {
+        "calls": 97,
+        "inputTokens": 130679,
+        "outputTokens": 28624
+      },
+      "application_score": {
+        "calls": 272,
+        "inputTokens": 492672,
+        "outputTokens": 253077
+      }
+    }
+  },
+  "costUsd": {
+    "chat": 1.74143775,
+    "embedding": 0.0014891000000000001,
+    "total": 1.74292685
+  },
+  "submitErrors": [],
+  "failedParses": [],
+  "failedScores": [
+    {
+      "applicationId": "e4571132-bf1f-4429-b2d4-85c3a3fe24f3",
+      "candidateId": "3a91b115-4101-4a43-8c4d-3ac47e6a7b50",
+      "vacancy": "Backend Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "08f0bc2a-0bfb-4191-9853-04fd7a915f20",
+      "candidateId": "8801d1b8-2876-406b-ae2c-66ad066d780a",
+      "vacancy": "Backend Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "b6a9d5fe-8304-4a72-afc4-288f71d32f82",
+      "candidateId": "87486a2c-5698-4239-bec1-689b15ed02ca",
+      "vacancy": "Mobile Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "6a6e56d1-3581-4a9f-b7b4-106c2c15ffaf",
+      "candidateId": "ba98ae86-929f-4709-ad9e-8cd21cc2e620",
+      "vacancy": "QA Automation Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "86fa8a40-8c85-4a9f-83c2-fb09d6ed7805",
+      "candidateId": "07405175-935c-40fc-810f-fc7904e3bd85",
+      "vacancy": "Machine Learning Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "0f2ba257-0a6a-4e27-9f98-04499f087617",
+      "candidateId": "3bf6b5ef-e5e5-4349-a911-d7c66f83b5c0",
+      "vacancy": "Data Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "485345d1-7595-4e0f-94ea-913663376741",
+      "candidateId": "3bf6b5ef-e5e5-4349-a911-d7c66f83b5c0",
+      "vacancy": "QA Automation Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "d65f00a7-9e8a-4c58-a908-1c462f222960",
+      "candidateId": "ba5463fe-c6ef-4df8-b81f-f6571e168d19",
+      "vacancy": "Backend Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "1ddcd3be-02b0-4377-89a1-c3cb90630d95",
+      "candidateId": "6c05f7fe-8de9-4f70-a5a7-e4af6d43e660",
+      "vacancy": "Frontend Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "5eac4fea-69fa-4ab8-a642-25caad44e3a6",
+      "candidateId": "6f3e6eec-861d-4803-abde-a4aba8f8faee",
+      "vacancy": "Mobile Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "be2257c6-f094-481c-b4d7-ff5369d3ed0e",
+      "candidateId": "239456dc-9470-4fbd-98d4-3b7cec43c9cf",
+      "vacancy": "Mobile Engineer",
+      "error": "Could not ground the score in the CV"
+    }
+  ]
+}

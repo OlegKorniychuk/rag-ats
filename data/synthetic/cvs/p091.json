@@ -1,0 +1,80 @@
+{
+  "personaId": "p091",
+  "language": "en",
+  "name": "Omar Nair",
+  "email": "omar-nair@example.com",
+  "githubUrl": "https://github.com/synth-omar-nair",
+  "headline": "Platform Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Platform engineer focused on building reliable delivery pipelines, internal tooling and observability for product teams. Experience spans software delivery, containerized services and operational support in fast-moving engineering environments. Known for improving release flow, reducing manual effort and keeping platforms stable under load.",
+  "roles": [
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Junior DevOps Engineer",
+      "start": "2022-10",
+      "end": "2024-05",
+      "bullets": [
+        "Built CI/CD pipelines and improved Git-based release workflows, cutting deployment handoffs by 40%.",
+        "Automated build and release checks across the backend and support services, reducing manual intervention for 3 teams.",
+        "Partnered with engineers to standardize source control practices in Git and keep branch usage consistent across projects."
+      ]
+    },
+    {
+      "employer": "Ostrava Labs",
+      "title": "Software Engineer",
+      "start": "2024-06",
+      "end": "2026-01",
+      "bullets": [
+        "Developed Python services packaged with Docker and wired into CI/CD, supporting faster delivery for internal products.",
+        "Shaped MLOps workflows for model builds and promotion, improving repeatability across 2 environments.",
+        "Reduced failure recovery time by 35% by adding safer runtime checks and clearer deployment steps in Python services.",
+        "Worked with delivery pipelines to keep container images consistent and remove recurring release issues."
+      ]
+    },
+    {
+      "employer": "Alderbank Technologies",
+      "title": "Platform Engineer",
+      "start": "2026-02",
+      "end": null,
+      "bullets": [
+        "Owns Docker-based platform components and GitHub Actions workflows that support daily releases across 5 services.",
+        "Built Python tooling for platform tasks and expanded Prometheus coverage to improve alert quality and reduce noisy incidents by 28%.",
+        "Developed Rust utilities for safer operational workflows and shared them across the team for reuse.",
+        "Tuned monitoring dashboards and alert thresholds in Prometheus so on-call engineers could spot service issues earlier.",
+        "Improved automation around image builds and delivery paths with Docker and GitHub Actions, lowering manual steps for the platform team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rapid Inbox",
+      "description": "Built a reporting view in Grafana to help teams track service health and release trends. The dashboard combined Grafana panels with operational metrics for faster review."
+    }
+  ],
+  "skills": [
+    "Bash",
+    "CI/CD",
+    "Git",
+    "Docker",
+    "MLOps",
+    "Python",
+    "GitHub Actions",
+    "Prometheus",
+    "Rust",
+    "Grafana"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Applied Computing",
+      "school": "Northmere Technical College",
+      "end": "2022"
+    },
+    {
+      "degree": "Certificate in Software Operations",
+      "school": "Veybridge Institute of Technology",
+      "end": "2021"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "Arabic (B2)"],
+  "injection": null
+}

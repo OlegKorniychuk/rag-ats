@@ -1,0 +1,71 @@
+{
+  "personaId": "p023",
+  "language": "en",
+  "name": "Roman Bondarenko",
+  "email": "roman-bondarenko@example.com",
+  "githubUrl": "https://github.com/synth-roman-bondarenko",
+  "headline": "Backend Engineer",
+  "location": "Kyiv, Ukraine",
+  "summary": "Backend engineer with experience building reliable services, improving data handling, and supporting production systems across product teams. Known for working closely with engineers and stakeholders to deliver stable releases, cleaner integrations, and faster issue resolution.",
+  "roles": [
+    {
+      "employer": "Opaline Works",
+      "title": "Software Engineer",
+      "start": "2020-06",
+      "end": "2022-07",
+      "bullets": [
+        "Built internal services in C# and MySQL to support order processing, cutting manual rework by 28%.",
+        "Packaged the service layer for Kubernetes deployments and improved rollout consistency across environments.",
+        "Refined data queries in MySQL and partnered with the team to reduce slow requests during peak usage.",
+        "Added monitoring-friendly error handling in C# that helped narrow incident investigation time by 30%."
+      ]
+    },
+    {
+      "employer": "Mossgate Software",
+      "title": "Senior Backend Developer",
+      "start": "2022-09",
+      "end": "2026-06",
+      "bullets": [
+        "Redesigned backend flows into Microservices and coordinated releases with CI/CD to reduce deployment delays by 40%.",
+        "Implemented messaging paths with Kafka and RabbitMQ, improving event delivery and decoupling high-traffic components.",
+        "Optimized persistence with Hibernate and MySQL, lowering average response time for core endpoints by 22%.",
+        "Strengthened caching and session handling with Redis, which reduced repeat database reads during busy periods.",
+        "Expanded automated coverage with JUnit and improved containerized delivery using Docker across the release pipeline."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Orbit Planner",
+      "description": "Designed the data model for Orbit Planner with MySQL, focusing on reliable scheduling records and simpler reporting for planners."
+    }
+  ],
+  "skills": [
+    "PostgreSQL",
+    "C#",
+    "Kubernetes",
+    "MySQL",
+    "CI/CD",
+    "Docker",
+    "Hibernate",
+    "JUnit",
+    "Kafka",
+    "Microservices",
+    "RabbitMQ",
+    "Redis"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Engineering",
+      "school": "Northbridge Institute of Technology",
+      "end": "2018"
+    },
+    {
+      "degree": "Associate Degree in Applied Computing",
+      "school": "Linden College of Digital Studies",
+      "end": "2016"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Ukrainian (Native)"],
+  "injection": null
+}

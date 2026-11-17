@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dmytro Moroz - резюме</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 11mm 12mm;
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 8.6pt;
+        line-height: 1.32;
+        color: #1c1c1c;
+        margin: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #2b4a3f;
+        padding-bottom: 4px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: #2b4a3f;
+      }
+      .headline {
+        font-size: 10pt;
+        color: #444;
+      }
+      .contact {
+        font-size: 8pt;
+        color: #555;
+        text-align: right;
+      }
+      h2 {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #2b4a3f;
+        margin: 9px 0 3px;
+        border-bottom: 1px solid #c4cfca;
+      }
+      p {
+        margin: 0 0 3px;
+      }
+      .job,
+      .project,
+      .edu {
+        margin-bottom: 5px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      ul {
+        margin: 2px 0 0;
+        padding-left: 14px;
+      }
+      li {
+        margin-bottom: 1px;
+      }
+      ul.skills {
+        list-style: none;
+        padding: 0;
+        columns: 2;
+        column-gap: 16px;
+      }
+      ul.skills li {
+        break-inside: avoid;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+  <div><h1>Dmytro Moroz</h1><div class="headline">Data Engineer та Senior Analytics Engineer</div></div>
+  <div class="contact"><div>dmytro-moroz@example.com</div>
+<div>Київ, Україна</div>
+<div>github.com/synth-dmytro-moroz</div></div>
+</header>
+<h2>Про себе</h2>
+<p>Аналітичний інженер і data engineer із досвідом побудови надійних даних-рішень для продуктових і аналітичних команд. Працюю з хмарними платформами, моделюванням даних і узгодженням архітектури з бізнес-потребами, щоб підвищувати якість, швидкість і прозорість аналітики. Орієнтуюся на практичні впровадження, стабільні процеси та передбачувану доставку даних.</p>
+<h2>Досвід роботи</h2>
+<div class="job">
+  <div class="row"><span>Senior Analytics Engineer</span><span class="dates">груд. 2024 – дотепер</span></div>
+  <div class="sub">Quillstone Systems</div>
+  <ul>
+    <li>Очолив роботу в Agile-команді над аналітичним стеком на AWS, Azure і Snowflake, синхронізуючи пріоритети між продуктом і даними.</li>
+    <li>Проєктував Data modeling у dbt для кількох доменів, щоб стандартизувати метрики та зменшити розбіжності між звітами на 18%.</li>
+    <li>Налагодив Git-процес для спільної розробки та перевірок змін, завдяки чому кількість конфліктів під час випусків знизилася на 40%.</li>
+    <li>Інтегрував подієві потоки через Kafka і підтримував аналітику в R, що допомогло скоротити час підготовки дашбордів до 1 дня.</li>
+    <li>Координував впровадження нових схем у Snowflake та AWS, забезпечивши стабільну роботу для 6 команд-споживачів.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Data Engineer</span><span class="dates">жовт. 2021 – груд. 2024</span></div>
+  <div class="sub">Ashgrove Digital</div>
+  <ul>
+    <li>Побудував потоки даних у GCP та PostgreSQL, щоб об’єднати розрізнені джерела в одну надійну основу для звітності.</li>
+    <li>Узгоджував System design із вимогами аналітики та команди продукту, завдяки чому скоротив кількість ручних виправлень на 32%.</li>
+    <li>Оптимізував структуру таблиць у PostgreSQL і контроль якості даних у GCP, що зменшило затримки оновлення наборів даних на 24%.</li>
+    <li>Підтримував аналітичні обчислення в R та документував зміни для суміжних команд, підвищивши відтворюваність ключових метрик.</li>
+  </ul>
+</div>
+<h2>Навички</h2>
+<ul class="skills">
+  <li>GCP</li>
+  <li>PostgreSQL</li>
+  <li>R</li>
+  <li>System design</li>
+  <li>Agile</li>
+  <li>AWS</li>
+  <li>Azure</li>
+  <li>Data modeling</li>
+  <li>dbt</li>
+  <li>Git</li>
+  <li>Kafka</li>
+  <li>Snowflake</li>
+</ul>
+<h2>Освіта</h2>
+<div class="edu">
+  <div class="row"><span>Бакалавр прикладної інформатики</span><span class="dates">2020</span></div>
+  <div class="sub">Політехнічна школа Дніпровського узвишшя</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Магістр інформаційної аналітики</span><span class="dates">2021</span></div>
+  <div class="sub">Інститут цифрових систем Левобережжя</div>
+</div>
+<h2>Мови</h2>
+<ul>
+  <li>Українська (рідна)</li>
+  <li>Англійська (B2)</li>
+</ul>
+  </body>
+</html>

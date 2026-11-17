@@ -1,0 +1,86 @@
+{
+  "personaId": "p056",
+  "language": "en",
+  "name": "Nadia Alvarez",
+  "email": "nadia-alvarez@example.com",
+  "githubUrl": null,
+  "headline": "Security Engineer",
+  "location": "Barcelona, Spain",
+  "summary": "Security engineer with experience across application and cloud security, from early-stage access control reviews to senior work on detection, hardening, and assessment programs. Known for partnering with engineering teams to improve secure delivery, reduce exposure, and turn findings into practical fixes. Comfortable working in fast-moving environments with clear documentation and measurable risk reduction.",
+  "roles": [
+    {
+      "employer": "Yarrow Analytics",
+      "title": "Junior Security Engineer",
+      "start": "2021-02",
+      "end": "2023-06",
+      "bullets": [
+        "Supported secure onboarding and account reviews in Agile delivery cycles, helping teams tighten access decisions around Azure and OAuth.",
+        "Reviewed application changes and raised findings early, contributing to 18 fewer high-risk issues before release.",
+        "Helped standardize security checks for new features and coordinated follow-up with engineers and analysts.",
+        "Tracked remediation progress across multiple workstreams and kept security tasks moving to closure."
+      ]
+    },
+    {
+      "employer": "Saltmarsh Digital",
+      "title": "Application Security Engineer",
+      "start": "2023-08",
+      "end": "2025-02",
+      "bullets": [
+        "Built and maintained application security checks for C++ services, using Git to manage review feedback and reduce rework.",
+        "Partnered with developers in Agile planning sessions to embed secure coding guidance into the release process.",
+        "Investigated code changes and dependency updates, identifying issues that cut repeat findings by 32%.",
+        "Prepared concise remediation notes and verified fixes before sign-off on sensitive releases."
+      ]
+    },
+    {
+      "employer": "Vantage Reed",
+      "title": "Senior Security Engineer",
+      "start": "2025-02",
+      "end": null,
+      "bullets": [
+        "Designed cloud security controls across AWS, Azure and GCP, aligning guardrails with IAM requirements and operational needs.",
+        "Developed detection content and response workflows with SIEM, Linux and CI/CD signals, improving alert triage time by 40%.",
+        "Performed penetration testing and Threat modeling for new services, using OWASP guidance to prioritize the highest-risk paths.",
+        "Automated security checks in Go for deployment pipelines, reducing manual review effort by 25%.",
+        "Led hardening work for hosted workloads, coordinating findings across engineers and platform owners to close critical gaps."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Paper Library",
+      "description": "Created a document-handling platform on AWS with IAM protections and regular Penetration testing to validate access controls and reduce exposed paths."
+    }
+  ],
+  "skills": [
+    "Agile",
+    "Azure",
+    "OAuth",
+    "C++",
+    "Git",
+    "AWS",
+    "CI/CD",
+    "GCP",
+    "Go",
+    "IAM",
+    "Linux",
+    "OWASP",
+    "Penetration testing",
+    "SIEM",
+    "Threat modeling"
+  ],
+  "education": [
+    {
+      "degree": "BSc in Information Security",
+      "school": "Northbridge Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Diploma in Network Defense",
+      "school": "Cedar Vale Technical College",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C1)", "Spanish (C2)"],
+  "injection": null
+}

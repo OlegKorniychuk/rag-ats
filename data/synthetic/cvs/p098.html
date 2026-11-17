@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Omar Banerjee - CV</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        /* The sidebar colour must repeat on every printed page. */
+        background: linear-gradient(to right, #263445 64mm, #ffffff 64mm);
+      }
+      body {
+        font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.4;
+        color: #222;
+        margin: 0;
+      }
+      .page {
+        display: flex;
+      }
+      .side {
+        width: 64mm;
+        flex: none;
+        color: #eef1f4;
+        padding: 14mm 8mm;
+        overflow-wrap: anywhere;
+      }
+      .main {
+        flex: 1;
+        padding: 14mm 10mm;
+        min-width: 0;
+      }
+      .side h2 {
+        font-size: 10pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #6b7c90;
+        padding-bottom: 2px;
+        margin: 15px 0 6px;
+      }
+      .side h2:first-child {
+        margin-top: 0;
+      }
+      .side ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side li {
+        margin-bottom: 3px;
+      }
+      .side .small {
+        font-size: 8.8pt;
+      }
+      h1 {
+        font-size: 23pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+      .headline {
+        font-size: 12pt;
+        color: #444;
+        margin: 3px 0 8px;
+      }
+      .main h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #263445;
+        padding-bottom: 2px;
+        margin: 14px 0 7px;
+        color: #263445;
+      }
+      p {
+        margin: 0 0 4px;
+      }
+      .job,
+      .project {
+        margin-bottom: 8px;
+        break-inside: avoid-page;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-weight: bold;
+      }
+      .dates {
+        font-weight: normal;
+        color: #555;
+        white-space: nowrap;
+      }
+      .sub {
+        color: #555;
+      }
+      .main ul {
+        margin: 3px 0 0;
+        padding-left: 17px;
+      }
+      .main li {
+        margin-bottom: 2px;
+      }
+      .edu {
+        margin-bottom: 6px;
+      }
+      .side .sub,
+      .side .dates {
+        color: #b6c3d1;
+      }
+      .note {
+        font-size: 6pt;
+        color: #aaaaaa;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+<aside class="side">
+<h2>Contact</h2>
+<ul>
+  <li>omar-banerjee@example.com</li>
+  <li>Bengaluru, India</li>
+</ul>
+<h2>Skills</h2>
+<ul>
+  <li>Azure</li>
+  <li>C++</li>
+  <li>Go</li>
+  <li>C</li>
+  <li>Git</li>
+  <li>Penetration testing</li>
+  <li>Agile</li>
+  <li>CI/CD</li>
+  <li>Cryptography</li>
+  <li>Cucumber</li>
+  <li>Cypress</li>
+  <li>Docker</li>
+  <li>GitHub Actions</li>
+  <li>IAM</li>
+  <li>Linux</li>
+  <li>Performance testing</li>
+  <li>Postman</li>
+  <li>pytest</li>
+  <li>Rust</li>
+  <li>Test automation</li>
+  <li>Threat modeling</li>
+  <li>AWS</li>
+  <li>Java</li>
+  <li>OWASP</li>
+</ul>
+<h2>Languages</h2>
+<ul>
+  <li>English (C1)</li>
+  <li>Hindi (B2)</li>
+  <li>Bengali (B2)</li>
+</ul>
+<h2>Education</h2>
+<div class="edu">
+  <div class="row"><span>Bachelor of Engineering in Computer Science</span><span class="dates">2019</span></div>
+  <div class="sub">Mirevale Institute of Technology</div>
+</div>
+<div class="edu">
+  <div class="row"><span>Diploma in Secure Software Practice</span><span class="dates">2018</span></div>
+  <div class="sub">Asterfield College of Applied Computing</div>
+</div>
+</aside>
+<main class="main">
+<h1>Omar Banerjee</h1>
+<div class="headline">Security Engineer</div>
+<h2>Summary</h2>
+<p>Security engineer with a background in software development, application security, and automation across product teams. Experienced in building reliable systems, strengthening access controls, and improving testing and delivery workflows. Known for practical risk reduction, clear collaboration, and disciplined engineering execution.</p>
+<h2>Experience</h2>
+<div class="job">
+  <div class="row"><span>Senior Security Engineer</span><span class="dates">Mar 2023 – Aug 2025</span></div>
+  <div class="sub">Copperline Labs</div>
+  <ul>
+    <li>Led Agile security work across CI/CD pipelines, coordinating reviews for Go and Rust services in a fast-moving release cycle.</li>
+    <li>Designed Threat modeling sessions for new features and paired them with Cryptography guidance to lower design risk early.</li>
+    <li>Built Test automation with Cucumber, Cypress and pytest, increasing coverage for critical paths by 40%.</li>
+    <li>Strengthened IAM and Linux hardening for production environments while using Docker and GitHub Actions to keep deployments repeatable.</li>
+    <li>Ran Performance testing and Postman checks for APIs, then tuned bottlenecks that improved median response time by 25%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Application Security Engineer</span><span class="dates">Mar 2022 – Mar 2023</span></div>
+  <div class="sub">Birchway Systems</div>
+  <ul>
+    <li>Performed Penetration testing against C and C++ services to uncover weaknesses before customer rollout.</li>
+    <li>Reviewed risky code paths in C and C++ with Git-based change control, helping the team prioritize the highest-impact fixes.</li>
+    <li>Documented findings and retested remediations, which reduced reopened issues by 30%.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Security Engineer</span><span class="dates">Feb 2021 – Feb 2022</span></div>
+  <div class="sub">Northgrove Networks</div>
+  <ul>
+    <li>Hardened core services in C and Go by reviewing source changes and closing security gaps before release.</li>
+    <li>Used Git to manage remediation branches and keep fixes aligned across three active product lines.</li>
+    <li>Investigated suspicious behavior in network-facing code and reduced repeat findings by 22% through targeted controls.</li>
+  </ul>
+</div>
+<div class="job">
+  <div class="row"><span>Junior Software Engineer</span><span class="dates">Mar 2020 – Dec 2020</span></div>
+  <div class="sub">Velvet Circuit</div>
+  <ul>
+    <li>Built backend components in C++ and Go on Azure, delivering new features for internal tooling with fewer manual handoffs.</li>
+    <li>Improved service reliability by tracing defects in C and Go, which cut recurring incident volume by 18%.</li>
+    <li>Supported releases in Azure by coordinating code changes and validating fixes across shared components.</li>
+  </ul>
+</div>
+<h2>Projects</h2>
+<div class="project">
+  <div class="row"><span>Echo Atlas</span></div>
+  <p>Built a cloud integration prototype on AWS to collect and route operational data for a small internal dashboard.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Cobalt Garden</span></div>
+  <p>Created a Java service for scheduling task flows and simplifying internal coordination between teams.</p>
+</div>
+<div class="project">
+  <div class="row"><span>Rapid Garden</span></div>
+  <p>Developed a Postman collection to standardize request checks and speed up manual validation for release support.</p>
+</div>
+</main>
+</div>
+  </body>
+</html>

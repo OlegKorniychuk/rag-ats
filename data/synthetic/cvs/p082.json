@@ -1,0 +1,88 @@
+{
+  "personaId": "p082",
+  "language": "en",
+  "name": "Pavel Moreau",
+  "email": "pavel-moreau@example.com",
+  "githubUrl": "https://github.com/synth-pavel-moreau",
+  "headline": "Senior Mobile Engineer",
+  "location": "Montreal, Canada",
+  "summary": "Mobile engineer focused on building and improving customer-facing apps across product teams. Experienced in delivering reliable features, tightening release processes, and working closely with design and backend partners. Strong background in cross-platform mobile work, code quality, and shipping iterative improvements.",
+  "roles": [
+    {
+      "employer": "Willowmere Software",
+      "title": "Junior Software Engineer",
+      "start": "2021-01",
+      "end": "2021-12",
+      "bullets": [
+        "Built early app features in Java and Kotlin, and used React Native to keep shared mobile flows consistent.",
+        "Wrote Jest checks for new screens and reduced regressions in the junior team by 30%.",
+        "Fixed UI defects and polished onboarding behavior in React Native, improving completion rates by 12%."
+      ]
+    },
+    {
+      "employer": "Copperline Labs",
+      "title": "Software Engineer",
+      "start": "2021-12",
+      "end": "2023-03",
+      "bullets": [
+        "Shipped mobile features in Dart and Java, coordinating with product owners on weekly release goals.",
+        "Implemented responsive interfaces with Jetpack Compose and Swift, cutting visual defects reported after release by 25%.",
+        "Improved local validation and code review habits across the team, raising merge quality for the main app."
+      ]
+    },
+    {
+      "employer": "Cinder Peak",
+      "title": "Mobile Engineer",
+      "start": "2023-03",
+      "end": "2024-11",
+      "bullets": [
+        "Delivered app updates in Dart and Java while maintaining shared business logic across mobile releases.",
+        "Refined customer-facing flows in Swift and Dart, helping reduce support tickets by 18%.",
+        "Collaborated with designers and backend teams to stabilize account screens and speed up delivery of small enhancements."
+      ]
+    },
+    {
+      "employer": "Ashgrove Digital",
+      "title": "Senior Mobile Engineer",
+      "start": "2025-01",
+      "end": "2026-07",
+      "bullets": [
+        "Led release planning and delivery using CI/CD and Git, helping the team ship 40% more frequently.",
+        "Built new mobile experiences in Flutter and SwiftUI, and connected app screens to GraphQL endpoints and REST APIs.",
+        "Maintained shared modules in Java and Swift while improving reliability through JUnit checks on critical paths.",
+        "Reviewed merge requests and coordinated delivery across time zones, keeping a 6-person mobile team aligned on priorities."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    "Java",
+    "Jest",
+    "Kotlin",
+    "React Native",
+    "Dart",
+    "Jetpack Compose",
+    "Swift",
+    "CI/CD",
+    "Flutter",
+    "Git",
+    "GraphQL",
+    "JUnit",
+    "REST APIs",
+    "SwiftUI"
+  ],
+  "education": [
+    {
+      "degree": "Diploma in Software Development",
+      "school": "Riverton Institute of Technology",
+      "end": "2020"
+    },
+    {
+      "degree": "Higher Certificate in Computing",
+      "school": "Northbridge College of Applied Studies",
+      "end": "2018"
+    }
+  ],
+  "spokenLanguages": ["English (C2)", "French (B2)"],
+  "injection": null
+}

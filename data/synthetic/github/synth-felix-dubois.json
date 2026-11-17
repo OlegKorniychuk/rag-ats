@@ -1,0 +1,71 @@
+{
+  "user": {
+    "login": "synth-felix-dubois",
+    "html_url": "https://github.com/synth-felix-dubois",
+    "bio": "Builds reliable platform foundations for teams that move quickly."
+  },
+  "repos": [
+    {
+      "name": "cluster-guardrails",
+      "html_url": "https://github.com/synth-felix-dubois/cluster-guardrails",
+      "description": "Opinionated controls for safe cluster setup and day-to-day changes.",
+      "language": "Bash",
+      "stargazers_count": 53,
+      "topics": [
+        "kubernetes",
+        "terraform",
+        "linux",
+        "iam",
+        "platform",
+        "automation"
+      ],
+      "pushed_at": "2026-09-12T00:00:00.000Z",
+      "created_at": "2025-06-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "fleet-provisioning-kit",
+      "html_url": "https://github.com/synth-felix-dubois/fleet-provisioning-kit",
+      "description": "Reusable provisioning flows for mixed cloud environments.",
+      "language": "Bash",
+      "stargazers_count": 43,
+      "topics": [
+        "terraform",
+        "aws",
+        "azure",
+        "ansible",
+        "linux",
+        "provisioning"
+      ],
+      "pushed_at": "2026-07-18T00:00:00.000Z",
+      "created_at": "2024-02-01T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    },
+    {
+      "name": "signal-room-dashboard",
+      "html_url": "https://github.com/synth-felix-dubois/signal-room-dashboard",
+      "description": "A small operations dashboard for reading health signals at a glance.",
+      "language": "Bash",
+      "stargazers_count": 34,
+      "topics": [
+        "prometheus",
+        "grafana",
+        "docker",
+        "github-actions",
+        "monitoring",
+        "linux"
+      ],
+      "pushed_at": "2026-05-08T00:00:00.000Z",
+      "created_at": "2022-10-02T00:00:00.000Z",
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "readmes": {
+    "cluster-guardrails": "# Cluster Guardrails\n\nCluster Guardrails helps teams set up a predictable base for shared environments. It focuses on repeatable cluster checks, access rules, and drift-aware housekeeping so operators can keep changes small and easy to review.\n\n## Features\n- Checks common cluster prerequisites before changes are applied\n- Verifies Terraform plans against a small set of safety rules\n- Keeps IAM notes close to the scripts that use them\n- Runs cleanly on Linux hosts with simple shell entry points\n\n## Getting started\n1. Review the sample settings and adjust the environment names.\n2. Set your Terraform values and cluster identifiers.\n3. Run the main script from a Linux shell and inspect the output before making changes.\n\nThe project is intentionally small and meant for personal use or internal experiments.",
+    "fleet-provisioning-kit": "# Fleet Provisioning Kit\n\nFleet Provisioning Kit collects a few repeatable scripts for preparing new environments from a shared input file. It is aimed at platform work where the same layout must be created more than once with fewer surprises.\n\n## Features\n- Generates consistent input for Terraform runs\n- Organizes environment-specific steps for AWS and Azure\n- Includes Ansible-friendly file layout for follow-up tasks\n- Uses Bash wrappers to keep the workflow readable\n\n## Getting started\n1. Copy the example configuration and rename it for your environment.\n2. Fill in the Terraform values, target location, and account details.\n3. Run the entry script from Bash and follow the printed steps.\n\nThis repository is a compact toolkit, not a full product.",
+    "signal-room-dashboard": "# Signal Room Dashboard\n\nSignal Room Dashboard gathers a few operational signals into one simple view for personal or team use. It is designed to make routine health checks quicker without adding heavy setup.\n\n## Features\n- Prepares metric queries for Prometheus-backed checks\n- Creates a lightweight view layout for Grafana dashboards\n- Packages a repeatable local run with Docker\n- Includes GitHub Actions steps for scheduled refresh jobs\n\n## Getting started\n1. Edit the sample values for hosts, labels, and refresh timing.\n2. Run the Bash script to generate the local files.\n3. Open the dashboard assets and adjust the panels as needed.\n\nUse it as a starter for operational views and small status pages."
+  }
+}
