@@ -47,6 +47,12 @@ export async function writeJson(path: string, data: unknown): Promise<void> {
   await writeFile(path, await format(JSON.stringify(data), { parser: 'json' }));
 }
 
+/** Markdown written through prettier too, for the same reason. */
+export async function writeMarkdown(path: string, text: string): Promise<void> {
+  await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, await format(text, { parser: 'markdown' }));
+}
+
 export const loadTaxonomy = (dir: string): Promise<Taxonomy> =>
   readJson<Taxonomy>(join(dir, 'taxonomy.json'));
 

@@ -150,7 +150,7 @@ describe('synth spot-check', () => {
     }
     expect(md.match(/^PDF: \.\.\/pdf\/p\d{3}\.pdf$/gm)).toHaveLength(30);
     // The vacancy text is there in full.
-    expect(md).toMatch(/Requirements\n- /);
+    expect(md).toMatch(/Requirements\n\n?- /);
   });
 
   it('refuses to overwrite filled labels unless --force', async () => {
@@ -250,11 +250,14 @@ describe('synth spot-check', () => {
     await expect(runSpotCheck(['--score'], dir)).rejects.toThrow(/pair\(s\) 3/);
   });
 
-  it('needs exactly one of --sample or --score', async () => {
+  it('needs exactly one of --sample, --score or --ui', async () => {
     await expect(runSpotCheck([], dir)).rejects.toThrow(UsageError);
     await expect(
       runSpotCheck(['--score', '--sample', '5'], dir),
     ).rejects.toThrow(UsageError);
+    await expect(runSpotCheck(['--score', '--ui'], dir)).rejects.toThrow(
+      UsageError,
+    );
     await expect(runSpotCheck(['--sample', 'abc'], dir)).rejects.toThrow(
       /--sample/,
     );

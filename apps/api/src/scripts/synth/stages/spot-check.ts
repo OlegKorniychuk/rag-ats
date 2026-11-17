@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseNumber, UsageError } from '../../shared/cli.js';
 import type { CvContent } from '../cv-content.js';
@@ -9,6 +9,7 @@ import {
   loadVacancies,
   readJson,
   writeJson,
+  writeMarkdown,
 } from '../io.js';
 import {
   computeAgreement,
@@ -19,64 +20,38 @@ import {
   renderSampleMarkdown,
   sampleStratified,
   toSampleFile,
+  type Agreement,
   type GithubFixtureView,
   type LabelEntry,
   type SampleEntry,
+  type SampleFile,
 } from '../spot-check.js';
 import type { GroundTruth, PersonaSpec } from '../types.js';
 
 export const SPOT_CHECK_USAGE = `synth spot-check --sample 30 [--seed N] [--force]
 synth spot-check --score
+synth spot-check --ui [--port 4321]
   --sample writes spot-check/sample.md (blind pairs to read), labels.json (to fill
   in: strong / partial / weak per pair) and sample.json. Needs ground-truth.json
   and cvs/<id>.json. Refuses to overwrite labels that are already filled in
   unless --force.
   --score compares labels.json with the rule's bands: exact agreement, Cohen's
   kappa (plain and quadratic), confusion matrix, disagreements. Writes
-  agreement.md and agreement.json. Exit code 2 while labels are missing.`;
+  agreement.md and agreement.json. Exit code 2 while labels are missing.
+  --ui serves a local page (127.0.0.1) to label the existing sample: vacancy
+  and CV side by side, each band and note saved straight to labels.json, and
+  the score once every pair has a band.`;
 
-async function runSample(
+/** The readable material for each sampled pair: vacancy, CV and GitHub fixture. */
+export async function loadSampleEntries(
   dir: string,
-  size: number,
-  seed: number,
-  force: boolean,
-): Promise<void> {
-  const out = join(dir, 'spot-check');
-  const labelsPath = join(out, 'labels.json');
-  if (!force && (await exists(labelsPath))) {
-    const existing = await readJson<LabelEntry[]>(labelsPath);
-    if (hasLabels(existing)) {
-      throw new UsageError(
-        `${labelsPath} already holds labels. Pass --force to replace them with a new sample.`,
-      );
-    }
-  }
-
-  const truth = await readJson<GroundTruth>(join(dir, 'ground-truth.json'));
+  sampleFile: SampleFile,
+): Promise<SampleEntry[]> {
   const vacancies = await loadVacancies(dir);
   const { personas } = await loadPersonas(dir);
   const personaById = new Map<string, PersonaSpec>(
     personas.map((p) => [p.id, p]),
   );
-
-  // Only pairs whose CV exists can be read by a human.
-  const withCv = new Set<string>();
-  for (const p of personas) {
-    if (await exists(join(dir, 'cvs', `${p.id}.json`))) withCv.add(p.id);
-  }
-  const candidates = truth.pairs.filter((p) => withCv.has(p.personaId));
-  if (candidates.length === 0) {
-    throw new UsageError(
-      `No ground-truth pair has a cvs/<id>.json in ${dir}. Run "synth cvs" first.`,
-    );
-  }
-
-  const sample = sampleStratified(candidates, size, seed);
-  if (sample.length < size) {
-    console.warn(`Warning: only ${sample.length} of ${size} pairs available`);
-  }
-  const sampleFile = toSampleFile(sample, seed);
-
   const entries: SampleEntry[] = [];
   for (const p of sampleFile.pairs) {
     const vacancy = vacancies.find((v) => v.id === p.vacancyId);
@@ -100,8 +75,54 @@ async function runSample(
     });
   }
 
+  return entries;
+}
+
+async function runSample(
+  dir: string,
+  size: number,
+  seed: number,
+  force: boolean,
+): Promise<void> {
+  const out = join(dir, 'spot-check');
+  const labelsPath = join(out, 'labels.json');
+  if (!force && (await exists(labelsPath))) {
+    const existing = await readJson<LabelEntry[]>(labelsPath);
+    if (hasLabels(existing)) {
+      throw new UsageError(
+        `${labelsPath} already holds labels. Pass --force to replace them with a new sample.`,
+      );
+    }
+  }
+
+  const truth = await readJson<GroundTruth>(join(dir, 'ground-truth.json'));
+  const { personas } = await loadPersonas(dir);
+
+  // Only pairs whose CV exists can be read by a human.
+  const withCv = new Set<string>();
+  for (const p of personas) {
+    if (await exists(join(dir, 'cvs', `${p.id}.json`))) withCv.add(p.id);
+  }
+  const candidates = truth.pairs.filter((p) => withCv.has(p.personaId));
+  if (candidates.length === 0) {
+    throw new UsageError(
+      `No ground-truth pair has a cvs/<id>.json in ${dir}. Run "synth cvs" first.`,
+    );
+  }
+
+  const sample = sampleStratified(candidates, size, seed);
+  if (sample.length < size) {
+    console.warn(`Warning: only ${sample.length} of ${size} pairs available`);
+  }
+  const sampleFile = toSampleFile(sample, seed);
+
+  const entries = await loadSampleEntries(dir, sampleFile);
+
   await mkdir(out, { recursive: true });
-  await writeFile(join(out, 'sample.md'), renderSampleMarkdown(entries, seed));
+  await writeMarkdown(
+    join(out, 'sample.md'),
+    renderSampleMarkdown(entries, seed),
+  );
   await writeJson(join(out, 'sample.json'), sampleFile);
   await writeJson(labelsPath, emptyLabels(sampleFile));
   console.log(
@@ -110,7 +131,11 @@ async function runSample(
   );
 }
 
-async function runScore(dir: string): Promise<void> {
+/**
+ * Compares labels.json with the rule's bands and writes agreement.md and
+ * agreement.json. A UsageError while labels.json is missing or incomplete.
+ */
+export async function scoreLabels(dir: string): Promise<Agreement> {
   const out = join(dir, 'spot-check');
   const labelsPath = join(out, 'labels.json');
   if (!(await exists(labelsPath))) {
@@ -129,16 +154,20 @@ async function runScore(dir: string): Promise<void> {
   const truth = await readJson<GroundTruth>(join(dir, 'ground-truth.json'));
   const vacancies = await loadVacancies(dir);
   const agreement = computeAgreement(labels, truth.pairs, vacancies);
-  await writeFile(
+  await writeMarkdown(
     join(out, 'agreement.md'),
     renderAgreementMarkdown(agreement),
   );
   await writeJson(join(out, 'agreement.json'), agreement);
+  return agreement;
+}
 
+async function runScore(dir: string): Promise<void> {
+  const agreement = await scoreLabels(dir);
   console.log(
     `${agreement.pairs} pairs: exact agreement ${(100 * agreement.exactAgreement).toFixed(1)}%, ` +
       `kappa ${agreement.kappa.toFixed(3)}, quadratic kappa ${agreement.quadraticKappa.toFixed(3)}, ` +
-      `${agreement.disagreements.length} disagreement(s). See ${join(out, 'agreement.md')}`,
+      `${agreement.disagreements.length} disagreement(s). See ${join(dir, 'spot-check', 'agreement.md')}`,
   );
 }
 
@@ -150,14 +179,21 @@ export async function runSpotCheck(argv: string[], dir: string): Promise<void> {
       sample: { type: 'string' },
       seed: { type: 'string' },
       score: { type: 'boolean', default: false },
+      ui: { type: 'boolean', default: false },
+      port: { type: 'string' },
       force: { type: 'boolean', default: false },
     },
     strict: true,
   });
-  if (values.score === (values.sample !== undefined)) {
-    throw new UsageError('Pass exactly one of --sample <n> or --score');
+  const modes = [values.sample !== undefined, values.score, values.ui];
+  if (modes.filter(Boolean).length !== 1) {
+    throw new UsageError('Pass exactly one of --sample <n>, --score or --ui');
   }
   if (values.score) return runScore(dir);
+  if (values.ui) {
+    const { runSpotCheckUi } = await import('./spot-check-ui.js');
+    return runSpotCheckUi(dir, parseNumber('port', values.port, 4321, true));
+  }
   await runSample(
     dir,
     parseNumber('sample', values.sample, 30, true),
