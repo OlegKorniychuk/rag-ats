@@ -1,0 +1,212 @@
+[
+  {
+    "pair": 1,
+    "vacancyId": "frontend",
+    "personaId": "p051",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 2,
+    "vacancyId": "backend-java",
+    "personaId": "p048",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 3,
+    "vacancyId": "ml",
+    "personaId": "p082",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 4,
+    "vacancyId": "platform-devops",
+    "personaId": "p043",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 5,
+    "vacancyId": "ml",
+    "personaId": "p040",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 6,
+    "vacancyId": "data-engineering",
+    "personaId": "p025",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 7,
+    "vacancyId": "full-stack",
+    "personaId": "p044",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 8,
+    "vacancyId": "mobile",
+    "personaId": "p050",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 9,
+    "vacancyId": "security",
+    "personaId": "p064",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 10,
+    "vacancyId": "platform-devops",
+    "personaId": "p060",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 11,
+    "vacancyId": "mobile",
+    "personaId": "p013",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 12,
+    "vacancyId": "data-engineering",
+    "personaId": "p055",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 13,
+    "vacancyId": "mobile",
+    "personaId": "p052",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 14,
+    "vacancyId": "security",
+    "personaId": "p020",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 15,
+    "vacancyId": "ml",
+    "personaId": "p001",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 16,
+    "vacancyId": "qa-automation",
+    "personaId": "p098",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 17,
+    "vacancyId": "full-stack",
+    "personaId": "p034",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 18,
+    "vacancyId": "platform-devops",
+    "personaId": "p039",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 19,
+    "vacancyId": "full-stack",
+    "personaId": "p095",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 20,
+    "vacancyId": "backend-node",
+    "personaId": "p026",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 21,
+    "vacancyId": "frontend",
+    "personaId": "p046",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 22,
+    "vacancyId": "security",
+    "personaId": "p099",
+    "band": "partial",
+    "note": ""
+  },
+  {
+    "pair": 23,
+    "vacancyId": "backend-node",
+    "personaId": "p005",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 24,
+    "vacancyId": "data-engineering",
+    "personaId": "p068",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 25,
+    "vacancyId": "backend-java",
+    "personaId": "p070",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 26,
+    "vacancyId": "qa-automation",
+    "personaId": "p021",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 27,
+    "vacancyId": "qa-automation",
+    "personaId": "p014",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 28,
+    "vacancyId": "frontend",
+    "personaId": "p033",
+    "band": "weak",
+    "note": ""
+  },
+  {
+    "pair": 29,
+    "vacancyId": "backend-java",
+    "personaId": "p022",
+    "band": "strong",
+    "note": ""
+  },
+  {
+    "pair": 30,
+    "vacancyId": "backend-node",
+    "personaId": "p007",
+    "band": "weak",
+    "note": ""
+  }
+]

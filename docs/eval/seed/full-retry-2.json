@@ -1,0 +1,70 @@
+{
+  "label": "full-retry-2",
+  "date": "2026-11-17T20:10:14.600Z",
+  "db": {
+    "host": "localhost:5432",
+    "database": "rag_ats_seed"
+  },
+  "scoringMode": "full_text",
+  "model": "gpt-5.4-mini",
+  "embeddingModel": "text-embedding-3-small",
+  "pricing": {
+    "inputPerMillion": 0.75,
+    "outputPerMillion": 4.5
+  },
+  "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page.",
+  "maxUsd": 0.2,
+  "stopped": null,
+  "durationSec": 25,
+  "retriedScores": 4,
+  "counts": {
+    "candidates": 100,
+    "parsed": 100,
+    "failedParses": 0,
+    "parsePending": 0,
+    "embedded": 100,
+    "applications": 232,
+    "scored": 230,
+    "failedScores": 2,
+    "scoresPending": 0,
+    "personas": 100
+  },
+  "parseSuccessPct": 100,
+  "parseSuccessTarget": 90,
+  "meetsParseTarget": true,
+  "tokens": {
+    "chatCalls": 6,
+    "chatInput": 10085,
+    "chatOutput": 4332,
+    "embeddingCalls": 0,
+    "embeddingTokens": 0,
+    "callsBySchema": {
+      "application_score": {
+        "calls": 6,
+        "inputTokens": 10085,
+        "outputTokens": 4332
+      }
+    }
+  },
+  "costUsd": {
+    "chat": 0.02705775,
+    "embedding": 0,
+    "total": 0.02705775
+  },
+  "submitErrors": [],
+  "failedParses": [],
+  "failedScores": [
+    {
+      "applicationId": "485345d1-7595-4e0f-94ea-913663376741",
+      "candidateId": "3bf6b5ef-e5e5-4349-a911-d7c66f83b5c0",
+      "vacancy": "QA Automation Engineer",
+      "error": "Could not ground the score in the CV"
+    },
+    {
+      "applicationId": "be2257c6-f094-481c-b4d7-ff5369d3ed0e",
+      "candidateId": "239456dc-9470-4fbd-98d4-3b7cec43c9cf",
+      "vacancy": "Mobile Engineer",
+      "error": "Could not ground the score in the CV"
+    }
+  ]
+}
