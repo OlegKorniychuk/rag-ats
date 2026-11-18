@@ -126,6 +126,7 @@ describe('ApplicationScorer', () => {
     });
 
     expect(capture.bodies).toHaveLength(1);
+    expect(result.attempts).toBe(1);
     expect(result.rationale).toBe('Strong backend fit.');
     expect(result.criteria).toEqual([
       {
@@ -210,6 +211,7 @@ describe('ApplicationScorer', () => {
     });
 
     expect(capture.bodies).toHaveLength(2);
+    expect(result.attempts).toBe(2);
     const [first, second] = capture.bodies;
     expect(userOf(first)).not.toContain('<feedback>');
     expect(userOf(second)).toContain('<feedback>');
@@ -481,6 +483,7 @@ describe('ApplicationScorer.scoreRag', () => {
     });
 
     expect(capture.bodies).toHaveLength(1);
+    expect(result.attempts).toBe(1);
     const body = capture.bodies[0];
     expect(messageContent(body, 'system')).toMatch(/place to look first/);
     const user = userOf(body);
@@ -542,6 +545,7 @@ describe('ApplicationScorer.scoreRag', () => {
     });
 
     expect(capture.bodies).toHaveLength(2);
+    expect(result.attempts).toBe(2);
     const [first, second] = capture.bodies;
     expect(userOf(first)).not.toContain('<feedback>');
     expect(userOf(second)).toContain('<feedback>');

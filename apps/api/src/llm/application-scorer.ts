@@ -88,6 +88,8 @@ export interface ApplicationScoreResult {
   rationale: string;
   overall: number;
   usage: { inputTokens: number; outputTokens: number; model: string };
+  /** Model calls the successful result took: 1, or 2 after a grounding retry. */
+  attempts: 1 | 2;
 }
 
 function clampScore(score: number): number {
@@ -157,7 +159,7 @@ export class ApplicationScorer {
     const usage = { inputTokens: 0, outputTokens: 0, model: this.llm.model };
     let feedback: string[] | null = null;
 
-    for (let attempt = 1; attempt <= 2; attempt++) {
+    for (const attempt of [1, 2] as const) {
       const output = await this.callModel(system, userPrompt(feedback), usage);
       const normalised: ApplicationScoreOutput = {
         rationale: output.rationale.trim(),
@@ -203,6 +205,7 @@ export class ApplicationScorer {
         rationale: normalised.rationale,
         overall: computeOverall(scored),
         usage,
+        attempts: attempt,
       };
     }
 
