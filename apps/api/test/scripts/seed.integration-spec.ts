@@ -10,70 +10,22 @@ import { VACANCY_CRITERIA_SCHEMA_NAME } from '../../src/llm/vacancy-criteria.sch
 import { SeedMeter } from '../../src/scripts/seed/metering.js';
 import { runSeed, type RunSeedResult } from '../../src/scripts/seed/run.js';
 import { isDrained, summarize } from '../../src/scripts/seed/snapshot.js';
-import type {
-  PersonaSpec,
-  VacancySpec,
-} from '../../src/scripts/synth/types.js';
-import type { EnvConfig } from '../../src/config/env.config.js';
-import type { GithubFixture } from '../../src/github/fixture-github-client.js';
+import type { PersonaSpec } from '../../src/scripts/synth/types.js';
 import { onUnhandledFrame, server } from '../msw/server.js';
 import { captureGithubRequests } from '../msw/github.handlers.js';
 import { textPdf } from '../pdf.util.js';
+import {
+  GITHUB_FIXTURE,
+  GITHUB_USERNAME,
+  persona,
+  testEnv,
+  vacancy,
+} from './seed-fixtures.util.js';
 import {
   createTestDatabase,
   teardownTestDatabase,
   type TestDatabase,
 } from '../testcontainers-db.util.js';
-
-const GITHUB_USERNAME = 'seed-jane';
-const GITHUB_FIXTURE: GithubFixture = {
-  user: {
-    login: GITHUB_USERNAME,
-    html_url: `https://github.com/${GITHUB_USERNAME}`,
-    bio: 'Seed fixture bio about Rust services.',
-  },
-  repos: [
-    {
-      name: 'seed-repo',
-      html_url: `https://github.com/${GITHUB_USERNAME}/seed-repo`,
-      description: 'A seed fixture repo',
-      language: 'Rust',
-      stargazers_count: 7,
-      topics: ['rust'],
-      pushed_at: '2026-01-01T00:00:00Z',
-      fork: false,
-      archived: false,
-    },
-  ],
-  readmes: { 'seed-repo': 'Seed fixture README.' },
-};
-
-const vacancy = (id: string): VacancySpec => ({
-  id,
-  title: `Seed vacancy ${id}`,
-  intro: '',
-  requirements: [],
-  text: `- 3+ years of ${id}\n- Good communication`,
-});
-
-const persona = (
-  id: string,
-  applyTo: string[],
-  github: string | null = null,
-): PersonaSpec => ({
-  id,
-  name: `Persona ${id}`,
-  email: `${id}@example.com`,
-  language: 'en',
-  layout: '1-col',
-  roles: [],
-  projects: [],
-  skills: [],
-  github: github ? { username: github } : null,
-  kind: 'targeted',
-  flags: [],
-  applyTo,
-});
 
 const VACANCIES = [vacancy('alpha'), vacancy('beta')];
 const MINI_SET = [
@@ -107,20 +59,7 @@ describe('db:seed core (Testcontainers + MSW + real pg-boss)', () => {
     process.env.OPENAI_API_KEY ??= 'test-key';
     const { createSeedContext } = await import('../../src/scripts/seed/app.js');
     const { DRIZZLE } = await import('../../src/db/db.tokens.js');
-    const env = {
-      DATABASE_URL: 'postgres://unused',
-      JWT_SECRET: 'test-secret',
-      JWT_EXPIRES_IN: '1h',
-      PORT: 0,
-      NODE_ENV: 'test',
-      WEB_ORIGIN: 'http://localhost:5173',
-      OPENAI_API_KEY: 'sk-test-dummy',
-      OPENAI_MODEL: 'gpt-5.4-mini',
-      OPENAI_EMBEDDING_MODEL: 'text-embedding-3-small',
-      SCORING_MODE: 'full_text',
-      JOBS_POLL_INTERVAL_SECONDS: 0.5,
-      GITHUB_FIXTURES_DIR: join(dir, 'github'),
-    } as EnvConfig;
+    const env = testEnv(join(dir, 'github'));
     const app = await createSeedContext({
       env,
       meter,
