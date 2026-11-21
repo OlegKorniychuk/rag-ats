@@ -1,5 +1,10 @@
 import type { INestApplication } from '@nestjs/common';
-import type { ApplicationScore, ScoreStatus } from '@rag-ats/shared';
+import type {
+  ApplicationQuestions,
+  ApplicationScore,
+  QuestionStatus,
+  ScoreStatus,
+} from '@rag-ats/shared';
 import request from 'supertest';
 
 const POLL_INTERVAL_MS = 200;
@@ -35,6 +40,39 @@ export async function waitForScoreStatus(
     if (Date.now() > deadline) {
       throw new Error(
         `Timed out after ${timeoutMs}ms waiting for application ${applicationId} to reach score status '${status}'; last seen: ${last}`,
+      );
+    }
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+  }
+}
+
+/**
+ * Polls GET /applications/:id/questions until `status` equals the given one,
+ * and returns that body. Throws (with the last seen status) on timeout.
+ */
+export async function waitForQuestionsStatus(
+  app: INestApplication,
+  cookie: string[],
+  applicationId: string,
+  status: QuestionStatus,
+  { timeoutMs = 15_000 }: { timeoutMs?: number } = {},
+): Promise<ApplicationQuestions> {
+  const deadline = Date.now() + timeoutMs;
+  let last = 'no response';
+  for (;;) {
+    const res = await request(app.getHttpServer())
+      .get(`/applications/${applicationId}/questions`)
+      .set('Cookie', cookie);
+    if (res.status === 200) {
+      const body = res.body as ApplicationQuestions;
+      if (body.status === status) return body;
+      last = String(body.status);
+    } else {
+      last = `HTTP ${res.status}`;
+    }
+    if (Date.now() > deadline) {
+      throw new Error(
+        `Timed out after ${timeoutMs}ms waiting for application ${applicationId} to reach questions status '${status}'; last seen: ${last}`,
       );
     }
     await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
