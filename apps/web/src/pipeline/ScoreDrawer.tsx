@@ -26,13 +26,10 @@ import { ApiError } from '../api/client';
 import { QuoteBlock } from '../components/QuoteBlock';
 import { errorMessage } from '../lib/errors';
 import { formatDate } from '../lib/format';
+import { ImportanceChip } from './ImportanceChip';
 import { useRescoreApplication } from './queries';
+import { QuestionsSection } from './QuestionsSection';
 import { isScoreInFlight, scoreBand } from './score';
-
-const IMPORTANCE_LABELS = {
-  must: 'Must',
-  nice: 'Nice to have',
-} satisfies Record<CriterionScore['importance'], string>;
 
 const MODE_LABELS = {
   full_text: 'Full text',
@@ -93,12 +90,7 @@ function CriterionItem({ criterion }: { criterion: CriterionScore }) {
         <Typography variant="subtitle2" sx={{ flex: 1 }}>
           {criterion.criterion}
         </Typography>
-        <Chip
-          size="small"
-          label={IMPORTANCE_LABELS[criterion.importance]}
-          color={criterion.importance === 'must' ? 'primary' : 'default'}
-          variant={criterion.importance === 'must' ? 'filled' : 'outlined'}
-        />
+        <ImportanceChip importance={criterion.importance} />
       </Stack>
       <Stack direction="row" sx={{ alignItems: 'center', gap: 1 }}>
         <LinearProgress
@@ -249,6 +241,9 @@ function ScoreDrawerContent({
       )}
 
       {score.result && <ResultSection result={score.result} />}
+
+      <Divider />
+      <QuestionsSection applicationId={application.id} score={score} />
     </Stack>
   );
 }

@@ -1,10 +1,13 @@
 import type {
   ApplicationStage,
+  QuestionStatus,
   ApplicationWithCandidateResponse,
 } from '@rag-ats/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addCandidateToVacancy, getVacancyMatches } from '../api/vacancies';
 import {
+  generateApplicationQuestions,
+  getApplicationQuestions,
   listVacancyApplications,
   rescoreApplication,
   updateApplicationStage,
@@ -113,5 +116,31 @@ export function useAddMatch(vacancyId: string, onAdded?: () => void) {
         }),
       ]);
     },
+  });
+}
+
+export const questionsKey = (applicationId: string) =>
+  ['applications', applicationId, 'questions'] as const;
+
+const isQuestionsInFlight = (status: QuestionStatus | null | undefined) =>
+  status === 'pending' || status === 'generating';
+
+export function useApplicationQuestions(applicationId: string) {
+  return useQuery({
+    queryKey: questionsKey(applicationId),
+    queryFn: () => getApplicationQuestions(applicationId),
+    refetchInterval: (query) =>
+      isQuestionsInFlight(query.state.data?.status)
+        ? SCORE_POLL_INTERVAL_MS
+        : false,
+  });
+}
+
+export function useGenerateQuestions(applicationId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => generateApplicationQuestions(applicationId),
+    onSuccess: (data) =>
+      queryClient.setQueryData(questionsKey(applicationId), data),
   });
 }
