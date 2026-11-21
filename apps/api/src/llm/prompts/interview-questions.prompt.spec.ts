@@ -95,4 +95,11 @@ describe('INTERVIEW_QUESTIONS_SYSTEM_PROMPT', () => {
     expect(INTERVIEW_QUESTIONS_SYSTEM_PROMPT).toContain('in English');
     expect(INTERVIEW_QUESTIONS_SYSTEM_PROMPT).toContain('below 50');
   });
+
+  it('asks gap questions about real experience, not hypothetical tool use', () => {
+    expect(INTERVIEW_QUESTIONS_SYSTEM_PROMPT).toContain('closest experience');
+    expect(INTERVIEW_QUESTIONS_SYSTEM_PROMPT).not.toContain(
+      'explain how they would handle it',
+    );
+  });
 });

@@ -47,7 +47,28 @@ All 10 reviewed gap questions were grounded; the 3 `partly` are fact questions:
 - **#11** (partial, full-stack, "a server-side language", 100): the question says the CV shows "not a lot of detail" on server-side work while quoting a unit that states Java services and GraphQL endpoints; the framing undersells the cited evidence.
 - **#12** (weak, full-stack, "PostgreSQL or MySQL or MongoDB", 90): one of the two quotes is the `SKILLS` section heading. The question itself is fine, but a heading is not evidence (the same rule the scoring prompt states).
 
-**A gap question that asks how the candidate would use a tool they haven't used.** Dude flagged #4 (strong, security, "Working knowledge of Burp Suite", 0): "Have you used Burp Suite…? If not, how would you use it to test a login or session flow?" The first half is a good gap question; the second asks someone without the tool to describe using it, which tests interview preparation more than experience. The prompt invites this: a gap question "asks the candidate to show the missing experience or explain how they would handle it". It is not rare: about 27 of the 90 gap questions (a keyword match on "how would you" / "if not") end with a hypothetical of this kind. A better pattern asks for the closest experience instead ("what have you used for intercepting and replaying web traffic?"). It is listed under limits; changing the prompt needs another (cheap) run to check it.
+**A gap question that asks how the candidate would use a tool they haven't used.** Dude flagged #4 (strong, security, "Working knowledge of Burp Suite", 0): "Have you used Burp Suite…? If not, how would you use it to test a login or session flow?" The first half is a good gap question; the second asks someone without the tool to describe using it, which tests interview preparation more than experience. The prompt invites this: a gap question "asks the candidate to show the missing experience or explain how they would handle it". It is not rare: 30 of the 90 gap questions ask what the candidate would do (keyword match, next section). A better pattern asks for the closest experience instead ("what have you used for intercepting and replaying web traffic?"). The prompt was changed and re-run (next section).
+
+## Gap-question fix (q2)
+
+The gap rule now reads: a gap question "asks about experience the candidate actually has: whether they have done it, and if not, their closest experience", with the Burp Suite case as the example, and "Never ask how they would use a tool or technology they have not used." Run q2 repeats q1 on the same 30 applications (same sample, seed 42) with only this change; files `docs/eval/questions/q2.{json,md}`.
+
+| Metric                                             | q1           | q2           |
+| -------------------------------------------------- | ------------ | ------------ |
+| Ok / retried / failed                              | 30 / 0 / 0   | 30 / 0 / 0   |
+| Questions per application (mean / min / max)       | 8.2 / 7 / 10 | 8.1 / 6 / 10 |
+| Gap questions                                      | 90           | 97           |
+| Gap questions asking what the candidate _would_ do | 30 (33 %)    | 0            |
+| Gap questions on a criterion scored below 50       | 91.1 %       | 85.6 % (83)  |
+| Fact questions citing a unit the score also cited  | 76.1 %       | 79.6 %       |
+| Sets with more than 8 questions                    | 5            | 5            |
+| Cost                                               | $0.143       | $0.146       |
+
+"Would do" is a keyword match on the question text (`how would you`, `how you would`, `would you approach / use / design / set / build / handle / test`), read through by hand for q2. The q2 gap questions instead ask whether the candidate has done it and, if not, for the nearest thing they have done. q2's Burp Suite question (another strong security candidate; the q1 candidate got none this time) reads:
+
+> I don't see Burp Suite in your background. What web traffic interception or testing tool have you used instead, and what kind of application issue did you uncover with it?
+
+The other numbers moved within what a second sample of the same model would give, except the gap-below-50 share, which fell from 91 % to 86 %: 14 gap questions target criteria scored 55–100, mostly to check how long the candidate has used a technology ("3+ years of Java", "2+ years of Spring Boot"). These read as fair follow-ups, but the q2 questions were not labelled, so the human review above is for q1 only.
 
 ## Examples
 
@@ -72,7 +93,7 @@ Through the API on the same database (3 applications, one per band): each set wa
 ## Limits
 
 - **Synthetic data, one reviewer, 25 questions.** The CVs are cleaner than real ones; the labels are one person's judgement on a small sample, so 88 % grounded is a rough figure (with 25 items, one label moves it by 4 points).
-- **Hypothetical gap questions** (above): about 30 % of gap questions end with "if not, how would you…", which is weak for a named tool the candidate has not used.
+- **Hypothetical gap questions** were about a third of q1's gap questions; the prompt fix removed them in q2 (above). The human review covers q1, not q2.
 - **Fact questions can misplace or undersell evidence** (#1, #11) and can quote a section heading (#12): the server checks that a cited unit exists, not that it supports the question.
 - **`full_text` scores only.** All seeded scores are `full_text`; with `rag` scores the cited units may not map back to the full CV (sdd §12), which this run does not measure.
-- **Set size**: 5 of 30 sets exceed the requested 8 questions.
+- **Set size**: 5 of 30 sets exceed the requested 8 questions, in both runs.

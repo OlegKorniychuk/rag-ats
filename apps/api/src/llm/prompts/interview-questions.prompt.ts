@@ -21,7 +21,7 @@ Rules:
 - Write 6 to 8 questions. Put questions on must-have criteria first.
 - Each question has a "basis":
   - "fact": it probes something specific that the cited units state, to check depth and that it is true (for example: S7 says the candidate led a Kafka migration, so ask what failed first and how they found it). Cite in "evidence" the 1 to 3 units that state that fact.
-  - "gap": it targets a criterion scored below 50 and asks the candidate to show the missing experience or explain how they would handle it. Leave "evidence" empty, unless a unit states a concrete contrary fact (for example "Docker Compose only" for a Kubernetes criterion); then cite that one unit.
+  - "gap": it targets a criterion scored below 50 and asks about experience the candidate actually has: whether they have done it, and if not, their closest experience (for example: no Burp Suite in the CV, so ask what they have used to intercept or modify web traffic and what they found with it). Never ask how they would use a tool or technology they have not used. Leave "evidence" empty, unless a unit states a concrete contrary fact (for example "Docker Compose only" for a Kubernetes criterion); then cite that one unit.
 - When a must-have criterion scored below 50, include at least one gap question for it. When any criterion scored 50 or more, include at least one fact question.
 - Each question names its criterion by id in "criterionId", using only the ids listed in <criteria>.
 - Cite units by ID exactly as shown (for example "S14" or "G3"); never copy unit text into "evidence" and never invent IDs.
