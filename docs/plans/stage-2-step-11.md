@@ -54,7 +54,7 @@ Query embeddings only, a few cents.
 - **Noise**: a 50-pair subset (stratified, seeded) is scored a second time per mode. Test-retest MAE and ρ give the run-to-run noise that step 12's "does not drop below the baseline" is judged against.
 - **Concurrency 4**, a **resumable cache** (`docs/eval/baseline/<label>/scores.jsonl`, one line per pair × mode × run; a re-run skips done lines and retries failed ones only with `--retry-failed`).
 - **Budget guard** (reuses `seed/budget.ts` and the meter):
-  - `--dry-run` prints call counts and an estimate at $0.0065 per score (measured on the seed, retries included) × 1.3 and makes no calls.
+  - `--dry-run` prints call counts and an estimate at $0.006 per score × 1.3 and makes no calls. (Planned at $0.0065, measured on the seed with quote retries; set to $0.006 after step 12's smoke, which measured $0.0055.)
   - A live run needs `--max-usd` (default $6) and stops starting new scores once spend plus in-flight estimates reach it.
 
 ### Metrics (`scripts/eval/metrics.ts`, pure)
@@ -150,6 +150,7 @@ Sonnet subagents do Tasks 1–6. The main session reviews each task, re-runs the
 
 - `--dry-run`, then `--limit 10` as a smoke, then the full run with `--max-usd 6`, and `--retry-failed` only if API errors occurred.
 - Report the cost, the grounding failures and anything odd before writing up.
+- As run (2026-11-21): the pre-fix smoke cost $0.009 per score with many rag retries, so Dude paused the run and step 12 (evidence-ID citations) was built first. The full run (`baseline-units`) uses evidence-ID citations; the pre-fix comparison comes from the step 10 seed report and the `smoke-quotes` cache.
 
 ### Checkpoint: Citation review (main + Dude)
 

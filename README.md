@@ -1,6 +1,6 @@
 # RAG-ATS
 
-RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is in progress: PDF CV upload, LLM parsing of the CV into a structured profile, GitHub enrichment of that profile (public repos, READMEs and languages), grounded fit scoring of every application (per-criterion scores backed by verified quotes from the CV or GitHub), adding pool candidates to vacancies, re-scoring on vacancy edits, semantic candidate search, "Find matches" for a vacancy and a RAG scoring mode are built, plus a synthetic data set of 100 candidates and 10 vacancies with ground truth and a seed script. The retrieval/scoring eval harness is next.
+RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is in progress: PDF CV upload, LLM parsing of the CV into a structured profile, GitHub enrichment of that profile (public repos, READMEs and languages), grounded fit scoring of every application (per-criterion scores that cite numbered evidence units from the CV or GitHub, resolved to the exact source text by the server), adding pool candidates to vacancies, re-scoring on vacancy edits, semantic candidate search, "Find matches" for a vacancy and a RAG scoring mode are built, plus a synthetic data set of 100 candidates and 10 vacancies with ground truth, a seed script and an eval harness that measures retrieval and score agreement against that ground truth.
 
 ## Docs
 
@@ -12,6 +12,7 @@ RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1
 - [`docs/eval/rag-scoring.md`](./docs/eval/rag-scoring.md) — RAG vs full-text scoring comparison (step 9)
 - [`docs/eval/checkpoint-c.md`](./docs/eval/checkpoint-c.md) — full-flow UI walkthrough (Checkpoint C)
 - [`docs/eval/synthetic-data.md`](./docs/eval/synthetic-data.md) — synthetic data generation, spot-check and seed report (step 10)
+- [`docs/eval/eval-baseline.md`](./docs/eval/eval-baseline.md) — retrieval and score-agreement baseline, evidence-ID citations before/after (steps 11–12)
 - [`data/synthetic/README.md`](./data/synthetic/README.md) — what the synthetic set contains and how to regenerate it
 - Swagger UI at `http://localhost:3000/docs` when running locally (raw OpenAPI at `/docs-json`)
 
@@ -59,11 +60,26 @@ Each run writes a report to `docs/eval/seed/<label>.{json,md}` (parse success, s
 
 Then start the API against the same database (`DATABASE_URL=… npm run dev:api`) and log in as `seed@example.com`. The password is `SEED_RECRUITER_PASSWORD` if you set it for the seed, otherwise the dev default `DEFAULT_SEED_PASSWORD` in `apps/api/src/scripts/seed/run.ts`.
 
+## Run the eval
+
+`npm run eval` measures retrieval (search and Find matches) and scoring (both modes) against the synthetic ground truth, on the database the seed filled. It only reads from it. Retrieval costs under a cent; scoring is a stratified sample of 381 pairs per mode plus 50 noise re-runs, about $4.
+
+```
+DATABASE_URL=…/rag_ats_seed npm run eval -- --dry-run --label my-run            # plan and cost estimate, no LLM calls
+DATABASE_URL=…/rag_ats_seed npm run eval -- --part scoring --label my-run --limit 10 --max-usd 1   # smoke
+DATABASE_URL=…/rag_ats_seed npm run eval -- --label my-run                      # everything (resumes, cap $6)
+npm run eval -- --label my-run --report-only                                    # rebuild the report, no DB
+npm run eval -- --label my-run --write-review --sample 40                       # citations to label by hand
+npm run eval -- --summarise-review docs/eval/baseline/my-run/review-rag.md      # count the labels
+```
+
+Each run writes `docs/eval/baseline/<label>.{json,md}` and caches every score in `docs/eval/baseline/<label>/scores.jsonl`, so a re-run with the same label only scores what is missing (`--retry-failed` also re-scores failures). `npm run eval -- --help` lists every flag. The baseline run and its write-up: `docs/eval/eval-baseline.md`.
+
 ## Using the app
 
 1. Register an account at `http://localhost:5173` and log in.
 2. Create a vacancy.
 3. Copy its public apply link from the vacancies list.
 4. Open that link logged out (or in a private window) to submit an application with a PDF CV. The candidate's profile is filled in from the CV (and their public GitHub repos, if a GitHub URL was given) in the background; a Pending/Parsing chip shows progress, and a failed parse can be retried from the candidate page.
-5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board. Each card shows the applicant's fit score once their CV is parsed, and columns are ranked by it; click the score to see the per-criterion breakdown with quotes from the CV or GitHub, or to rescore. Editing an open vacancy's title or requirements re-scores all of its applicants (a closed vacancy's scores are marked outdated until you reopen it). On an open vacancy, "Find matches" lists pool candidates who fit it, with the criteria they match and the passages that matched; "Add" puts one on the board and scores them.
+5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board. Each card shows the applicant's fit score once their CV is parsed, and columns are ranked by it; click the score to see the per-criterion breakdown with the cited CV or GitHub text, or to rescore. Editing an open vacancy's title or requirements re-scores all of its applicants (a closed vacancy's scores are marked outdated until you reopen it). On an open vacancy, "Find matches" lists pool candidates who fit it, with the criteria they match and the passages that matched; "Add" puts one on the board and scores them.
 6. Browse the shared candidate pool at `/candidates`, or type what you need ("backend engineer with Kafka and Kubernetes") and press Enter for a semantic search that ranks candidates and shows the CV or GitHub passages that matched. A candidate's page lists their applications on your vacancies; use "Add to vacancy" to put them on another open vacancy, where they are scored like an applicant.
