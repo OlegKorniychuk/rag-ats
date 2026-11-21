@@ -3,6 +3,7 @@ import { DrizzleApplicationsRepository } from './repositories/drizzle-applicatio
 import { DrizzleCandidateChunksRepository } from './repositories/drizzle-candidate-chunks.repository.js';
 import { DrizzleCandidatesRepository } from './repositories/drizzle-candidates.repository.js';
 import { DrizzleCvDocumentsRepository } from './repositories/drizzle-cv-documents.repository.js';
+import { DrizzleQuestionsRepository } from './repositories/drizzle-questions.repository.js';
 import { DrizzleScoresRepository } from './repositories/drizzle-scores.repository.js';
 import { DrizzleRecruitersRepository } from './repositories/drizzle-recruiters.repository.js';
 import { DrizzleVacanciesRepository } from './repositories/drizzle-vacancies.repository.js';
@@ -11,6 +12,7 @@ import { CANDIDATE_CHUNKS_REPOSITORY } from './repositories/candidate-chunks.rep
 import { CANDIDATES_REPOSITORY } from './repositories/candidates.repository.js';
 import { CV_DOCUMENTS_REPOSITORY } from './repositories/cv-documents.repository.js';
 import { RECRUITERS_REPOSITORY } from './repositories/recruiters.repository.js';
+import { QUESTIONS_REPOSITORY } from './repositories/questions.repository.js';
 import { SCORES_REPOSITORY } from './repositories/scores.repository.js';
 import { VACANCIES_REPOSITORY } from './repositories/vacancies.repository.js';
 
@@ -29,6 +31,7 @@ import { VACANCIES_REPOSITORY } from './repositories/vacancies.repository.js';
       useClass: DrizzleCvDocumentsRepository,
     },
     { provide: SCORES_REPOSITORY, useClass: DrizzleScoresRepository },
+    { provide: QUESTIONS_REPOSITORY, useClass: DrizzleQuestionsRepository },
     {
       provide: CANDIDATE_CHUNKS_REPOSITORY,
       useClass: DrizzleCandidateChunksRepository,
@@ -41,6 +44,7 @@ import { VACANCIES_REPOSITORY } from './repositories/vacancies.repository.js';
     APPLICATIONS_REPOSITORY,
     CV_DOCUMENTS_REPOSITORY,
     SCORES_REPOSITORY,
+    QUESTIONS_REPOSITORY,
     CANDIDATE_CHUNKS_REPOSITORY,
   ],
 })

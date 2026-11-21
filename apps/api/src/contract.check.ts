@@ -18,6 +18,8 @@ import type {
   PublicVacancyResponse,
   MatchSnippet,
   ScoreStatus,
+  QuestionStatus,
+  ApplicationQuestions,
   SearchCandidatesRequest,
   SearchSnippet,
   VacancyMatch,
@@ -41,6 +43,10 @@ import type {
   toApplicationScore,
 } from './db/repositories/score.mapper.js';
 import type { Vacancy } from './db/repositories/vacancies.repository.js';
+import type {
+  QuestionRow,
+  toApplicationQuestions,
+} from './db/repositories/questions.mapper.js';
 import type { CandidateSearchResultResponseDto } from './candidates/dto/candidate-search-result-response.dto.js';
 import type { SearchCandidatesRequestDto } from './candidates/dto/search-candidates-request.dto.js';
 import type { SearchSnippetResponseDto } from './candidates/dto/search-snippet-response.dto.js';
@@ -57,6 +63,7 @@ import type {
   applicationStageEnum,
   parseStatusEnum,
   scoreStatusEnum,
+  questionStatusEnum,
   vacancyStatusEnum,
 } from './db/schema.js';
 
@@ -134,6 +141,18 @@ export type CheckApplicationScore = Assert<
   Equal<
     Simplify<Jsonify<ReturnType<typeof toApplicationScore>>>,
     Simplify<ApplicationScore>
+  >
+>;
+export type CheckQuestionStatus = Assert<
+  Equal<(typeof questionStatusEnum.enumValues)[number], QuestionStatus>
+>;
+export type CheckQuestionRowStatus = Assert<
+  Equal<QuestionRow['status'], QuestionStatus>
+>;
+export type CheckApplicationQuestions = Assert<
+  Equal<
+    Simplify<Jsonify<ReturnType<typeof toApplicationQuestions>>>,
+    Simplify<ApplicationQuestions>
   >
 >;
 export type CheckApplicationSource = Assert<

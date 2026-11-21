@@ -257,6 +257,55 @@ export interface ApplicationScore {
 /** POST /applications/:id/rescore -> 202, the freshly reset (pending) score. */
 export type RescoreResponse = ApplicationScore;
 
+/** Status of an application's interview questions job. */
+export type QuestionStatus = 'pending' | 'generating' | 'ready' | 'failed';
+
+/**
+ * `fact`: probes something the CV/GitHub states (cites the evidence);
+ * `gap`: probes a criterion the candidate scored low on.
+ */
+export type QuestionBasis = 'fact' | 'gap';
+
+/** One generated interview question, tied to a vacancy criterion. */
+export interface InterviewQuestion {
+  text: string;
+  basis: QuestionBasis;
+  criterionId: string;
+  /** The criterion text, denormalised for display. */
+  criterion: string;
+  importance: CriterionImportance;
+  /** One sentence: what the question checks. */
+  purpose: string;
+  /** Resolved evidence: fact 1–3, gap 0–1 (a concrete contrary fact). */
+  quotes: ScoreQuote[];
+}
+
+/** A generated set of interview questions for one application. */
+export interface QuestionSet {
+  questions: InterviewQuestion[];
+  /** The CV the questions were generated from. */
+  cvDocumentId: string;
+  model: string;
+  generatedAt: IsoDateString;
+}
+
+/**
+ * GET /applications/:id/questions. `result` keeps the last good set while a
+ * regeneration is pending; `stale` is true when that set was not generated
+ * from the current CV, criteria and score.
+ */
+export interface ApplicationQuestions {
+  /** Null: questions were never requested. */
+  status: QuestionStatus | null;
+  /** Short, safe reason when `status` is `failed`; otherwise null. */
+  error: string | null;
+  stale: boolean;
+  result: QuestionSet | null;
+}
+
+/** POST /applications/:id/questions -> 202, the freshly reset (pending) state. */
+export type GenerateQuestionsResponse = ApplicationQuestions;
+
 /**
  * GET /vacancies/:id/applications
  *
