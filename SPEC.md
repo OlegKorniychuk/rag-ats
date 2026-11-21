@@ -97,7 +97,7 @@ Eval:            npm run eval -w apps/api                # standalone script, pr
 │   │   │   ├── app.module.ts
 │   │   │   └── main.ts
 │   │   ├── test/                     → e2e tests
-│   │   └── scripts/                  → seed.ts, eval.ts
+│   │   └── src/scripts/              → seed.ts, eval.ts
 │   └── web/                          → React + Vite frontend
 │       ├── src/
 │       │   ├── pages/
@@ -167,7 +167,7 @@ Conventions:
 - **Unit (Jest):** parsing/scoring/search service logic with mocked LLM + embedding calls — no live API calls in unit tests
 - **E2E (Jest + Supertest, `@nestjs/testing`):** API endpoints against a test Postgres+pgvector instance (Docker), including: protected routes reject requests with no/invalid JWT cookie; a recruiter cannot see or modify another recruiter's vacancies/applications; any authenticated recruiter can see the full shared candidate pool; `apply/` routes work with no token at all
 - **Frontend (Vitest + React Testing Library)**
-- **Eval harness** (standalone script `apps/api/scripts/eval.ts`, not part of the Jest suite — produces the thesis's quantitative results): runs retrieval + scoring over the 100×10 synthetic ground-truth set, reports retrieval precision/recall and score-agreement (e.g. correlation/MAE) vs self-labeled human judgments
+- **Eval harness** (standalone script `apps/api/src/scripts/eval.ts` with its modules in `apps/api/src/scripts/eval/`, not part of the Jest suite — produces the thesis's quantitative results): runs retrieval + scoring over the 100×10 synthetic ground-truth set, reports retrieval precision/recall and score-agreement (e.g. correlation/MAE) vs self-labeled human judgments
 - No fixed coverage %, but every parsing/scoring/search service needs ≥1 test
 - Mock LLM/embedding calls in automated tests to keep them free, fast, and CI-safe; live-API runs (seed, eval) are manual/separate to control the $20 budget
 

@@ -1,0 +1,40 @@
+[
+  {
+    "part": "retrieval",
+    "startedAt": "2026-11-18T18:54:27.653Z",
+    "finishedAt": "2026-11-18T18:54:42.474Z",
+    "modes": [],
+    "seed": 1,
+    "weak": 150,
+    "noise": 50,
+    "limit": null,
+    "concurrency": 4,
+    "maxUsd": 6,
+    "retryFailed": false,
+    "spentUsd": 0.00005012,
+    "stopped": null,
+    "scoring": null
+  },
+  {
+    "part": "scoring",
+    "startedAt": "2026-11-18T20:27:00.653Z",
+    "finishedAt": "2026-11-18T20:27:59.420Z",
+    "modes": ["full_text", "rag"],
+    "seed": 1,
+    "weak": 150,
+    "noise": 50,
+    "limit": 10,
+    "concurrency": 4,
+    "maxUsd": 6,
+    "retryFailed": false,
+    "spentUsd": 0.1983323,
+    "stopped": null,
+    "scoring": {
+      "planned": 22,
+      "done": 18,
+      "failed": 4,
+      "skipped": 0,
+      "notStarted": 0
+    }
+  }
+]

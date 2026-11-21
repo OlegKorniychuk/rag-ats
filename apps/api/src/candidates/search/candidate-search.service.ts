@@ -8,6 +8,7 @@ import type { CandidateSearchResult } from '@rag-ats/shared';
 import {
   CANDIDATE_CHUNKS_REPOSITORY,
   type CandidateChunksRepository,
+  type ChunkHit,
 } from '../../db/repositories/candidate-chunks.repository.js';
 import {
   CANDIDATES_REPOSITORY,
@@ -30,6 +31,13 @@ export type CandidateSearchHit = Omit<CandidateSearchResult, 'candidate'> & {
   candidate: Candidate;
 };
 
+/** A search result with the nearest chunks it was ranked from (for the eval). */
+export interface CandidateSearchTrace {
+  /** The raw nearest chunks, before the floor and the cap. */
+  hits: ChunkHit[];
+  results: CandidateSearchHit[];
+}
+
 @Injectable()
 export class CandidateSearchService {
   private readonly logger = new Logger(CandidateSearchService.name);
@@ -49,6 +57,15 @@ export class CandidateSearchService {
    * snippets. Candidates that aren't embedded yet cannot match.
    */
   async search(query: string): Promise<CandidateSearchHit[]> {
+    return (await this.searchWithHits(query)).results;
+  }
+
+  /**
+   * `search`, plus the nearest chunks it ranked. Same embedding call, same
+   * query, same ranking: the eval re-ranks `hits` at other floors without
+   * embedding the query a second time.
+   */
+  async searchWithHits(query: string): Promise<CandidateSearchTrace> {
     const vector = await this.embedQuery(query);
     const hits = await this.chunks.findNearest(vector, SEARCH_CHUNK_LIMIT);
     const ranked = rankCandidates(hits, {
@@ -56,7 +73,7 @@ export class CandidateSearchService {
       maxCandidates: MAX_RESULTS,
       maxSnippets: MAX_SNIPPETS,
     });
-    if (ranked.length === 0) return [];
+    if (ranked.length === 0) return { hits, results: [] };
 
     const found = await this.candidates.findByIds(
       ranked.map((r) => r.candidateId),
@@ -78,7 +95,7 @@ export class CandidateSearchService {
         })),
       });
     }
-    return results;
+    return { hits, results };
   }
 
   private async embedQuery(query: string): Promise<number[]> {

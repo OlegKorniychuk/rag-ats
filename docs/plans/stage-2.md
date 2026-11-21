@@ -153,6 +153,8 @@ Full flow works: apply → parse → embed → score, plus search and matches, a
 
 **Done when:** the report has been produced and the docs reflect Stage 2.
 
+**Done (2026-11-21)**: plan `stage-2-step-11.md`; report `docs/eval/eval-baseline.md` (label `baseline-units`, 862 scores, 0 failed, $3.95). The full scoring run was made after step 12, on evidence-ID citations, so it is both this step's baseline and step 12's "after".
+
 ### Part E — Grounding by construction
 
 **Step 12 — Cite evidence by ID instead of quoting.**
@@ -167,24 +169,26 @@ Today the scorer copies quotes and the server checks they are verbatim (generate
 
 **Done when:** the grounding failure rate is 0% on the first pass (excluding API errors), score agreement does not drop below the baseline beyond run-to-run noise, and the comparison is written up in `docs/eval/`.
 
+**Done (2026-11-21)**: plan `stage-2-step-12.md`. Step 12 landed before step 11's full run, so the "before" figures are the step 10 seed (about 21% of first answers failed, 4.7% after the retry) and the pre-fix smoke `smoke-quotes` (first pass 18% full_text, 64% rag), not a pre-fix full eval. After: 0.5% (full_text) and 1.9% (rag) of first answers needed the retry, 0% failed after it, no unknown ID in 862 scores; output tokens fell by 40–60% and cost per score from $0.0061 / $0.0105 to $0.0043 / $0.0048. The first-pass target was not quite met, and agreement has no pre-fix baseline to compare with; both are stated in `docs/eval/eval-baseline.md`. Snap-to-source was not built.
+
 ## Risks
 
-| Risk                                                     | Impact | Mitigation                                                                                                                                                                  |
-| -------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LLM quotes not verbatim → ungrounded scores              | High   | Server-side substring check after whitespace normalization; one retry with feedback; else `failed` + retry button. Step 12 removes the failure class by citing evidence IDs |
-| `gpt-5.4-mini` pricing unknown vs the $20 cap            | Med    | Log token usage per call from step 2; cost estimate before seed and eval; cap on job concurrency                                                                            |
-| pg-boss jobs in e2e make tests flaky or slow             | Med    | Await job completion via a polling helper; small poll interval in the test config                                                                                           |
-| Multipart upload breaks existing apply e2e and web tests | Med    | Step 1 rewrites the apply tests deliberately; contract change goes first                                                                                                    |
-| PDF text extraction is poor on templated or 2-column CVs | Med    | Checkpoint A uses varied templates; the synthetic generator uses a few layouts                                                                                              |
-| GitHub rate limit (60/h unauthenticated)                 | Low    | Optional `GITHUB_TOKEN`; degrade to CV-only                                                                                                                                 |
-| Score/CV drift when a candidate uploads a newer CV       | Low    | The score stores `cv_document_id`; see open question                                                                                                                        |
+| Risk                                                     | Impact | Mitigation                                                                                                                                                   |
+| -------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| LLM quotes not verbatim → ungrounded scores              | High   | Server-side substring check after whitespace normalization; one retry with feedback; else `failed` + retry button. Step 12 removed it by citing evidence IDs |
+| `gpt-5.4-mini` pricing unknown vs the $20 cap            | Med    | Log token usage per call from step 2; cost estimate before seed and eval; cap on job concurrency                                                             |
+| pg-boss jobs in e2e make tests flaky or slow             | Med    | Await job completion via a polling helper; small poll interval in the test config                                                                            |
+| Multipart upload breaks existing apply e2e and web tests | Med    | Step 1 rewrites the apply tests deliberately; contract change goes first                                                                                     |
+| PDF text extraction is poor on templated or 2-column CVs | Med    | Checkpoint A uses varied templates; the synthetic generator uses a few layouts                                                                               |
+| GitHub rate limit (60/h unauthenticated)                 | Low    | Optional `GITHUB_TOKEN`; degrade to CV-only                                                                                                                  |
+| Score/CV drift when a candidate uploads a newer CV       | Low    | The score stores `cv_document_id`; see open question                                                                                                         |
 
 ## Open questions (resolve in subplans)
 
 - Step 4: when a candidate submits a newer CV, should their _other_ applications' scores be marked stale and rescored? The proposed default is yes, rescoring against the latest CV.
 - ~~Step 7: chunking strategy (per CV section vs. fixed-size token windows) and k values.~~ Resolved in `stage-2-step-7.md`: CV text packed on line boundaries into ~1000-char windows with one-line overlap, one chunk per GitHub repo plus a profile chunk; search takes the 50 nearest chunks, returns up to 20 candidates × 3 snippets above a 0.3 similarity floor.
 - ~~Step 10: how ground-truth labels are produced (LLM-generated with manual spot-check vs. fully self-labeled).~~ Resolved in `stage-2-step-10.md`: labels come from the persona specs by a fixed rule, with no LLM. Dude's blind spot-check of 30 pairs agreed with the rule at κ = 0.65 (quadratic κ 0.83).
-- Step 12: the unit size for evidence IDs (sentence vs. bullet vs. line) on PDF-extracted text, where line breaks fall inside sentences and 2-column layouts interleave; and whether the model may cite a sub-span of a unit.
+- ~~Step 12: the unit size for evidence IDs (sentence vs. bullet vs. line) on PDF-extracted text, where line breaks fall inside sentences and 2-column layouts interleave; and whether the model may cite a sub-span of a unit.~~ Resolved in `stage-2-step-12.md`: bullet or sentence units, with PDF line wraps merged and short lines kept as their own units, and GitHub block lines one unit each; the model cites whole units, never sub-spans. Two-column interleave is a known limit (`docs/sdd.md` §12).
 
 ## Execution
 

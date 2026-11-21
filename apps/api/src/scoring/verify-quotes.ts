@@ -62,7 +62,7 @@ function occursIn(source: string, quote: string): boolean {
   ).test(source);
 }
 
-function preview(text: string): string {
+export function preview(text: string): string {
   const flat = text.replace(/\s+/g, ' ').trim();
   return JSON.stringify(flat.length > 80 ? `${flat.slice(0, 80)}...` : flat);
 }

@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
-import type { RetrievedChunk, ScoringMode } from '@rag-ats/shared';
+import type { ScoringMode } from '@rag-ats/shared';
 import { ClsService } from 'nestjs-cls';
 import { EnvConfig } from '../config/env.config.js';
 import {
@@ -26,9 +26,8 @@ import {
   type ApplicationScoreResult,
   type ScoringCriterion,
 } from '../llm/application-scorer.js';
-import type { CriterionEvidence } from '../llm/prompts/application-score-rag.prompt.js';
 import { LlmClient } from '../llm/llm-client.js';
-import { RAG_CHUNKS_PER_CRITERION } from '../rag/nearest-chunks.js';
+import { retrieveCriterionEvidence } from '../rag/retrieve-criterion-evidence.js';
 import { vacancyCriteriaHash } from '../scoring/criteria-hash.js';
 import type { ScoreApplicationJob } from './jobs.constants.js';
 import { JobsService } from './jobs.service.js';
@@ -146,21 +145,12 @@ export class ScoreApplicationWorker {
     candidateId: string,
     criteria: ScoringCriterion[],
   ): Promise<ApplicationScoreResult> {
-    const { vectors } = await this.llm.embed(criteria.map((c) => c.text));
-    const evidence: CriterionEvidence[] = [];
-    for (const [index, criterion] of criteria.entries()) {
-      const hits = await this.chunks.findNearest(
-        vectors[index],
-        RAG_CHUNKS_PER_CRITERION,
-        { candidateId },
-      );
-      const chunks: RetrievedChunk[] = hits.map((hit) => ({
-        source: hit.source,
-        text: hit.text,
-        similarity: Math.round(hit.similarity * 1000) / 1000,
-      }));
-      evidence.push({ criterionId: criterion.id, chunks });
-    }
+    const evidence = await retrieveCriterionEvidence(
+      this.llm,
+      this.chunks,
+      candidateId,
+      criteria,
+    );
     return this.scorer.scoreRag({ criteria, evidence });
   }
 
