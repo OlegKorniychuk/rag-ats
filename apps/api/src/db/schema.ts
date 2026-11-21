@@ -1,5 +1,9 @@
 import { defineRelations, sql } from 'drizzle-orm';
-import type { ScoreResult, VacancyCriterion } from '@rag-ats/shared';
+import type {
+  QuestionSet,
+  ScoreResult,
+  VacancyCriterion,
+} from '@rag-ats/shared';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
 import { EMBEDDING_DIMENSIONS } from '../llm/embedding.constants.js';
 import {
@@ -47,6 +51,13 @@ export const scoreStatusEnum = pgEnum('score_status', [
   'pending',
   'scoring',
   'scored',
+  'failed',
+]);
+
+export const questionStatusEnum = pgEnum('question_status', [
+  'pending',
+  'generating',
+  'ready',
   'failed',
 ]);
 
@@ -186,11 +197,34 @@ export const applicationScores = pgTable('application_scores', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
+// One row per application, created on the first request for questions.
+export const interviewQuestions = pgTable('interview_questions', {
+  applicationId: uuid('application_id')
+    .primaryKey()
+    .references(() => applications.id, { onDelete: 'cascade' }),
+  status: questionStatusEnum('status').notNull().default('pending'),
+  error: text('error'),
+  // internal diagnosis of a failure (grounding problems); never in the API
+  failureDetails: jsonb('failure_details').$type<string[]>(),
+  // the last good set; kept while a regeneration is pending
+  result: jsonb('result').$type<QuestionSet>(),
+  // what `result` was generated from, to derive staleness
+  cvDocumentId: uuid('cv_document_id').references(() => cvDocuments.id),
+  criteriaHash: text('criteria_hash'),
+  scoreScoredAt: timestamp('score_scored_at'),
+  model: text('model'),
+  inputTokens: integer('input_tokens'),
+  outputTokens: integer('output_tokens'),
+  generatedAt: timestamp('generated_at'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
 const schema = {
   vacancyStatusEnum,
   applicationStageEnum,
   parseStatusEnum,
   scoreStatusEnum,
+  questionStatusEnum,
   recruiters,
   vacancies,
   candidates,
@@ -198,6 +232,7 @@ const schema = {
   cvDocuments,
   candidateChunks,
   applicationScores,
+  interviewQuestions,
 };
 
 export const dbRelations = defineRelations(schema, (r) => ({
@@ -215,6 +250,17 @@ export const dbRelations = defineRelations(schema, (r) => ({
     score: r.one.applicationScores({
       from: r.applications.id,
       to: r.applicationScores.applicationId,
+    }),
+    questions: r.one.interviewQuestions({
+      from: r.applications.id,
+      to: r.interviewQuestions.applicationId,
+    }),
+  },
+  interviewQuestions: {
+    application: r.one.applications({
+      from: r.interviewQuestions.applicationId,
+      to: r.applications.id,
+      optional: false,
     }),
   },
   applicationScores: {

@@ -147,4 +147,33 @@ describe('Swagger recruiter docs (e2e)', () => {
       }
     }
   });
+
+  it('documents GET and POST /applications/{id}/questions with their response codes', () => {
+    const path = doc.paths['/applications/{id}/questions'];
+    expect(Object.keys(path?.get?.responses ?? {}).sort()).toEqual([
+      '200',
+      '400',
+      '401',
+      '404',
+    ]);
+    expect(Object.keys(path?.post?.responses ?? {}).sort()).toEqual([
+      '202',
+      '400',
+      '401',
+      '404',
+      '409',
+    ]);
+    for (const [operation, status] of [
+      [path?.get, '200'],
+      [path?.post, '202'],
+    ] as const) {
+      const schema = resolveRef(doc, responseSchema(operation, status));
+      expect(Object.keys(schema?.properties ?? {}).sort()).toEqual([
+        'error',
+        'result',
+        'stale',
+        'status',
+      ]);
+    }
+  });
 });

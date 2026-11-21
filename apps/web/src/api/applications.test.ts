@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/server';
 import {
+  generateApplicationQuestions,
+  getApplicationQuestions,
   listVacancyApplications,
   updateApplicationStage,
 } from './applications';
@@ -52,5 +54,28 @@ describe('applications api', () => {
     const result = await updateApplicationStage('a1', 'screened');
     expect(receivedBody).toEqual({ stage: 'screened' });
     expect(result).toEqual({ ...application, stage: 'screened' });
+  });
+
+  it('getApplicationQuestions gets /applications/:id/questions', async () => {
+    const body = { status: null, error: null, stale: false, result: null };
+    server.use(
+      http.get(`${baseUrl}/applications/a1/questions`, () =>
+        HttpResponse.json(body),
+      ),
+    );
+    expect(await getApplicationQuestions('a1')).toEqual(body);
+  });
+
+  it('generateApplicationQuestions posts /applications/:id/questions', async () => {
+    const body = { status: 'pending', error: null, stale: false, result: null };
+    let method = '';
+    server.use(
+      http.post(`${baseUrl}/applications/a1/questions`, ({ request }) => {
+        method = request.method;
+        return HttpResponse.json(body, { status: 202 });
+      }),
+    );
+    expect(await generateApplicationQuestions('a1')).toEqual(body);
+    expect(method).toBe('POST');
   });
 });

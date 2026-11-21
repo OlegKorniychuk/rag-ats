@@ -398,4 +398,16 @@ describe('ScoreDrawer', () => {
       ).toBeNull();
     });
   });
+
+  it('renders the questions section for a scored application', async () => {
+    renderDrawer(makeScore({}));
+    expect(
+      screen.getByRole('heading', { name: 'Interview questions' }),
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Generate questions' }),
+      ).toBeEnabled(),
+    );
+  });
 });

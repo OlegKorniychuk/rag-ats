@@ -23,3 +23,9 @@ export interface EmbedCandidateJob {
   candidateId: string;
   cvDocumentId: string;
 }
+
+export const GENERATE_QUESTIONS_QUEUE = 'generate-questions';
+
+export interface GenerateQuestionsJob {
+  applicationId: string;
+}

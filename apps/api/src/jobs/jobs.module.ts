@@ -16,6 +16,10 @@ import {
 import { GithubModule } from '../github/github.module.js';
 import { LlmModule } from '../llm/llm.module.js';
 import {
+  QUESTIONS_REPOSITORY,
+  type QuestionsRepository,
+} from '../db/repositories/questions.repository.js';
+import {
   SCORES_REPOSITORY,
   type ScoresRepository,
 } from '../db/repositories/scores.repository.js';
@@ -24,13 +28,16 @@ import { ExtractVacancyCriteriaWorker } from './extract-vacancy-criteria.worker.
 import {
   EMBED_CANDIDATE_QUEUE,
   EXTRACT_VACANCY_CRITERIA_QUEUE,
+  GENERATE_QUESTIONS_QUEUE,
   PARSE_CANDIDATE_QUEUE,
   SCORE_APPLICATION_QUEUE,
   type EmbedCandidateJob,
   type ExtractVacancyCriteriaJob,
+  type GenerateQuestionsJob,
   type ParseCandidateJob,
   type ScoreApplicationJob,
 } from './jobs.constants.js';
+import { GenerateQuestionsWorker } from './generate-questions.worker.js';
 import { JobsService } from './jobs.service.js';
 import { PG_BOSS } from './jobs.tokens.js';
 import { ParseCandidateWorker } from './parse-candidate.worker.js';
@@ -57,6 +64,7 @@ const STOP_TIMEOUT_MS = 5_000;
     ExtractVacancyCriteriaWorker,
     ScoreApplicationWorker,
     EmbedCandidateWorker,
+    GenerateQuestionsWorker,
   ],
   exports: [JobsService],
 })
@@ -73,10 +81,13 @@ export class JobsModule
     private readonly criteriaWorker: ExtractVacancyCriteriaWorker,
     private readonly scoreWorker: ScoreApplicationWorker,
     private readonly embedWorker: EmbedCandidateWorker,
+    private readonly questionsWorker: GenerateQuestionsWorker,
     @Inject(CANDIDATES_REPOSITORY)
     private readonly candidates: CandidatesRepository,
     @Inject(SCORES_REPOSITORY)
     private readonly scores: ScoresRepository,
+    @Inject(QUESTIONS_REPOSITORY)
+    private readonly questions: QuestionsRepository,
   ) {}
 
   async onApplicationBootstrap() {
@@ -104,6 +115,10 @@ export class JobsModule
       retryLimit: 2,
       retryDelay: 30,
       retryBackoff: true,
+      policy: 'short',
+    });
+    await this.boss.createQueue(GENERATE_QUESTIONS_QUEUE, {
+      retryLimit: 0,
       policy: 'short',
     });
     const workOptions = {
@@ -139,13 +154,21 @@ export class JobsModule
         for (const job of jobs) await this.embedWorker.handle(job.data);
       },
     );
+    await this.boss.work<GenerateQuestionsJob>(
+      GENERATE_QUESTIONS_QUEUE,
+      workOptions,
+      async (jobs: Job<GenerateQuestionsJob>[]) => {
+        for (const job of jobs) await this.questionsWorker.handle(job.data);
+      },
+    );
     await this.sweepBacklog();
   }
 
   /**
    * Re-enqueues candidates left pending/parsing, scores left pending/scoring
    * for parsed candidates, and parsed candidates whose chunks are missing or
-   * outdated (e.g. a crash before enqueue or mid-job).
+   * outdated (e.g. a crash before enqueue or mid-job), and interview
+   * questions left pending/generating.
    */
   private async sweepBacklog() {
     const backlog = await this.candidates.findParseBacklog();
@@ -160,6 +183,15 @@ export class JobsModule
     if (scoreBacklog.length > 0) {
       this.logger.log(
         `Startup sweep enqueued ${scoreBacklog.length} score job(s)`,
+      );
+    }
+    const questionsBacklog = await this.questions.findBacklog();
+    for (const applicationId of questionsBacklog) {
+      await this.jobs.enqueueQuestions(applicationId);
+    }
+    if (questionsBacklog.length > 0) {
+      this.logger.log(
+        `Startup sweep enqueued ${questionsBacklog.length} questions job(s)`,
       );
     }
     const embedBacklog = await this.candidates.findEmbedBacklog();

@@ -3,10 +3,12 @@ import { PgBoss } from 'pg-boss';
 import {
   EMBED_CANDIDATE_QUEUE,
   EXTRACT_VACANCY_CRITERIA_QUEUE,
+  GENERATE_QUESTIONS_QUEUE,
   PARSE_CANDIDATE_QUEUE,
   SCORE_APPLICATION_QUEUE,
   type EmbedCandidateJob,
   type ExtractVacancyCriteriaJob,
+  type GenerateQuestionsJob,
   type ParseCandidateJob,
   type ScoreApplicationJob,
 } from './jobs.constants.js';
@@ -64,6 +66,17 @@ export class JobsService {
     const payload: EmbedCandidateJob = { candidateId, cvDocumentId };
     await this.boss.send(EMBED_CANDIDATE_QUEUE, payload, {
       singletonKey: candidateId,
+    });
+  }
+
+  /**
+   * At most one QUEUED questions job per application (`short` policy). The
+   * API refuses a new request while one is pending or generating.
+   */
+  async enqueueQuestions(applicationId: string): Promise<void> {
+    const payload: GenerateQuestionsJob = { applicationId };
+    await this.boss.send(GENERATE_QUESTIONS_QUEUE, payload, {
+      singletonKey: applicationId,
     });
   }
 }
