@@ -134,6 +134,21 @@ Checkpoint B's reviews measured 97.2% (full_text, `tuned-2`) and 93.3% (rag, `ra
 
 In Checkpoint C full_text cited GitHub in none of 34 quotes. Here a skill evidenced only on GitHub is credited almost always, and cited from GitHub in most cases; the rest credit it from a related CV unit. rag cites GitHub more because each repo is its own chunk, retrieved by the criterion.
 
+## Project spend
+
+All live OpenAI runs logged in `docs/eval/`, against SPEC's $20 ceiling (third-party `gpt-5.4-mini` prices, unverified). A few step smokes during development (steps 2–9, cents each) were not logged and are not included.
+
+| Run                                    | Report                       |      Cost |
+| -------------------------------------- | ---------------------------- | --------: |
+| Checkpoint A (5 parse runs)            | `checkpoint-a.md`            |     $0.18 |
+| Checkpoint B (3 scoring runs)          | `checkpoint-b.md`            |     $1.00 |
+| Step 9 RAG scoring (2 runs)            | `rag-scoring.md`             |     $0.78 |
+| Checkpoint C walkthrough               | `checkpoint-c.md`            |     $0.23 |
+| Step 10 synthetic generation           | `synthetic-data.md`          |     $0.71 |
+| Step 10 seed (smoke, full, 2 retries)  | `synthetic-data.md`          |     $1.92 |
+| Steps 11–12 eval (3 smokes + full run) | this report, `baseline/*.md` |     $4.36 |
+| **Total**                              |                              | **$9.19** |
+
 ## Limits
 
 - **Synthetic data**: CVs are cleaner and more regular than real ones, and the labels come from a rule that a human agreed with at κ 0.65. The numbers measure agreement with that rule, not hiring quality.

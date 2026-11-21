@@ -99,7 +99,7 @@ Plan: `docs/plans/stage-2-checkpoint-c-fixes.md`. The six code gaps were fixed i
 | G7  | A score behind a failed parse no longer counts as in flight; static "Waiting for CV (parse failed)" chip                | That badge live; the board fell back to the 30 s idle interval instead of 3 s                                                      |
 | G8  | A failed rescore shows the previous score greyed out with "Last rescore failed — showing the previous score"            | An invalid-key rescore of Tomasz: badge "Fit score 97 of 100 (last rescore failed)", the drawer adds "Showing the previous score." |
 
-G4 (full_text ignores GitHub) and G5 (Find matches false positives) stay open for step 11, which measures retrieval and score quality.
+G4 (full_text ignores GitHub) and G5 (Find matches false positives) were left for step 11, which measured them on the synthetic set: 97% of GitHub-only skills credited and 72% cited from GitHub in full_text, and no weak candidate in any criteria-mode top 10 (`docs/eval/eval-baseline.md`).
 
 ## Caveats
 

@@ -123,12 +123,11 @@ The dev API and web app ran against `rag_ats_seed`, logged in as `seed@example.c
 - **The rule is generous at band boundaries** (spot-check above) and blind to emphasis: one role bullet that names a tag counts as fully met.
 - **Some CVs mention tags in more roles than the spec**: 17 personas, non-blocking drift warnings. A human or the scorer may credit more years than the rule does.
 - **Four persona names repeat** (Kwame Silva, Ananya Banerjee, Mateo Fischer, Pavel Hartmann): the emails differ (`-2` suffix), but two cards with the same name can sit on one board.
-- **Only 232 of 1000 pairs are scored in the database**; step 11 scores all 1000 in memory for agreement.
-- **2 applications have no score**, so step 11's agreement over the seeded applications covers 230.
+- **Only 232 of 1000 pairs are scored in the database**; step 11 does not use those scores. It scores a stratified sample of 381 pairs per mode itself (`docs/eval/eval-baseline.md`).
+- **2 applications have no score** in the seeded database (the two quote failures above).
 - **Prices** are third-party figures for `gpt-5.4-mini`, as in Checkpoints A–C.
 - **One reviewer**: the spot-check is Dude alone, 30 pairs.
 
 ## Next
 
-- **Step 11**: retrieval precision/recall@k for search (`queries.json`) and Find matches, score agreement against the rule and the spot-check labels for `full_text` and `rag`, and the grounding failure rate as the baseline for step 12.
-- **Step 12**: cite evidence by ID instead of quoting (`docs/plans/stage-2.md`, Part E).
+Both follow-ups are done: step 11 measured retrieval and score agreement on this set, and step 12 replaced quoting with evidence-unit IDs. Results: `docs/eval/eval-baseline.md`.

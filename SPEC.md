@@ -84,33 +84,36 @@ Eval:            npm run eval -w apps/api                # standalone script, pr
 │   ├── api/                          → NestJS backend
 │   │   ├── src/
 │   │   │   ├── auth/                 → register/login controller, JwtStrategy, JwtAuthGuard
-│   │   │   ├── candidates/           → controller, service, module, dto/ (guarded, NOT owner-scoped — shared pool)
-│   │   │   ├── vacancies/            → controller, service, module, dto/ (guarded + owner-scoped to req.user.id)
+│   │   │   ├── candidates/           → controller, service, module, dto/, search/ (semantic search) (guarded, NOT owner-scoped — shared pool)
+│   │   │   ├── vacancies/            → controller, service, module, dto/, matches/ (find matches) (guarded + owner-scoped to req.user.id)
 │   │   │   ├── applications/         → pipeline stage tracking (guarded, scoped via parent vacancy's owner)
 │   │   │   ├── apply/                → PUBLIC unauthenticated module: GET vacancy by token, POST CV submission
-│   │   │   ├── search/               → semantic search controller/service (guarded, NOT owner-scoped)
 │   │   │   ├── cv/                   → PDF check + text extraction (pdf-parse)
 │   │   │   ├── jobs/                 → pg-boss queue + workers
-│   │   │   ├── llm/                  → OpenAI client wrapper (parse, score prompts)
-│   │   │   ├── embeddings/           → OpenAI embedding service (text-embedding-3-small)
+│   │   │   ├── llm/                  → OpenAI client wrapper (parse, criteria, score prompts; embeddings via text-embedding-3-small)
+│   │   │   ├── github/               → GitHub REST client + profile fetcher (fixture client for the seed)
+│   │   │   ├── rag/                  → chunking, per-criterion retrieval and ranking
+│   │   │   ├── scoring/              → evidence units, citation resolving, overall score, criteria hash
 │   │   │   ├── db/                   → drizzle schema, migrations, client
 │   │   │   ├── app.module.ts
 │   │   │   └── main.ts
-│   │   ├── test/                     → e2e tests
-│   │   └── src/scripts/              → seed.ts, eval.ts
+│   │   ├── test/                     → e2e and integration tests (unit specs sit next to the code)
+│   │   └── src/scripts/              → seed.ts, eval.ts, synth.ts, parse-eval.ts, score-eval.ts
 │   └── web/                          → React + Vite frontend
 │       ├── src/
-│       │   ├── pages/
-│       │   │   ├── recruiter/        → vacancies, candidates, search, pipeline board
-│       │   │   └── apply/[token]/    → PUBLIC applicant-facing page (vacancy details + CV upload form)
-│       │   └── components/
-│       └── tests/
+│       │   ├── pages/                → one component per route (vacancies, pipeline, candidates + search, candidate, PUBLIC apply page, login/register)
+│       │   ├── api/, auth/, candidates/, vacancies/, pipeline/, apply/, layout/ → feature folders
+│       │   └── components/           → shared UI
+│       └── (tests sit next to the code as *.test.ts(x); harness in src/test/)
 ├── packages/
-│   └── shared/                        → shared TS types (Recruiter, Candidate, Vacancy, Application, ScoreResult, etc.)
+│   └── shared/                        → shared API contract types (`api.ts`: *Request/*Response types, ScoreResult, etc.)
 ├── data/
+│   ├── checkpoint-a/, checkpoint-b/    → small hand-made CV and vacancy sets for the parse and score evals
 │   └── synthetic/                      → 100 synthetic candidates x 10 vacancies (no real PII)
 ├── docs/
 │   ├── ideas/rag-tech-ats.md           → originating idea doc
+│   ├── plans/                           → Stage 2 roadmap and per-step plans
+│   ├── sdd.md                           → as-built software design document
 │   └── eval/                            → eval reports (precision/recall, score-agreement results)
 ├── docker-compose.yml                    → postgres+pgvector service
 └── SPEC.md                               → this file
@@ -121,28 +124,27 @@ Eval:            npm run eval -w apps/api                # standalone script, pr
 Nest controller/service pattern — thin controller, thick service, DTO validation via `class-validator`:
 
 ```typescript
-// apps/api/src/candidates/dto/search-candidates.dto.ts
-export class SearchCandidatesDto {
+// apps/api/src/candidates/dto/search-candidates-request.dto.ts
+export class SearchCandidatesRequestDto {
   @IsString()
   @MinLength(1)
   query: string;
 }
 
 // apps/api/src/candidates/candidates.controller.ts
+// guarded by the global JwtAuthGuard (APP_GUARD); public routes opt out with @Public()
 @Controller('candidates')
-@UseGuards(JwtAuthGuard) // guarded, but NOT owner-scoped — shared candidate pool
 export class CandidatesController {
   constructor(private readonly searchService: CandidateSearchService) {}
 
-  @Post('search')
-  async search(@Body() dto: SearchCandidatesDto) {
-    return this.searchService.semanticSearch(dto.query);
+  @Post('search') // guarded, but NOT owner-scoped — shared candidate pool
+  async search(@Body() dto: SearchCandidatesRequestDto) {
+    return this.searchService.search(dto.query);
   }
 }
 
 // apps/api/src/vacancies/vacancies.controller.ts
 @Controller('vacancies')
-@UseGuards(JwtAuthGuard)
 export class VacanciesController {
   constructor(private readonly vacanciesService: VacanciesService) {}
 
@@ -159,21 +161,21 @@ Conventions:
 - DTOs + `class-validator`/`class-transformer` for request validation (Nest-idiomatic)
 - Services hold business logic; controllers stay thin (validate → call service → respond)
 - Async/await only, no raw `.then()` chains
-- kebab-case filenames; PascalCase types/classes; camelCase functions/vars
-- One Nest module per domain concept (candidates, vacancies, applications, search)
+- kebab-case filenames in `apps/api` and `packages/shared`; `apps/web` follows the React convention (PascalCase component files, camelCase modules); PascalCase types/classes; camelCase functions/vars
+- One Nest module per domain concept (candidates, vacancies, applications, apply, auth, …); semantic search lives inside the candidates module
 
 ## Testing Strategy
 
 - **Unit (Jest):** parsing/scoring/search service logic with mocked LLM + embedding calls — no live API calls in unit tests
 - **E2E (Jest + Supertest, `@nestjs/testing`):** API endpoints against a test Postgres+pgvector instance (Docker), including: protected routes reject requests with no/invalid JWT cookie; a recruiter cannot see or modify another recruiter's vacancies/applications; any authenticated recruiter can see the full shared candidate pool; `apply/` routes work with no token at all
 - **Frontend (Vitest + React Testing Library)**
-- **Eval harness** (standalone script `apps/api/src/scripts/eval.ts` with its modules in `apps/api/src/scripts/eval/`, not part of the Jest suite — produces the thesis's quantitative results): runs retrieval + scoring over the 100×10 synthetic ground-truth set, reports retrieval precision/recall and score-agreement (e.g. correlation/MAE) vs self-labeled human judgments
+- **Eval harness** (standalone script `apps/api/src/scripts/eval.ts` with its modules in `apps/api/src/scripts/eval/`, not part of the Jest suite — produces the thesis's quantitative results): runs retrieval over the whole synthetic set and scoring over a stratified sample of its 100×10 pairs, reports retrieval precision/recall and score agreement (correlation, MAE, κ) against the rule-based ground truth and the human spot-check labels
 - No fixed coverage %, but every parsing/scoring/search service needs ≥1 test
 - Mock LLM/embedding calls in automated tests to keep them free, fast, and CI-safe; live-API runs (seed, eval) are manual/separate to control the $20 budget
 
 ## Boundaries
 
-- **Always do:** run `npm test --workspaces` before committing; validate all API input via DTOs; keep LLM calls isolated in `llm/` (swappable); never call live OpenAI API inside automated Jest/Vitest runs; cap submissions accepted per vacancy on the public `apply/` endpoint (basic abuse/cost guard, not production anti-bot) and reject files above a small size limit before they reach the LLM; hash passwords with `bcrypt`, never store or log plaintext passwords; enforce owner-scoping in the service layer (not just the controller) for vacancies/applications so a missed guard can't leak another recruiter's data
+- **Always do:** run `npm test` (api unit + web; `packages/shared` has no tests) before committing; validate all API input via DTOs; keep LLM calls isolated in `llm/` (swappable); never call live OpenAI API inside automated Jest/Vitest runs; cap submissions accepted per vacancy on the public `apply/` endpoint (basic abuse/cost guard, not production anti-bot) and reject files above a small size limit before they reach the LLM; hash passwords with `bcrypt`, never store or log plaintext passwords; enforce owner-scoping in the service layer (not just the controller) for vacancies/applications so a missed guard can't leak another recruiter's data
 - **Ask first:** adding paid dependencies/services beyond OpenAI API; schema changes requiring data migration; using any real (non-synthetic) candidate data; any single script run likely to burn a large fraction of the $20 budget; exposing the app beyond localhost (the public apply link is only "public" within the local demo — don't deploy it to the open internet without revisiting the abuse-guard boundary above); adding RBAC/roles beyond the single flat recruiter role
 - **Never do:** commit `.env`/API keys or the JWT signing secret; commit real PII; remove failing tests without discussion; call OpenAI API in an unbounded loop
 
@@ -185,11 +187,24 @@ Conventions:
 - Creating a vacancy auto-generates a working public apply link; an applicant can open it, view the role, and submit a CV without any account or login
 - CV + GitHub/portfolio ingestion produces a standardized structured profile for ≥90% of the 100 synthetic candidates without manual fixup
 - Semantic search returns relevant candidates for natural-language queries, measured via precision/recall against the self-labeled ground-truth set (100 candidates × 10 vacancies)
-- 100% of fit scores include a cited snippet traceable to source CV/profile text — no un-grounded scores
+- Every criterion scored above 0 cites a snippet traceable to source CV/profile text — no un-grounded scores. A criterion scored 0 cites a unit only for a concrete contrary fact, so a score whose criteria are all 0 can carry no citation (19 of 862 in the eval)
 - Quantitative eval report produced (retrieval precision/recall + score-agreement metric)
 - Qualitative feedback collected from ≥2-3 informal reviewers on usefulness/trust
 - Runs fully locally via Docker Compose — no cloud deploy required for defense
 - Total OpenAI spend stays under $20
+
+## As-built deviations
+
+Where the built system differs from this spec (details in `docs/sdd.md`):
+
+- **Synthetic data**: personas are built by code and the LLM writes only the CV and GitHub prose; ground-truth fit labels come from the persona specs by a fixed rule, checked by a blind human spot-check of 30 pairs (κ 0.65), not LLM-generated judgments.
+- **Eval**: scoring runs on a stratified 381-pair sample (all strong and partial pairs, 150 random weak pairs, the spot-check pairs) with band weights, not all 1000 pairs.
+- **Auth guard**: one global `JwtAuthGuard` with a `@Public()` opt-out instead of `@UseGuards` on each controller.
+- **Modules**: no separate `search/` or `embeddings/` module; search is in `candidates/search/`, embeddings in `llm/`.
+- **Grounding**: the scorer cites numbered evidence units by ID and the server resolves them to source text; a criterion scored 0 may cite nothing (see Success Criteria).
+- **Conventions**: lint does not enforce the `any` rule (`no-explicit-any` is off); `any` appears only in test files. `ExtractVacancyCriteriaWorker` is tested only through the scoring integration tests.
+- **Portfolio URLs** are stored and shown, never fetched.
+- **Not done yet**: qualitative reviewer feedback (Success Criteria).
 
 ## Open Questions
 
