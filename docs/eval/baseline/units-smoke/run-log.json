@@ -1,0 +1,24 @@
+[
+  {
+    "part": "scoring",
+    "startedAt": "2026-11-21T15:22:36.613Z",
+    "finishedAt": "2026-11-21T15:23:13.702Z",
+    "modes": ["full_text", "rag"],
+    "seed": 1,
+    "weak": 150,
+    "noise": 50,
+    "limit": 10,
+    "concurrency": 4,
+    "maxUsd": 1,
+    "retryFailed": false,
+    "spentUsd": 0.1218017,
+    "stopped": null,
+    "scoring": {
+      "planned": 22,
+      "done": 20,
+      "failed": 2,
+      "skipped": 0,
+      "notStarted": 0
+    }
+  }
+]
