@@ -1,7 +1,9 @@
 import { randomUUID } from 'crypto';
 import type { ApplicationScore } from '@rag-ats/shared';
 import request from 'supertest';
-import { normaliseForMatch } from '../src/scoring/verify-quotes.js';
+import { normaliseText } from '../src/llm/cv-profile-parser.js';
+import { escapeChunkText } from '../src/llm/prompts/application-score-rag.prompt.js';
+import { cvUnits, segmentText } from '../src/scoring/evidence-units.js';
 import { applyWithCv } from './apply.util.js';
 import { closeTestApp, createTestApp, type TestApp } from './e2e-app.util.js';
 import {
@@ -13,6 +15,7 @@ import {
   openaiScoreHandler,
   schemaNameOf,
   scoreFromRequest,
+  withoutEvidence,
   type MockCriterion,
 } from './msw/openai.handlers.js';
 import { server } from './msw/server.js';
@@ -121,7 +124,7 @@ describe('Application scoring (e2e)', () => {
   ) =>
     waitForScoreStatus(testApp.app, cookie, vacancyId, applicationId, status);
 
-  it('scores an application in the background with quotes found in the CV text', async () => {
+  it('scores an application in the background, citing the first CV unit', async () => {
     const vacancy = await createVacancy();
     const { applicationId } = await apply(vacancy.id, vacancy.applyToken);
 
@@ -138,14 +141,13 @@ describe('Application scoring (e2e)', () => {
     expect(result.overall).toBeLessThanOrEqual(100);
     expect(result.criteria.length).toBeGreaterThanOrEqual(3);
     expect(result.mode).toBe('full_text');
-    const cv = normaliseForMatch(await cvTextOf(applicationId));
+    // The fake scorer cites the first unit of the CV.
+    const firstUnit = cvUnits(normaliseText(await cvTextOf(applicationId)))[0];
     for (const criterion of result.criteria) {
       expect(criterion.retrieved).toBeNull();
-      expect(criterion.quotes.length).toBeGreaterThan(0);
-      for (const quote of criterion.quotes) {
-        expect(['cv', 'github']).toContain(quote.source);
-        expect(cv).toContain(normaliseForMatch(quote.text));
-      }
+      expect(criterion.quotes).toEqual([
+        { source: 'cv', text: firstUnit.text },
+      ]);
     }
     // Internal bookkeeping never leaks into the contract.
     expect(Object.keys(score).sort()).toEqual([
@@ -422,7 +424,28 @@ describe('Application scoring (e2e)', () => {
     });
   });
 
-  it('records a failed score and shows the error in the list when every quote is fabricated', async () => {
+  it('shows a score with a criterion at 0 when the model keeps citing no evidence for it', async () => {
+    server.use(
+      openaiScoreHandler((body) =>
+        withoutEvidence(scoreFromRequest(body), 'c1'),
+      ),
+    );
+    const vacancy = await createVacancy();
+    const { applicationId } = await apply(vacancy.id, vacancy.applyToken);
+
+    const score = await waitFor(vacancy.id, applicationId, 'scored');
+
+    expect(score.error).toBeNull();
+    const [first, ...rest] = score.result!.criteria;
+    expect(first).toMatchObject({ criterionId: 'c1', score: 0, quotes: [] });
+    expect(first.reasoning).toContain(
+      '(Score set to 0: no evidence was cited.)',
+    );
+    expect(rest.every((c) => c.score > 0 && c.quotes.length > 0)).toBe(true);
+    expect(score.result!.overall).toBeLessThan(80);
+  });
+
+  it('records a failed score and shows the error in the list when every citation is unknown', async () => {
     server.use(
       openaiScoreHandler((body) =>
         fabricatedScoreResponse(criterionIdsFromRequest(body)),
@@ -507,28 +530,21 @@ describe('Application scoring in rag mode (e2e)', () => {
     const result = score.result!;
     expect(result.mode).toBe('rag');
     expect(result.criteria.length).toBeGreaterThanOrEqual(3);
-    // A quote may sit in any chunk retrieved for the application.
-    const allRetrieved = result.criteria.flatMap((c) => c.retrieved!);
     for (const criterion of result.criteria) {
       const retrieved = criterion.retrieved!;
       expect(retrieved.length).toBeGreaterThan(0);
       expect(retrieved.length).toBeLessThanOrEqual(3);
-      expect(criterion.quotes.length).toBeGreaterThan(0);
-      for (const quote of criterion.quotes) {
-        expect(
-          allRetrieved.some(
-            (chunk) =>
-              chunk.source === quote.source &&
-              normaliseForMatch(chunk.text).includes(
-                normaliseForMatch(quote.text),
-              ),
-          ),
-        ).toBe(true);
-      }
+      // The fake scorer cites the first unit of the criterion's first chunk.
+      expect(criterion.quotes).toEqual([
+        {
+          source: retrieved[0].source,
+          text: segmentText(escapeChunkText(retrieved[0].text))[0],
+        },
+      ]);
     }
   }
 
-  it('embeds the new candidate, then scores from retrieved chunks with quotes inside the retrieved set', async () => {
+  it('embeds the new candidate, then scores from retrieved chunks citing units of the retrieved chunks', async () => {
     const { vacancyId, applicationId, candidateId } = await applyToNewVacancy();
 
     const score = await waitFor(vacancyId, applicationId, 'scored');

@@ -48,7 +48,8 @@ import { JobsService } from '../../src/jobs/jobs.service.js';
 import { ScoreApplicationWorker } from '../../src/jobs/score-application.worker.js';
 import { normaliseText } from '../../src/llm/cv-profile-parser.js';
 import { chunkCandidate } from '../../src/rag/chunking.js';
-import { normaliseForMatch } from '../../src/scoring/verify-quotes.js';
+import { escapeChunkText } from '../../src/llm/prompts/application-score-rag.prompt.js';
+import { cvUnits, segmentText } from '../../src/scoring/evidence-units.js';
 import { vacancyCriteriaHash } from '../../src/scoring/criteria-hash.js';
 import {
   captureOpenaiEmbeddingRequests,
@@ -64,6 +65,7 @@ import {
   openaiProfileHandler,
   openaiScoreHandler,
   scoreFromRequest,
+  withoutEvidence,
   type MockCriterion,
   type MockProfile,
 } from '../msw/openai.handlers.js';
@@ -413,13 +415,12 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
         'c2',
         'c3',
       ]);
-      const cv = normaliseForMatch(normaliseText(CV_TEXT));
+      // The fake scorer cites the first unit of the CV.
+      const firstUnit = cvUnits(normaliseText(CV_TEXT))[0];
       for (const criterion of result.criteria) {
-        expect(criterion.quotes.length).toBeGreaterThan(0);
-        for (const quote of criterion.quotes) {
-          expect(quote.source).toBe('cv');
-          expect(cv).toContain(normaliseForMatch(quote.text));
-        }
+        expect(criterion.quotes).toEqual([
+          { source: 'cv', text: firstUnit.text },
+        ]);
       }
       expect(Date.parse(result.scoredAt)).not.toBeNaN();
 
@@ -531,6 +532,33 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       expect((await rawScore(applicationId)).input_tokens).toBe(2400);
     });
 
+    it('retries a score without evidence, then stores it with that criterion at 0', async () => {
+      server.use(
+        openaiScoreHandler((body) =>
+          withoutEvidence(scoreFromRequest(body), 'c2'),
+        ),
+      );
+      const { applicationId } = await seedApplication();
+
+      await enqueueScore(applicationId);
+      const score = await waitForScore(applicationId, 'scored');
+
+      // One retry with feedback, then the criterion is zeroed, not failed.
+      expect(scoreCapture.bodies).toHaveLength(2);
+      const result = score.result!;
+      const [c1, c2, c3] = result.criteria;
+      expect([c1.score, c2.score, c3.score]).toEqual([80, 0, 80]);
+      expect(c2.quotes).toEqual([]);
+      expect(c2.reasoning).toBe(
+        'Evidence found for c2. (Score set to 0: no evidence was cited.)',
+      );
+      // (80*2 + 0*2 + 80*1) / 5: c1 and c2 are must, c3 is nice
+      expect(result.overall).toBe(48);
+      const row = await rawScore(applicationId);
+      expect(row.error).toBeNull();
+      expect(row.failure_details).toBeNull();
+    });
+
     it('fails with a grounding message when quotes are fabricated twice', async () => {
       server.use(
         openaiScoreHandler((body) =>
@@ -561,10 +589,10 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       const details = (await rawScore(applicationId)).failure_details;
       expect(Array.isArray(details)).toBe(true);
       expect(details.length).toBeGreaterThan(0);
-      expect(details.join('\n')).toContain('not a verbatim excerpt');
+      expect(details.join('\n')).toContain('cites unknown evidence id');
       // Never part of the API shape.
       expect(failed).not.toHaveProperty('failureDetails');
-      expect(JSON.stringify(failed)).not.toContain('Imaginary Corp');
+      expect(JSON.stringify(failed)).not.toContain('unknown evidence id');
 
       // A reset to pending keeps the last failure's details for diagnosis.
       await scores.resetToPending(applicationId);
@@ -666,10 +694,9 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       const last = await waitForScore(applicationId, 'scored');
       expect(last).toMatchObject({ stale: false, waitingForParse: false });
       expect(last.result?.cvDocumentId).toBe(newCvId);
-      const quote = last.result!.criteria[0].quotes[0].text;
-      expect(normaliseForMatch(normaliseText(newCvText))).toContain(
-        normaliseForMatch(quote),
-      );
+      expect(last.result!.criteria[0].quotes).toEqual([
+        { source: 'cv', text: cvUnits(normaliseText(newCvText))[0].text },
+      ]);
       expect((await rawScore(applicationId)).cv_document_id).toBe(newCvId);
     });
 
@@ -859,7 +886,6 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
       const own = chunkCandidate(RAG_CV_TEXT, null).map((c) => c.text);
       expect(own).toHaveLength(5);
       const expectedTop = ['TypeScript', 'REST', 'Docker'];
-      const allRetrieved = result.criteria.flatMap((c) => c.retrieved!);
       for (const [index, criterion] of result.criteria.entries()) {
         const retrieved = criterion.retrieved!;
         expect(retrieved.length).toBeGreaterThan(0);
@@ -875,15 +901,13 @@ describe('Score jobs (Testcontainers + MSW + real pg-boss)', () => {
         expect(similarities).toEqual([...similarities].sort((a, b) => b - a));
         expect(retrieved[0].text).toContain(expectedTop[index]);
 
-        // Quotes come from the chunks retrieved for the application.
-        expect(criterion.quotes.length).toBeGreaterThan(0);
-        for (const quote of criterion.quotes) {
-          expect(
-            allRetrieved.some((c) =>
-              normaliseForMatch(c.text).includes(normaliseForMatch(quote.text)),
-            ),
-          ).toBe(true);
-        }
+        // The fake scorer cites the first unit of the criterion's first chunk.
+        expect(criterion.quotes).toEqual([
+          {
+            source: 'cv',
+            text: segmentText(escapeChunkText(retrieved[0].text))[0],
+          },
+        ]);
       }
 
       // The model saw evidence, not the CV.

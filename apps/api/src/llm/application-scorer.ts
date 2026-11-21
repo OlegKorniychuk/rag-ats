@@ -14,7 +14,7 @@ import {
 import {
   APPLICATION_SCORE_RAG_SYSTEM_PROMPT,
   applicationScoreRagUserPrompt,
-  ragGroundingSources,
+  indexEvidence,
   type CriterionEvidence,
 } from './prompts/application-score-rag.prompt.js';
 import { buildGithubBlock } from './prompts/cv-profile.prompt.js';
@@ -22,12 +22,19 @@ import { normaliseText } from './cv-profile-parser.js';
 import type { GithubSnapshot } from '../github/github-snapshot.js';
 import { computeOverall } from '../scoring/compute-overall.js';
 import {
-  verifyQuotes,
-  type VerifyQuotesSources,
-} from '../scoring/verify-quotes.js';
+  cvUnits,
+  githubUnits,
+  type EvidenceUnit,
+} from '../scoring/evidence-units.js';
+import {
+  MAX_QUOTES_PER_CRITERION,
+  resolveCitations,
+} from '../scoring/resolve-citations.js';
 
-export const MAX_QUOTES_PER_CRITERION = 3;
+export { MAX_QUOTES_PER_CRITERION };
 export const MAX_QUOTE_CHARS = 300;
+/** Appended to the reasoning of a criterion whose score was set to 0 for lack of evidence. */
+export const ZEROED_NOTE = ' (Score set to 0: no evidence was cited.)';
 
 export class LlmScoreError extends Error {
   constructor(message = 'The model could not score the application') {
@@ -36,11 +43,11 @@ export class LlmScoreError extends Error {
   }
 }
 
-/** The model's answer could not be tied to verbatim CV/GitHub text, even after a retry. */
+/** The model's citations could not be tied to evidence units, even after a retry. */
 export class LlmGroundingError extends LlmScoreError {
   /**
-   * The last attempt's verification problems (capped, see `capProblems`).
-   * They quote CV text: for the database row only, never for logs or the API.
+   * The last attempt's citation problems (capped, see `capProblems`). They can
+   * echo model output: for the database row only, never for logs or the API.
    */
   constructor(
     readonly problems: readonly string[] = [],
@@ -90,6 +97,15 @@ export interface ApplicationScoreResult {
   usage: { inputTokens: number; outputTokens: number; model: string };
   /** Model calls the successful result took: 1, or 2 after a grounding retry. */
   attempts: 1 | 2;
+  /**
+   * Criterion ids whose score above 0 was set to 0 because the model cited no
+   * evidence even after the retry. Not stored: the reasoning carries a note.
+   */
+  zeroedCriteria: string[];
+}
+
+function unitEntry(unit: EvidenceUnit): [string, EvidenceUnit] {
+  return [unit.id, unit];
 }
 
 function clampScore(score: number): number {
@@ -112,21 +128,28 @@ export class ApplicationScorer {
     const cv = normaliseText(params.cvText);
     const githubBlock =
       params.github?.status === 'ok' ? buildGithubBlock(params.github) : null;
+    const cvUnitList = cvUnits(cv);
+    const githubUnitList = githubBlock ? githubUnits(githubBlock) : null;
 
     return this.runAttempts({
       criteria,
       system: APPLICATION_SCORE_SYSTEM_PROMPT,
       userPrompt: (feedback) =>
-        applicationScoreUserPrompt(criteria, cv, githubBlock, feedback),
-      sources: { cv, github: githubBlock },
+        applicationScoreUserPrompt(
+          criteria,
+          cvUnitList,
+          githubUnitList,
+          feedback,
+        ),
+      units: new Map([...cvUnitList, ...(githubUnitList ?? [])].map(unitEntry)),
       retrievedFor: () => null,
     });
   }
 
   /**
    * RAG mode: each criterion is scored from the chunks retrieved for it
-   * (`evidence`, best first), but a quote is verified against every chunk
-   * retrieved for the application, never against unretrieved text.
+   * (`evidence`, best first), but it may cite a unit from any chunk retrieved
+   * for the application, never from unretrieved text.
    */
   async scoreRag(params: {
     criteria: ScoringCriterion[];
@@ -134,26 +157,33 @@ export class ApplicationScorer {
   }): Promise<ApplicationScoreResult> {
     const { criteria, evidence } = params;
     const chunksById = new Map(evidence.map((e) => [e.criterionId, e.chunks]));
+    // The prompt indexes the same evidence the same way, so the ids it shows
+    // are exactly the ones in this map.
+    const { units } = indexEvidence(evidence);
 
     return this.runAttempts({
       criteria,
       system: APPLICATION_SCORE_RAG_SYSTEM_PROMPT,
       userPrompt: (feedback) =>
         applicationScoreRagUserPrompt(criteria, evidence, feedback),
-      sources: ragGroundingSources(evidence.flatMap((e) => e.chunks)),
+      units: new Map(units.map(unitEntry)),
       retrievedFor: (id) => chunksById.get(id) ?? [],
     });
   }
 
-  /** Shared by both modes: call → normalise → verify → retry once → assemble. */
+  /**
+   * Shared by both modes: call → normalise → resolve citations → retry once →
+   * assemble. A score above 0 citing nothing is a problem on the first attempt
+   * (retry with feedback) and is set to 0 on the second.
+   */
   private async runAttempts(params: {
     criteria: ScoringCriterion[];
     system: string;
     userPrompt: (feedback: string[] | null) => string;
-    sources: VerifyQuotesSources;
+    units: ReadonlyMap<string, EvidenceUnit>;
     retrievedFor: (criterionId: string) => RetrievedChunk[] | null;
   }): Promise<ApplicationScoreResult> {
-    const { criteria, system, userPrompt, sources, retrievedFor } = params;
+    const { criteria, system, userPrompt, units, retrievedFor } = params;
     const expectedIds = criteria.map((c) => c.id);
 
     const usage = { inputTokens: 0, outputTokens: 0, model: this.llm.model };
@@ -167,33 +197,39 @@ export class ApplicationScorer {
           criterionId: c.criterionId.trim(),
           score: clampScore(c.score),
           reasoning: c.reasoning.trim(),
-          quotes: c.quotes.map((q) => ({
-            source: q.source,
-            text: q.text.trim(),
-          })),
+          evidence: c.evidence,
         })),
       };
 
-      const check = verifyQuotes(normalised, sources, expectedIds);
+      const check = resolveCitations(normalised, units, expectedIds, {
+        zeroUnsupported: attempt === 2,
+      });
       if (!check.valid) {
         this.logger.warn(
-          `Score attempt ${attempt} failed quote verification: problems=${check.problems.length} (details stored on the score row when the score fails)`,
+          `Score attempt ${attempt} failed citation check: problems=${check.problems.length} (details stored on the score row when the score fails)`,
         );
         feedback = check.problems;
         continue;
       }
 
       const byId = new Map(normalised.criteria.map((c) => [c.criterionId, c]));
+      const resolvedById = new Map(
+        check.criteria.map((c) => [c.criterionId, c]),
+      );
+      const zeroed = new Set(check.zeroed);
       const scored: ScoredCriterion[] = criteria.map((input) => {
         const c = byId.get(input.id)!;
+        const resolved = resolvedById.get(input.id)!;
         return {
           criterionId: input.id,
           criterion: input.text,
           importance: input.importance,
-          score: c.score,
-          reasoning: c.reasoning,
-          // A prefix of a verbatim quote is still verbatim.
-          quotes: c.quotes.slice(0, MAX_QUOTES_PER_CRITERION).map((q) => ({
+          score: resolved.score,
+          reasoning: zeroed.has(input.id)
+            ? `${c.reasoning}${ZEROED_NOTE}`.trim()
+            : c.reasoning,
+          // Units are already capped; this is defence in depth.
+          quotes: resolved.quotes.map((q) => ({
             source: q.source,
             text: q.text.slice(0, MAX_QUOTE_CHARS),
           })),
@@ -206,6 +242,7 @@ export class ApplicationScorer {
         overall: computeOverall(scored),
         usage,
         attempts: attempt,
+        zeroedCriteria: check.zeroed,
       };
     }
 

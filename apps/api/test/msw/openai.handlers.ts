@@ -3,7 +3,6 @@ import { APPLICATION_SCORE_SCHEMA_NAME } from '../../src/llm/application-score.s
 import { CV_PROFILE_SCHEMA_NAME } from '../../src/llm/cv-profile.schema.js';
 import { VACANCY_CRITERIA_SCHEMA_NAME } from '../../src/llm/vacancy-criteria.schema.js';
 import { EMBEDDING_DIMENSIONS } from '../../src/llm/embedding.constants.js';
-import { normaliseForMatch } from '../../src/scoring/verify-quotes.js';
 
 export const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
 export const OPENAI_EMBEDDINGS_URL = 'https://api.openai.com/v1/embeddings';
@@ -28,16 +27,12 @@ export interface MockCriterion {
   importance: 'must' | 'nice';
 }
 
-export interface MockQuote {
-  source: 'cv' | 'github';
-  text: string;
-}
-
 export interface MockCriterionScore {
   criterionId: string;
   score: number;
   reasoning: string;
-  quotes: MockQuote[];
+  /** Cited evidence-unit ids ("S1", "G3"). */
+  evidence: string[];
 }
 
 export interface MockScoreResponse {
@@ -213,10 +208,10 @@ export function sourceFromRequest(
   return extractTag(messageContent(body, 'user'), source);
 }
 
-/** A valid score response: one entry per id, each carrying `quote`. */
+/** A valid score response: one entry per id, each citing `unitId`. */
 export function validScoreResponse(
   criterionIds: string[],
-  quote: MockQuote,
+  unitId: string,
   options: { score?: number; rationale?: string } = {},
 ): MockScoreResponse {
   return {
@@ -224,32 +219,60 @@ export function validScoreResponse(
       criterionId,
       score: options.score ?? 80,
       reasoning: `Evidence found for ${criterionId}.`,
-      quotes: [quote],
+      evidence: [unitId],
     })),
     rationale: options.rationale ?? 'Solid match based on the CV.',
   };
 }
 
-/** A response whose quote appears nowhere in the CV: fails verification. */
+/** The id fabricated responses cite: no request ever has this many units. */
+export const UNKNOWN_UNIT_ID = 'S999';
+
+/** A response citing a unit that does not exist: fails the citation check. */
 export function fabricatedScoreResponse(
   criterionIds: string[],
   options: { score?: number } = {},
 ): MockScoreResponse {
-  return validScoreResponse(
-    criterionIds,
-    {
-      source: 'cv',
-      text: 'Led a team of 40 engineers at Imaginary Corp Ltd',
-    },
-    options,
-  );
+  return validScoreResponse(criterionIds, UNKNOWN_UNIT_ID, options);
+}
+
+/**
+ * `response` with the given criteria keeping their score but citing nothing:
+ * the first attempt retries, then the final attempt sets them to 0.
+ */
+export function withoutEvidence(
+  response: MockScoreResponse,
+  ...criterionIds: string[]
+): MockScoreResponse {
+  return {
+    ...response,
+    criteria: response.criteria.map((c) =>
+      criterionIds.includes(c.criterionId) ? { ...c, evidence: [] } : c,
+    ),
+  };
+}
+
+export interface RequestUnit {
+  id: string;
+  /** As rendered: one line, ID-lookalikes defused. */
+  text: string;
+}
+
+const UNIT_LINE = /^\[([SG]\d+)\] (.*)$/;
+
+/** The `[ID] text` units listed in `content` (a tag's body or a chunk's body). */
+export function unitsIn(content: string): RequestUnit[] {
+  return content
+    .split('\n')
+    .map((line) => UNIT_LINE.exec(line))
+    .filter((m): m is RegExpExecArray => !!m)
+    .map((m) => ({ id: m[1], text: m[2] }));
 }
 
 export interface RequestEvidenceChunk {
   id: string;
   source: 'cv' | 'github';
-  /** As the model saw it (tags defused). */
-  text: string;
+  units: RequestUnit[];
 }
 
 /**
@@ -270,7 +293,7 @@ export function evidenceFromRequest(
     chunks.set(match[1], {
       id: match[1],
       source: match[2] as 'cv' | 'github',
-      text: match[3],
+      units: unitsIn(match[3]),
     });
   }
   const evidence = new Map<string, RequestEvidenceChunk[]>();
@@ -290,32 +313,34 @@ export function evidenceFromRequest(
   return evidence;
 }
 
+/** Every unit a score request shows the model, by id (`<cv>`, `<github>` or `<evidence>`). */
+export function unitsFromRequest(
+  body: OpenaiRequestBody,
+): Map<string, RequestUnit> {
+  const user = messageContent(body, 'user');
+  const all = ['cv', 'github', 'evidence'].flatMap((tag) =>
+    unitsIn(extractTag(user, tag) ?? ''),
+  );
+  return new Map(all.map((u) => [u.id, u]));
+}
+
 /**
- * Valid `rag` response: each criterion quotes the first `chars` characters of
- * its own first evidence chunk (score 0 and no quote when it has none).
+ * Valid `rag` response: each criterion cites the first unit of its own first
+ * evidence chunk (score 0 and no citation when it has none).
  */
 export function scoreFromEvidence(
   body: OpenaiRequestBody,
-  options: { score?: number; chars?: number } = {},
+  options: { score?: number } = {},
 ): MockScoreResponse {
   const evidence = evidenceFromRequest(body);
   return {
     criteria: criterionIdsFromRequest(body).map((criterionId) => {
-      const first = evidence.get(criterionId)?.[0];
+      const first = evidence.get(criterionId)?.[0]?.units[0];
       return {
         criterionId,
         score: first ? (options.score ?? 80) : 0,
         reasoning: `Evidence found for ${criterionId}.`,
-        quotes: first
-          ? [
-              {
-                source: first.source,
-                text: normaliseForMatch(first.text)
-                  .slice(0, options.chars ?? 40)
-                  .trim(),
-              },
-            ]
-          : [],
+        evidence: first ? [first.id] : [],
       };
     }),
     rationale: 'Solid match based on the retrieved evidence.',
@@ -323,26 +348,27 @@ export function scoreFromEvidence(
 }
 
 /**
- * Valid response quoting the first `chars` characters of the `<cv>` sent, or,
- * for a `rag` request (it has `<evidence>` instead of `<cv>`), of each
- * criterion's own first chunk.
+ * Valid response citing the first unit of the `<cv>` sent, or, for a `rag`
+ * request (it has `<evidence>` instead of `<cv>`), of each criterion's own
+ * first chunk.
  */
 export function scoreFromRequest(
   body: OpenaiRequestBody,
-  options: { score?: number; chars?: number } = {},
+  options: { score?: number } = {},
 ): MockScoreResponse {
   if (extractTag(messageContent(body, 'user'), 'evidence') !== null) {
     return scoreFromEvidence(body, options);
   }
-  const cv = sourceFromRequest(body, 'cv') ?? '';
-  const text = normaliseForMatch(cv)
-    .slice(0, options.chars ?? 40)
-    .trim();
-  return validScoreResponse(
-    criterionIdsFromRequest(body),
-    { source: 'cv', text },
-    options,
-  );
+  const first = unitsIn(sourceFromRequest(body, 'cv') ?? '')[0];
+  return {
+    criteria: criterionIdsFromRequest(body).map((criterionId) => ({
+      criterionId,
+      score: first ? (options.score ?? 80) : 0,
+      reasoning: `Evidence found for ${criterionId}.`,
+      evidence: first ? [first.id] : [],
+    })),
+    rationale: 'Solid match based on the CV.',
+  };
 }
 
 /** Refusal for requests of `schemaName` (default `cv_profile`; `null` = any). */

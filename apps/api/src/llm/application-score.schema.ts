@@ -11,32 +11,21 @@ export const applicationScoreSchema = z.object({
         criterionId: z
           .string()
           .describe('The id of the criterion being judged, e.g. "c1"'),
+        evidence: z
+          .array(z.string())
+          .describe(
+            'IDs of 0-3 evidence units (e.g. "S14", "G3") that show this criterion; empty for a score of 0 when the CV is silent about it',
+          ),
         score: z
           .number()
           .int()
           .describe(
-            'Integer 0-100: how well the evidence shows the candidate meets this criterion',
+            'Integer 0-100: how well the cited evidence shows the candidate meets this criterion. A score above 0 requires at least one ID in `evidence`, otherwise 0',
           ),
         reasoning: z
           .string()
           .describe(
             'One or two sentences explaining the score from the evidence',
-          ),
-        quotes: z
-          .array(
-            z.object({
-              source: z
-                .enum(['cv', 'github'])
-                .describe('Where the quote was copied from'),
-              text: z
-                .string()
-                .describe(
-                  'An exact, verbatim excerpt (2-300 characters) copied from that source',
-                ),
-            }),
-          )
-          .describe(
-            '0-3 verbatim quotes that are evidence for this criterion; empty for a score of 0 when the CV is silent about it',
           ),
       }),
     )
