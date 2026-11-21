@@ -3,6 +3,7 @@ import { APPLICATION_SCORE_SCHEMA_NAME } from '../../src/llm/application-score.s
 import { CV_PROFILE_SCHEMA_NAME } from '../../src/llm/cv-profile.schema.js';
 import { VACANCY_CRITERIA_SCHEMA_NAME } from '../../src/llm/vacancy-criteria.schema.js';
 import { EMBEDDING_DIMENSIONS } from '../../src/llm/embedding.constants.js';
+import { INTERVIEW_QUESTIONS_SCHEMA_NAME } from '../../src/llm/interview-questions.schema.js';
 
 export const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
 export const OPENAI_EMBEDDINGS_URL = 'https://api.openai.com/v1/embeddings';
@@ -183,6 +184,102 @@ export function openaiScoreHandler(
   options: HandlerOptions = {},
 ) {
   return openaiSchemaHandler(APPLICATION_SCORE_SCHEMA_NAME, async (body) => {
+    await options.before?.();
+    return jsonOutput(
+      typeof response === 'function' ? response(body) : response,
+      options,
+    );
+  });
+}
+
+export interface MockQuestion {
+  text: string;
+  basis: 'fact' | 'gap';
+  criterionId: string;
+  purpose: string;
+  /** Cited evidence-unit ids ("S1", "G3"). */
+  evidence: string[];
+}
+
+export interface MockQuestionsResponse {
+  questions: MockQuestion[];
+}
+
+export interface RequestQuestionCriterion {
+  id: string;
+  score: number;
+}
+
+const QUESTION_CRITERION_LINE = /^(\S+) \[(?:must|nice)\] score (\d+) — /;
+
+/** The criteria (id, score) of an `interview_questions` request, in order. */
+export function questionCriteriaFromRequest(
+  body: OpenaiRequestBody,
+): RequestQuestionCriterion[] {
+  const block = extractTag(messageContent(body, 'user'), 'criteria') ?? '';
+  return block
+    .split('\n')
+    .map((line) => QUESTION_CRITERION_LINE.exec(line))
+    .filter((m): m is RegExpExecArray => !!m)
+    .map((m) => ({ id: m[1], score: Number(m[2]) }));
+}
+
+/**
+ * A valid questions response for the request actually sent: one fact question
+ * on the first criterion citing the first CV unit, and one gap question on the
+ * lowest-scored criterion.
+ */
+export function validQuestionsResponse(
+  body: OpenaiRequestBody,
+): MockQuestionsResponse {
+  const criteria = questionCriteriaFromRequest(body);
+  const firstUnit = unitsIn(sourceFromRequest(body, 'cv') ?? '')[0];
+  const lowest = [...criteria].sort((a, b) => a.score - b.score)[0];
+  return {
+    questions: [
+      {
+        text: `Tell me more about ${firstUnit?.id ?? 'S1'}.`,
+        basis: 'fact',
+        criterionId: criteria[0]?.id ?? 'c1',
+        purpose: 'Checks the stated experience.',
+        evidence: [firstUnit?.id ?? 'S1'],
+      },
+      {
+        text: 'How would you close this gap?',
+        basis: 'gap',
+        criterionId: lowest?.id ?? 'c1',
+        purpose: 'Checks the missing requirement.',
+        evidence: [],
+      },
+    ],
+  };
+}
+
+/** A questions response whose fact question cites a unit that does not exist. */
+export function fabricatedQuestionsResponse(
+  body: OpenaiRequestBody,
+): MockQuestionsResponse {
+  const valid = validQuestionsResponse(body);
+  return {
+    questions: valid.questions.map((q) =>
+      q.basis === 'fact' ? { ...q, evidence: [UNKNOWN_UNIT_ID] } : q,
+    ),
+  };
+}
+
+/**
+ * Successful `interview_questions` response. Pass a fixed response or a
+ * function of the request body; the default is `validQuestionsResponse`.
+ */
+export function openaiQuestionsHandler(
+  response:
+    | MockQuestionsResponse
+    | ((
+        body: OpenaiRequestBody,
+      ) => MockQuestionsResponse) = validQuestionsResponse,
+  options: HandlerOptions = {},
+) {
+  return openaiSchemaHandler(INTERVIEW_QUESTIONS_SCHEMA_NAME, async (body) => {
     await options.before?.();
     return jsonOutput(
       typeof response === 'function' ? response(body) : response,
