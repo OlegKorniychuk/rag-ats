@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import type {
   ApplicationScore,
   InterviewQuestion,
@@ -19,7 +19,12 @@ import { QuoteBlock } from '../components/QuoteBlock';
 import { errorMessage } from '../lib/errors';
 import { formatDate } from '../lib/format';
 import { ImportanceChip } from './ImportanceChip';
-import { useApplicationQuestions, useGenerateQuestions } from './queries';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  questionsKey,
+  useApplicationQuestions,
+  useGenerateQuestions,
+} from './queries';
 
 const GROUPS = [
   { basis: 'gap', title: 'Gaps to probe', chip: 'GAP' },
@@ -126,6 +131,19 @@ export function QuestionsSection({
 }: QuestionsSectionProps) {
   const query = useApplicationQuestions(applicationId);
   const generate = useGenerateQuestions(applicationId);
+  const queryClient = useQueryClient();
+
+  // A rescore (or a new CV) changes the score under the cached questions,
+  // which stop polling once ready: refetch so `stale` is current.
+  const scoreVersion = `${score.status}|${score.stale}|${score.result?.scoredAt ?? ''}`;
+  const seenVersion = useRef(scoreVersion);
+  useEffect(() => {
+    if (seenVersion.current === scoreVersion) return;
+    seenVersion.current = scoreVersion;
+    void queryClient.invalidateQueries({
+      queryKey: questionsKey(applicationId),
+    });
+  }, [scoreVersion, applicationId, queryClient]);
   const questions = query.data;
   const status = questions?.status ?? null;
   const inFlight = status === 'pending' || status === 'generating';

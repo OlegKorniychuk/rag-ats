@@ -5,8 +5,8 @@ import type { QuestionsRecord } from './metrics.js';
 import { BANDS } from './sample.js';
 
 export const REVIEW_HEADER =
-  '| # | band | vacancy | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |';
-const SEPARATOR = `|${' --- |'.repeat(10)}`;
+  '| # | band | vacancy | candidate | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |';
+const SEPARATOR = `|${' --- |'.repeat(11)}`;
 
 const GROUNDED = ['yes', 'partly', 'no'] as const;
 const USEFUL = ['yes', 'no'] as const;
@@ -68,6 +68,7 @@ export function buildQuestionsReview(
       String(i + 1),
       record.item.band,
       cell(record.item.vacancySpecId),
+      cell(`${record.item.personaId} (${record.item.applicationId})`),
       cell(`${question.criterion} (${score ?? '?'})`),
       question.basis,
       cell(question.text),
@@ -119,16 +120,16 @@ export function summariseQuestionsReview(
     if (!/^\|\s*\d+\s*\|/.test(line)) continue;
     const row = cells(line);
     const n = row[0];
-    const grounded = (row[8] ?? '').toLowerCase();
-    const useful = (row[9] ?? '').toLowerCase();
+    const grounded = (row[9] ?? '').toLowerCase();
+    const useful = (row[10] ?? '').toLowerCase();
     if (grounded && !(GROUNDED as readonly string[]).includes(grounded)) {
       throw new QuestionsReviewError(
-        `row ${n}: grounded must be yes, partly or no (got "${row[8]}")`,
+        `row ${n}: grounded must be yes, partly or no (got "${row[9]}")`,
       );
     }
     if (useful && !(USEFUL as readonly string[]).includes(useful)) {
       throw new QuestionsReviewError(
-        `row ${n}: useful must be yes or no (got "${row[9]}")`,
+        `row ${n}: useful must be yes or no (got "${row[10]}")`,
       );
     }
     if (!grounded && !useful) continue;

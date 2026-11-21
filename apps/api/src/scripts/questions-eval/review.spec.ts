@@ -34,7 +34,7 @@ describe('buildQuestionsReview', () => {
     const rows = rowsOf(markdown);
 
     expect(markdown).toContain(
-      '| # | band | vacancy | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
+      '| # | band | vacancy | candidate | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
     );
     expect(rows).toHaveLength(25);
     for (const band of ['strong', 'partial', 'weak']) {
@@ -54,6 +54,11 @@ describe('buildQuestionsReview', () => {
     expect(rows.some((r) => r.includes('| partial |'))).toBe(false);
   });
 
+  it('identifies the candidate (persona and application) on every row', () => {
+    const row = rowsOf(buildQuestionsReview([threeRecords()[0]], 1, 1))[0];
+    expect(row).toContain('| v1 | p1 (a1) |');
+  });
+
   it('shows the criterion score and the quotes with their source', () => {
     const row = rowsOf(buildQuestionsReview([threeRecords()[0]], 1, 1))[0];
     expect(row).toMatch(
@@ -65,12 +70,12 @@ describe('buildQuestionsReview', () => {
 describe('summariseQuestionsReview', () => {
   it('counts a labelled fixture', () => {
     const markdown = [
-      '| # | band | vacancy | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
-      '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
-      '| 1 | strong | v1 | Kafka (90) | fact | Q | P | cv: x | yes | yes |',
-      '| 2 | strong | v1 | Kafka (90) | fact | Q | P | cv: x | Partly | no |',
-      '| 3 | weak | v1 | Kafka (10) | gap | Q | P |  | no | Yes |',
-      '| 4 | weak | v1 | Kafka (10) | gap | Q | P |  |  |  |',
+      '| # | band | vacancy | candidate | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
+      '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+      '| 1 | strong | v1 | p1 | Kafka (90) | fact | Q | P | cv: x | yes | yes |',
+      '| 2 | strong | v1 | p1 | Kafka (90) | fact | Q | P | cv: x | Partly | no |',
+      '| 3 | weak | v1 | p1 | Kafka (10) | gap | Q | P |  | no | Yes |',
+      '| 4 | weak | v1 | p1 | Kafka (10) | gap | Q | P |  |  |  |',
     ].join('\n');
 
     expect(summariseQuestionsReview(markdown)).toEqual({
@@ -82,9 +87,9 @@ describe('summariseQuestionsReview', () => {
 
   it('rejects an unknown label with its row number', () => {
     const markdown = [
-      '| # | band | vacancy | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
-      '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
-      '| 7 | strong | v1 | Kafka (90) | fact | Q | P | cv: x | maybe | yes |',
+      '| # | band | vacancy | candidate | criterion (score) | basis | question | purpose | quotes | grounded (yes/partly/no) | useful (yes/no) |',
+      '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+      '| 7 | strong | v1 | p1 | Kafka (90) | fact | Q | P | cv: x | maybe | yes |',
     ].join('\n');
     expect(() => summariseQuestionsReview(markdown)).toThrow(
       QuestionsReviewError,

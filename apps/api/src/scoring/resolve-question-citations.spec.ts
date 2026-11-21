@@ -115,6 +115,17 @@ describe('resolveQuestionCitations', () => {
     ]);
   });
 
+  it('keeps at most one contrary quote on a gap question', () => {
+    const result = resolve([
+      q({ basis: 'gap', criterionId: 'c2', evidence: ['S3', 'S4'] }),
+    ]);
+
+    expect(result.valid).toBe(true);
+    expect(result.questions[0].quotes).toEqual([
+      { source: 'cv', text: 'Docker Compose for local dev.' },
+    ]);
+  });
+
   it('does not reject a gap on a criterion scored 50 or more', () => {
     expect(
       resolve([q({ basis: 'gap', criterionId: 'c1', evidence: [] })]).valid,

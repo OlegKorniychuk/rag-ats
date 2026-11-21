@@ -13,6 +13,8 @@ import { preview } from './verify-quotes.js';
 
 /** Most questions kept from one answer; later ones are dropped. */
 export const MAX_QUESTIONS = 10;
+/** A gap question keeps at most one quote: the concrete contrary fact. */
+export const MAX_GAP_QUOTES = 1;
 
 /** A scored vacancy criterion the questions may target. */
 export interface QuestionCriterion {
@@ -44,7 +46,7 @@ export interface ResolveQuestionCitationsResult {
 
 /**
  * Checks every question's criterion and cited unit IDs and resolves the IDs to
- * the units' verbatim text (deduplicated, at most 3). A fact question must cite
+ * the units' verbatim text (deduplicated; at most 3 for a fact, 1 for a gap). A fact question must cite
  * at least one unit. A gap on a criterion scored 50 or more is not a problem
  * (the eval measures it). Questions past MAX_QUESTIONS are dropped.
  */
@@ -84,7 +86,10 @@ export function resolveQuestionCitations(
       const unit = units.get(unitId);
       if (!unit) {
         problems.push(questionProblems.unknownEvidence(index, raw));
-      } else if (quotes.length < MAX_QUOTES_PER_CRITERION) {
+      } else if (
+        quotes.length <
+        (question.basis === 'gap' ? MAX_GAP_QUOTES : MAX_QUOTES_PER_CRITERION)
+      ) {
         quotes.push({ source: unit.source, text: unit.text });
       }
     }

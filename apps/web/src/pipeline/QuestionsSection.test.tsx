@@ -8,6 +8,7 @@ import type {
   ApplicationQuestions,
   ApplicationScore,
   QuestionSet,
+  ScoreResult,
 } from '@rag-ats/shared';
 import { server } from '../test/server';
 import { theme } from '../theme';
@@ -27,6 +28,16 @@ const score: ApplicationScore = {
   waitingForParse: false,
   stale: false,
   result: null,
+};
+
+const scoreResult: ScoreResult = {
+  overall: 60,
+  rationale: 'Mixed.',
+  criteria: [],
+  cvDocumentId: 'cv1',
+  model: 'gpt-test',
+  mode: 'full_text',
+  scoredAt: '2024-03-10T00:00:00.000Z',
 };
 
 const set: QuestionSet = {
@@ -262,5 +273,46 @@ describe('QuestionsSection', () => {
         'Score the application first',
       ),
     );
+  });
+
+  it('refetches when the score is rescored and shows the set as outdated', async () => {
+    let calls = 0;
+    server.use(
+      http.get(url, () => {
+        calls += 1;
+        return HttpResponse.json(
+          state({ status: 'ready', stale: calls > 1, result: set }),
+        );
+      }),
+    );
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const view = (scoredAt: string) => (
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <QuestionsSection
+            applicationId="a1"
+            score={{ ...score, result: { ...scoreResult, scoredAt } }}
+          />
+        </QueryClientProvider>
+      </ThemeProvider>
+    );
+    const { rerender } = render(view('2024-03-10T00:00:00.000Z'));
+    expect(
+      await screen.findByText('You led the Kafka migration. What broke first?'),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Outdated: the CV, requirements or score changed'),
+    ).not.toBeInTheDocument();
+
+    rerender(view('2024-03-11T00:00:00.000Z'));
+
+    expect(
+      await screen.findByText(
+        'Outdated: the CV, requirements or score changed',
+      ),
+    ).toBeInTheDocument();
+    expect(calls).toBe(2);
   });
 });
