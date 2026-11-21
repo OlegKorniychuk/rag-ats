@@ -121,6 +121,7 @@ interface OkOptions {
   attempts?: 1 | 2;
   run?: 1 | 2;
   criteria?: RecordedCriterion[];
+  zeroedCriteria?: string[];
 }
 
 const TOKENS: Record<ScoringMode, [number, number, number]> = {
@@ -151,6 +152,9 @@ export function ok(
       ]),
     ],
     attempts: options.attempts ?? 1,
+    ...(options.zeroedCriteria
+      ? { zeroedCriteria: options.zeroedCriteria }
+      : {}),
     inputTokens,
     outputTokens,
     costUsd,
@@ -175,9 +179,7 @@ export function failed(
       kind,
       message: `${kind} failure`,
       ...(kind === 'grounding' && {
-        problems: [
-          'Criterion c1: quote "made up" is not a verbatim excerpt of <cv>',
-        ],
+        problems: ['Criterion c1 cites unknown evidence id "S99"'],
       }),
     },
   };
@@ -201,17 +203,22 @@ export function fixtureRecords(): ScoreJobRecord[] {
     ok('full_text', 'p1', 85, {
       attempts: 2,
       criteria: rustCriterion(0, false),
+      zeroedCriteria: ['c1'],
     }),
     ok('full_text', 'p2', 60),
     ok('full_text', 'p3', 55),
     ok('full_text', 'p4', 20),
     ok('full_text', 'p5', 10),
     ok('full_text', 'p6', 30),
-    ok('full_text', 'p1', 80, { run: 2, criteria: rustCriterion(0, false) }),
+    ok('full_text', 'p1', 80, {
+      run: 2,
+      criteria: rustCriterion(0, false),
+      zeroedCriteria: ['c1'],
+    }),
     ok('full_text', 'p4', 30, { run: 2 }),
     ok('rag', 'p1', 95, { criteria: rustCriterion(70, true) }),
     ok('rag', 'p2', 82),
-    ok('rag', 'p3', 45),
+    ok('rag', 'p3', 45, { zeroedCriteria: ['c1', 'c2'] }),
     ok('rag', 'p4', 41, { attempts: 2 }),
     failed('rag', 'p5', 'grounding'),
     ok('rag', 'p6', 5),

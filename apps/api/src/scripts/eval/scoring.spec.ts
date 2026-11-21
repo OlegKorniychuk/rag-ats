@@ -60,6 +60,7 @@ function result(
   criteria: ScoringCriterion[],
   overall = 70,
   attempts: 1 | 2 = 1,
+  zeroedCriteria: string[] = [],
 ): ApplicationScoreResult {
   return {
     criteria: criteria.map((c) => ({
@@ -75,11 +76,14 @@ function result(
     overall,
     usage: { inputTokens: 1000, outputTokens: 200, model: 'm' },
     attempts,
+    zeroedCriteria,
   };
 }
 
 interface FakeOptions {
   perCallUsd?: number;
+  /** Criterion ids every fake score reports as zeroed. */
+  zeroed?: string[];
   fail?: (candidateId: string, mode: 'full_text' | 'rag') => unknown;
 }
 
@@ -102,7 +106,7 @@ function fakeDeps(options: FakeOptions = {}) {
     spent += options.perCallUsd ?? 0.001;
     const failure = options.fail?.(candidateId, mode);
     if (failure) throw failure;
-    return result(criteria);
+    return result(criteria, 70, 1, options.zeroed);
   };
   const deps: ScoringDeps = {
     scorer: {
@@ -228,7 +232,7 @@ describe('scoring runner', () => {
   });
 
   describe('planScoringEval (dry-run)', () => {
-    it('counts jobs and estimates jobs x $0.0065 x 1.3 without a cache', async () => {
+    it('counts jobs and estimates jobs x $0.006 x 1.3 without a cache', async () => {
       const plan = await planScoringEval({
         pairs: PAIRS,
         noise: [PAIRS[0], PAIRS[1]],
@@ -237,8 +241,8 @@ describe('scoring runner', () => {
       expect(plan.byMode).toEqual({ full_text: 7, rag: 7 });
       expect(plan.byRun).toEqual({ 1: 10, 2: 4 });
       expect(plan.toRun).toBe(14);
-      expect(plan.estimateUsd).toBeCloseTo(14 * 0.0065 * 1.3, 10);
-      expect(SCORE_UNIT_COST_USD).toBe(0.0065);
+      expect(plan.estimateUsd).toBeCloseTo(14 * 0.006 * 1.3, 10);
+      expect(SCORE_UNIT_COST_USD).toBe(0.006);
       expect(estimateJobsUsd(1)).toBeCloseTo(SCORE_JOB_ESTIMATE_USD, 12);
     });
 
@@ -266,7 +270,7 @@ describe('scoring runner', () => {
         retryFailed: true,
       });
       expect(retry.toRun).toBe(4);
-      expect(retry.totalEstimateUsd).toBeCloseTo(4 * 0.0065 * 1.3, 10);
+      expect(retry.totalEstimateUsd).toBeCloseTo(4 * 0.006 * 1.3, 10);
     });
   });
 
@@ -320,6 +324,25 @@ describe('scoring runner', () => {
       // rag jobs go through retrieval, full_text through the CV
       expect(calls.filter((c) => c.mode === 'rag')).toHaveLength(6);
       expect(out.spentUsd).toBeCloseTo(12 * 0.001, 10);
+    });
+
+    it('records the zeroed criteria of the score', async () => {
+      const out = await runScoringJobs(
+        fakeDeps({ zeroed: ['c1'] }).deps,
+        dataset,
+        { pairs: PAIRS.slice(0, 1), cachePath, concurrency: 1 },
+      );
+      const records = out.records as ScoreOkRecord[];
+      expect(records).toHaveLength(2);
+      for (const record of records) {
+        expect(record.zeroedCriteria).toEqual(['c1']);
+      }
+      const plain = await runScoringJobs(fakeDeps().deps, dataset, {
+        pairs: PAIRS.slice(1, 2),
+        cachePath,
+        concurrency: 1,
+      });
+      expect((plain.records[0] as ScoreOkRecord).zeroedCriteria).toEqual([]);
     });
 
     it('a second run skips everything and makes no calls', async () => {

@@ -50,8 +50,8 @@ import {
   type ScoringMode,
 } from './score-record.js';
 
-/** USD per score, measured on the seed with retries included (docs/eval/rag-scoring.md and the seed run). */
-export const SCORE_UNIT_COST_USD = 0.0065;
+/** USD per score, measured $0.0055 per score in the step 12 smoke run, rounded up. */
+export const SCORE_UNIT_COST_USD = 0.006;
 /** Safety margin on the estimate (the seed's). */
 export const SCORE_ESTIMATE_MARGIN = MARGIN;
 /** What one job is expected to cost, for the dry-run and the budget guard. */
@@ -127,7 +127,7 @@ export interface ScoringPlan {
   toRun: number;
   unitUsd: number;
   margin: number;
-  /** `toRun` jobs x $0.0065 x 1.3. */
+  /** `toRun` jobs x $0.006 x 1.3. */
   estimateUsd: number;
   /** The same for every job in scope. */
   totalEstimateUsd: number;
@@ -294,6 +294,7 @@ function toRecord(
     status: 'ok',
     overall: result.overall,
     attempts: result.attempts,
+    zeroedCriteria: result.zeroedCriteria,
     inputTokens: result.usage.inputTokens,
     outputTokens: result.usage.outputTokens,
     costUsd: costUsd(

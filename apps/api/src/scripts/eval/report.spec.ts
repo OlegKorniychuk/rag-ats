@@ -100,7 +100,18 @@ describe('renderReport', () => {
     const section = md.slice(md.indexOf('## Grounding'), md.indexOf('## Cost'));
     expect(section).toMatch(/API \(excluded\)/);
     expect(section).toMatch(/0\.286/); // rag first pass 2/7
-    expect(section).toMatch(/quote-not-found-cv/);
+    expect(section).toMatch(/unknown-evidence-id/);
+  });
+
+  it('reports the scores with a zeroed criterion and the zeroed criteria', () => {
+    const md = renderReportRaw(aggregate());
+    const section = md.slice(md.indexOf('## Grounding'), md.indexOf('## Cost'));
+    expect(section).toMatch(/Scores with a zeroed criterion/);
+    expect(section).toMatch(/Zeroed criteria/);
+    // per-mode rows end with the two zeroed counts: full_text 2 scores / 2 criteria, rag 1 / 2
+    expect(section).toMatch(/\| full_text \|.*\| 2 \| 2 \|\n/);
+    expect(section).toMatch(/\| rag \|.*\| 1 \| 2 \|\n/);
+    expect(section).not.toMatch(/scored-without-evidence/);
   });
 
   it('says "not run" for a missing retrieval part', () => {

@@ -61,6 +61,11 @@ export interface ScoreOkRecord extends RecordBase {
   criteria: RecordedCriterion[];
   /** Model calls the score took: 1, or 2 after a grounding retry. */
   attempts: 1 | 2;
+  /**
+   * Criterion ids whose score was set to 0 because the model cited no evidence
+   * even after the retry. Absent in records cached before this was recorded.
+   */
+  zeroedCriteria?: string[];
   inputTokens: number;
   outputTokens: number;
   /** Chat cost of the score at the pricing in force (embeddings not included). */

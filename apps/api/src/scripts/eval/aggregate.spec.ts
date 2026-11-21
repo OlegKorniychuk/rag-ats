@@ -168,6 +168,30 @@ describe('buildAggregate grounding', () => {
     });
   });
 
+  it('counts ok scores with a zeroed criterion and the zeroed criteria', () => {
+    // full_text: p1 in run 1 and run 2, one criterion each
+    expect(full().grounding).toMatchObject({
+      zeroedScores: 2,
+      zeroedCriteria: 2,
+    });
+    // rag: p3 with two zeroed criteria
+    expect(rag().grounding).toMatchObject({
+      zeroedScores: 1,
+      zeroedCriteria: 2,
+    });
+  });
+
+  it('counts none for records without zeroedCriteria or with an empty list', () => {
+    const records = [
+      ok('rag', 'p1', 50),
+      ok('rag', 'p2', 50, { zeroedCriteria: [] }),
+    ];
+    expect(scoring({ records }).perMode.rag!.grounding).toMatchObject({
+      zeroedScores: 0,
+      zeroedCriteria: 0,
+    });
+  });
+
   it('adds grounding failures to both rates and leaves api failures out', () => {
     const g = rag().grounding;
     expect(g).toMatchObject({
@@ -181,7 +205,7 @@ describe('buildAggregate grounding', () => {
     // (1 + 1) / (6 + 1) and 1 / (6 + 1): the api failure is in neither.
     expect(g.firstPassFailureRate).toBeCloseTo(2 / 7, 10);
     expect(g.afterRetryFailureRate).toBeCloseTo(1 / 7, 10);
-    expect(g.buckets['quote-not-found-cv']).toBe(1);
+    expect(g.buckets['unknown-evidence-id']).toBe(1);
   });
 
   it('has no rates when nothing was graded', () => {

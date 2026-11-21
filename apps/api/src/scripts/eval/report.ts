@@ -327,7 +327,7 @@ function grounding(report: BaselineAggregate): string[] {
   const out = [
     '## Grounding',
     '',
-    'Jobs of run 1 and run 2. First pass: scores that needed the in-job retry plus grounding failures, over ok plus grounding failures. After retry: grounding failures over the same. API and parse failures are counted apart and left out of both rates.',
+    'Jobs of run 1 and run 2. First pass: scores that needed the in-job retry plus grounding failures, over ok plus grounding failures. After retry: grounding failures over the same. API and parse failures are counted apart and left out of both rates. A score above 0 that still cites no evidence after the retry is set to 0, not failed: the last two columns count those scores and criteria.',
     '',
     ...perModeTable(
       report,
@@ -340,6 +340,8 @@ function grounding(report: BaselineAggregate): string[] {
         'Parse (excluded)',
         'First-pass failure rate',
         'After-retry failure rate',
+        'Scores with a zeroed criterion',
+        'Zeroed criteria',
       ],
       (a) => [
         a.grounding.jobs,
@@ -350,6 +352,8 @@ function grounding(report: BaselineAggregate): string[] {
         a.grounding.parseFailures,
         num(a.grounding.firstPassFailureRate),
         num(a.grounding.afterRetryFailureRate),
+        a.grounding.zeroedScores,
+        a.grounding.zeroedCriteria,
       ],
     ),
   ];

@@ -117,6 +117,10 @@ export interface GroundingAggregate {
   ok: number;
   /** Ok scores that needed the in-job retry (`attempts` = 2). */
   okAfterRetry: number;
+  /** Ok scores with at least one criterion set to 0 for lack of evidence. */
+  zeroedScores: number;
+  /** Criteria set to 0 for lack of evidence, over all ok scores. */
+  zeroedCriteria: number;
   groundingFailures: number;
   /** Reported apart and left out of both rates. */
   apiFailures: number;
@@ -409,6 +413,8 @@ function noiseOf(
 function groundingOf(records: readonly ScoreJobRecord[]): GroundingAggregate {
   let ok = 0;
   let okAfterRetry = 0;
+  let zeroedScores = 0;
+  let zeroedCriteria = 0;
   let groundingFailures = 0;
   let apiFailures = 0;
   let parseFailures = 0;
@@ -416,6 +422,9 @@ function groundingOf(records: readonly ScoreJobRecord[]): GroundingAggregate {
     if (record.status === 'ok') {
       ok++;
       if (record.attempts === 2) okAfterRetry++;
+      const zeroed = record.zeroedCriteria?.length ?? 0;
+      if (zeroed > 0) zeroedScores++;
+      zeroedCriteria += zeroed;
     } else if (record.failure.kind === 'grounding') groundingFailures++;
     else if (record.failure.kind === 'api') apiFailures++;
     else parseFailures++;
@@ -426,6 +435,8 @@ function groundingOf(records: readonly ScoreJobRecord[]): GroundingAggregate {
     jobs: records.length,
     ok,
     okAfterRetry,
+    zeroedScores,
+    zeroedCriteria,
     groundingFailures,
     apiFailures,
     parseFailures,

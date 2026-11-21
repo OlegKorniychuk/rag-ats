@@ -1,4 +1,5 @@
-import { verifyQuotes } from '../../scoring/verify-quotes.js';
+import type { EvidenceUnit } from '../../scoring/evidence-units.js';
+import { resolveCitations } from '../../scoring/resolve-citations.js';
 import {
   bucketProblem,
   bucketsOfProblems,
@@ -7,78 +8,27 @@ import {
 } from './grounding.js';
 import type { ScoreJobRecord } from './score-record.js';
 
-const CV = 'Built payment services in Kotlin for five years at Acme.';
-const GITHUB = 'Repo: seed-repo, a Rust service.';
+const UNITS: ReadonlyMap<string, EvidenceUnit> = new Map([
+  ['S1', { id: 'S1', source: 'cv', text: 'Built payment services in Kotlin.' }],
+  ['G1', { id: 'G1', source: 'github', text: 'Repo: seed-repo, Rust.' }],
+]);
 
-/** The real problems `verifyQuotes` produces for one bad response. */
+/** The real problems `resolveCitations` produces for one bad response on the final attempt. */
 function problemsFor(
-  criteria: Array<{
-    criterionId: string;
-    score: number;
-    quotes: Array<{ source: 'cv' | 'github'; text: string }>;
-  }>,
+  criteria: Array<{ criterionId: string; score: number; evidence: string[] }>,
   expected: string[],
-  github: string | null = GITHUB,
 ): string[] {
-  return verifyQuotes({ criteria }, { cv: CV, github }, expected).problems;
+  return resolveCitations({ criteria }, UNITS, expected, {
+    zeroUnsupported: true,
+  }).problems;
 }
 
-describe('bucketProblem against the real verifyQuotes strings', () => {
+describe('bucketProblem against the real resolveCitations strings', () => {
   const cases: Array<[GroundingBucket, string[]]> = [
     [
-      'scored-without-quote',
-      problemsFor([{ criterionId: 'c1', score: 70, quotes: [] }], ['c1']),
-    ],
-    [
-      'quote-not-found-cv',
+      'unknown-evidence-id',
       problemsFor(
-        [
-          {
-            criterionId: 'c1',
-            score: 70,
-            quotes: [{ source: 'cv', text: 'Led a team of forty engineers' }],
-          },
-        ],
-        ['c1'],
-      ),
-    ],
-    [
-      'quote-not-found-github',
-      problemsFor(
-        [
-          {
-            criterionId: 'c1',
-            score: 70,
-            quotes: [{ source: 'github', text: 'Repository: https://x.y' }],
-          },
-        ],
-        ['c1'],
-      ),
-    ],
-    [
-      'github-not-provided',
-      problemsFor(
-        [
-          {
-            criterionId: 'c1',
-            score: 70,
-            quotes: [{ source: 'github', text: 'Rust service' }],
-          },
-        ],
-        ['c1'],
-        null,
-      ),
-    ],
-    [
-      'quote-too-short',
-      problemsFor(
-        [
-          {
-            criterionId: 'c1',
-            score: 70,
-            quotes: [{ source: 'cv', text: 'C' }],
-          },
-        ],
+        [{ criterionId: 'c1', score: 70, evidence: ['S99'] }],
         ['c1'],
       ),
     ],
@@ -86,16 +36,8 @@ describe('bucketProblem against the real verifyQuotes strings', () => {
       'unknown-criterion',
       problemsFor(
         [
-          {
-            criterionId: 'zzz',
-            score: 0,
-            quotes: [{ source: 'cv', text: 'Kotlin' }],
-          },
-          {
-            criterionId: 'c1',
-            score: 0,
-            quotes: [{ source: 'cv', text: 'Kotlin' }],
-          },
+          { criterionId: 'zzz', score: 0, evidence: ['S1'] },
+          { criterionId: 'c1', score: 0, evidence: ['S1'] },
         ],
         ['c1'],
       ),
@@ -103,13 +45,7 @@ describe('bucketProblem against the real verifyQuotes strings', () => {
     [
       'missing-criterion',
       problemsFor(
-        [
-          {
-            criterionId: 'c1',
-            score: 0,
-            quotes: [{ source: 'cv', text: 'Kotlin' }],
-          },
-        ],
+        [{ criterionId: 'c1', score: 0, evidence: ['S1'] }],
         ['c1', 'c2'],
       ),
     ],
@@ -117,23 +53,11 @@ describe('bucketProblem against the real verifyQuotes strings', () => {
       'duplicate-criterion',
       problemsFor(
         [
-          {
-            criterionId: 'c1',
-            score: 0,
-            quotes: [{ source: 'cv', text: 'Kotlin' }],
-          },
-          {
-            criterionId: 'c1',
-            score: 0,
-            quotes: [{ source: 'cv', text: 'Kotlin' }],
-          },
+          { criterionId: 'c1', score: 0, evidence: ['S1'] },
+          { criterionId: 'c1', score: 0, evidence: ['S1'] },
         ],
         ['c1'],
       ),
-    ],
-    [
-      'no-quotes',
-      problemsFor([{ criterionId: 'c1', score: 0, quotes: [] }], ['c1']),
     ],
   ];
 
@@ -144,23 +68,10 @@ describe('bucketProblem against the real verifyQuotes strings', () => {
     expect(problems.map(bucketProblem)).not.toContain('other');
   });
 
-  it('keeps the literal wording classified (guards a verifier rewording)', () => {
-    expect(
-      bucketProblem('Criterion c1 has a score above 0 but no quotes'),
-    ).toBe('scored-without-quote');
-    expect(
-      bucketProblem(
-        'Criterion c2: quote "x y" is not a verbatim excerpt of <cv>',
-      ),
-    ).toBe('quote-not-found-cv');
-    expect(
-      bucketProblem(
-        'Criterion c2: quote "x y" is not a verbatim excerpt of <github>',
-      ),
-    ).toBe('quote-not-found-github');
-    expect(
-      bucketProblem('Criterion c2: quote "C" is shorter than 2 characters'),
-    ).toBe('quote-too-short');
+  it('keeps the literal wording classified (guards a resolver rewording)', () => {
+    expect(bucketProblem('Criterion c1 cites unknown evidence id "S99"')).toBe(
+      'unknown-evidence-id',
+    );
     expect(bucketProblem('Unknown criterion id "zzz"')).toBe(
       'unknown-criterion',
     );
@@ -168,11 +79,17 @@ describe('bucketProblem against the real verifyQuotes strings', () => {
     expect(bucketProblem('Criterion c3 appears more than once')).toBe(
       'duplicate-criterion',
     );
-    expect(bucketProblem('The response contains no quotes')).toBe('no-quotes');
   });
 
-  it('puts anything unrecognised into other', () => {
+  it('puts anything unrecognised, including old quote-era wording, into other', () => {
     expect(bucketProblem('something new')).toBe('other');
+    expect(
+      bucketProblem('Criterion c1 has a score above 0 but no quotes'),
+    ).toBe('other');
+    // zeroed on the final attempt, so never a failure cause any more
+    expect(
+      bucketProblem('Criterion c1 has a score above 0 but cites no evidence'),
+    ).toBe('other');
   });
 });
 
@@ -180,11 +97,11 @@ describe('bucketsOfProblems', () => {
   it('lists distinct buckets in a stable order', () => {
     expect(
       bucketsOfProblems([
-        'Criterion c2: quote "x y" is not a verbatim excerpt of <cv>',
-        'Criterion c1 has a score above 0 but no quotes',
-        'Criterion c3: quote "q r" is not a verbatim excerpt of <cv>',
+        'Criterion c2 cites unknown evidence id "S98"',
+        'Criterion c1 is missing',
+        'Criterion c3 cites unknown evidence id "S99"',
       ]),
-    ).toEqual(['scored-without-quote', 'quote-not-found-cv']);
+    ).toEqual(['unknown-evidence-id', 'missing-criterion']);
   });
 
   it('is other when there are no problems', () => {
@@ -210,16 +127,14 @@ describe('groundingBucketCounts', () => {
   it('counts a job once per bucket and only grounding failures', () => {
     const counts = groundingBucketCounts([
       failed('grounding', [
-        'Criterion c1 has a score above 0 but no quotes',
-        'Criterion c2 has a score above 0 but no quotes',
-        'Criterion c3: quote "ab" is not a verbatim excerpt of <cv>',
+        'Criterion c2 cites unknown evidence id "S98"',
+        'Criterion c3 cites unknown evidence id "S99"',
       ]),
       failed('grounding', ['Criterion c1 is missing']),
       failed('api'),
       failed('parse'),
     ]);
-    expect(counts['scored-without-quote']).toBe(1);
-    expect(counts['quote-not-found-cv']).toBe(1);
+    expect(counts['unknown-evidence-id']).toBe(1);
     expect(counts['missing-criterion']).toBe(1);
     expect(counts.other).toBe(0);
   });
