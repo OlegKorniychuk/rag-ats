@@ -37,7 +37,7 @@ Two personas: **recruiter** (registers/logs in via simple JWT auth; sees only th
 
 1. As the thesis author, I want to run an eval script against the self-labeled ground-truth set so I get precision/recall + score-agreement metrics for the defense.
 
-Explicitly not in MVP stories: talent-pool resurfacing, skill-gap analysis, auto-generated interview questions, applicant accounts/login, multi-format CV upload (PDF only), anti-bot/CAPTCHA on the apply page, RBAC/admin roles, email verification/password reset/SSO — deferred per Not Doing / stretch scope.
+Explicitly not in MVP stories: talent-pool resurfacing, skill-gap analysis, applicant accounts/login, multi-format CV upload (PDF only), anti-bot/CAPTCHA on the apply page, RBAC/admin roles, email verification/password reset/SSO — deferred per Not Doing / stretch scope.
 
 ## Tech Stack
 
@@ -204,6 +204,7 @@ Where the built system differs from this spec (details in `docs/sdd.md`):
 - **Grounding**: the scorer cites numbered evidence units by ID and the server resolves them to source text; a criterion scored 0 may cite nothing (see Success Criteria).
 - **Conventions**: lint does not enforce the `any` rule (`no-explicit-any` is off); `any` appears only in test files. `ExtractVacancyCriteriaWorker` is tested only through the scoring integration tests.
 - **Portfolio URLs** are stored and shown, never fetched.
+- **Interview questions** (out of the MVP stories above, built as Stage 2 step 13): on a scored application the recruiter can generate 6–8 English interview questions from the fit score, each tied to a criterion and either a cited fact or a low-scored gap; on demand only, measured with `questions-eval`.
 - **Not done yet**: qualitative reviewer feedback (Success Criteria).
 
 ## Open Questions

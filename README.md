@@ -1,6 +1,6 @@
 # RAG-ATS
 
-RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is built: PDF CV upload, LLM parsing of the CV into a structured profile, GitHub enrichment of that profile (public repos, READMEs and languages), grounded fit scoring of every application (per-criterion scores that cite numbered evidence units from the CV or GitHub, resolved to the exact source text by the server), adding pool candidates to vacancies, re-scoring on vacancy edits, semantic candidate search, "Find matches" for a vacancy and a RAG scoring mode are built, plus a synthetic data set of 100 candidates and 10 vacancies with ground truth, a seed script and an eval harness that measures retrieval and score agreement against that ground truth.
+RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1 (vacancy CRUD, auth, public apply flow, pipeline management, shared candidate pool) is built. Stage 2 is built: PDF CV upload, LLM parsing of the CV into a structured profile, GitHub enrichment of that profile (public repos, READMEs and languages), grounded fit scoring of every application (per-criterion scores that cite numbered evidence units from the CV or GitHub, resolved to the exact source text by the server), adding pool candidates to vacancies, re-scoring on vacancy edits, semantic candidate search, "Find matches" for a vacancy, a RAG scoring mode and interview questions generated from the fit score (each tied to a cited fact or a low-scored criterion) are built, plus a synthetic data set of 100 candidates and 10 vacancies with ground truth, a seed script and an eval harness that measures retrieval and score agreement against that ground truth.
 
 ## Docs
 
@@ -75,11 +75,21 @@ npm run eval -- --summarise-review docs/eval/baseline/my-run/review-rag.md      
 
 Each run writes `docs/eval/baseline/<label>.{json,md}` and caches every score in `docs/eval/baseline/<label>/scores.jsonl`, so a re-run with the same label only scores what is missing (`--retry-failed` also re-scores failures). `npm run eval -- --help` lists every flag. The baseline run and its write-up: `docs/eval/eval-baseline.md`.
 
+`npm run questions-eval` generates interview questions for a stratified sample of the seeded applications (10 strong, 10 partial, 10 weak by default), writes the metrics report and a table of 25 questions to label by hand. It calls the model directly and writes nothing to the database.
+
+```
+DATABASE_URL=…/rag_ats_seed npm run questions-eval -- --label my-run --dry-run   # sample and estimate, no LLM calls
+DATABASE_URL=…/rag_ats_seed npm run questions-eval -- --label my-run             # generate (cap $1)
+npm run questions-eval -- --summarise-review docs/eval/questions/my-run.review.md   # count the labels
+```
+
+Each run writes `docs/eval/questions/<label>.{json,md}` and `<label>.review.md` (never overwritten).
+
 ## Using the app
 
 1. Register an account at `http://localhost:5173` and log in.
 2. Create a vacancy.
 3. Copy its public apply link from the vacancies list.
 4. Open that link logged out (or in a private window) to submit an application with a PDF CV. The candidate's profile is filled in from the CV (and their public GitHub repos, if a GitHub URL was given) in the background; a Pending/Parsing chip shows progress, and a failed parse can be retried from the candidate page.
-5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board. Each card shows the applicant's fit score once their CV is parsed, and columns are ranked by it; click the score to see the per-criterion breakdown with the cited CV or GitHub text, or to rescore. Editing an open vacancy's title or requirements re-scores all of its applicants (a closed vacancy's scores are marked outdated until you reopen it). On an open vacancy, "Find matches" lists pool candidates who fit it, with the criteria they match and the passages that matched; "Add" puts one on the board and scores them.
+5. Open the vacancy to move applicants across pipeline stages on the drag-and-drop board. Each card shows the applicant's fit score once their CV is parsed, and columns are ranked by it; click the score to see the per-criterion breakdown with the cited CV or GitHub text, or to rescore. At the bottom of that drawer, "Generate questions" writes interview questions from the score: gaps to probe and facts to verify, each with the CV or GitHub text it is based on. Editing an open vacancy's title or requirements re-scores all of its applicants (a closed vacancy's scores are marked outdated until you reopen it). On an open vacancy, "Find matches" lists pool candidates who fit it, with the criteria they match and the passages that matched; "Add" puts one on the board and scores them.
 6. Browse the shared candidate pool at `/candidates`, or type what you need ("backend engineer with Kafka and Kubernetes") and press Enter for a semantic search that ranks candidates and shows the CV or GitHub passages that matched. A candidate's page lists their applications on your vacancies; use "Add to vacancy" to put them on another open vacancy, where they are scored like an applicant.

@@ -17,6 +17,7 @@ npm run db:migrate
 # dev CLIs (paid OpenAI calls; dry-run first)
 npm run db:seed -- --dry-run   # load data/synthetic/ through the apply pipeline
 npm run eval -- --help         # retrieval + score-agreement eval on the seeded DB
+npm run questions-eval -- --help   # interview questions eval on the seeded DB
 npm run synth -- --help        # synthetic data stages
 npm run parse-eval / score-eval
 ```
@@ -28,19 +29,19 @@ Use a separate DB by prefixing `DATABASE_URL=…`; process env overrides `.env` 
 ```
 auth/          register/login/logout, JWT in an httpOnly cookie, global JwtAuthGuard + @Public()
 vacancies/     owner-scoped CRUD, add candidate, auto-rescore on edit; matches/ = Find matches
-applications/  pipeline stage changes, rescore
+applications/  pipeline stage changes, rescore, interview questions
 apply/         PUBLIC: GET/POST /apply/:token, CV upload (multer, 5 MB, PDF magic bytes)
 candidates/    shared pool, CV download, reparse; search/ = semantic search
 cv/            PDF check + text extraction (pdf-parse v2)
-llm/           LlmClient (only code that talks to OpenAI), CV parser, criteria extractor, ApplicationScorer, prompts/, Zod schemas
+llm/           LlmClient (only code that talks to OpenAI), CV parser, criteria extractor, ApplicationScorer, QuestionGenerator, prompts/, Zod schemas
 scoring/       pure helpers: evidence units, resolveCitations, computeOverall, criteria hash
 rag/           chunking, per-criterion retrieval, ranking
 github/        GitHub REST client, profile fetcher, FixtureGithubClient (seed)
-jobs/          pg-boss setup, workers (parse, extract criteria, score, embed), startup sweep
+jobs/          pg-boss setup, workers (parse, extract criteria, score, embed, questions), startup sweep
 db/            schema.ts, migrations/, repositories (interface + Drizzle impl per table)
 config/        EnvConfig (validated env, sdd §9)
 common/        shared DTOs, Postgres error helpers
-scripts/       dev CLIs (seed, eval, synth, parse-eval, score-eval); compiled with the app, never imported by it
+scripts/       dev CLIs (seed, eval, questions-eval, synth, parse-eval, score-eval); compiled with the app, never imported by it
 contract.check.ts  type-only check that DTOs/rows match @rag-ats/shared
 ```
 
