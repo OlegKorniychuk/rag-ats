@@ -471,7 +471,33 @@ describe('Candidates (e2e)', () => {
       k8sId = await applyPdf(vacancy.applyToken, uniqueEmail(), K8S_CV);
       reactId = await applyPdf(vacancy.applyToken, uniqueEmail(), REACT_CV);
       dataId = await applyPdf(vacancy.applyToken, uniqueEmail(), DATA_CV);
+      // Scoring runs in the background, and in rag mode (the default) it
+      // embeds the vacancy criteria too. Let it settle, so later tests that
+      // count embeddings requests see only the search's own.
+      await waitForScoresSettled(vacancy.id);
     }, 60_000);
+
+    async function waitForScoresSettled(vacancyId: string): Promise<void> {
+      const deadline = Date.now() + 30_000;
+      for (;;) {
+        const res = await agent
+          .get(`/vacancies/${vacancyId}/applications`)
+          .expect(200);
+        const statuses = (res.body as Array<{ score: { status: string } }>).map(
+          (a) => a.score.status,
+        );
+        if (
+          statuses.length === 3 &&
+          statuses.every((st) => st === 'scored' || st === 'failed')
+        ) {
+          return;
+        }
+        if (Date.now() > deadline) {
+          throw new Error(`Scores did not settle: ${statuses.join(', ')}`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+    }
 
     it('ranks the matching candidate first, with a matching snippet and the full candidate', async () => {
       const res = await search('kubernetes terraform').expect(200);
