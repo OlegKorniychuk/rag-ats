@@ -1,4 +1,5 @@
 import { parseArgs } from 'node:util';
+import { DEFAULT_PRICING, type Pricing } from '../parse-eval/cost.js';
 import { UsageError } from '../shared/cli.js';
 
 export const QUESTIONS_EVAL_DEFAULTS = {
@@ -15,6 +16,8 @@ export const QUESTIONS_EVAL_USAGE = [
   `  --review <n>                 questions in the review table (default ${QUESTIONS_EVAL_DEFAULTS.review})`,
   `  --seed <n>                   sample seed (default ${QUESTIONS_EVAL_DEFAULTS.seed})`,
   `  --max-usd <n>                stop before a call that would pass n (default ${QUESTIONS_EVAL_DEFAULTS.maxUsd})`,
+  '  --input-price <n>            USD per 1M input tokens (default 0.75, gpt-5.4-mini)',
+  '  --output-price <n>           USD per 1M output tokens (default 4.5, gpt-5.4-mini)',
   '  --dry-run                    print the sample and the estimate (reads the DB), no LLM calls, nothing written',
   '  --summarise-review <file>    count the labels of a filled-in review file (no DB, no LLM)',
 ].join('\n');
@@ -27,6 +30,8 @@ export interface QuestionsEvalArgs {
   review: number;
   seed: number;
   summariseReview: string | null;
+  /** Chat prices for metering and report costs. */
+  pricing: Pricing;
 }
 
 const LABEL_PATTERN = /^[A-Za-z0-9._-]+$/;
@@ -73,6 +78,8 @@ export function parseQuestionsEvalArgs(argv: string[]): QuestionsEvalArgs {
         review: { type: 'string' },
         seed: { type: 'string' },
         'max-usd': { type: 'string' },
+        'input-price': { type: 'string' },
+        'output-price': { type: 'string' },
         'dry-run': { type: 'boolean', default: false },
         'summarise-review': { type: 'string' },
       },
@@ -118,5 +125,19 @@ export function parseQuestionsEvalArgs(argv: string[]): QuestionsEvalArgs {
       'nonneg-int',
     ),
     summariseReview,
+    pricing: {
+      inputPerMillion: numberFlag(
+        'input-price',
+        values['input-price'],
+        DEFAULT_PRICING.inputPerMillion,
+        'positive',
+      ),
+      outputPerMillion: numberFlag(
+        'output-price',
+        values['output-price'],
+        DEFAULT_PRICING.outputPerMillion,
+        'positive',
+      ),
+    },
   };
 }

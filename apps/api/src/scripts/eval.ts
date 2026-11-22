@@ -32,7 +32,6 @@
  */
 import { access, readFile } from 'node:fs/promises';
 import { Logger } from '@nestjs/common';
-import { DEFAULT_PRICING } from './parse-eval/cost.js';
 import { parseEvalArgs, EVAL_USAGE, type EvalArgs } from './eval/args.js';
 import {
   rebuildBaseline,
@@ -213,7 +212,7 @@ async function dryRun(args: EvalArgs, set: SyntheticSet): Promise<number> {
   const { createEvalContext } = await import('./eval/app.js');
   const app = await createEvalContext({
     env,
-    meter: new SeedMeter(DEFAULT_PRICING),
+    meter: new SeedMeter(args.pricing),
   });
   try {
     await loadEvalDataset(app, set);
@@ -239,7 +238,7 @@ async function liveRun(args: EvalArgs, set: SyntheticSet): Promise<number> {
   const env = loadEnv();
   // Keep the console to this script's own lines plus warnings.
   Logger.overrideLogger(['warn', 'error']);
-  const meter = new SeedMeter(DEFAULT_PRICING);
+  const meter = new SeedMeter(args.pricing);
   const { createEvalContext } = await import('./eval/app.js');
   const app = await createEvalContext({ env, meter });
 
@@ -278,6 +277,7 @@ async function liveRun(args: EvalArgs, set: SyntheticSet): Promise<number> {
         concurrency: args.concurrency,
         maxUsd: args.maxUsd,
         retryFailed: args.retryFailed,
+        pricing: args.pricing,
         meter,
         log: (line) => console.log(line),
       });

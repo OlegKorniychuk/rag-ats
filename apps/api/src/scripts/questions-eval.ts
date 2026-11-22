@@ -30,7 +30,6 @@ import { loadSyntheticSet } from './eval/data.js';
 import { loadEvalDataset } from './eval/dataset.js';
 import { writeFormatted } from './eval/layout.js';
 import { PreflightError } from './eval/preflight.js';
-import { DEFAULT_PRICING } from './parse-eval/cost.js';
 import {
   parseQuestionsEvalArgs,
   QUESTIONS_EVAL_USAGE,
@@ -89,7 +88,7 @@ async function run(args: QuestionsEvalArgs): Promise<number> {
   const env = loadEnv();
   // Keep the console to this script's own lines plus warnings.
   Logger.overrideLogger(['warn', 'error']);
-  const meter = new SeedMeter(DEFAULT_PRICING);
+  const meter = new SeedMeter(args.pricing);
   const { createEvalContext } = await import('./eval/app.js');
   const app = await createEvalContext({ env, meter });
   const startedAt = new Date().toISOString();
@@ -122,6 +121,7 @@ async function run(args: QuestionsEvalArgs): Promise<number> {
 
     const out = await runQuestionsEval(app, items, {
       maxUsd: args.maxUsd,
+      pricing: args.pricing,
       meter,
       log: (line) => console.log(line),
     });
@@ -129,7 +129,7 @@ async function run(args: QuestionsEvalArgs): Promise<number> {
       dir,
       label,
       records: out.records,
-      pricing: DEFAULT_PRICING,
+      pricing: args.pricing,
       meta: {
         model: env.OPENAI_MODEL,
         perBand: args.perBand,
