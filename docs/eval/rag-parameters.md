@@ -9,10 +9,10 @@ Three retrieval parameters were measured on the synthetic set:
 **Outcome: production stays as it is** (`text-embedding-3-small`, 1000-character CV chunks, k 3).
 
 - Large gives no consistent gain and costs 6.5× more.
-- 500-character chunks rank search results better and get more of the cited evidence into the same amount of context. They also cost Find matches precision.
+- 500-character chunks rank search results better and get more of the cited evidence into the same amount of context. They also cost Find matches precision, and re-tuning Find matches does not win it back (floor sweep below).
 - With CVs this short, every k that reaches the plateau of the decision rule sends most of the CV.
 
-The rules for B and C call for changes. Both are listed below as proposals and were not applied. Run files: `rag-params/<variant>.{json,md}` (evidence recall) and `baseline/rag-<variant>.{json,md}` (retrieval).
+The rules for B and C call for changes. B's proposal was tested further and rejected (Find matches floor sweep); C's is listed as a proposal and was not applied. Run files: `rag-params/<variant>.{json,md}` (evidence recall) and `baseline/rag-<variant>.{json,md}` (retrieval).
 
 ## Setup
 
@@ -98,11 +98,38 @@ Smaller chunks are more specific, so the nearest ones hold the cited lines more 
 
 **Verdict B:** the rule is met by 500 characters: +4.4 pp recall at equal context and +0.027 search nDCG@10. But Find matches by criteria drops from P@10 1.00 to 0.93 (0.98 to 0.93 in whole-text mode), which the rule did not cover. Its 0.35 floor was tuned on 1000-character chunks and was not re-tuned here.
 
-**Proposal, not applied:** 500-character CV chunks with k 5, together with a re-tuned Find matches floor. It needs a re-embed of the pool (about $0.002), a floor sweep for Find matches, and a `rag` scoring check. Until then, 1000 stays.
+**Proposal rejected:** 500-character CV chunks with k 5, together with a re-tuned Find matches floor. The floor sweep below shows that re-tuning does not recover Find matches precision, so 1000 stays.
 
 **Verdict C:** on the production index the rule gives **k 6**: 99.2 % recall, and k 8 adds 0.8 pp. But k 6 sends 94 % of a candidate's chunks, so `rag` would become `full_text` in all but name. At k 3, production already gets 86 % of the cited evidence, and `rag` and `full_text` scores agree to within noise (`eval-baseline.md`: MAE 7.7 against 7.6, ρ 0.940 against 0.936). So the missing 14 % of quotes cost little score accuracy on this set: they are mostly second and third quotes of a criterion that is already supported (any quote covered for 97.1 % of criteria at k 3).
 
 **Proposal, not run:** before changing k, a paid `rag` scoring check at the new k (`eval --modes rag`, about 100 pairs, about $0.5). Until then, k stays 3. On CVs this short, k matters much less than chunk size; the parameter would matter for long profiles, which the synthetic set does not have (sdd §12).
+
+## Find matches floor sweep (follow-up)
+
+Verdict B left one question open: does a re-tuned Find matches floor recover the P@10 that 500-character chunks lose? It does not.
+
+- **Setup:** an ad-hoc script (not kept in the repo) ran the eval's `evaluateMatches` (the production rankers, whole pool, the same 10 vacancies and ground truth) on `rag_ats_seed` (1000) and on a fresh `rag_ats_exp_small_500` (re-indexed, dropped afterwards).
+  - `criteria` mode: floor 0.30–0.45 × nearest chunks per criterion 30 (production), 60, 100.
+  - `whole_text` mode: floor 0.25–0.40 × nearest chunks 50 (production), 100, 200.
+  - Search was not re-swept: its best floor at 500 is already the production 0.3 (verdict A table).
+- **Run files:** `rag-params/find-matches-sweep-small-{1000,500}.json`.
+
+| Index | Mode         | Floor, chunks             | P@5  | P@10     | nDCG@10 | R@20        | Weak in top 10 |
+| ----- | ------------ | ------------------------- | ---- | -------- | ------- | ----------- | -------------- |
+| 1000  | `criteria`   | 0.35, 30 (production)     | 1.00 | **1.00** | 0.874   | 0.733       | 0 %            |
+| 500   | `criteria`   | 0.35, 30 (production)     | 0.98 | 0.92     | 0.839   | 0.704       | 8 %            |
+| 500   | `criteria`   | 0.40, 30 (best floor)     | 0.98 | 0.93     | 0.843   | 0.689       | 7 %            |
+| 500   | `criteria`   | 0.40, 100 (best of grid)  | 0.98 | 0.98     | 0.871   | 0.708       | 2 %            |
+| 1000  | `criteria`   | 0.40, 100 (same setting)  | 1.00 | 0.99     | 0.896   | 0.710       | 1 %            |
+| 1000  | `whole_text` | 0.30, 50 (production)     | 1.00 | **0.98** | 0.878   | 0.714       | 2 %            |
+| 500   | `whole_text` | any floor and chunk limit | 0.96 | 0.93     | 0.844   | 0.695–0.715 | 7 %            |
+
+- **The floor alone does not help:** at the production chunk limit the best 500 floor gives P@10 0.93.
+- **The chunk limit is most of the loss:** the 500 index has 762 chunks against 463, so the 30 nearest chunks per criterion reach fewer candidates. Floor 0.40 with 100 chunks reaches P@10 0.98, still below production, and it is two constants fitted on 10 vacancies (the gap is 2 of 100 top-10 slots).
+- **`whole_text` cannot be tuned back:** the nearest 50–100 chunks are all above 0.40, so the floor changes nothing, and it ranks a candidate by their best chunk; a short chunk that names one skill lifts a weak candidate.
+- The production 500 setting reads P@10 0.92 here against 0.93 in the verdict A table: the index was re-embedded, one top-10 slot.
+
+**Verdict:** 500-character chunks with k 5 are a trade, not a gain. They raise search nDCG@10 by 0.027 and `rag` evidence recall by 4.4 pp, in a mode that is not the default and already scores as well as `full_text`, and they lower Find matches P@10 by 0.02–0.07. The proposal is dropped; the paid `rag` check at k 5 and a production re-index path are not needed. Production stays at 1000 characters, k 3.
 
 ## The small-model check of retrieved chunks
 
@@ -115,12 +142,13 @@ Ch. 2 of the thesis listed an optional step: a small model checks each retrieved
 
 ## Cost
 
-| Step                                              | Spend      |
-| ------------------------------------------------- | ---------- |
-| Re-index, small × 2 (500, 2000)                   | $0.0031    |
-| Re-index, large × 3 (500, 1000, 2000)             | $0.0305    |
-| Retrieval eval × 6 (query and vacancy embeddings) | $0.0011    |
-| Evidence eval × 6 (99 criterion texts each)       | $0.0004    |
-| **Total**                                         | **$0.035** |
+| Step                                                | Spend      |
+| --------------------------------------------------- | ---------- |
+| Re-index, small × 2 (500, 2000)                     | $0.0031    |
+| Re-index, large × 3 (500, 1000, 2000)               | $0.0305    |
+| Retrieval eval × 6 (query and vacancy embeddings)   | $0.0011    |
+| Floor sweep: re-index small 500, vacancy embeddings | $0.0017    |
+| Evidence eval × 6 (99 criterion texts each)         | $0.0004    |
+| **Total**                                           | **$0.037** |
 
 Prices: small $0.02, large $0.13 per 1M tokens (listed, unverified). No chat model was called.
