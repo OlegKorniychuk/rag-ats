@@ -55,11 +55,11 @@ export class EnvConfig {
   @MinLength(1)
   public readonly OPENAI_EMBEDDING_MODEL: string = 'text-embedding-3-small';
 
-  // `full_text` scores from the whole CV; `rag` from chunks retrieved per
-  // criterion. Applies to new scores only.
+  // `rag` (default) scores from chunks retrieved per criterion; `full_text`
+  // from the whole CV. Applies to new scores only.
   @IsOptional()
   @IsIn(['full_text', 'rag'])
-  public readonly SCORING_MODE: ScoringMode = 'full_text';
+  public readonly SCORING_MODE: ScoringMode = 'rag';
 
   // pg-boss requires >= 0.5.
   @IsOptional()

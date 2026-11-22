@@ -26,7 +26,7 @@ function uniqueEmail(): string {
   return `${randomUUID()}@example.com`;
 }
 
-describe('Application scoring (e2e)', () => {
+describe('Application scoring in full_text mode (e2e)', () => {
   let testApp: TestApp;
   let cookie: string[];
   let agent: ReturnType<typeof request.agent>;
@@ -52,7 +52,8 @@ describe('Application scoring (e2e)', () => {
   }
 
   beforeAll(async () => {
-    testApp = await createTestApp();
+    // full_text is no longer the default: pin it for this app.
+    testApp = await createTestApp({ env: { SCORING_MODE: 'full_text' } });
     server.events.on('request:start', capture.listener);
     ({ agent, cookie } = await registerAgent());
   }, 60_000);
@@ -462,15 +463,15 @@ describe('Application scoring (e2e)', () => {
   });
 });
 
-describe('Application scoring in rag mode (e2e)', () => {
+describe('Application scoring in rag mode, the default (e2e)', () => {
   let testApp: TestApp;
   let agent: ReturnType<typeof request.agent>;
   let cookie: string[];
   const capture = captureOpenaiRequests('application_score');
 
   beforeAll(async () => {
-    // Its own app and database: SCORING_MODE=rag for this app only.
-    testApp = await createTestApp({ env: { SCORING_MODE: 'rag' } });
+    // Its own app and database, on the default config: rag is the default mode.
+    testApp = await createTestApp();
     server.events.on('request:start', capture.listener);
     const email = uniqueEmail();
     const password = 'password123';
