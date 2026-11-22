@@ -1,4 +1,4 @@
-import { SeedMeter } from './metering.js';
+import { embeddingPricePerMillion, SeedMeter } from './metering.js';
 
 const usage = (inputTokens: number, outputTokens: number) => ({
   model: 'm',
@@ -31,5 +31,30 @@ describe('SeedMeter', () => {
     expect(meter.calls('nope')).toBe(0);
     expect(meter.chatCalls).toBe(3);
     expect(meter.spentUsd).toBe(0);
+  });
+});
+
+describe('embedding prices', () => {
+  it('prices the small and large embedding models', () => {
+    expect(embeddingPricePerMillion('text-embedding-3-small')).toBe(0.02);
+    expect(embeddingPricePerMillion('text-embedding-3-large')).toBe(0.13);
+  });
+
+  it('meters each embedding call at its own model price', () => {
+    const meter = new SeedMeter({ inputPerMillion: 1, outputPerMillion: 4 });
+    meter.recordEmbedding({
+      model: 'text-embedding-3-large',
+      inputTokens: 1_000_000,
+      outputTokens: 0,
+      totalTokens: 1_000_000,
+    });
+    meter.recordEmbedding({
+      model: 'text-embedding-3-small',
+      inputTokens: 1_000_000,
+      outputTokens: 0,
+      totalTokens: 1_000_000,
+    });
+    expect(meter.embeddingCostUsd).toBeCloseTo(0.15, 10);
+    expect(meter.embeddingTokens).toBe(2_000_000);
   });
 });
