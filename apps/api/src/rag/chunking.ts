@@ -100,12 +100,16 @@ function lengthOf(lines: string[]): number {
 
 /**
  * Chunks extracted CV text: blank lines are dropped and whole lines are packed
- * greedily into chunks of at most `CV_CHUNK_MAX_CHARS`, joined by `\n`. A
+ * greedily into chunks of at most `maxChars` (default `CV_CHUNK_MAX_CHARS`;
+ * other sizes are for the RAG parameter experiments), joined by `\n`. A
  * chunk starts with the previous chunk's last line when that line is short
  * (overlap). A line longer than the maximum is split on its own (see
  * `splitLongLine`) into chunks without overlap.
  */
-export function chunkCvText(text: string): string[] {
+export function chunkCvText(
+  text: string,
+  maxChars: number = CV_CHUNK_MAX_CHARS,
+): string[] {
   const lines = text
     .split(/\r?\n/)
     .map((line) => line.trimEnd())
@@ -115,21 +119,18 @@ export function chunkCvText(text: string): string[] {
   let current: string[] = [];
 
   for (const line of lines) {
-    if (line.length > CV_CHUNK_MAX_CHARS) {
+    if (line.length > maxChars) {
       if (current.length > 0) chunks.push(current.join('\n'));
       current = [];
-      chunks.push(...splitLongLine(line, CV_CHUNK_MAX_CHARS));
+      chunks.push(...splitLongLine(line, maxChars));
       continue;
     }
-    if (
-      current.length > 0 &&
-      lengthOf(current) + 1 + line.length > CV_CHUNK_MAX_CHARS
-    ) {
+    if (current.length > 0 && lengthOf(current) + 1 + line.length > maxChars) {
       chunks.push(current.join('\n'));
       const last = current[current.length - 1];
       const overlap =
         last.length <= CV_CHUNK_OVERLAP_MAX_CHARS &&
-        last.length + 1 + line.length <= CV_CHUNK_MAX_CHARS;
+        last.length + 1 + line.length <= maxChars;
       current = overlap ? [last] : [];
     }
     current.push(line);
@@ -162,13 +163,22 @@ export function chunkGithubSnapshot(snapshot: GithubSnapshot | null): string[] {
   );
 }
 
+export interface ChunkOptions {
+  /** CV chunk size; defaults to `CV_CHUNK_MAX_CHARS`. GitHub chunks are unaffected. */
+  cvMaxChars?: number;
+}
+
 /** CV chunks first, then GitHub chunks, capped at `MAX_CHUNKS_PER_CANDIDATE`. */
 export function chunkCandidate(
   cvText: string,
   snapshot: GithubSnapshot | null,
+  options: ChunkOptions = {},
 ): TextChunk[] {
   const chunks: TextChunk[] = [
-    ...chunkCvText(cvText).map((text) => ({ source: 'cv' as const, text })),
+    ...chunkCvText(cvText, options.cvMaxChars).map((text) => ({
+      source: 'cv' as const,
+      text,
+    })),
     ...chunkGithubSnapshot(snapshot).map((text) => ({
       source: 'github' as const,
       text,
