@@ -1,4 +1,5 @@
 import { parseArgs } from 'node:util';
+import { DEFAULT_PRICING, type Pricing } from '../parse-eval/cost.js';
 import { UsageError } from '../shared/cli.js';
 import { DEFAULT_NOISE, DEFAULT_WEAK } from './sample.js';
 import { DEFAULT_CONCURRENCY, DEFAULT_MAX_USD } from './scoring.js';
@@ -18,6 +19,8 @@ export const EVAL_USAGE = [
   '  --limit <n>                    only the first n sampled pairs (smoke runs)',
   `  --concurrency <n>              scores in flight at once (default ${DEFAULT_CONCURRENCY})`,
   `  --max-usd <n>                  stop starting scores when spend plus in-flight estimates reach n (default ${DEFAULT_MAX_USD})`,
+  '  --input-price <n>              USD per 1M input tokens (default 0.75, gpt-5.4-mini)',
+  '  --output-price <n>             USD per 1M output tokens (default 4.5, gpt-5.4-mini)',
   '  --dry-run                      print the plan and the cost estimate, no LLM calls, nothing written',
   '  --retry-failed                 score again the jobs that failed (default: keep the failure)',
   '  --report-only                  rebuild <label>.{json,md} from the files in the label directory (no DB, no LLM)',
@@ -40,6 +43,8 @@ export interface EvalArgs {
   concurrency: number;
   maxUsd: number;
   retryFailed: boolean;
+  /** Chat prices for metering and report costs. */
+  pricing: Pricing;
   /** `--write-review`: citations per mode. */
   sample: number | null;
   /** `--summarise-review`: the review file. */
@@ -108,6 +113,8 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
         limit: { type: 'string' },
         concurrency: { type: 'string' },
         'max-usd': { type: 'string' },
+        'input-price': { type: 'string' },
+        'output-price': { type: 'string' },
         'dry-run': { type: 'boolean', default: false },
         'retry-failed': { type: 'boolean', default: false },
         'report-only': { type: 'boolean', default: false },
@@ -186,6 +193,20 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
       'positive',
     ),
     retryFailed: values['retry-failed'] ?? false,
+    pricing: {
+      inputPerMillion: numberFlag(
+        'input-price',
+        values['input-price'],
+        DEFAULT_PRICING.inputPerMillion,
+        'positive',
+      ),
+      outputPerMillion: numberFlag(
+        'output-price',
+        values['output-price'],
+        DEFAULT_PRICING.outputPerMillion,
+        'positive',
+      ),
+    },
     sample:
       values.sample === undefined
         ? null

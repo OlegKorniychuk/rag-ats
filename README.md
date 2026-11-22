@@ -14,6 +14,7 @@ RAG-powered ATS prototype for tech recruiting (master's thesis project). Stage 1
 - [`docs/eval/synthetic-data.md`](./docs/eval/synthetic-data.md) — synthetic data generation, spot-check and seed report (step 10)
 - [`docs/eval/eval-baseline.md`](./docs/eval/eval-baseline.md) — retrieval and score-agreement baseline, evidence-ID citations before/after (steps 11–12)
 - [`docs/eval/interview-questions.md`](./docs/eval/interview-questions.md) — interview questions eval and human review (step 13)
+- [`docs/eval/model-comparison.md`](./docs/eval/model-comparison.md) — `gpt-5.4-mini` vs `gpt-6-luna` on scoring, citations and questions
 - [`data/synthetic/README.md`](./data/synthetic/README.md) — what the synthetic set contains and how to regenerate it
 - Swagger UI at `http://localhost:3000/docs` when running locally (raw OpenAPI at `/docs-json`)
 

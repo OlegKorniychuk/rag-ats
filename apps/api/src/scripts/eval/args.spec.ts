@@ -1,6 +1,7 @@
 // cli.ts pulls in EnvConfig, whose decorators need the Reflect metadata polyfill.
 import 'reflect-metadata';
 import { UsageError } from '../shared/cli.js';
+import { DEFAULT_PRICING } from '../parse-eval/cost.js';
 import { parseEvalArgs } from './args.js';
 
 describe('parseEvalArgs', () => {
@@ -19,6 +20,7 @@ describe('parseEvalArgs', () => {
       retryFailed: false,
       sample: null,
       summariseFile: null,
+      pricing: DEFAULT_PRICING,
     });
   });
 
@@ -149,5 +151,47 @@ describe('parseEvalArgs', () => {
       UsageError,
     );
     expect(() => parseEvalArgs(['--label'])).toThrow(UsageError);
+  });
+
+  describe('pricing', () => {
+    it('defaults pricing to DEFAULT_PRICING', () => {
+      expect(parseEvalArgs(['--label', 'run1']).pricing).toEqual(
+        DEFAULT_PRICING,
+      );
+    });
+
+    it('takes --input-price and --output-price', () => {
+      expect(
+        parseEvalArgs([
+          '--label',
+          'run1',
+          '--input-price',
+          '0.1',
+          '--output-price',
+          '0.5',
+        ]).pricing,
+      ).toEqual({ inputPerMillion: 0.1, outputPerMillion: 0.5 });
+    });
+
+    it('defaults each price on its own', () => {
+      expect(
+        parseEvalArgs(['--label', 'run1', '--output-price', '0.5']).pricing,
+      ).toEqual({
+        inputPerMillion: DEFAULT_PRICING.inputPerMillion,
+        outputPerMillion: 0.5,
+      });
+    });
+
+    it.each(['0', '-1', 'abc', ''])('rejects --input-price %p', (raw) => {
+      expect(() =>
+        parseEvalArgs(['--label', 'run1', `--input-price=${raw}`]),
+      ).toThrow(new UsageError('--input-price must be a positive number'));
+    });
+
+    it.each(['0', 'abc'])('rejects --output-price %p', (raw) => {
+      expect(() =>
+        parseEvalArgs(['--label', 'run1', `--output-price=${raw}`]),
+      ).toThrow(new UsageError('--output-price must be a positive number'));
+    });
   });
 });
