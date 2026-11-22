@@ -149,7 +149,8 @@ All live OpenAI runs logged in `docs/eval/`, against SPEC's $20 ceiling (third-p
 | Steps 11–12 eval (3 smokes + full run)        | this report, `baseline/*.md` |      $4.36 |
 | Step 13 interview questions (2 evals + smoke) | `interview-questions.md`     |      $0.32 |
 | Model comparison (mini vs Luna)               | `model-comparison.md`        |      $1.02 |
-| **Total**                                     |                              | **$10.53** |
+| RAG parameter experiments (embeddings only)   | `rag-parameters.md`          |      $0.04 |
+| **Total**                                     |                              | **$10.57** |
 
 ## Limits
 

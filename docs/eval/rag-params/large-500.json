@@ -1,0 +1,117 @@
+{
+  "label": "large-500",
+  "database": "rag_ats_exp_large_500",
+  "embeddingModel": "text-embedding-3-large",
+  "citationsFrom": "baseline-units",
+  "at": "2026-11-22T15:16:47.596Z",
+  "index": {
+    "candidates": 100,
+    "chunks": {
+      "cv": 602,
+      "github": 160
+    },
+    "meanCvChunkChars": 431,
+    "maxCvChunkChars": 500,
+    "models": ["text-embedding-3-large"]
+  },
+  "criterionTexts": 99,
+  "spentUsd": 0.00010764,
+  "recall": {
+    "items": 2081,
+    "quotes": 5250,
+    "quotesCv": 4848,
+    "quotesGithub": 402,
+    "rows": [
+      {
+        "k": 1,
+        "quoteRecall": 0.4055238095238095,
+        "quoteRecallCv": 0.42636138613861385,
+        "quoteRecallGithub": 0.15422885572139303,
+        "criterionAll": 0.1600192215281115,
+        "criterionAny": 0.7246516098029794,
+        "meanContextChars": 460.49159058145125,
+        "meanChunkShare": 0.1399077269572218
+      },
+      {
+        "k": 2,
+        "quoteRecall": 0.6165714285714285,
+        "quoteRecallCv": 0.6495462046204621,
+        "quoteRecallGithub": 0.21890547263681592,
+        "criterionAll": 0.3512734262373859,
+        "criterionAny": 0.8995675156174916,
+        "meanContextChars": 909.3983661701105,
+        "meanChunkShare": 0.2798154539144436
+      },
+      {
+        "k": 3,
+        "quoteRecall": 0.7617142857142857,
+        "quoteRecallCv": 0.7992986798679867,
+        "quoteRecallGithub": 0.30845771144278605,
+        "criterionAll": 0.5478135511773186,
+        "criterionAny": 0.9538683325324363,
+        "meanContextChars": 1361.142239308025,
+        "meanChunkShare": 0.4197231808716672
+      },
+      {
+        "k": 4,
+        "quoteRecall": 0.856,
+        "quoteRecallCv": 0.8937706270627063,
+        "quoteRecallGithub": 0.40049751243781095,
+        "criterionAll": 0.7097549255165786,
+        "criterionAny": 0.9759730898606439,
+        "meanContextChars": 1812.731379144642,
+        "meanChunkShare": 0.5545051669991575
+      },
+      {
+        "k": 5,
+        "quoteRecall": 0.9099047619047619,
+        "quoteRecallCv": 0.9455445544554455,
+        "quoteRecallGithub": 0.48009950248756217,
+        "criterionAll": 0.8082652570879385,
+        "criterionAny": 0.9846227775108121,
+        "meanContextChars": 2236.3080249879868,
+        "meanChunkShare": 0.6826797528383304
+      },
+      {
+        "k": 6,
+        "quoteRecall": 0.944952380952381,
+        "quoteRecallCv": 0.9744224422442245,
+        "quoteRecallGithub": 0.5895522388059702,
+        "criterionAll": 0.8822681403171552,
+        "criterionAny": 0.9937530033637674,
+        "meanContextChars": 2590.716001922153,
+        "meanChunkShare": 0.7818298312291548
+      },
+      {
+        "k": 8,
+        "quoteRecall": 0.9845714285714285,
+        "quoteRecallCv": 0.9969059405940595,
+        "quoteRecallGithub": 0.835820895522388,
+        "criterionAll": 0.9678039404132629,
+        "criterionAny": 0.9985583853916387,
+        "meanContextChars": 3189.8116290245075,
+        "meanChunkShare": 0.9144564336299071
+      },
+      {
+        "k": 10,
+        "quoteRecall": 0.9979047619047619,
+        "quoteRecallCv": 0.9995874587458746,
+        "quoteRecallGithub": 0.9776119402985075,
+        "criterionAll": 0.9956751561749159,
+        "criterionAny": 1,
+        "meanContextChars": 3702.9663623258048,
+        "meanChunkShare": 0.9858678083089449
+      },
+      {
+        "k": "all",
+        "quoteRecall": 0.9996190476190476,
+        "quoteRecallCv": 0.9995874587458746,
+        "quoteRecallGithub": 1,
+        "criterionAll": 0.9990389235944258,
+        "criterionAny": 1,
+        "meanContextChars": 3816.923594425757,
+        "meanChunkShare": 1
+      }
+    ]
+  }
+}
