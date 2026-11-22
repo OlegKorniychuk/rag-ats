@@ -1,0 +1,8039 @@
+{
+  "label": "luna-units",
+  "generatedAt": "2026-11-22T12:53:02.332Z",
+  "sample": {
+    "seed": 1,
+    "weak": 150,
+    "noise": 50,
+    "population": {
+      "strong": 62,
+      "partial": 161,
+      "weak": 777
+    },
+    "sampled": {
+      "strong": 62,
+      "partial": 161,
+      "weak": 158
+    },
+    "pairs": 381,
+    "spotCheckPairs": 30
+  },
+  "retrieval": null,
+  "scoring": {
+    "perMode": {
+      "full_text": {
+        "mode": "full_text",
+        "coverage": {
+          "sampled": 381,
+          "ok": 381,
+          "failed": 0,
+          "failedByKind": {
+            "grounding": 0,
+            "api": 0,
+            "parse": 0
+          },
+          "missing": 0
+        },
+        "agreement": {
+          "n": 381,
+          "spearman": {
+            "estimate": 0.9418750141838823,
+            "lo": 0.9262021367414655,
+            "hi": 0.9524618401063495,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "mae": {
+            "estimate": 9.406824146981627,
+            "lo": 8.558989501312336,
+            "hi": 10.288845144356955,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "meanSignedError": -8.047244094488189,
+          "perBandMae": {
+            "strong": 16.032258064516128,
+            "partial": 11.273291925465838,
+            "weak": 4.905063291139241
+          },
+          "perBandN": {
+            "strong": 62,
+            "partial": 161,
+            "weak": 158
+          },
+          "bandAgreement": 0.7559055118110236,
+          "kappa": {
+            "estimate": 0.5980328761528776,
+            "lo": 0.5321726134852857,
+            "hi": 0.6664705827212389,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "quadraticKappa": 0.7589247443512338,
+          "weightedMae": 6.6202341772151785,
+          "weightedBandAgreement": 0.9030822784810125,
+          "confusion": [
+            [36, 26, 0],
+            [1, 95, 65],
+            [0, 1, 157]
+          ]
+        },
+        "vsDude": {
+          "pairs": 30,
+          "scorer": {
+            "pairs": 30,
+            "exactAgreement": 0.8333333333333334,
+            "kappa": 0.7386759581881532,
+            "quadraticKappa": 0.7798165137614679,
+            "confusion": [
+              [4, 3, 1],
+              [0, 8, 1],
+              [0, 0, 13]
+            ]
+          },
+          "rule": {
+            "pairs": 30,
+            "exactAgreement": 0.7666666666666667,
+            "kappa": 0.6499999999999999,
+            "quadraticKappa": 0.8292682926829268,
+            "confusion": [
+              [7, 1, 0],
+              [3, 6, 0],
+              [0, 3, 10]
+            ]
+          },
+          "ruleAll": {
+            "pairs": 30,
+            "exactAgreement": 0.7666666666666667,
+            "kappa": 0.6499999999999999,
+            "quadraticKappa": 0.8292682926829268,
+            "confusion": [
+              [7, 1, 0],
+              [3, 6, 0],
+              [0, 3, 10]
+            ]
+          }
+        },
+        "noise": {
+          "pairs": 50,
+          "meanAbsDelta": 2.06,
+          "spearman": 0.9908203981261011,
+          "maxAbsDelta": 9,
+          "meanSignedDelta": 0.14
+        },
+        "grounding": {
+          "runs": "run 1 and run 2",
+          "jobs": 431,
+          "ok": 431,
+          "okAfterRetry": 0,
+          "zeroedScores": 0,
+          "zeroedCriteria": 0,
+          "groundingFailures": 0,
+          "apiFailures": 0,
+          "parseFailures": 0,
+          "firstPassFailureRate": 0,
+          "afterRetryFailureRate": 0,
+          "buckets": {
+            "unknown-evidence-id": 0,
+            "unknown-criterion": 0,
+            "missing-criterion": 0,
+            "duplicate-criterion": 0,
+            "other": 0
+          }
+        },
+        "cost": {
+          "okScores": 431,
+          "meanInputTokens": 1896.338747099768,
+          "meanOutputTokens": 1073.84686774942,
+          "meanCostUsd": 0.0007265573085846863,
+          "totalCostUsd": 0.3131461999999998
+        },
+        "g4": {
+          "tags": 76,
+          "mapped": 76,
+          "unmapped": 0,
+          "credited": 64,
+          "citedGithub": 54,
+          "creditedShare": 0.8421052631578947,
+          "citedGithubShare": 0.7105263157894737
+        },
+        "slices": {
+          "uk": {
+            "n": 19,
+            "mae": 9.421052631578947,
+            "meanSignedError": -9.421052631578947
+          },
+          "keywordStuffers": {
+            "n": 13,
+            "mae": 8.538461538461538,
+            "meanSignedError": -2.230769230769231
+          },
+          "injection": {
+            "n": 5,
+            "mae": 10.8,
+            "meanSignedError": -5.2
+          },
+          "rest": {
+            "n": 344,
+            "mae": 9.418604651162791,
+            "meanSignedError": -8.232558139534884
+          }
+        }
+      },
+      "rag": {
+        "mode": "rag",
+        "coverage": {
+          "sampled": 381,
+          "ok": 381,
+          "failed": 0,
+          "failedByKind": {
+            "grounding": 0,
+            "api": 0,
+            "parse": 0
+          },
+          "missing": 0
+        },
+        "agreement": {
+          "n": 381,
+          "spearman": {
+            "estimate": 0.9387088882097803,
+            "lo": 0.9227512269784633,
+            "hi": 0.9503562401476014,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "mae": {
+            "estimate": 9.535433070866143,
+            "lo": 8.650918635170603,
+            "hi": 10.46988188976378,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "meanSignedError": -8.259842519685039,
+          "perBandMae": {
+            "strong": 15.887096774193548,
+            "partial": 11.677018633540373,
+            "weak": 4.860759493670886
+          },
+          "perBandN": {
+            "strong": 62,
+            "partial": 161,
+            "weak": 158
+          },
+          "bandAgreement": 0.7480314960629921,
+          "kappa": {
+            "estimate": 0.5846562649042719,
+            "lo": 0.5183585477414838,
+            "hi": 0.6508154604756152,
+            "resamples": 1000,
+            "valid": 1000
+          },
+          "quadraticKappa": 0.7514575773637217,
+          "weightedMae": 6.641810126582266,
+          "weightedBandAgreement": 0.9000822784810125,
+          "confusion": [
+            [36, 26, 0],
+            [0, 92, 69],
+            [0, 1, 157]
+          ]
+        },
+        "vsDude": {
+          "pairs": 30,
+          "scorer": {
+            "pairs": 30,
+            "exactAgreement": 0.7666666666666667,
+            "kappa": 0.6385542168674698,
+            "quadraticKappa": 0.7478991596638656,
+            "confusion": [
+              [5, 2, 1],
+              [2, 6, 1],
+              [0, 1, 12]
+            ]
+          },
+          "rule": {
+            "pairs": 30,
+            "exactAgreement": 0.7666666666666667,
+            "kappa": 0.6499999999999999,
+            "quadraticKappa": 0.8292682926829268,
+            "confusion": [
+              [7, 1, 0],
+              [3, 6, 0],
+              [0, 3, 10]
+            ]
+          },
+          "ruleAll": {
+            "pairs": 30,
+            "exactAgreement": 0.7666666666666667,
+            "kappa": 0.6499999999999999,
+            "quadraticKappa": 0.8292682926829268,
+            "confusion": [
+              [7, 1, 0],
+              [3, 6, 0],
+              [0, 3, 10]
+            ]
+          }
+        },
+        "noise": {
+          "pairs": 50,
+          "meanAbsDelta": 2.52,
+          "spearman": 0.9878646620723198,
+          "maxAbsDelta": 14,
+          "meanSignedDelta": 0
+        },
+        "grounding": {
+          "runs": "run 1 and run 2",
+          "jobs": 431,
+          "ok": 431,
+          "okAfterRetry": 0,
+          "zeroedScores": 0,
+          "zeroedCriteria": 0,
+          "groundingFailures": 0,
+          "apiFailures": 0,
+          "parseFailures": 0,
+          "firstPassFailureRate": 0,
+          "afterRetryFailureRate": 0,
+          "buckets": {
+            "unknown-evidence-id": 0,
+            "unknown-criterion": 0,
+            "missing-criterion": 0,
+            "duplicate-criterion": 0,
+            "other": 0
+          }
+        },
+        "cost": {
+          "okScores": 431,
+          "meanInputTokens": 2451.542923433875,
+          "meanOutputTokens": 1133.292343387471,
+          "meanCostUsd": 0.0008118004640371225,
+          "totalCostUsd": 0.3498859999999998
+        },
+        "g4": {
+          "tags": 76,
+          "mapped": 76,
+          "unmapped": 0,
+          "credited": 68,
+          "citedGithub": 60,
+          "creditedShare": 0.8947368421052632,
+          "citedGithubShare": 0.7894736842105263
+        },
+        "slices": {
+          "uk": {
+            "n": 19,
+            "mae": 10.31578947368421,
+            "meanSignedError": -10.31578947368421
+          },
+          "keywordStuffers": {
+            "n": 13,
+            "mae": 10.23076923076923,
+            "meanSignedError": -0.23076923076923078
+          },
+          "injection": {
+            "n": 5,
+            "mae": 14,
+            "meanSignedError": -10.8
+          },
+          "rest": {
+            "n": 344,
+            "mae": 9.401162790697674,
+            "meanSignedError": -8.412790697674419
+          }
+        }
+      }
+    },
+    "paired": {
+      "pairs": 381,
+      "spearman": {
+        "estimate": 0.003166125974102041,
+        "lo": -0.0034052555984584623,
+        "hi": 0.010125002401132111,
+        "resamples": 1000,
+        "valid": 1000
+      },
+      "mae": {
+        "estimate": -0.1286089238845154,
+        "lo": -0.49868766404199505,
+        "hi": 0.26253280839894905,
+        "resamples": 1000,
+        "valid": 1000
+      },
+      "kappa": {
+        "estimate": 0.013376611248605674,
+        "lo": -0.034433838426083094,
+        "hi": 0.059087816375457125,
+        "resamples": 1000,
+        "valid": 1000
+      }
+    },
+    "pairs": [
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p003",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p011",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p013",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p017",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 87,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 86,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p018",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 62,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 63,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p019",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p020",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p022",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 81,
+            "run2": 80,
+            "failure": null
+          },
+          "rag": {
+            "run1": 79,
+            "run2": 81,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p023",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 75,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p026",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 79,
+            "run2": 83,
+            "failure": null
+          },
+          "rag": {
+            "run1": 84,
+            "run2": 86,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p027",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 35,
+            "run2": 29,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": 35,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p030",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p032",
+        "band": "partial",
+        "rule": 73,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 57,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p034",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p038",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 80,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 73,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p044",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p045",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p048",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 53,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p049",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 2,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p052",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p054",
+        "band": "partial",
+        "rule": 67,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p055",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p057",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p058",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p060",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 30,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p064",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p065",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p067",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p070",
+        "band": "weak",
+        "rule": 33,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p071",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p072",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p075",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p078",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p079",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p080",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p081",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 40,
+            "run2": 38,
+            "failure": null
+          },
+          "rag": {
+            "run1": 33,
+            "run2": 38,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p086",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p090",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p091",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p093",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-java",
+        "personaId": "p097",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 60,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p003",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 32,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p004",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p007",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p010",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 2,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p011",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 73,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 72,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p015",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p016",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 75,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 64,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p017",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 53,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p018",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p020",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p022",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p023",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p026",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 84,
+            "run2": 82,
+            "failure": null
+          },
+          "rag": {
+            "run1": 86,
+            "run2": 79,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p027",
+        "band": "partial",
+        "rule": 73,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p032",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p035",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p037",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p038",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p040",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 32,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p044",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 70,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p045",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 71,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p050",
+        "band": "weak",
+        "rule": 37,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": 28,
+            "failure": null
+          },
+          "rag": {
+            "run1": 27,
+            "run2": 25,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p051",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 32,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p058",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p060",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p061",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p066",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 57,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p067",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p070",
+        "band": "partial",
+        "rule": 67,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 53,
+            "run2": 49,
+            "failure": null
+          },
+          "rag": {
+            "run1": 53,
+            "run2": 54,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p071",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p080",
+        "band": "partial",
+        "rule": 67,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 65,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p081",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p086",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p091",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p093",
+        "band": "strong",
+        "rule": 80,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p094",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p095",
+        "band": "partial",
+        "rule": 73,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "backend-node",
+        "personaId": "p096",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 21,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p017",
+        "band": "weak",
+        "rule": 33,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 36,
+            "run2": 33,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": 36,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p020",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p024",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p025",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p029",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 69,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 69,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p030",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 60,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 61,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p031",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 67,
+            "run2": 72,
+            "failure": null
+          },
+          "rag": {
+            "run1": 71,
+            "run2": 66,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p036",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p039",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 44,
+            "run2": 44,
+            "failure": null
+          },
+          "rag": {
+            "run1": 48,
+            "run2": 48,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p040",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p041",
+        "band": "partial",
+        "rule": 67,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p046",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p055",
+        "band": "strong",
+        "rule": 80,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p056",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p058",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p059",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 59,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 53,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p065",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 92,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 91,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p068",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p074",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p079",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 51,
+            "run2": 50,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": 50,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p087",
+        "band": "partial",
+        "rule": 67,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 70,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p089",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p090",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 82,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 80,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p094",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 2,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p095",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p098",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "data-engineering",
+        "personaId": "p100",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p002",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": 1,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p003",
+        "band": "partial",
+        "rule": 57,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p006",
+        "band": "weak",
+        "rule": 36,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p007",
+        "band": "partial",
+        "rule": 71,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 64,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p011",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p013",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 56,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p016",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p017",
+        "band": "weak",
+        "rule": 21,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p018",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p022",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 61,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p023",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p024",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p026",
+        "band": "weak",
+        "rule": 36,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 17,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p030",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p032",
+        "band": "weak",
+        "rule": 14,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p033",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p036",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p038",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p045",
+        "band": "partial",
+        "rule": 57,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 63,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p046",
+        "band": "strong",
+        "rule": 86,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 78,
+            "run2": 80,
+            "failure": null
+          },
+          "rag": {
+            "run1": 84,
+            "run2": 81,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p049",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p050",
+        "band": "weak",
+        "rule": 21,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p051",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p052",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 89,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 84,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p053",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p054",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p058",
+        "band": "partial",
+        "rule": 71,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 57,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 63,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p060",
+        "band": "partial",
+        "rule": 64,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p065",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p066",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 55,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p068",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": 6,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": 6,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p070",
+        "band": "partial",
+        "rule": 64,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 53,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p071",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p072",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p075",
+        "band": "weak",
+        "rule": 14,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p082",
+        "band": "partial",
+        "rule": 43,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 36,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p083",
+        "band": "strong",
+        "rule": 86,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p084",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p088",
+        "band": "partial",
+        "rule": 57,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 55,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p091",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p092",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p094",
+        "band": "weak",
+        "rule": 21,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p095",
+        "band": "partial",
+        "rule": 71,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "frontend",
+        "personaId": "p099",
+        "band": "weak",
+        "rule": 36,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p003",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 75,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 72,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 72,
+            "run2": 72,
+            "failure": null
+          },
+          "rag": {
+            "run1": 67,
+            "run2": 66,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p009",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 21,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p011",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p013",
+        "band": "partial",
+        "rule": 63,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 36,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 36,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p014",
+        "band": "weak",
+        "rule": 31,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p015",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p016",
+        "band": "partial",
+        "rule": 63,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 55,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 55,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p017",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 54,
+            "run2": 56,
+            "failure": null
+          },
+          "rag": {
+            "run1": 54,
+            "run2": 55,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p018",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p020",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 59,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p022",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 74,
+            "run2": 76,
+            "failure": null
+          },
+          "rag": {
+            "run1": 79,
+            "run2": 75,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p023",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p026",
+        "band": "partial",
+        "rule": 63,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 50,
+            "run2": 52,
+            "failure": null
+          },
+          "rag": {
+            "run1": 51,
+            "run2": 50,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p027",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p033",
+        "band": "weak",
+        "rule": 31,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p034",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p036",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p038",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 78,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 73,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p040",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 83,
+            "run2": 86,
+            "failure": null
+          },
+          "rag": {
+            "run1": 85,
+            "run2": 88,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p044",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p045",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 79,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 81,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p049",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 28,
+            "run2": 31,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": 27,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p051",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 60,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 70,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p052",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p053",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p054",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p055",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 23,
+            "run2": 32,
+            "failure": null
+          },
+          "rag": {
+            "run1": 30,
+            "run2": 28,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p056",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 17,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p057",
+        "band": "weak",
+        "rule": 31,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p058",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 80,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 82,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p060",
+        "band": "partial",
+        "rule": 69,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 66,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p066",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 68,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 63,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p070",
+        "band": "partial",
+        "rule": 63,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 64,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 68,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p071",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p072",
+        "band": "weak",
+        "rule": 38,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 30,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p074",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p075",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 21,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p078",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 10,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p080",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 44,
+            "run2": 43,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": 44,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p082",
+        "band": "weak",
+        "rule": 38,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p083",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p092",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p093",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p095",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 71,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 75,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p096",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p098",
+        "band": "weak",
+        "rule": 38,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p099",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "full-stack",
+        "personaId": "p100",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": 8,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": 8,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p001",
+        "band": "strong",
+        "rule": 93,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 65,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 65,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p002",
+        "band": "weak",
+        "rule": 17,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p004",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": 33,
+            "failure": null
+          },
+          "rag": {
+            "run1": 35,
+            "run2": 31,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p015",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p016",
+        "band": "strong",
+        "rule": 80,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 79,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 77,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p017",
+        "band": "weak",
+        "rule": 27,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p021",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p027",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p030",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 92,
+            "run2": 86,
+            "failure": null
+          },
+          "rag": {
+            "run1": 77,
+            "run2": 91,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p031",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p040",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": 26,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": 26,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p041",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": 29,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": 29,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p045",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p049",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p052",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p056",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p057",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p065",
+        "band": "strong",
+        "rule": 87,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 69,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p074",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 87,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 86,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p077",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p079",
+        "band": "partial",
+        "rule": 73,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 53,
+            "run2": 54,
+            "failure": null
+          },
+          "rag": {
+            "run1": 57,
+            "run2": 54,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p080",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 10,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p081",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p082",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p085",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p086",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p087",
+        "band": "partial",
+        "rule": 40,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 30,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p088",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p089",
+        "band": "partial",
+        "rule": 60,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p090",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 36,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p095",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p098",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p099",
+        "band": "weak",
+        "rule": 20,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "ml",
+        "personaId": "p100",
+        "band": "weak",
+        "rule": 7,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p002",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p003",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 81,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 77,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 74,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p009",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p013",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p017",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p022",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p024",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p033",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p034",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 93,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 91,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p037",
+        "band": "weak",
+        "rule": 38,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p038",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p040",
+        "band": "weak",
+        "rule": 25,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p044",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 39,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p047",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 97,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 94,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p048",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p050",
+        "band": "weak",
+        "rule": 28,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p051",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p052",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p053",
+        "band": "partial",
+        "rule": 44,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p057",
+        "band": "weak",
+        "rule": 31,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 26,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p063",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p067",
+        "band": "partial",
+        "rule": 69,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 60,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 60,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p068",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p069",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 53,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p070",
+        "band": "weak",
+        "rule": 38,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 30,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p071",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 40,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p073",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 96,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 98,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p074",
+        "band": "weak",
+        "rule": 19,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p076",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 91,
+            "run2": 88,
+            "failure": null
+          },
+          "rag": {
+            "run1": 90,
+            "run2": 92,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p082",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 93,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 97,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p083",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 44,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p085",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p087",
+        "band": "weak",
+        "rule": 13,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p090",
+        "band": "weak",
+        "rule": 19,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": 19,
+            "failure": null
+          },
+          "rag": {
+            "run1": 17,
+            "run2": 16,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p092",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "mobile",
+        "personaId": "p093",
+        "band": "partial",
+        "rule": 50,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p002",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 70,
+            "run2": 68,
+            "failure": null
+          },
+          "rag": {
+            "run1": 78,
+            "run2": 74,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p005",
+        "band": "weak",
+        "rule": 24,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 17,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p009",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p012",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p015",
+        "band": "weak",
+        "rule": 9,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 1,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p017",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 77,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 72,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p018",
+        "band": "weak",
+        "rule": 24,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p019",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 87,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 87,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p021",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 2,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p025",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 46,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p031",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p035",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 36,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p038",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p039",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 77,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 80,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p043",
+        "band": "partial",
+        "rule": 65,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 59,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p045",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 17,
+            "run2": 14,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": 18,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p048",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": 34,
+            "failure": null
+          },
+          "rag": {
+            "run1": 32,
+            "run2": 32,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p050",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p051",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": 14,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": 13,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p055",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p056",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 17,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p059",
+        "band": "weak",
+        "rule": 12,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p060",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 38,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p061",
+        "band": "strong",
+        "rule": 82,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 59,
+            "run2": 60,
+            "failure": null
+          },
+          "rag": {
+            "run1": 58,
+            "run2": 58,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p064",
+        "band": "weak",
+        "rule": 24,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p068",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 63,
+            "run2": 69,
+            "failure": null
+          },
+          "rag": {
+            "run1": 62,
+            "run2": 63,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p078",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 50,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p079",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 24,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p080",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p082",
+        "band": "weak",
+        "rule": 12,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p083",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": 0,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p084",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 91,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 98,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p087",
+        "band": "partial",
+        "rule": 59,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p088",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p089",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p091",
+        "band": "partial",
+        "rule": 59,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 49,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p093",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p097",
+        "band": "partial",
+        "rule": 65,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 51,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p098",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 32,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p099",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "platform-devops",
+        "personaId": "p100",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 33,
+            "run2": 32,
+            "failure": null
+          },
+          "rag": {
+            "run1": 34,
+            "run2": 33,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p002",
+        "band": "weak",
+        "rule": 21,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 2,
+            "run2": 2,
+            "failure": null
+          },
+          "rag": {
+            "run1": 2,
+            "run2": 3,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p003",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": 5,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": 5,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p005",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 20,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p006",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 77,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p007",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p008",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 56,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p010",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p013",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 81,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p014",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 37,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p015",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 2,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p017",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 17,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p019",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 10,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p021",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p022",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p028",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p029",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": 6,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": 5,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p030",
+        "band": "weak",
+        "rule": 24,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 10,
+            "run2": 11,
+            "failure": null
+          },
+          "rag": {
+            "run1": 10,
+            "run2": 10,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p032",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": 30,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": 30,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p033",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 87,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 89,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p034",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 10,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p038",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 25,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 23,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p045",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p047",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 16,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 11,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p049",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 29,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p051",
+        "band": "partial",
+        "rule": 56,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 61,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p052",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 22,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p054",
+        "band": "weak",
+        "rule": 12,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p057",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 32,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 33,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p069",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p086",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 43,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p092",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 21,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p094",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p098",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": "strong",
+        "scores": {
+          "full_text": {
+            "run1": 58,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 69,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "qa-automation",
+        "personaId": "p099",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 77,
+            "run2": 79,
+            "failure": null
+          },
+          "rag": {
+            "run1": 78,
+            "run2": 86,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p002",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p010",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 34,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 35,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p012",
+        "band": "strong",
+        "rule": 82,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p017",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 18,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p018",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 9,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p019",
+        "band": "weak",
+        "rule": 24,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p020",
+        "band": "weak",
+        "rule": 12,
+        "weight": 4.917721518987341,
+        "spotCheck": "weak",
+        "scores": {
+          "full_text": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p021",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p024",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 6,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p028",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 28,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p029",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 3,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 4,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p035",
+        "band": "strong",
+        "rule": 88,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 62,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 67,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p042",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 47,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 41,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p043",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 19,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 15,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p056",
+        "band": "strong",
+        "rule": 82,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 73,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 68,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p057",
+        "band": "partial",
+        "rule": 59,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 45,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 54,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p060",
+        "band": "weak",
+        "rule": 29,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 10,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 12,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p061",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 13,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p062",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 76,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 75,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p063",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p064",
+        "band": "partial",
+        "rule": 53,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 48,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 52,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p068",
+        "band": "partial",
+        "rule": 41,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 31,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 14,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p069",
+        "band": "weak",
+        "rule": 35,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 13,
+            "run2": 14,
+            "failure": null
+          },
+          "rag": {
+            "run1": 19,
+            "run2": 19,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p071",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p074",
+        "band": "weak",
+        "rule": 18,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 8,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p076",
+        "band": "weak",
+        "rule": 6,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p078",
+        "band": "partial",
+        "rule": 47,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 27,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p081",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p084",
+        "band": "strong",
+        "rule": 94,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 42,
+            "run2": 38,
+            "failure": null
+          },
+          "rag": {
+            "run1": 48,
+            "run2": 38,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p088",
+        "band": "weak",
+        "rule": 0,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 0,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p091",
+        "band": "weak",
+        "rule": 12,
+        "weight": 4.917721518987341,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 5,
+            "run2": null,
+            "failure": null
+          },
+          "rag": {
+            "run1": 7,
+            "run2": null,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p098",
+        "band": "strong",
+        "rule": 76,
+        "weight": 1,
+        "spotCheck": null,
+        "scores": {
+          "full_text": {
+            "run1": 59,
+            "run2": 64,
+            "failure": null
+          },
+          "rag": {
+            "run1": 68,
+            "run2": 65,
+            "failure": null
+          }
+        }
+      },
+      {
+        "vacancyId": "security",
+        "personaId": "p099",
+        "band": "strong",
+        "rule": 100,
+        "weight": 1,
+        "spotCheck": "partial",
+        "scores": {
+          "full_text": {
+            "run1": 54,
+            "run2": 56,
+            "failure": null
+          },
+          "rag": {
+            "run1": 47,
+            "run2": 52,
+            "failure": null
+          }
+        }
+      }
+    ],
+    "reviews": [
+      {
+        "mode": "full_text",
+        "total": 40,
+        "labelled": 0,
+        "supports": 0,
+        "weak": 0,
+        "irrelevant": 0,
+        "supportsShare": null,
+        "relevanceRate": null
+      },
+      {
+        "mode": "rag",
+        "total": 40,
+        "labelled": 0,
+        "supports": 0,
+        "weak": 0,
+        "irrelevant": 0,
+        "supportsShare": null,
+        "relevanceRate": null
+      }
+    ],
+    "unmatchedRecords": 0
+  },
+  "runs": [
+    {
+      "part": "scoring",
+      "startedAt": "2026-11-22T12:18:23.438Z",
+      "finishedAt": "2026-11-22T12:52:21.802Z",
+      "modes": ["full_text", "rag"],
+      "seed": 1,
+      "weak": 150,
+      "noise": 50,
+      "limit": null,
+      "concurrency": 4,
+      "maxUsd": 1.5,
+      "retryFailed": false,
+      "spentUsd": 0.66375412,
+      "stopped": null,
+      "scoring": {
+        "planned": 862,
+        "done": 862,
+        "failed": 0,
+        "skipped": 0,
+        "notStarted": 0
+      }
+    }
+  ],
+  "meteredUsd": 0.66375412,
+  "pricingCaveat": "Prices are third-party listed figures for gpt-5.4-mini, unverified against OpenAI's pricing page."
+}
