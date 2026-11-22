@@ -1,0 +1,18 @@
+[
+  {
+    "part": "retrieval",
+    "startedAt": "2026-11-22T15:14:53.630Z",
+    "finishedAt": "2026-11-22T15:15:02.090Z",
+    "modes": [],
+    "seed": 1,
+    "weak": 150,
+    "noise": 50,
+    "limit": null,
+    "concurrency": 4,
+    "maxUsd": 0.05,
+    "retryFailed": false,
+    "spentUsd": 0.00005012,
+    "stopped": null,
+    "scoring": null
+  }
+]

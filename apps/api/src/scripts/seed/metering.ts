@@ -11,6 +11,15 @@ import { costUsd, type Pricing } from '../parse-eval/cost.js';
 
 /** USD per 1M embedding tokens (`text-embedding-3-small`, third-party listed price). */
 export const EMBEDDING_PRICE_PER_MILLION = 0.02;
+/** USD per 1M embedding tokens of `text-embedding-3-large` (listed price). */
+export const LARGE_EMBEDDING_PRICE_PER_MILLION = 0.13;
+
+/** Embedding price of `model`: large at its own price, anything else at small's. */
+export function embeddingPricePerMillion(model: string): number {
+  return model.startsWith('text-embedding-3-large')
+    ? LARGE_EMBEDDING_PRICE_PER_MILLION
+    : EMBEDDING_PRICE_PER_MILLION;
+}
 
 export interface KindUsage {
   calls: number;
@@ -23,6 +32,7 @@ export class SeedMeter {
   private readonly byKind = new Map<string, KindUsage>();
   private embeddingCalls = 0;
   private embeddingInput = 0;
+  private embeddingCost = 0;
 
   constructor(private readonly pricing: Pricing) {}
 
@@ -48,7 +58,10 @@ export class SeedMeter {
 
   recordEmbedding(usage: LlmUsage | null): void {
     this.embeddingCalls += 1;
-    if (usage) this.embeddingInput += usage.inputTokens;
+    if (!usage) return;
+    this.embeddingInput += usage.inputTokens;
+    this.embeddingCost +=
+      (usage.inputTokens * embeddingPricePerMillion(usage.model)) / 1_000_000;
   }
 
   /** Calls made with this schema name (retries count as extra calls). */
@@ -79,7 +92,7 @@ export class SeedMeter {
   }
 
   get embeddingCostUsd(): number {
-    return (this.embeddingInput * EMBEDDING_PRICE_PER_MILLION) / 1_000_000;
+    return this.embeddingCost;
   }
 
   get chatCostUsd(): number {

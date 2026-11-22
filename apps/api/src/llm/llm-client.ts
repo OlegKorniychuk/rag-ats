@@ -108,6 +108,12 @@ export class LlmClient {
       const response = await this.client.embeddings.create({
         model: this.embeddingModel,
         input: batch,
+        // Native size of text-embedding-3-small; text-embedding-3-large is
+        // shortened to it, so both fit the `vector(1536)` column. Older
+        // models reject the parameter.
+        ...(this.embeddingModel.startsWith('text-embedding-3')
+          ? { dimensions: EMBEDDING_DIMENSIONS }
+          : {}),
       });
 
       if (response.data.length !== batch.length) {

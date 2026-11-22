@@ -344,3 +344,44 @@ describe('chunkCandidate', () => {
     expect(chunks.every((c) => c.source === 'cv')).toBe(true);
   });
 });
+
+describe('chunk size option', () => {
+  const longCv = Array.from({ length: 30 }, (_, i) => line(i, 50)).join('\n');
+
+  it('chunkCvText packs to the given maximum', () => {
+    const small = chunkCvText(longCv, 500);
+    expect(small.every((c) => c.length <= 500)).toBe(true);
+    expect(small.length).toBeGreaterThan(chunkCvText(longCv).length);
+  });
+
+  it('chunkCvText splits a long line at the given maximum', () => {
+    const sentence = 'Built and ran a service for billing. '.repeat(19).trim();
+    expect(sentence.length).toBeGreaterThan(500);
+    expect(sentence.length).toBeLessThan(CV_CHUNK_MAX_CHARS);
+    const chunks = chunkCvText(sentence, 500);
+    expect(chunks.length).toBeGreaterThan(1);
+    expect(chunks.every((c) => c.length <= 500)).toBe(true);
+    expect(chunkCvText(sentence)).toEqual([sentence]);
+  });
+
+  it('chunkCandidate changes only the CV chunks', () => {
+    const base = chunkCandidate(longCv, snapshot());
+    const big = chunkCandidate(longCv, snapshot(), { cvMaxChars: 2000 });
+    const cv = (chunks: typeof base) => chunks.filter((c) => c.source === 'cv');
+    const gh = (chunks: typeof base) =>
+      chunks.filter((c) => c.source === 'github');
+    expect(cv(big).length).toBeLessThan(cv(base).length);
+    expect(cv(big).every((c) => c.text.length <= 2000)).toBe(true);
+    expect(gh(big)).toEqual(gh(base));
+  });
+
+  it('chunkCandidate without the option equals the default size', () => {
+    const base = chunkCandidate(CV_FIXTURE, snapshot());
+    expect(chunkCandidate(CV_FIXTURE, snapshot(), {})).toEqual(base);
+    expect(
+      chunkCandidate(CV_FIXTURE, snapshot(), {
+        cvMaxChars: CV_CHUNK_MAX_CHARS,
+      }),
+    ).toEqual(base);
+  });
+});

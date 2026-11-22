@@ -17,11 +17,11 @@ const EMBEDDING_MODEL = 'test-embedding-model';
 const server = setupServer();
 const capture = captureOpenaiEmbeddingRequests();
 
-function makeClient() {
+function makeClient(embeddingModel = EMBEDDING_MODEL) {
   return new LlmClient({
     OPENAI_API_KEY: 'sk-test',
     OPENAI_MODEL: 'test-model',
-    OPENAI_EMBEDDING_MODEL: EMBEDDING_MODEL,
+    OPENAI_EMBEDDING_MODEL: embeddingModel,
   } as EnvConfig);
 }
 
@@ -63,6 +63,22 @@ describe('LlmClient.embed', () => {
     expect(vectors).toHaveLength(2);
     expect(vectors[0]).toHaveLength(EMBEDDING_DIMENSIONS);
     expect(vectors[0][0]).toBeCloseTo(fakeEmbedding('alpha')[0], 5);
+  });
+
+  it('asks a text-embedding-3 model for EMBEDDING_DIMENSIONS', async () => {
+    server.use(openaiEmbeddingsHandler());
+
+    await makeClient('text-embedding-3-large').embed(['alpha']);
+
+    expect(capture.bodies[0].dimensions).toBe(EMBEDDING_DIMENSIONS);
+  });
+
+  it('sends no dimensions to a model that does not accept them', async () => {
+    server.use(openaiEmbeddingsHandler());
+
+    await makeClient('text-embedding-ada-002').embed(['alpha']);
+
+    expect(capture.bodies[0]).not.toHaveProperty('dimensions');
   });
 
   it('batches inputs and keeps their order', async () => {
